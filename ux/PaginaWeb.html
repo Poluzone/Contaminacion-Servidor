@@ -1,0 +1,58 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Titulo de la web| Menos de 55 caracteres</title>
+<meta charset="utf-8" />
+<script type="text/javascript" src="../ux/proxy.js"></script>
+<script>
+
+var proxy = new Proxy();
+
+
+function InsertDato(){
+
+var dato= document.getElementById('datoP').value;
+var fecha= document.getElementById('fechaP').value;
+var posicion= document.getElementById('posiP').value;
+
+proxy.insertarMedida(dato,fecha,posicion);
+
+}
+
+function GETM(){
+
+proxy.GetSoloMedidasPR();
+
+}
+
+</script>
+</head>
+
+<body>
+
+  <h1>Insertar Medidas</h1>
+    <div>
+      Dato:<input type="text" id="datoP"><br>
+      Fecha:<input type="text" id="fechaP"><br>
+      Posición:<input type="text" id="posiP"><br>
+
+      <button onclick="InsertDato()">Aceptar</button>
+    </div>
+
+
+<h1>Get Medidas</h1>
+        <div>
+            <p>Pulsa click derecho en el raton sobre la página,
+               clica en Inspeccionar y luego en las pestañas pulsa Console.</p>
+
+      <button onclick="GETM()">Aceptar</button>
+    </div>
+
+
+    <footer>
+        Creado por Josep ahora mismo
+    </footer>
+</body>
+</html>
