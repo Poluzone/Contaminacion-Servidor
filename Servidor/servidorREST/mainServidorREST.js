@@ -17,7 +17,7 @@ function cargarLogica(fichero) {
         } else {
           resolver(laLogica)
         }
-      
+
       }) // new
   }) // Promise
 } // ()

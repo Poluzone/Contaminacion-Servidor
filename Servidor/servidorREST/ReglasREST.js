@@ -1,6 +1,7 @@
 // .....................................................................
 // ReglasREST.js
 // .....................................................................
+const path = require('path');
 module.exports.cargar = function(servidorExpress, laLogica) {
   // .......................................................
   // GET /prueba
@@ -48,16 +49,13 @@ module.exports.cargar = function(servidorExpress, laLogica) {
 
       laLogica.insertarMedida(datos);
 
-
-
       respuesta.send( "OK" );
     }) // post / insertarPersona
 
-    servidorExpress.get('/ux/:archivo', function( peticion, respuesta ){
-              console.log( " HTML:" + peticion.params.archivo )
-
-              var dir = 'C:/Users/jcarr/Escritorio/Projecte/Servidor/ux/'
-              respuesta.sendfile( dir + peticion.params.archivo);
+    servidorExpress.get('/ux/html/:archivo', function( peticion, respuesta ){
+              console.log( " HTML:" + peticion.params.archivo );
+              var dir = path.resolve("../ux/html");
+              respuesta.sendfile( dir +"/"+ peticion.params.archivo);
           });
 } // cargar()
 // .....................................................................
