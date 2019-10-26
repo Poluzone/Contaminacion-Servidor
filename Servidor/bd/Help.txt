@@ -1,0 +1,4 @@
+Para reiniciar el contador a 0 del sqlite:
+
+
+update sqlite_sequence set seq=0 where name = 'Usuarios';
