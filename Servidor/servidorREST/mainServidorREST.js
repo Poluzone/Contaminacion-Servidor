@@ -25,7 +25,7 @@ function cargarLogica(fichero) {
 // main()
 // .....................................................................
 async function main() {
-  var laLogica = await cargarLogica("../bd/datos.bd")
+  var laLogica = await cargarLogica("../bd/datos.db")
   // creo el servidor
   var servidorExpress = express()
   // para poder acceder a la carga de la petición http
