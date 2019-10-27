@@ -76,7 +76,7 @@ async  GetUsuarioPorEmail(email) {
   insertarUsuario(datos) {
     var textoSQL = "insert into Usuarios values( $IdUsuario,$Email ,$Password , $Telefono )";
     var valoresParaSQL = {
-      $IdUsuario: datos.IdUsuario,
+      $IdUsuario: null,
       $Email: datos.email,
       $Password: datos.password,
       $Telefono: datos.telefono
