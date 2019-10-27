@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<title>Titulo de la web| Menos de 55 caracteres</title>
+<title>Login</title>
 <meta charset="utf-8" />
-<script type="text/javascript" src="../ux/js/proxy.js"></script>
+<script type="text/javascript" src="../js/PROXY.js"></script>
 <script>
 
   var proxy = new Proxy();
@@ -11,11 +11,11 @@
 
   function InsertarUsuario(){
 
-  var dato= document.getElementById('emailR').value;
-  var fecha= document.getElementById('passR').value;
-  var posicion= document.getElementById('telR').value;
+  var email= document.getElementById('emailR').value;
+  var pass= document.getElementById('passR').value;
+  var tel= document.getElementById('telR').value;
 
-  proxy.insertarUsuario(dato,fecha,posicion);
+  proxy.insertarUsuarioP(email,pass,tel);
 
   }
 

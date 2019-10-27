@@ -68,6 +68,23 @@ module.exports.cargar = function(servidorExpress, laLogica) {
     var dir = path.resolve("../ux/html");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
+
+  servidorExpress.get('/ux/js/:archivo', function(peticion, respuesta) {
+    console.log(" JS:" + peticion.params.archivo);
+    var dir = path.resolve("../ux/js");
+    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+  });
+  servidorExpress.get('/ux/css/:archivo', function(peticion, respuesta) {
+    console.log(" CSS:" + peticion.params.archivo);
+    var dir = path.resolve("../ux/css");
+    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+  });
+
+  servidorExpress.get('/ux/images/:archivo', function(peticion, respuesta) {
+    console.log(" IMAGES:" + peticion.params.archivo);
+    var dir = path.resolve("../ux/images");
+    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+  });
 } // cargar()
 // .....................................................................
 // .....................................................................

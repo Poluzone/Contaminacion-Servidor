@@ -1,5 +1,4 @@
-
-const IP_PUERTO="http://localhost:8080"
+const IP_PUERTO="http://localhost:8080";
 
 
 class Proxy {
@@ -22,6 +21,21 @@ class Proxy {
       })
     }
 
+    async insertarUsuarioP( email, hash, tel ){
+          var data = { Email: email, Password: hash , Telefono: tel};
+
+          fetch(IP_PUERTO+"/insertarUsuario", {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(data), // data can be `string` or {object}!
+          headers:{
+             'User-Agent' : 'jordi', 'Content-Type' : 'application/json'
+          }
+        }).then( (res) =>{
+          console.log(data)
+          console.log(res)
+        })
+      }
+
     async  GetSoloMedidasPR(){
 
       var myInit = { method: 'GET',
@@ -41,4 +55,6 @@ class Proxy {
         console.log(data);
 
       })}
+
+
 }

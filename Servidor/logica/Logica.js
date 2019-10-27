@@ -48,7 +48,7 @@ module.exports = class Logica {
   }
 
   async GetHashPorEmail(email) {
-    var textoSQL = "select Usuarios.Password from Usuarios where Email = $email ";
+  var textoSQL = "select Password from Usuarios where Email = $email ";
     var valoresParaSQL = {
       $email: email
     };
@@ -77,9 +77,9 @@ async  GetUsuarioPorEmail(email) {
     var textoSQL = "insert into Usuarios values( $IdUsuario,$Email ,$Password , $Telefono )";
     var valoresParaSQL = {
       $IdUsuario: null,
-      $Email: datos.email,
-      $Password: datos.password,
-      $Telefono: datos.telefono
+      $Email: datos.Email,
+      $Password: datos.Password,
+      $Telefono: datos.Telefono
     };
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
