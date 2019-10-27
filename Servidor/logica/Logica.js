@@ -82,7 +82,7 @@ async  GetUsuarioPorEmail(email) {
       $Telefono: datos.telefono
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
