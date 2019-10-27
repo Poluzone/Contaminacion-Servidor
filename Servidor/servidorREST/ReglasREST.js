@@ -40,6 +40,30 @@ module.exports.cargar = function(servidorExpress, laLogica) {
       respuesta.send(JSON.stringify(res))
     })
 
+    servidorExpress.get('/GetUsuarioPorEmail/:email',
+      async function(peticion, respuesta) {
+        console.log(" * GET /UsuarioPorEmail ")
+        // averiguo el dni
+        var dato = peticion.params.email
+
+        console.log(dato)
+        // llamo a la función adecuada de la lógica
+        var res = await laLogica.GetUsuarioPorEmail(dato);
+
+        console.log(res.Email);
+        console.log(res.Password);
+        console.log(res.Telefono);
+
+        // si el array de resultados no tiene una casilla ...
+        if (res.length !=1) {
+          // 404: not found
+          respuesta.status(404).send("no encontré usuario: " + dato)
+          return
+        }
+        // todo ok
+        respuesta.send(JSON.stringify(res))
+      })
+
   servidorExpress.post('/insertarMedida',
     async function(peticion, respuesta) {
       console.log(" * POST /insertarMedida")

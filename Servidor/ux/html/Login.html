@@ -7,15 +7,20 @@
 <script>
 
   var proxy = new Proxy();
-
+  
 
   function InsertarUsuario(){
 
+
+
   var email= document.getElementById('emailR').value;
   var pass= document.getElementById('passR').value;
+  var pass2= document.getElementById('RpassR').value;
   var tel= document.getElementById('telR').value;
 
-  proxy.insertarUsuarioP(email,pass,tel);
+  if(pass==pass2){
+    proxy.insertarUsuarioP(email,pass,tel);
+  }
 
   }
 

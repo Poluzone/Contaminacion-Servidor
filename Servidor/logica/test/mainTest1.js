@@ -47,4 +47,26 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     }) //it
 
 
+      it("probar GetUsuarioPorEmail",
+        async function() {
+          var datos = {
+            IdUsuario: null,
+            email: "Prueba1@hotmail.com",
+            password: "prueba1",
+            telefono: "22132"
+          }
+
+          try {
+            laLogica.insertarUsuario(datos)
+          } catch (err) {
+            error = err
+          }
+
+          var res = await laLogica.GetUsuarioPorEmail("Prueba1@hotmail.com")
+          assert.equal(res.length, 1, "¿no hay un resulado?")
+          assert.equal(res[0].Telefono, "22132", "¿no es 1234A?")
+          assert.equal(res[0].Password, "prueba1", "¿no es 1234A?")
+
+        })
+
 }) // describe
