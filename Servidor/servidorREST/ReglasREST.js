@@ -40,6 +40,30 @@ module.exports.cargar = function(servidorExpress, laLogica) {
       respuesta.send(JSON.stringify(res))
     })
 
+    servidorExpress.get('/GetUsuarioPorEmail/:email',
+      async function(peticion, respuesta) {
+        console.log(" * GET /UsuarioPorEmail ")
+        // averiguo el dni
+        var dato = peticion.params.email
+
+        console.log(dato)
+        // llamo a la función adecuada de la lógica
+        var res = await laLogica.GetUsuarioPorEmail(dato);
+
+        console.log(res.Email);
+        console.log(res.Password);
+        console.log(res.Telefono);
+
+        // si el array de resultados no tiene una casilla ...
+        if (res.length !=1) {
+          // 404: not found
+          respuesta.status(404).send("no encontré usuario: " + dato)
+          return
+        }
+        // todo ok
+        respuesta.send(JSON.stringify(res))
+      })
+
   servidorExpress.post('/insertarMedida',
     async function(peticion, respuesta) {
       console.log(" * POST /insertarMedida")
@@ -60,12 +84,30 @@ module.exports.cargar = function(servidorExpress, laLogica) {
         // supuesto procesamiento
         laLogica.insertarUsuario(datos);
 
-        respuesta.send("OK");
+        var data = { status: "ok" }
+        respuesta.send(JSON.stringify(data));
       }) // post / insertarPersona
 
   servidorExpress.get('/ux/html/:archivo', function(peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
     var dir = path.resolve("../ux/html");
+    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+  });
+
+  servidorExpress.get('/ux/js/:archivo', function(peticion, respuesta) {
+    console.log(" JS:" + peticion.params.archivo);
+    var dir = path.resolve("../ux/js");
+    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+  });
+  servidorExpress.get('/ux/css/:archivo', function(peticion, respuesta) {
+    console.log(" CSS:" + peticion.params.archivo);
+    var dir = path.resolve("../ux/css");
+    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+  });
+
+  servidorExpress.get('/ux/images/:archivo', function(peticion, respuesta) {
+    console.log(" IMAGES:" + peticion.params.archivo);
+    var dir = path.resolve("../ux/images");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
 } // cargar()
