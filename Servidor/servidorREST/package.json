@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "express": "*",
-    "request": "*"
+    "request": "*",
+    "sqlite3": "^4.1.0"
   },
   "devDependencies": {
     "mocha": "*"

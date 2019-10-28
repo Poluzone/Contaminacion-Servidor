@@ -44,7 +44,7 @@ module.exports.cargar = function(servidorExpress, laLogica) {
     async function(peticion, respuesta) {
       console.log(" * POST /insertarMedida")
       var datos = JSON.parse(peticion.body)
-
+      //console.log(datos);
       // supuesto procesamiento
 
       laLogica.insertarMedida(datos);
