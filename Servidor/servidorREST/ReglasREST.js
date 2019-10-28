@@ -84,7 +84,8 @@ module.exports.cargar = function(servidorExpress, laLogica) {
         // supuesto procesamiento
         laLogica.insertarUsuario(datos);
 
-        respuesta.send("OK");
+        var data = { status: "ok" }
+        respuesta.send(JSON.stringify(data));
       }) // post / insertarPersona
 
   servidorExpress.get('/ux/html/:archivo', function(peticion, respuesta) {
