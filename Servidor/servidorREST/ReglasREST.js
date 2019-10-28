@@ -116,17 +116,9 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
           datos.Password = hash;
 
-          laLogica.insertarUsuario(datos);
-
-          respuesta.send("OK");
-
-        } else {
-          console.log(err);
-        }
-      });
-      // supuesto procesamiento
-
-    }) // post / insertarPersona
+        var data = { status: "ok" }
+        respuesta.send(JSON.stringify(data));
+      }) // post / insertarPersona
 
   servidorExpress.get('/ux/html/:archivo', function(peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
