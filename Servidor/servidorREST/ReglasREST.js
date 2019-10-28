@@ -2,7 +2,9 @@
 // ReglasREST.js
 // .....................................................................
 const path = require('path');
-module.exports.cargar = function(servidorExpress, laLogica) {
+const saltRounds = 10;
+
+module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
   // .......................................................
   // GET /prueba
   // .......................................................
@@ -40,28 +42,56 @@ module.exports.cargar = function(servidorExpress, laLogica) {
       respuesta.send(JSON.stringify(res))
     })
 
-    servidorExpress.get('/GetUsuarioPorEmail/:email',
+  servidorExpress.get('/GetUsuarioPorEmail/:email',
+    async function(peticion, respuesta) {
+      console.log(" * GET /UsuarioPorEmail ")
+      // averiguo el dni
+      var dato = peticion.params.email
+
+      console.log(dato)
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.GetUsuarioPorEmail(dato);
+
+      console.log(res.Email);
+      console.log(res.Password);
+      console.log(res.Telefono);
+
+      // si el array de resultados no tiene una casilla ...
+      if (res.length != 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré usuario: " + dato)
+        return
+      }
+      // todo ok
+      respuesta.send(JSON.stringify(res))
+    })
+
+    servidorExpress.post('/ComprobarLogin',
       async function(peticion, respuesta) {
-        console.log(" * GET /UsuarioPorEmail ")
+        console.log(" * POST /ComprobarLogin ")
         // averiguo el dni
-        var dato = peticion.params.email
+        var dato = JSON.parse(peticion.body);
 
         console.log(dato)
         // llamo a la función adecuada de la lógica
-        var res = await laLogica.GetUsuarioPorEmail(dato);
+        var resu = await laLogica.GetUsuarioPorEmail(dato.Email);
 
-        console.log(res.Email);
-        console.log(res.Password);
-        console.log(res.Telefono);
-
-        // si el array de resultados no tiene una casilla ...
-        if (res.length !=1) {
+        if (resu.length != 1) {
           // 404: not found
           respuesta.status(404).send("no encontré usuario: " + dato)
           return
         }
-        // todo ok
-        respuesta.send(JSON.stringify(res))
+
+        bcrypt.compare(dato.Password, resu[0].Password , function(err, res) {
+          if(!err){
+                console.log(res);
+              respuesta.send(JSON.stringify(res));
+          }else {
+
+            console.log(err);
+          }
+        });
+
       })
 
   servidorExpress.post('/insertarMedida',
@@ -76,16 +106,27 @@ module.exports.cargar = function(servidorExpress, laLogica) {
       respuesta.send("OK");
     }) // post / insertarPersona
 
-    servidorExpress.post('/insertarUsuario',
-      async function(peticion, respuesta) {
-        console.log(" * POST /insertarUsuario")
-        var datos = JSON.parse(peticion.body)
+  servidorExpress.post('/insertarUsuario',
+    async function(peticion, respuesta) {
+      console.log(" * POST /insertarUsuario")
+      var datos = JSON.parse(peticion.body)
 
-        // supuesto procesamiento
-        laLogica.insertarUsuario(datos);
+      bcrypt.hash(datos.Password, saltRounds, function(err, hash) {
+        if (!err) {
 
-        respuesta.send("OK");
-      }) // post / insertarPersona
+          datos.Password = hash;
+
+          laLogica.insertarUsuario(datos);
+
+          respuesta.send("OK");
+
+        } else {
+          console.log(err);
+        }
+      });
+      // supuesto procesamiento
+
+    }) // post / insertarPersona
 
   servidorExpress.get('/ux/html/:archivo', function(peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
@@ -109,6 +150,7 @@ module.exports.cargar = function(servidorExpress, laLogica) {
     var dir = path.resolve("../ux/images");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
+
 } // cargar()
 // .....................................................................
 // .....................................................................

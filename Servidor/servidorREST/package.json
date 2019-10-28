@@ -10,6 +10,7 @@
     "test": "node ./node_modules/mocha/bin/mocha"
   },
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "express": "*",
     "request": "*"
   },

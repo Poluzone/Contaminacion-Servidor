@@ -20,6 +20,8 @@
 
       if (pass == pass2) {
         proxy.insertarUsuarioP(email, pass, tel);
+      }else {
+        console.log("error");
       }
 
     }
@@ -27,8 +29,14 @@
     function ComprobarUsuario() {
 
       var email = document.getElementById('Email').value;
+      var pass = document.getElementById('Pass').value;
 
-      proxy.ComprobacionLogin(email);
+      var data = {
+        Email: email,
+        Password: pass
+      };
+
+      proxy.ComprobacionLogin(data);
 
     }
   </script>
