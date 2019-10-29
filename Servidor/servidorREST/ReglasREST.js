@@ -57,7 +57,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       console.log(res.Telefono);
 
       // si el array de resultados no tiene una casilla ...
-      if (res.length != 1) {
+      if (res.length < 1) {
         // 404: not found
         respuesta.status(404).send("no encontré usuario: " + dato)
         return
@@ -78,17 +78,32 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
         if (resu.length != 1) {
           // 404: not found
-          respuesta.status(404).send("no encontré usuario: " + dato)
+          console.log("no encontré email: " + dato.Email);
+          respuesta.status(404).send("no encontré usuario: " + dato.Email)
           return
         }
 
-        bcrypt.compare(dato.Password, resu[0].Password , function(err, res) {
+        bcrypt.compare(dato.Email+dato.Password, resu[0].Password , function(err, res) {
           if(!err){
-                console.log(res);
-              respuesta.send(JSON.stringify(res));
+
+            var data = {
+              resu,
+              status: true,
+            };
+
+            console.log(res);
+              respuesta.send(data);
+
           }else {
 
+            var data = {
+              resu,
+              status: false
+            };
+
             console.log(err);
+            respuesta.send(data);
+
           }
         });
 
@@ -98,7 +113,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     async function(peticion, respuesta) {
       console.log(" * POST /insertarMedida")
       var datos = JSON.parse(peticion.body)
-      //console.log(datos);
+
       // supuesto procesamiento
 
       laLogica.insertarMedida(datos);
@@ -111,7 +126,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       console.log(" * POST /insertarUsuario")
       var datos = JSON.parse(peticion.body)
 
-      bcrypt.hash(datos.Password, saltRounds, function(err, hash) {
+      bcrypt.hash(datos.Email+datos.Password, saltRounds, function(err, hash) {
         if (!err) {
           datos.Password = hash;
           laLogica.insertarUsuario(datos);

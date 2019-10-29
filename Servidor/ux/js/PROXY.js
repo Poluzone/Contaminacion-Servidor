@@ -27,7 +27,7 @@ class Proxy {
     })
   }
 
-  async insertarUsuarioP(email, pass, tel) {
+  async insertarUsuario(email, pass, tel) {
 
     var data = {
       Email: email,
