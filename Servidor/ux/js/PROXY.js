@@ -1,5 +1,6 @@
 const IP_PUERTO = "http://localhost:8080";
 
+
 class Proxy {
   constructor() {
     console.log("Funciono");
@@ -30,7 +31,7 @@ class Proxy {
 
     var data = {
       Email: email,
-      Password: hash,
+      Password: pass,
       Telefono: tel
     };
 
@@ -46,38 +47,21 @@ class Proxy {
       console.log(res)
     })
 
-
   }
 
-  async ComprobacionLogin(email) {
+  async ComprobacionLogin(data) {
 
-    var resu;
 
-    var myInit = {
-      method: 'GET',
+    fetch(IP_PUERTO + "/ComprobarLogin",{
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data), // data can be `string` or {object}!
       headers: {
         'User-Agent': 'jordi',
         'Content-Type': 'application/json'
-      },
-      mode: 'cors',
-      cache: 'default'
-    };
-
-
-    fetch(IP_PUERTO + "/GetUsuarioPorEmail/" + email, myInit)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-
-        var pass = document.getElementById('Pass').value;
-        if (data[0].Password == pass) {
-          console.log("funciona");
-        } else {
-          console.log("no funciona");
-        }
-
-      })
+      }
+    }).then((res) => {
+      console.log(res)
+    })
   }
 
 }
