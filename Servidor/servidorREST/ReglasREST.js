@@ -87,17 +87,17 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
           if(!err){
 
             var data = {
-              resu,
+              Usuario: resu,
               status: true,
             };
 
-            console.log(res);
+            console.log(data.Usuario[0].Email);
               respuesta.send(data);
 
           }else {
 
             var data = {
-              resu,
+              Usuario: resu,
               status: false
             };
 
