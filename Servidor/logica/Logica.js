@@ -65,7 +65,7 @@ async GetUsuarioPorEmail(email) {
     var valoresParaSQL = {  $email: email };
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,valoresParaSQL,
-(err, res) => {
+          (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
     })
@@ -83,7 +83,7 @@ async GetUsuarioPorEmail(email) {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
-    })
+     }) 
   }
 
   borrarFilasDe(tabla) {

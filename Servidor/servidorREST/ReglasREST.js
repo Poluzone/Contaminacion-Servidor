@@ -129,9 +129,16 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       bcrypt.hash(datos.Email+datos.Password, saltRounds, function(err, hash) {
         if (!err) {
           datos.Password = hash;
-          laLogica.insertarUsuario(datos);
-          var data = { status: true }
-          respuesta.send(JSON.stringify(data));
+          
+          laLogica.insertarUsuario(datos).then(function() {
+              var data = { status: true }
+              respuesta.send(JSON.stringify(data));
+            })
+            .catch (function(err) {
+              console.log(err) 
+              var data = { status: false }
+              respuesta.send(JSON.stringify(data));
+            })
         }else {
           var data = { status: false }
           console.log(err);
