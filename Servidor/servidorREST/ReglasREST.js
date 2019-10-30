@@ -130,9 +130,10 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
         if (!err) {
           datos.Password = hash;
           laLogica.insertarUsuario(datos);
-          var data = { status: "ok" }
+          var data = { status: true }
           respuesta.send(JSON.stringify(data));
         }else {
+          var data = { status: false }
           console.log(err);
         }
       }) }); // post / insertarPersona
