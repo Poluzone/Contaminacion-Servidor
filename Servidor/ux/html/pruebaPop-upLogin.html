@@ -5,6 +5,42 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" src="../js/PROXY.js"></script>
+  <script>
+    var proxy = new Proxy();
+
+
+    function InsertarUsuario() {
+
+      var email = document.getElementById('emailR').value;
+      var pass = document.getElementById('passR').value;
+      var pass2 = document.getElementById('RpassR').value;
+      var tel = document.getElementById('telR').value;
+
+      if (pass == pass2) {
+        proxy.insertarUsuario(email, pass, tel);
+      }else {
+        console.log("error");
+      }
+
+    }
+
+    function ComprobarUsuario() {
+
+      var email = document.getElementById('email').value;
+      var pass = document.getElementById('pass').value;
+
+      var data = {
+        Email: email,
+        Password: pass
+      };
+
+      proxy.ComprobacionLogin(data);
+
+    }
+  </script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -14,10 +50,10 @@
 <div class="container">
   <h2>Small Modal</h2>
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login">Iniciar Sesión</button>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signIn">Registrarse</button>
+  <!-- Modal para login -->
+  <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -37,7 +73,42 @@
             </form>           
         </div>
         <div class="modal-footer">
-            <button onclick="ComprobarUsuario()" class="btn">Aceptar</button>  
+            <button onclick="ComprobarUsuario()" class="btn">Entrar</button>  
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal para registrarse -->
+  <div class="modal fade" id="signIn" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Registrarse</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                  <input id="passwordRepeat" type="password" class="form-control" name="passwordRepeat" placeholder="Repetir contraseña">
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                  <input id="telNum" type="text" class="form-control" name="telefono" placeholder="Telefono">
+              </div>
+            </form>           
+        </div>
+        <div class="modal-footer">
+            <button onclick="ComprobarUsuario()" class="btn">Entrar</button>  
           <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
         </div>
       </div>
