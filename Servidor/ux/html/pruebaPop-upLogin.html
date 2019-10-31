@@ -42,13 +42,15 @@
   </script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+  <link rel="stylesheet" href="../css/estilos.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-  <h2>Small Modal</h2>
+  <h2 class="fuente">Poluzone</h2>
   <!-- Trigger the modal with a button -->
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login">Iniciar Sesión</button>
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signIn">Registrarse</button>
@@ -64,12 +66,13 @@
             <form class="form-horizontal">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                    <input id="email" type="text" class="form-control fuente" name="email" placeholder="Email">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                    <input id="password" type="password" class="form-control fuente" name="password" placeholder="Password">
                 </div>
+                <p>¿No tienes cuenta?</p><button type="button" class="btn btn-link fuente">Registrate</button>
             </form>           
         </div>
         <div class="modal-footer">
