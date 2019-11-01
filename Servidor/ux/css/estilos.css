@@ -1,7 +1,49 @@
 /* Clase para los tipos de fuentes */
-.fuente {
+.nunito {
     font-family: 'Nunito';
 }
-.fuente1 {
-    font-family: 'Courier New', Courier, monospace;
+.sizeS {
+    font-size:12px;
+}
+.sizeM {
+    font-size:22px;
+}
+.sizeL {
+    font-size:32px;
+}
+.fondoOscuro {
+    background-color: #222831;
+}
+.fondoGris {
+    background-color: #393E46;
+}
+.fondoNaranja {
+    background-color: #F88E52;
+}
+.fondoBlanco {
+    background-color: #ffffff;
+}
+.blanco {
+    color: #ffffff;
+}
+.naranja {
+    color: #F88E52;
+}
+.azulOscuro {
+    color: #222831;
+}
+.grisAzulado{
+    color: #393E46;
+}
+.centro{
+    display: flex;
+    justify-content: center;
+}
+.left{
+    display: flex;
+    justify-content: left;
+}
+.right{
+    display: flex;
+    justify-content: right;
 }
