@@ -69,12 +69,12 @@
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                     <input id="email" type="text" class="form-control nunito sizeS" name="email" placeholder="Email">
-                </div>
+                </div></br>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                     <input id="password" type="password" class="form-control nunito sizeS" name="password" placeholder="Password">
-                </div>
-            </form></br>
+                </div></br>
+            </form>
             <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" type="button" data-toggle="modal" data-target="#recoverPass"> Recuperar </a></p>   
             <p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" type="button" data-toggle="modal" data-target="#signIn"> Registrarse </a></p>
             <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->        
@@ -91,32 +91,36 @@
   <div class="modal fade" id="signIn" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Registrarse</h4>
+        <div class="modal-header fondoOscuro">
+          <button type="button" class="close blanco" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title nunito blanco sizeM">Registrarse</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body centrado">
             <form class="form-horizontal">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    <input id="email" type="text" class="form-control" name="email" placeholder="Email">
-                </div>
+                    <input id="email" type="text" class="form-control nunito sizeS" name="email" placeholder="Email">
+                </div></br>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña">
-                </div>
+                    <input id="password" type="password" class="form-control nunito sizeS" name="password" placeholder="Contraseña">
+                </div></br>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                  <input id="passwordRepeat" type="password" class="form-control" name="passwordRepeat" placeholder="Repetir contraseña">
-                </div>
+                  <input id="passwordRepeat" type="password" class="form-control nunito sizeS" name="passwordRepeat" placeholder="Repetir contraseña">
+                </div></br>
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                  <input id="telNum" type="text" class="form-control" name="telefono" placeholder="Telefono">
-              </div>
+                  <input id="telNum" type="text" class="form-control nunito sizeS" name="telefono" placeholder="Telefono">
+                </div></br>
+                <div class="input-group">
+                    <label class="sizeXS centrado"><input id="condiciones" type="checkbox" name="condiciones" style="margin: 6px;"> Acepto los Términos de uso y confirmo que he leído y comprendido la Política de privacidad.
+                      <a href="http://localhost:8080/ux/pdf/terminos.pdf">Politicas de privacidad</a></label>
+                </div>
             </form>           
         </div>
-        <div class="modal-footer">
-            <button onclick="ComprobarUsuario()" class="btn">Entrar</button>  
+        <div class="modal-footer centrado">
+            <button onclick="ComprobarUsuario()" class="btn active nunito fondoNaranja blanco">Registrarse</button>  
           <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
         </div>
       </div>
