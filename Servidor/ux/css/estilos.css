@@ -35,15 +35,17 @@
 .grisAzulado{
     color: #393E46;
 }
-.centro{
+
+/*Podemos organizar los elementos de un div, y/o etiqueta que queramos*/
+.centrado{
     display: flex;
     justify-content: center;
 }
-.left{
+.izquierda{
     display: flex;
     justify-content: left;
 }
-.right{
+.derecha{
     display: flex;
     justify-content: right;
 }
