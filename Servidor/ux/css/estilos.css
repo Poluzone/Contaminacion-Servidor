@@ -52,3 +52,13 @@
     display: flex;
     justify-content: right;
 }
+
+/*Para las formas de algunas imagenes*/
+/*Este estilo es utilizado en la imagen del perfil*/
+.redonda {
+    width:130px;
+    height:130px;
+    background-color: #222831;
+    border-radius:160px;
+    border:5px solid #222831;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!----------------------------------------------------------------------------->
+  <!-- Este fichero es la página del perfil del usuario -->
+  <!----------------------------------------------------------------------------->
+  <script type="text/javascript" src="../js/PROXY.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+  <link rel="stylesheet" href="../css/estilos.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body class="fondoOscuro">
+  <div class="centrado">
+      <img class="redonda" src="../images/perfil.png">
+  </div></br>
+  <div class="centrado">
+    <form class="form-horizontal">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input id="email" type="text" class="form-control nunito sizeS" name="email" placeholder="Email">
+        </div></br>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="password" type="password" class="form-control nunito sizeS" name="password" placeholder="Contraseña">
+        </div></br>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+          <input id="passwordRepeat" type="password" class="form-control nunito sizeS" name="passwordRepeat" placeholder="Repetir contraseña">
+        </div></br>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+          <input id="telNum" type="text" class="form-control nunito sizeS" name="telefono" placeholder="Telefono">
+        </div></br>
+    </form>           
+ </div>
+ <div class="centrado">
+    <button onclick="ComprobarUsuario()" class="btn active nunito fondoNaranja blanco">Guardar cambios</button>  
+ </div>
+</body>
+<footer class="">
+    <!--Author: Equipo-3 GTI-->
+</footer>
+</html>
