@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!----------------------------------------------------------------------------->
-  <!-- Este fichero es la página principal, página que se visualiza una vez el login es aceptado -->
+  <!-- Fichero que es abierto al comprobar que el usuario es correcto -->
   <!----------------------------------------------------------------------------->
   <script type="text/javascript" src="../js/PROXY.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -13,9 +13,34 @@
   <link rel="stylesheet" href="../css/estilos.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- iconos Material Design -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button"
+                id="dropdownMenu1" data-toggle="dropdown">
+                <i class="material-icons">
+                    menu
+                    </i>
+        </button>
+      
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">Perfil</a>
+          </li>
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">Mapa</a>
+          </li>
+          <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">Configuración</a>
+          </li>
+          <li role="presentation" class="divider"></li>
+          <li role="presentation">
+            <a role="menuitem" class="sizeS" tabindex="-1" href="#"><i class="material-icons">power_settings_new</i>Cerrar Sesión</a>
+          </li>
+        </ul>
+      </div>
 </body>
 <footer class="">
     <!--Author: Equipo-3 GTI-->

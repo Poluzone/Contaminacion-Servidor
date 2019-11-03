@@ -1,61 +1,272 @@
 
-
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<title>Titulo de la web| Menos de 55 caracteres</title>
-<meta charset="utf-8" />
-<script type="text/javascript" src="../ux/js/proxy.js"></script>
-<script>
+<html lang="en">
+  <head>
+     <!--  css de bootsrap  -->
+    <link rel="stylesheet" href="app/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    
+    <!-- iconos Material Design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+     
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Poluzone | Home </title>
 
-var proxy = new Proxy();
+    <!-- CSS de Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+    <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+        <!------------------------------------------------ Sección 1 -------------------------------------------------------->
+        
+       <section class="section_1 container-fluid p-0">
+           <div class="d-flex-column">
+               <div>
+                   <header>
+                       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
 
+                         <a class="navbar-brand nunito" href="#">Poluzone</a>
 
-function InsertDato(){
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 
-var dato= document.getElementById('datoP').value;
-var fecha= document.getElementById('fechaP').value;
-var posicion= document.getElementById('posiP').value;
+                         
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 
-proxy.insertarMedida(dato,fecha,posicion);
+                         <div class="navbar-nav mr-auto"></div>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li class="nav-item active">
+            <a class="nav-link" href="#">Inicio<span class="sr-only">(current)</span></a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Iniciar sesión</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Nuestra app</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Tutoriales</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Acerca de nosotros</a>
+          </li>
+            </ul>
+                         </div>
+                           </div>
+                        </nav>
+                   </header>
+               </div>
+               <div class="container-fluid text-center heading">
+                   <h1 class="ha1 nunito">¿Qué es Poluzone?</h1>
+                   <p class="p nunito">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam modi quidem accusantium voluptatum in iste. Hic voluptas magni ab placeat ducimus maxime inventore, deleniti mollitia voluptates, perferendis itaque laudantium. Enim!
+                   </p>
+                   <button type="button" class="btn btn-primary nunito bordeNaranja fondoNaranja">Regístrate</button>
+               </div>
+           </div>
+       </section>
+       
+        <!------------------------------------------------ /Sección 1 -------------------------------------------------------->
+        
+        
+        
 
-}
+   
+        <!------------------------------------------------ Sección 2 -------------------------------------------------------->
+        
+        <section class="section_2 container-fluid">
+               <div class="d-flex flex-column text-center">
+                <div>
+                    <h1 class="nunito">
+                        Whatever
+                    </h1>
+                        <p class="p nunito">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo laudantium quam est quia aut culpa quaerat sapiente, reprehenderit dolor doloremque commodi, magnam eos iste id illo. Aliquid necessitatibus sunt amet.
+                        </p>
+                </div>
+                
+                    <div class="d-sm-flex">
+                        <div class="flex-fill">
+                            <div class="progress-one"></div>
+                                <div class="caption">60%</div>
+                                    <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar progress-curcle" 
+                                        role="progressbar"                                            
+                                        style="width: 60%"                                              
+                                        aria-valuenow="100"                                              
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        </div>
+                                        </div>
+                                        <p class="pro-details">
+                                            <i class="material-icons">question_answer
+                                            </i>¿Qué hacemos?
+                                        </p>
+                            <div class="progress-two"></div>  
+                                    <div class="caption">85%</div>
+                                        <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar progress-curcle" 
+                                         role="progressbar"                                            
+                                        style="width: 85%"                                              
+                                        aria-valuenow="100"                                              
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        </div>
+                                        </div>
+                                        <p class="pro-details">
+                                           <i class="material-icons">android
+                                           </i>¿Cómo lo hacemos?
+                                        </p>
+                                        <div class="progress-three"></div>
+                                        <div class="caption">90%</div>
+                                        <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar progress-curcle" 
+                                         role="progressbar"                                            
+                                        style="width: 90%"                                              
+                                        aria-valuenow="100"                                              
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        </div>
+                                        </div>
+                                        <p class="prodetails">
+                                            <i class="material-icons">get_app
+                                            </i>¿Cuándo empiezo?
+                                        </p>
+                                </div>
+                            <div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        
+        <!------------------------------------------------ /Sección 2 -------------------------------------------------------->
+        
+        
+        
+        
+        
+        
+        <!------------------------------------------------ Sección 3 -------------------------------------------------------->
+        
+        
+        
+        <section class="section_3 container-fluid p-0">
+            <div class="d-flex flex-column text-center projects">
+                <div>
+                    <h1>Proyecto Poluzone</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut sit laboriosam consequatur aspernatur. Illum nisi temporibus distinctio vero obcaecati tempora, animi perspiciatis impedit adipisci accusamus, unde voluptas deleniti laborum iure!
+                    </p>
+                </div>
+                <div class="images">
+                    <div class="d-sm-flex flex-row">
+                        <div class="flex-fill">
+                            <img src="../images/imagen_ciudad.jpg" alt="">
+                        </div>
+                          <div class="flex-fill">
+                            <img src="../images/imagen_coche_policia.jpg" alt="">
+                        </div>
+                          <div class="flex-fill">
+                            <img src="../images/imagen_mobile.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        
+        
+        
+        
+        <!------------------------------------------------ /Sección 3 -------------------------------------------------------->
+        
+        
+        
+        <!------------------------------------------------ Sección 4 -------------------------------------------------------->
+          
+          <section class="section_4 container-fluid p-0">
+              <div class="d-flex flex-column text-center services">
+                 <div>
+                    <h1 class="nunito">Servicios</h1>     
+                 </div>
+                 <div>
+                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque esse explicabo nemo, illum soluta dolores quasi, laudantium atque, fugiat magnam deleniti id dicta corporis veritatis eum consequuntur provident voluptate! Earum.</p>
+                 </div>
+                 <div class="d-sm-flex flex-row">
+                     <div class="div cards">
+                        <i class="material-icons">map</i>
+                        <h3 class="nunito">Mapa de mediciones</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et error aut distinctio obcaecati nihil ipsum rerum voluptates. Quasi, dolorum doloremque distinctio impedit molestias perspiciatis quos illum porro eius facilis cum.</p>
+                     </div>
+                      <div class="div cards">
+                        <i class="material-icons">phone_android</i>
+                        <h3 class="nunito">Aplicación móvil</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et error aut distinctio obcaecati nihil ipsum rerum voluptates. Quasi, dolorum doloremque distinctio impedit molestias perspiciatis quos illum porro eius facilis cum.</p>
+                     </div>
+                      <div class="div cards">
+                        <i class="material-icons">bluetooth</i>
+                        <h3 class="nunito">Sensores BLE</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et error aut distinctio obcaecati nihil ipsum rerum voluptates. Quasi, dolorum doloremque distinctio impedit molestias perspiciatis quos illum porro eius facilis cum.</p>
+                     </div>
+                 </div>     
+              </div>
+          </section>
+          
+          
+        <!------------------------------------------------ /Sección 4 -------------------------------------------------------->
+        
+        
+        
+        
+        
+        
+        <!------------------------------------------------ Sección 5 -------------------------------------------------------->
+        
+        
+        
+        <section class="container-fluid p-0 section_5">
+            <div class="Team d-flex flex-column text-center">
+                <div>
+                    <h1 class="nunito">Equipo</h1>
+                </div>
+                <div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit sint hic, corporis perferendis cum quas molestiae debitis minus assumenda, mollitia similique modi cumque laudantium repellendus.</p>
+                </div>
+                <div class="d-sm-flex-row">
+                    <div class="member">
+                        <img src="../images/imagen_equipo.jpg">
+                        <div class="details">
+                            <h4 class="nunito">Equipo 3</h4>
+                            <h6> Proyecto 3A </h6>
+                            <p>Aplicaciones de Biometría y Medio Ambiente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        <!------------------------------------------------ /Sección 5 -------------------------------------------------------->
 
-function GETM(){
+    <!-- Librería jQuery requerida por los plugins de JavaScript -->
+    <script src="http://code.jquery.com/jquery.js"></script>
 
-proxy.GetSoloMedidasPR();
-
-}
-
-</script>
-</head>
-
-<body>
-
-  <h1>Insertar Medidas</h1>
-    <div>
-      Dato:<input type="text" id="datoP"><br>
-      Fecha:<input type="text" id="fechaP"><br>
-      Posición:<input type="text" id="posiP"><br>
-
-      <button onclick="InsertDato()">Aceptar</button>
-    </div>
-
-
-<h1>Get Medidas</h1>
-        <div>
-            <p>Pulsa click derecho en el raton sobre la página,
-               clica en Inspeccionar y luego en las pestañas pulsa Console.</p>
-
-      <button onclick="GETM()">Aceptar</button>
-    </div>
-
-
-    <footer>
-        Creado por Josep ahora mismo
-    </footer>
+    <!-- Todos los plugins JavaScript de Bootstrap (también puedes
+         incluir archivos JavaScript individuales de los únicos
+         plugins que utilices) -->
+    <script src="js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
+  </body>
 </html>
