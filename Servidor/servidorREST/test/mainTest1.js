@@ -45,4 +45,17 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     ) // .get
   }) // it
 
+
+  it( "GET /GETultimaMedida ", function( hecho ) {
+    request.get(
+      { url : IP_PUERTO+"/GETultimaMedida", headers : { 'User-Agent' : 'jordi' }},
+      function( err, respuesta, carga ) {
+        var json = JSON.parse(carga);
+        assert.equal( err, null, "¿ha habido un error?" )
+        assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
+        hecho()
+      } // callback()
+    ) // .get
+  }) // it
+
 }) // describe

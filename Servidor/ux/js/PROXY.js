@@ -74,4 +74,31 @@ class Proxy {
   });
   }
 
+  /**
+   * GETultimaMedida()
+   */
+  async GETultimaMedida() {
+
+    fetch(IP_PUERTO + "/GETultimaMedida",{
+      method: 'POST', // or 'PUT'
+      /*body: JSON.stringify(data), // data can be `string` or {object}!*/
+      headers: {
+        'User-Agent': 'jordi',
+        'Content-Type': 'application/json'
+      }
+    }).then(function(response) {
+    return response.json();
+  })
+  .then(function(datos) {
+    /*if(datos.status == true){
+      setCookie("username",datos.Usuario[0].Email);
+      console.log("Iniciar sesion correcto y se han creado los cookies");
+      checkCookie();
+    }else{
+      console.log("No existe o no has puesto bien los datos");
+    }*/
+    console.log(datos);
+  });
+  }
+
 }

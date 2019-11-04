@@ -42,6 +42,32 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
+    /**
+     * /GETultimaMedida
+     * 
+     * Recoge la última médida -> devuelve un JSON con el dato, la fecha y la posición
+     */
+    servidorExpress.get('/GETultimaMedida',
+    async function(peticion, respuesta) {
+      console.log(" * GET /ultimaMedida ")
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.GetLaUltimaMedida();
+
+      console.log(res[0].Valor);
+      console.log(res[0].Tiempo);
+      console.log(res[0].Latitud);
+      console.log(res[0].Longitud);
+
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 0) {
+        // 404: not found
+        respuesta.status(404).send("no encontré medidas: " + dato)
+        return
+      }
+      // todo ok
+      respuesta.send(JSON.stringify(res))
+    })
+
   servidorExpress.get('/GetUsuarioPorEmail/:email',
     async function(peticion, respuesta) {
       console.log(" * GET /UsuarioPorEmail ")

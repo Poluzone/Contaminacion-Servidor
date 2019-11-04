@@ -23,8 +23,18 @@
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+    <script type="text/javascript" src="../js/PROXY.js"></script>
+    <script>
+        var proxy = new Proxy();
+
+        function visualizarMedida()
+        {
+            proxy.GETultimaMedida();
+        }
+    </script>
 </head>
 <body>
+    <script>visualizarMedida();</script>
   <section class="section_1 container-fluid p-0">
     <div class="d-flex-column">
           <header>
@@ -65,8 +75,22 @@
           </header>
     </div>
   </section>
-  <section>
-      <div class="d-flex-column">
+  <section class="container-fluid">
+      <div class="card col-sm-4">
+
+           <!-- <div class="card-header">
+
+            </div> -->
+
+            <div class="card-body">
+                <label id="ultimaMedida">
+
+                </label>
+            </div>
+
+            <!-- <div class="card-footer">
+
+            </div> -->
 
       </div>
   </section>
