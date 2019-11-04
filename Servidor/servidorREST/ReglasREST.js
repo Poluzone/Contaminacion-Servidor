@@ -77,12 +77,17 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
      * 
      * Recoge la última médida -> devuelve un JSON con el dato, la fecha y la posición
      */
-    servidorExpress.get('/GETultimaMedida',
+    servidorExpress.post('/GETultimaMedida',
     async function(peticion, respuesta) {
-      console.log(" * GET /ultimaMedida ")
-      
+      console.log(" * POST /ultimaMedida ")
+
+     // averiguo el dni
+     var dato = JSON.parse(peticion.body);
+
+     console.log(dato);
+
       // llamo a la función adecuada de la lógica
-      var res = await laLogica.GetLaUltimaMedida();
+      var res = await laLogica.GetLaUltimaMedida(dato);
 
       console.log(res[0].Valor);
       console.log(res[0].Tiempo);

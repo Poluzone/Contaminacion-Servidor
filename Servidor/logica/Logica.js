@@ -37,8 +37,8 @@ module.exports = class Logica {
     })
   }
 
-  async GetLaUltimaMedida() {
-    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario=15 ORDER BY IdMedida DESC LIMIT 0, 1";
+  async GetLaUltimaMedida(userId) {
+    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {

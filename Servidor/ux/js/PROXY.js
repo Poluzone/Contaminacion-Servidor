@@ -77,11 +77,11 @@ class Proxy {
   /**
    * GETultimaMedida()
    */
-  async GETultimaMedida() {
+  async GETultimaMedida(userId, callback) {
 
     fetch(IP_PUERTO + "/GETultimaMedida",{
       method: 'POST', // or 'PUT'
-      //body: JSON.stringify(user), // data can be `string` or {object}!
+      body: JSON.stringify(userId), // data can be `string` or {object}!
       headers: {
         'User-Agent': 'jordi',
         'Content-Type': 'application/json'
@@ -90,14 +90,12 @@ class Proxy {
     return response.json();
   })
   .then(function(datos) {
-    /*if(datos.status == true){
-      setCookie("username",datos.Usuario[0].Email);
-      console.log("Iniciar sesion correcto y se han creado los cookies");
-      checkCookie();
+    if(datos != undefined){
+      console.log("Tenemos la última medida");
     }else{
       console.log("No existe o no has puesto bien los datos");
-    }*/
-    console.log(datos);
+    }
+    callback(datos);
   });
   }
 

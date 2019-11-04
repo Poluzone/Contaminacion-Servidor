@@ -47,13 +47,31 @@
             //Recogemos el usuario actual
             var username = getCookie("username");
             console.log(username);
+            var userId;
+            var ultimaMedida;
             //Recogemos su id
             proxy.GETidUsuario(username, function(datos){
                 console.log(datos);
+                console.log("El id del usuario es: "+datos);
+
+                    //Le pasamos el id del usuario para recoger su ultima medida
+                proxy.GETultimaMedida(datos, function(dato){
+                    console.log(dato);
+                    console.log("La ultima medida es: "+ dato);
+                    var valor = dato[0].Valor;
+                    var latitud = dato[0].Latitud;
+                    var longitud = dato[0].Longitud;
+                    var tiempo = dato[0].Tiempo;
+                    
+                    document.getElementById("valor").textContent=valor;
+                    document.getElementById("tiempo").textContent=tiempo;
+                    document.getElementById("latitud").textContent=latitud;
+                    document.getElementById("longitud").textContent=longitud;
+
+                });
+                
             });
-            //console.log("El id del usuario es: "+userId);
-            //Le pasamos el id del usuario para recoger su ultima medida
-            //proxy.GETultimaMedida(userId);
+            
         }
         
         visualizarMedida();
@@ -101,6 +119,29 @@
           </header>
     </div>
   </section>
+  <section>
+      <!-- Control the column width, and how they should appear on different devices -->
+    <div class="row">
+        <div class="card col-sm-4">
+            <label id="valor"></label>
+            <label id="tiempo"></label>
+            <label id="latitud"></label>
+            <label id="longitud"></label>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="card col-sm-4">
+
+        </div>
+        <div class="card col-sm-4">
+
+        </div>
+        <div class="card col-sm-4">
+
+        </div>
+    </div>   -->
+  </section>
+
        <!-- Todos los plugins JavaScript de Bootstrap (también puedes
         incluir archivos JavaScript individuales de los únicos
       plugins que utilices) -->
