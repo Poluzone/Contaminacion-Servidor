@@ -34,6 +34,20 @@
                 proxy.ComprobacionLogin(data);
           
               }
+              
+              var url = "http://localhost:8080/ux/html/principal.html";
+              
+              function abrirPagina(url)
+              {
+                var a = document.createElement("a");
+                a.href = url;
+                a.click();
+              }
+
+              window.onload=function(){
+                    abrirEnPestana(url);
+                }
+
             </script>
         <!--  css de bootsrap  -->
         <link rel="stylesheet" href="app/css/bootstrap.min.css">
@@ -89,7 +103,7 @@
                 </div>
                 <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
                 <div class="modal-footer d-flex justify-content-center">
-                    <button onclick="ComprobarUsuario()" class="btn btn-primary nunito fondoNaranja bordeNaranja">Entrar</button>  
+                    <button onclick="ComprobarUsuario(); abrirPagina(url);" class="btn btn-primary nunito fondoNaranja bordeNaranja">Entrar</button>  
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                 </div>
             </div>
@@ -129,7 +143,7 @@
                     </form>           
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button onclick="ComprobarUsuario()" class="btn btn-primary nunito fondoNaranja blanco">Registrarse</button>  
+                    <button onclick="insertarUsuario()" class="btn btn-primary nunito fondoNaranja blanco">Registrarse</button>  
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                 </div>
             </div>

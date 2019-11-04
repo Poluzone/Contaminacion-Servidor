@@ -52,7 +52,7 @@
 }
 
 .bordeGris{
-    border-color: #393E46; 
+    border-color: #393E46 !important; 
 }
 
 .bordeNaranja{
@@ -95,9 +95,9 @@
 .redonda {
     width:130px;
     height:130px;
-    background-color: #222831;
+    background-color: #393E46;
     border-radius:160px;
-    border:5px solid #222831;
+    border:5px solid #393E46;
 }
 /*Para el texto*/ 
 .alinear{
