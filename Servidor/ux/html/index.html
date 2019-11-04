@@ -29,10 +29,14 @@
 
     function checkCookie() {
       var user = getCookie("username");
+      var url = "http://localhost:8080/ux/html/principal.html";
       if (user != "") {
         alert("Los cookies funcionan estimado: " + user);
-      }
-      }
+        var a = document.createElement("a");
+                a.href = url;
+                a.click();
+        }
+    }
           
           
               function insertarUsuario() {
@@ -91,6 +95,7 @@
 <![endif]-->
     </head>
     <body>
+        <body onload="checkCookie()">
         <!-- POP UPS -->
         <!-- Modal para login -->
         <div class="modal fade" id="login">
