@@ -62,10 +62,6 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
       console.log(res[0].IdUsuario);
       var idUser = res[0].IdUsuario;
-      /*console.log(res[0].IdUsuario);
-      console.log(res[0].Email);
-      console.log(res[0].Telefono);*/
-
       // si el array de resultados no tiene una casilla ...
       if (res.length < 0) {
         // 404: not found

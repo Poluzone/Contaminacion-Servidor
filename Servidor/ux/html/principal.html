@@ -48,10 +48,12 @@
             var username = getCookie("username");
             console.log(username);
             //Recogemos su id
-            var userId = proxy.GETidUsuario(username);
-            console.log(userId);
+            proxy.GETidUsuario(username, function(datos){
+                console.log(datos);
+            });
+            //console.log("El id del usuario es: "+userId);
             //Le pasamos el id del usuario para recoger su ultima medida
-            proxy.GETultimaMedida(userId);
+            //proxy.GETultimaMedida(userId);
         }
         
         visualizarMedida();

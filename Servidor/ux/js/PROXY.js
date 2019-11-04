@@ -104,7 +104,7 @@ class Proxy {
     /**
    * GetIdUsuario()
    */
-  GETidUsuario(username) {
+  async GETidUsuario(username,callback) {
 
     fetch(IP_PUERTO + "/GETidUsuario",{
       method: 'POST', // or 'PUT'
@@ -118,13 +118,13 @@ class Proxy {
     return response.json();
   })
   .then(function(datos) {
-    if(datos.status == true){
-      console.log("Iniciar sesion correcto y se han creado los cookies");
-      //console.log(datos);
+    if(datos != undefined){
+      console.log("------------PROXY------------");
+      console.log("El id del usuario es: "+datos);
     }else{
       console.log("No existe o no has puesto bien los datos");
     }
-      //console.log(datos);
+      callback(datos);
   });
   }
 }
