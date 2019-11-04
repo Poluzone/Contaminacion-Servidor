@@ -1,3 +1,7 @@
+/*Author: Matthew Conde Oltra*/
+
+
+
 /* Clase para los tipos de fuentes */
 .nunito {
     font-family: 'Nunito';
@@ -61,4 +65,19 @@
     background-color: #222831;
     border-radius:160px;
     border:5px solid #222831;
+}
+/*Para el texto*/ 
+.alinear{
+    display:flex;
+    justify-content: center;
+    margin: auto;
+    padding: auto;
+}
+
+.inlineBlock {
+    display: flex;
+    display: inline;
+    justify-content: center;
+    margin: auto;
+    padding: auto;
 }

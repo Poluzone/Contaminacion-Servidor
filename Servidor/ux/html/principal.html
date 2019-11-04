@@ -17,27 +17,34 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button"
+    <div class="dropdown fondoOscuro">
+        <button class="btn dropdown-toggle fondoOscuro" type="button"
                 id="dropdownMenu1" data-toggle="dropdown">
-                <i class="material-icons">
+                <i class="material-icons blanco">
                     menu
                     </i>
         </button>
       
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <ul class="dropdown-menu fondoOscuro" role="menu" aria-labelledby="dropdownMenu1">
           <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">Perfil</a>
+            <a role="menuitem" tabindex="-1" href="#"><p class="blanco sizeS nunito">Perfil</p></a>
           </li>
           <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">Mapa</a>
+            <a role="menuitem" class="sizeS" tabindex="-1" href="#">
+              <i class="material-icons blanco">
+                map
+              </i>
+              <p class="blanco sizeS nunito inlineBlock" style="vertical-align: super;">  Mapa
+              </p>
+            </a>
           </li>
           <li role="presentation">
-            <a role="menuitem" tabindex="-1" href="#">Configuración</a>
+            <a role="menuitem" tabindex="-1" href="#"><p class="blanco sizeS nunito">Configuración</p></a>
           </li>
           <li role="presentation" class="divider"></li>
           <li role="presentation">
-            <a role="menuitem" class="sizeS" tabindex="-1" href="#"><i class="material-icons">power_settings_new</i>Cerrar Sesión</a>
+            <a role="menuitem" class="sizeS" tabindex="-1" href="#"><i class="material-icons blanco">power_settings_new</i><p class="blanco sizeS nunito inlineBlock" style="vertical-align: super;" >  Cerrar Sesión</p></a>
+            
           </li>
         </ul>
       </div>
