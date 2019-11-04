@@ -92,26 +92,34 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   }) // it
 
 
-  it( "GET /GETultimaMedida ", function( hecho ) {
-    request.get(
-      { url : IP_PUERTO+"/GETultimaMedida", headers : { 'User-Agent' : 'jordi' }},
+  it( "POST /GETultimaMedida ", function( hecho ) {
+    var dato = 15;
+    request.post(
+      { url : IP_PUERTO+"/GETultimaMedida",
+       headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
+       body : JSON.stringify(dato)
+      },
       function( err, respuesta, carga ) {
         var json = JSON.parse(carga);
-        assert.equal( err, null, "¿ha habido un error?" )
-        assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
-        hecho()
+        assert.equal( err, null, "¿ha habido un error?" );
+        assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" );
+        hecho();
       } // callback()
     ) // .get
   }) // it
 
-  it( "GET /GETidUsuario", function( hecho ) {
-    request.get(
-      { url : IP_PUERTO+"/GETidUsuario", headers : { 'User-Agent' : 'jordi' }},
+  it( "POST /GETidUsuario ", function( hecho ) {
+    var dato = "mat@gmail.com";
+    request.post(
+      { url : IP_PUERTO+"/GETidUsuario", 
+      headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json'},
+      body : JSON.stringify(dato)
+    },
       function( err, respuesta, carga ) {
         var json = JSON.parse(carga);
-        assert.equal( err, null, "¿ha habido un error?" )
-        assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
-        hecho()
+        assert.equal( err, null, "¿ha habido un error?" );
+        assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" );
+        hecho();
       } // callback()
     ) // .get
   }) // it

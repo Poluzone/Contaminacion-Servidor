@@ -96,7 +96,17 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
 
-      var res = await laLogica.GetLaUltimaMedida();
+      var res = await laLogica.GetLaUltimaMedida(15);
+      assert.equal(res.length, 1, "¿no hay un resulado?")
+
+
+    })
+
+  it("probar GetIdUsuario",
+    async function() {
+
+
+      var res = await laLogica.GetIdDelUsuario('mat@gmail.com');
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
 
