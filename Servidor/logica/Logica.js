@@ -37,8 +37,27 @@ module.exports = class Logica {
     })
   }
 
-  GetLaUltimaMedida() {
-    var textoSQL = "select * from Medidas ORDER BY IdMedida DESC LIMIT 0, 1";
+  async GetLaUltimaMedida() {
+    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario=15 ORDER BY IdMedida DESC LIMIT 0, 1";
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  }
+  /*async GetLaUltimaMedida(idUsuario) {
+    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  }*/
+
+  async GetIdDelUsuario(email) {
+    var textoSQL = "SELECT * FROM Usuarios WHERE Email='"+email+"';";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {

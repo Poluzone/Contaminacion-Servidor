@@ -81,7 +81,7 @@ class Proxy {
 
     fetch(IP_PUERTO + "/GETultimaMedida",{
       method: 'POST', // or 'PUT'
-      /*body: JSON.stringify(data), // data can be `string` or {object}!*/
+      //body: JSON.stringify(user), // data can be `string` or {object}!
       headers: {
         'User-Agent': 'jordi',
         'Content-Type': 'application/json'
@@ -101,4 +101,30 @@ class Proxy {
   });
   }
 
+    /**
+   * GetIdUsuario()
+   */
+  GETidUsuario(username) {
+
+    fetch(IP_PUERTO + "/GETidUsuario",{
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(username), // data
+      headers: {
+        'User-Agent': 'jordi',
+        'Content-Type': 'application/json'
+      }
+    }).then(function(response) {
+      console.log(response);
+    return response.json();
+  })
+  .then(function(datos) {
+    if(datos.status == true){
+      console.log("Iniciar sesion correcto y se han creado los cookies");
+      //console.log(datos);
+    }else{
+      console.log("No existe o no has puesto bien los datos");
+    }
+      //console.log(datos);
+  });
+  }
 }

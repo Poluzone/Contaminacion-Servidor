@@ -42,6 +42,40 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
+     /**
+     * /GETidUsuario
+     * 
+     * Recoge el id que corresponda al usuario loggeado
+     */
+    servidorExpress.post('/GETidUsuario',
+    async function(peticion, respuesta) {
+      
+      console.log(" * POST /idUsuario ");
+
+     // averiguo el dni
+     var dato = JSON.parse(peticion.body);
+
+     console.log(dato);
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.GetIdDelUsuario(dato);
+
+      console.log(res[0].IdUsuario);
+      var idUser = res[0].IdUsuario;
+      /*console.log(res[0].IdUsuario);
+      console.log(res[0].Email);
+      console.log(res[0].Telefono);*/
+
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 0) {
+        // 404: not found
+        respuesta.status(404).send("no encontré medidas: " + email);
+        return;
+      }
+      // todo ok
+      respuesta.send(JSON.stringify(idUser));
+    })
+
     /**
      * /GETultimaMedida
      * 
@@ -50,6 +84,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     servidorExpress.get('/GETultimaMedida',
     async function(peticion, respuesta) {
       console.log(" * GET /ultimaMedida ")
+      
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetLaUltimaMedida();
 
@@ -77,7 +112,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       console.log(dato)
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetUsuarioPorEmail(dato);
-
+     
       console.log(res.Email);
       console.log(res.Password);
       console.log(res.Telefono);

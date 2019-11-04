@@ -26,15 +26,39 @@
     <script type="text/javascript" src="../js/PROXY.js"></script>
     <script>
         var proxy = new Proxy();
-
+        
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        
         function visualizarMedida()
         {
-            proxy.GETultimaMedida();
+            //Recogemos el usuario actual
+            var username = getCookie("username");
+            console.log(username);
+            //Recogemos su id
+            var userId = proxy.GETidUsuario(username);
+            console.log(userId);
+            //Le pasamos el id del usuario para recoger su ultima medida
+            proxy.GETultimaMedida(userId);
         }
+        
+        visualizarMedida();
+
     </script>
 </head>
 <body>
-    <script>visualizarMedida();</script>
   <section class="section_1 container-fluid p-0">
     <div class="d-flex-column">
           <header>
@@ -74,25 +98,6 @@
               </nav>
           </header>
     </div>
-  </section>
-  <section class="container-fluid">
-      <div class="card col-sm-4">
-
-           <!-- <div class="card-header">
-
-            </div> -->
-
-            <div class="card-body">
-                <label id="ultimaMedida">
-
-                </label>
-            </div>
-
-            <!-- <div class="card-footer">
-
-            </div> -->
-
-      </div>
   </section>
        <!-- Todos los plugins JavaScript de Bootstrap (también puedes
         incluir archivos JavaScript individuales de los únicos
