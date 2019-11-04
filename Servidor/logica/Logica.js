@@ -28,7 +28,7 @@ module.exports = class Logica {
     var valoresParaSQL = {
       $IdMedida: null,
       $IdTipoMedida: medida.IdTipoMedida,
-      $IdUsuario: medida.IdUsuario,
+      $IdUsuario: 15,
       $Valor:medida.Valor,
       $Tiempo:medida.Tiempo,
       $Latitud:medida.Latitud,
