@@ -43,14 +43,15 @@ class Proxy {
         'Content-Type': 'application/json'
       }
     }).then((res) => {
-      console.log(data)
+      setCookie("username",data.Email);
+      console.log(data.Email);
       console.log(res)
+      checkCookie();
     })
 
   }
 
   async ComprobacionLogin(data) {
-
 
     fetch(IP_PUERTO + "/ComprobarLogin",{
       method: 'POST', // or 'PUT'
@@ -66,6 +67,7 @@ class Proxy {
     if(datos.status == true){
       setCookie("username",datos.Usuario[0].Email);
       console.log("Iniciar sesion correcto y se han creado los cookies");
+      checkCookie();
     }else{
       console.log("No existe o no has puesto bien los datos");
     }
