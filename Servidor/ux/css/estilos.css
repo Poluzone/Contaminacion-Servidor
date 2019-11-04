@@ -3,6 +3,19 @@
 
 
 /* Clase para los tipos de fuentes */
+
+.banner {
+    position: relative;
+    background: url(../images/imagen_ciudad.jpg);
+    min-height: 100vh;
+    background-size: cover;
+}
+
+
+.login_link:hover {
+     color: #F88E52;
+}
+
 .nunito {
     font-family: 'Nunito';
 }
@@ -30,6 +43,23 @@
 .fondoBlanco {
     background-color: #ffffff;
 }
+
+.bordeOscuro{
+    border-color: #222831;
+}
+
+.bordeGris{
+    border-color: #393E46; 
+}
+
+.bordeNaranja{
+    border-color: #F88E52 !important;
+}
+
+.bordeBlanco{
+    border-color: #ffffff;
+}
+
 .blanco {
     color: #ffffff;
 }
