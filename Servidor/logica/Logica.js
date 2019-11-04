@@ -37,8 +37,8 @@ module.exports = class Logica {
     })
   }
 
-  GetSoloMedidas() {
-    var textoSQL = "select * from Datos";
+  GetLaUltimaMedida() {
+    var textoSQL = "select * from Medidas ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {
@@ -83,10 +83,10 @@ async GetUsuarioPorEmail(email) {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
-     }) 
+     })
   }
 
-  borrarFilasDe(tabla) {
+  async borrarFilasDe(tabla) {
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(
         "delete from " + tabla + ";",
@@ -98,7 +98,7 @@ async GetUsuarioPorEmail(email) {
   // borrarFilasDeTodasLasTablas() -->
   // .................................................................
   async borrarFilasDeTodasLasTablas() {
-    await this.borrarFilasDe("Datos")
+    await this.borrarFilasDe("Usuarios")
   } // ()
   // .................................................................
   // cerrar() -->
