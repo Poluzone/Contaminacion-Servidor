@@ -14,12 +14,37 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   // ....................................................
 
   it( "probar POST /insertarUsuario", function( hecho ) {
-  var datos = { IdUsuario : null, email : "prueba2@gmail.com",password: "prueba1" ,telefono : "5864"
+  var datos = { Email : "prueba2@gmail.com",Password: "prueba1" ,Telefono : "5864"
   }
   request.post(
     { url : IP_PUERTO+"/insertarUsuario",
     headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
     body : JSON.stringify( datos )
+  },
+  function( err, respuesta, carga ) {
+    assert.equal( err, null, "¿ha habido un error?" )
+    assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
+    assert.equal( carga, "true", "¿La carga no es OK" )
+    hecho()
+  } // callback
+  ) // .post
+  })
+
+  it( "probar POST /insertarMedida", function( hecho ) {
+    var medida = {
+
+      IdTipoMedida: 2,
+      IdUsuario: 6,
+      Valor: 2423433,
+      Tiempo: 234324,
+      Latitud: 234,
+      Longitud:324
+    }
+
+  request.post(
+    { url : IP_PUERTO+"/insertarMedida",
+    headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
+    body : JSON.stringify( medida )
   },
   function( err, respuesta, carga ) {
     assert.equal( err, null, "¿ha habido un error?" )
@@ -33,7 +58,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
   it( "GET /GetUsuarioPorEmail/Prueba1@hotmail.com ", function( hecho ) {
     request.get(
-      { url : IP_PUERTO+"/GetUsuarioPorEmail/Prueba1@hotmail.com", headers : { 'User-Agent' : 'jordi' }},
+      { url : IP_PUERTO+"/GetUsuarioPorEmail/prueba1@hotmail.com", headers : { 'User-Agent' : 'jordi' }},
       function( err, respuesta, carga ) {
         var json = JSON.parse(carga);
         assert.equal( err, null, "¿ha habido un error?" )

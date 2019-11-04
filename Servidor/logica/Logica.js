@@ -22,13 +22,17 @@ module.exports = class Logica {
       })
   } // ()
 
-  insertarMedida(datos) {
+  insertarMedida(medida) {
     var textoSQL =
-      'insert into Datos values( $dato, $fecha , $posicion);'
+      'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
     var valoresParaSQL = {
-      $dato: datos.dato,
-      $fecha: datos.fecha,
-      $posicion: datos.posicion
+      $IdMedida: null,
+      $IdTipoMedida: medida.IdTipoMedida,
+      $IdUsuario: medida.IdUsuario,
+      $Valor:medida.Valor,
+      $Tiempo:medida.Tiempo,
+      $Latitud:medida.Latitud,
+      $Longitud:medida.Longitud
     }
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err) {

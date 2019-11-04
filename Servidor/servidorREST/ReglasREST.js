@@ -105,7 +105,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
       // supuesto procesamiento
 
-      laLogica.insertarMedida(datos);
+       laLogica.insertarMedida(datos);
 
       respuesta.send("OK");
     }) // post / insertarPersona
@@ -118,13 +118,13 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       bcrypt.hash(datos.Email+datos.Password, saltRounds, function(err, hash) {
         if (!err) {
           datos.Password = hash;
-          
+
           laLogica.insertarUsuario(datos).then(function() {
               var data = { status: true }
               respuesta.send(JSON.stringify(data));
             })
             .catch (function(err) {
-              console.log(err) 
+              console.log(err)
               var data = { status: false }
               respuesta.send(JSON.stringify(data));
             })
