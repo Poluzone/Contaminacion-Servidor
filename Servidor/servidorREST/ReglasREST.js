@@ -85,24 +85,12 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
         bcrypt.compare(dato.Email+dato.Password, resu[0].Password , function(err, res) {
           if(!err){
-
             var data = {
               Usuario: resu,
-              status: true,
+              status: res,
             };
 
-            console.log(data.Usuario[0].Email);
               respuesta.send(data);
-
-          }else {
-
-            var data = {
-              Usuario: resu,
-              status: false
-            };
-
-            console.log(err);
-            respuesta.send(data);
 
           }
         });
@@ -129,13 +117,13 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       bcrypt.hash(datos.Email+datos.Password, saltRounds, function(err, hash) {
         if (!err) {
           datos.Password = hash;
-          
+
           laLogica.insertarUsuario(datos).then(function() {
               var data = { status: true }
               respuesta.send(JSON.stringify(data));
             })
             .catch (function(err) {
-              console.log(err) 
+              console.log(err)
               var data = { status: false }
               respuesta.send(JSON.stringify(data));
             })
