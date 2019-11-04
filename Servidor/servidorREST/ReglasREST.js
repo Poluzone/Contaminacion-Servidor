@@ -67,47 +67,36 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     })
 
     servidorExpress.post('/ComprobarLogin',
-      async function(peticion, respuesta) {
-        console.log(" * POST /ComprobarLogin ")
-        // averiguo el dni
-        var dato = JSON.parse(peticion.body);
+    async function(peticion, respuesta) {
+      console.log(" * POST /ComprobarLogin ")
+      // averiguo el dni
+      var dato = JSON.parse(peticion.body);
 
-        console.log(dato)
-        // llamo a la función adecuada de la lógica
-        var resu = await laLogica.GetUsuarioPorEmail(dato.Email);
+      console.log(dato)
+      // llamo a la función adecuada de la lógica
+      var resu = await laLogica.GetUsuarioPorEmail(dato.Email);
 
-        if (resu.length != 1) {
-          // 404: not found
-          console.log("no encontré email: " + dato.Email);
-          respuesta.status(404).send("no encontré usuario: " + dato.Email)
-          return
+      if (resu.length != 1) {
+        // 404: not found
+        console.log("no encontré email: " + dato.Email);
+        respuesta.status(404).send("no encontré usuario: " + dato.Email)
+        return
+      }
+
+      bcrypt.compare(dato.Email+dato.Password, resu[0].Password , function(err, res) {
+        if(!err){
+          var data = {
+            Usuario: resu,
+            status: res,
+          };
+
+            respuesta.send(data);
+
         }
-        console.log(dato);
-        bcrypt.compare(dato.Email+dato.Password, resu[0].Password , function(err, res) {
-          if(!err){
+      });
 
-            var data = {
-              Usuario: resu,
-              status: true,
-            };
+    })
 
-            console.log(data.Usuario[0].Email);
-            respuesta.send(data);
-              
-          }else {
-
-            var data = {
-              Usuario: resu,
-              status: false
-            };
-
-            console.log(err);
-            respuesta.send(data);
-
-          }
-        });
-
-      })
 
   servidorExpress.post('/insertarMedida',
     async function(peticion, respuesta) {
