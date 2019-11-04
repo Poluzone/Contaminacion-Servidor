@@ -66,7 +66,7 @@
             <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <!-- Cabeza del modal, contiene el titulo del modal en este caso Iniciar Sesión -->
-                <div class="modal-header fondoOscuro bordeOscuro">
+                <div class="modal-header fondoOscuro">
                     <h4 class="modal-title nunito blanco sizeTitlePopUp">Iniciar Sesión</h4>
                     <button type="button" class="close azulOscuro" data-dismiss="modal">&times;</button>
                 </div>
@@ -83,8 +83,8 @@
                             <input id="pass" type="password" class="form-control nunito sizeS" name="password" placeholder="Password">
                         </div></br>
                     </form>
-                    <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" data-toggle="modal" data-target="#recoverPass"> Recuperar </a></p>   
-                    <p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" data-toggle="modal" data-target="#signIn"> Registrarse </a></p>
+                    <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" data-toggle="modal" data-target="#recoverPass" class="naranja"> Recuperar </a></p>   
+                    <!--<p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" data-toggle="modal" data-target="#signIn" class="close naranja" data-dismiss="modal"> Registrarse </a></p>-->
                     <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->        
                 </div>
                 <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
@@ -182,7 +182,7 @@
                     <div class="mt-5">
                         <button type="button" data-toggle="modal" data-target="#signIn" class="btn btn-primary nunito bordeNaranja fondoNaranja">Regístrate</button>
                         <div class="mt-2">
-                            <h6>¿Ya tienes cuenta? <u><a href="" class="login_link azulOscuro">Iniciar sesión</a></u></h6>
+                            <h6>¿Ya tienes cuenta? <u><a href="" class="login_link azulOscuro" data-toggle="modal" data-target="#login">Iniciar sesión</a></u></h6>
                         </div>
                     </div>
                     <div class="m-5">
