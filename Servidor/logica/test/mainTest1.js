@@ -77,7 +77,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
         var medida = {
 
           IdTipoMedida: 2,
-          IdUsuario: 6,
+          //IdUsuario: 6,
           Valor: 243,
           Tiempo: 234324,
           Latitud: 234,
@@ -85,10 +85,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
         }
 
          await laLogica.insertarMedida(medida);
-        var res = await laLogica.GetLaUltimaMedida();
+        var res = await laLogica.GetLaUltimaMedida(15);
         assert.equal(res.length, 1, "¿no hay un resulado?")
-
-
 
       })
 

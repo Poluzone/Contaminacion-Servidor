@@ -22,7 +22,7 @@ module.exports = class Logica {
       })
   } // ()
 
-  insertarMedida(medida) {
+  async insertarMedida(medida) {
     var textoSQL =
       'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
     var valoresParaSQL = {
@@ -50,6 +50,7 @@ module.exports = class Logica {
         })
     })
   }
+
   /*async GetLaUltimaMedida(idUsuario) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
