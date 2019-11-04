@@ -26,6 +26,42 @@
 <![endif]-->
     </head>
     <body>
+        <!-- POP UPS -->
+        <!-- Modal para login -->
+        <div class="modal fade" id="login" role="dialog">
+            <div class="modal-dialog modal-sm ">
+            <div class="modal-content">
+                <!-- Cabeza del modal, contiene el titulo del modal en este caso Iniciar Sesión -->
+                <div class="modal-header fondoOscuro">
+                <button type="button" class="close blanco" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title nunito blanco sizeM">Iniciar Sesión</h4>
+                </div>
+                <!-- Cuerpo del modal, contiene el formulario del modal para Iniciar Sesión comprobando el usuario y su contraseña y el enlace para registrarse -->
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input id="email" type="text" class="form-control nunito sizeS" name="email" placeholder="Email">
+                        </div></br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="password" type="password" class="form-control nunito sizeS" name="password" placeholder="Password">
+                        </div></br>
+                    </form>
+                    <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" type="button" data-toggle="modal" data-target="#recoverPass"> Recuperar </a></p>   
+                    <p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" type="button" data-toggle="modal" data-target="#signIn"> Registrarse </a></p>
+                    <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->        
+                </div>
+                <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
+                <div class="modal-footer centrado">
+                    <button onclick="ComprobarUsuario()" class="btn btn-sm active nunito fondoNaranja blanco">Entrar</button>  
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+            </div>
+        </div>
+
+
         <!------------------------------------------------ Sección 1 -------------------------------------------------------->
 
         <section class="section_1 container-fluid p-0">
@@ -53,7 +89,7 @@
                                         <a class="nav-link" href="#">Tutoriales</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Cerrar</a>
+                                        <a class="nav-link" href="#">Acerca de nosotros</a>
                                     </li>
                                 </ul>
                                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
