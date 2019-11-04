@@ -167,7 +167,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
       // supuesto procesamiento
 
-      laLogica.insertarMedida(datos);
+       laLogica.insertarMedida(datos);
 
       respuesta.send("OK");
     }) // post / insertarPersona
