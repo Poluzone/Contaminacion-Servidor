@@ -24,7 +24,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   function( err, respuesta, carga ) {
     assert.equal( err, null, "¿ha habido un error?" )
     assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
-    assert.equal( carga, "true", "¿La carga no es OK" )
+    //assert.equal( carga, "true", "¿La carga no es OK" )
     hecho()
   } // callback
   ) // .post
@@ -50,6 +50,27 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     assert.equal( err, null, "¿ha habido un error?" )
     assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
     assert.equal( carga, "OK", "¿La carga no es OK" )
+    hecho()
+  } // callback
+  ) // .post
+  })
+
+  it( "probar POST /ComprobarLogin", function( hecho ) {
+    var dato = {
+      Email:"prueba2@gmail.com",
+      Password:"prueba1"
+    }
+
+  request.post(
+    { url : IP_PUERTO+"/ComprobarLogin",
+    headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
+    body : JSON.stringify( dato )
+  },
+  function( err, respuesta, carga ) {
+    var json = JSON.parse(carga);
+    assert.equal( err, null, "¿ha habido un error?" )
+    assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" )
+    assert.equal( json.status, true , "¿La carga no es OK" )
     hecho()
   } // callback
   ) // .post
