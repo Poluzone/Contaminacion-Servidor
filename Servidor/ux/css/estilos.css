@@ -1,1 +1,116 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">ss
+/*Author: Matthew Conde Oltra*/
+
+
+
+/* Clase para los tipos de fuentes */
+
+.banner {
+    position: relative;
+    background: url(../images/imagen_ciudad.jpg);
+    min-height: 100vh;
+    background-size: cover;
+}
+
+
+.login_link:hover {
+     color: #F88E52;
+}
+
+.nunito {
+    font-family: 'Nunito';
+}
+.sizeXS{
+    font-size:8px;
+}
+.sizeS {
+    font-size:12px;
+}
+.sizeTitlePopUp{
+    font-size:18px;
+}
+.sizeM {
+    font-size:22px;
+}
+.sizeL {
+    font-size:32px;
+}
+.fondoOscuro {
+    background-color: #222831;
+}
+.fondoGris {
+    background-color: #393E46;
+}
+.fondoNaranja {
+    background-color: #F88E52 !important;
+}
+.fondoBlanco {
+    background-color: #ffffff;
+}
+
+.bordeOscuro{
+    border-color: #222831;
+}
+
+.bordeGris{
+    border-color: #393E46 !important; 
+}
+
+.bordeNaranja{
+    border-color: #F88E52 !important;
+}
+
+.bordeBlanco{
+    border-color: #ffffff;
+}
+
+.blanco {
+    color: #ffffff;
+}
+.naranja {
+    color: #F88E52;
+}
+.azulOscuro {
+    color: #222831;
+}
+.grisAzulado{
+    color: #393E46;
+}
+
+/*Podemos organizar los elementos de un div, y/o etiqueta que queramos*/
+.centrado{
+    display: flex;
+    justify-content: center;
+}
+.izquierda{
+    display: flex;
+    justify-content: left;
+}
+.derecha{
+    display: flex;
+    justify-content: right;
+}
+
+/*Para las formas de algunas imagenes*/
+/*Este estilo es utilizado en la imagen del perfil*/
+.redonda {
+    width:130px;
+    height:130px;
+    background-color: #393E46;
+    border-radius:160px;
+    border:5px solid #393E46;
+}
+/*Para el texto*/ 
+.alinear{
+    display:flex;
+    justify-content: center;
+    margin: auto;
+    padding: auto;
+}
+
+.inlineBlock {
+    display: flex;
+    display: inline;
+    justify-content: center;
+    margin: auto;
+    padding: auto;
+}

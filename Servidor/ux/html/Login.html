@@ -9,39 +9,85 @@
     var proxy = new Proxy();
 
 
-    function InsertarUsuario() {
+    function setCookie(cname, cvalue) {
+      //var d = new Date();
+    // d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+      //var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + ";path=/";
+    }
 
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
 
-
-      var email = document.getElementById('emailR').value;
-      var pass = document.getElementById('passR').value;
-      var pass2 = document.getElementById('RpassR').value;
-      var tel = document.getElementById('telR').value;
-
-      if (pass == pass2) {
-        proxy.insertarUsuarioP(email, pass, tel);
+    function checkCookie() {
+      var user = getCookie("username");
+      if (user != "") {
+        alert("Los cookies funcionan estimado: " + user);
+      }
       }
 
-    }
 
-    function ComprobarUsuario() {
 
-      var email = document.getElementById('Email').value;
+      function InsertarUsuario() {
+        var email = document.getElementById('emailR').value;
+        var pass = document.getElementById('passR').value;
+        var pass2 = document.getElementById('RpassR').value;
+        var tel = document.getElementById('telR').value;
 
-      proxy.ComprobacionLogin(email);
+        if (pass == pass2) {
+          proxy.insertarUsuario(email, pass, tel);
+        } else {
+          console.log("error");
+        }
 
-    }
+      }
+
+      function ComprobarUsuario() {
+
+        var email = document.getElementById('Email').value;
+        var pass = document.getElementById('Pass').value;
+
+        var data = {
+          Email: email,
+          Password: pass
+        };
+
+        proxy.ComprobacionLogin(data);
+
+      }
   </script>
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <!-- <script type="text/javascript" src=""></script> -->
+
 </head>
 
-<body>
+<body onload="checkCookie()">
+  <div class="container">
+    <section class="main row">
+      <article class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+          <h1>Login</h1>
+        
+          <label>Email:</label><input type="text" id="Email"><br>
+          <label>Contraseña:</label><input type="text" id="Pass"><br>
+          
+          <button onclick="ComprobarUsuario()">Aceptar</button>
 
-  <h1>Login</h1>
-  <div>
-    Email:<input type="text" id="Email"><br>
-    Contraseña:<input type="text" id="Pass"><br>
+      </article>
+    </section>
 
-    <button onclick="ComprobarUsuario()">Aceptar</button>
   </div>
 
 
@@ -57,7 +103,7 @@
 
 
   <footer>
-    Creado por Josep ahora mismo
+    3º GTI Equipo-3
   </footer>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

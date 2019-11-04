@@ -2,7 +2,9 @@
 // ReglasREST.js
 // .....................................................................
 const path = require('path');
-module.exports.cargar = function(servidorExpress, laLogica) {
+const saltRounds = 10;
+
+module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
   // .......................................................
   // GET /prueba
   // .......................................................
@@ -40,35 +42,67 @@ module.exports.cargar = function(servidorExpress, laLogica) {
       respuesta.send(JSON.stringify(res))
     })
 
-    servidorExpress.get('/GetUsuarioPorEmail/:email',
-      async function(peticion, respuesta) {
-        console.log(" * GET /UsuarioPorEmail ")
-        // averiguo el dni
-        var dato = peticion.params.email
+  servidorExpress.get('/GetUsuarioPorEmail/:email',
+    async function(peticion, respuesta) {
+      console.log(" * GET /UsuarioPorEmail ")
+      // averiguo el dni
+      var dato = peticion.params.email
 
-        console.log(dato)
-        // llamo a la función adecuada de la lógica
-        var res = await laLogica.GetUsuarioPorEmail(dato);
+      console.log(dato)
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.GetUsuarioPorEmail(dato);
 
-        console.log(res.Email);
-        console.log(res.Password);
-        console.log(res.Telefono);
+      console.log(res.Email);
+      console.log(res.Password);
+      console.log(res.Telefono);
 
-        // si el array de resultados no tiene una casilla ...
-        if (res.length !=1) {
-          // 404: not found
-          respuesta.status(404).send("no encontré usuario: " + dato)
-          return
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré usuario: " + dato)
+        return
+      }
+      // todo ok
+      respuesta.send(JSON.stringify(res))
+    })
+
+    servidorExpress.post('/ComprobarLogin',
+    async function(peticion, respuesta) {
+      console.log(" * POST /ComprobarLogin ")
+      // averiguo el dni
+      var dato = JSON.parse(peticion.body);
+
+      console.log(dato)
+      // llamo a la función adecuada de la lógica
+      var resu = await laLogica.GetUsuarioPorEmail(dato.Email);
+
+      if (resu.length != 1) {
+        // 404: not found
+        console.log("no encontré email: " + dato.Email);
+        respuesta.status(404).send("no encontré usuario: " + dato.Email)
+        return
+      }
+
+      bcrypt.compare(dato.Email+dato.Password, resu[0].Password , function(err, res) {
+        if(!err){
+          var data = {
+            Usuario: resu,
+            status: res,
+          };
+
+            respuesta.send(data);
+
         }
-        // todo ok
-        respuesta.send(JSON.stringify(res))
-      })
+      });
+
+    })
+
 
   servidorExpress.post('/insertarMedida',
     async function(peticion, respuesta) {
       console.log(" * POST /insertarMedida")
       var datos = JSON.parse(peticion.body)
-      //console.log(datos);
+
       // supuesto procesamiento
 
       laLogica.insertarMedida(datos);
@@ -76,17 +110,29 @@ module.exports.cargar = function(servidorExpress, laLogica) {
       respuesta.send("OK");
     }) // post / insertarPersona
 
-    servidorExpress.post('/insertarUsuario',
-      async function(peticion, respuesta) {
-        console.log(" * POST /insertarUsuario")
-        var datos = JSON.parse(peticion.body)
+  servidorExpress.post('/insertarUsuario',
+    async function(peticion, respuesta) {
+      console.log(" * POST /insertarUsuario")
+      var datos = JSON.parse(peticion.body)
 
-        // supuesto procesamiento
-        laLogica.insertarUsuario(datos);
-
-        var data = { status: "ok" }
-        respuesta.send(JSON.stringify(data));
-      }) // post / insertarPersona
+      bcrypt.hash(datos.Email+datos.Password, saltRounds, function(err, hash) {
+        if (!err) {
+          datos.Password = hash;
+          
+          laLogica.insertarUsuario(datos).then(function() {
+              var data = { status: true }
+              respuesta.send(JSON.stringify(data));
+            })
+            .catch (function(err) {
+              console.log(err) 
+              var data = { status: false }
+              respuesta.send(JSON.stringify(data));
+            })
+        }else {
+          var data = { status: false }
+          console.log(err);
+        }
+      }) }); // post / insertarPersona
 
   servidorExpress.get('/ux/html/:archivo', function(peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
@@ -110,6 +156,7 @@ module.exports.cargar = function(servidorExpress, laLogica) {
     var dir = path.resolve("../ux/images");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
+
 } // cargar()
 // .....................................................................
 // .....................................................................

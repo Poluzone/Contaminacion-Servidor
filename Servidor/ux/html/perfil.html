@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--  css de bootsrap  -->
+        <!--<link rel="stylesheet" href="app/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="../css/estilos.css">
+    
+        <!-- iconos Material Design -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
+    
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Poluzone | Perfil</title>
+    
+        <!-- CSS de Bootstrap -->
+        <!--<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+        <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+        <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+<body class="fondoGris">
+
+    <section class="section_1 container-fluid p-0">
+        <div class="d-flex-column">
+              <header>
+                  <nav class="navbar navbar-expand-lg navbar-dark fondoOscuro">
+                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <a class="navbar-brand nunito" href="#"> <img src="../images/earth.png" width="40" alt=""> Poluzone</a>
+    
+                      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                              <li class="nav-item active">
+                                  <a class="nav-link" href="#">Inicio<span class="sr-only">(current)</span></a>
+                              </li>
+                              <li class="nav-item a_login d-sm-none">
+                                  <a class="nav-link" href="http://localhost:8080/ux/html/perfil.html" hi><i class="material-icons">perm_identity</i><p class="nunito inlineBlock" style="vertical-align: super;">  Perfil</p></a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#mapa"><i class="material-icons">map</i><p class="nunito inlineBlock" style="vertical-align: super;">  Mapa</p></a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#setup"><i class="material-icons">settings_applications</i><p class="nunito inlineBlock" style="vertical-align: super;">  Configuración</p></a>
+                              </li>
+                              <li class="nav-item a_login d-sm-none">
+                                  <a class="nav-link" href="#" hi><i class="material-icons">power_settings_new</i><p class="nunito inlineBlock" style="vertical-align: super;" >  Cerrar Sesión</p></a>
+                              </li>
+                          </ul>
+                          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                              <li class="nav-item d-none d-xl-block">
+                                  <button type="button" class="btn" onclick="abrirPagina(url);"><i class="material-icons naranja">perm_identity</i></button>
+                              </li>
+                              <li class="nav-item d-none d-xl-block">
+                                  <button type="button" class="btn bordeGris"><i class="material-icons naranja">power_settings_new</i></button>
+                              </li>
+                          </ul>
+                      </div>
+                  </nav>
+              </header>
+        </div>
+      </section>
+  <section></br>
+      <div class="centrado">
+          <img class="redonda" src="../images/perfil.png">
+      </div></br>
+      <div class="centrado">
+          <form class="form-horizontal">
+              <div class="input-group">
+                  <span class="input-group-text"><i class="material-icons">email</i></span>
+                  <input id="emailG" type="text" class="form-control nunito sizeS" name="emailG" placeholder="Email">
+              </div></br>
+              <div class="input-group">
+                  <span class="input-group-text"><i class="material-icons">https</i></span>
+                  <input id="passG" type="password" class="form-control nunito sizeS" name="passG" placeholder="Contraseña">
+              </div></br>
+              <div class="input-group">
+              <span class="input-group-text"><i class="material-icons">https</i></span>
+              <input id="RpassG" type="password" class="form-control nunito sizeS" name="RpassG" placeholder="Repetir contraseña">
+              </div></br>
+              <div class="input-group">
+              <span class="input-group-text"><i class="material-icons">phone</i></span>
+              <input id="telG" type="text" class="form-control nunito sizeS" name="telG" placeholder="Telefono">
+              </div></br>
+          </form>                     
+     </div>
+     <div class="centrado">
+        <button type="button" onclick="actualizarUsuario()" class="btn btn-primary nunito fondoNaranja bordeNaranja">Guardar cambios</button>  
+     </div>
+  </section>
+     <!-- Todos los plugins JavaScript de Bootstrap (también puedes
+        incluir archivos JavaScript individuales de los únicos
+      plugins que utilices) -->
+      <script src="../js/bootstrap.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+<footer class="">
+    <!--Author: Equipo-3 GTI-->
+</footer>
+</html>

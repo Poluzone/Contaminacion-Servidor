@@ -5,6 +5,7 @@
 // .....................................................................
 const express = require('express')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 const Logica = require("../logica/Logica.js")
 // .....................................................................
 // .....................................................................
@@ -35,7 +36,7 @@ async function main() {
   }))
   // cargo las reglas REST
   var reglas = require("./ReglasREST.js")
-  reglas.cargar(servidorExpress, laLogica)
+  reglas.cargar(servidorExpress, laLogica,bcrypt)
   // arranco el servidor
   var servicio = servidorExpress.listen(8080, function() {
     console.log("servidor REST escuchando en el puerto 8080 ")

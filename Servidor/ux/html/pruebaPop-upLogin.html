@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" src="../js/PROXY.js"></script>
+  <script>
+    var proxy = new Proxy();
+
+
+    function InsertarUsuario() {
+
+      var email = document.getElementById('emailR').value;
+      var pass = document.getElementById('passR').value;
+      var pass2 = document.getElementById('RpassR').value;
+      var tel = document.getElementById('telR').value;
+
+      if (pass == pass2) {
+        proxy.insertarUsuario(email, pass, tel);
+      }else {
+        console.log("error");
+      }
+
+    }
+
+    function ComprobarUsuario() {
+
+      var email = document.getElementById('email').value;
+      var pass = document.getElementById('pass').value;
+
+      var data = {
+        Email: email,
+        Password: pass
+      };
+
+      proxy.ComprobacionLogin(data);
+
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+  <link rel="stylesheet" href="../css/estilos.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="fuente">Poluzone</h2>
+  <!-- Los botones para abrir los modales -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#login">Iniciar Sesión</button>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signIn">Registrarse</button>
+  <!-- Modal para login -->
+  <div class="modal fade" id="login" role="dialog">
+    <div class="modal-dialog modal-sm ">
+      <div class="modal-content">
+        <!-- Cabeza del modal, contiene el titulo del modal en este caso Iniciar Sesión -->
+        <div class="modal-header fondoOscuro">
+          <button type="button" class="close blanco" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title nunito blanco sizeM">Iniciar Sesión</h4>
+        </div>
+        <!-- Cuerpo del modal, contiene el formulario del modal para Iniciar Sesión comprobando el usuario y su contraseña y el enlace para registrarse -->
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="email" type="text" class="form-control nunito sizeS" name="email" placeholder="Email">
+                </div></br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control nunito sizeS" name="password" placeholder="Password">
+                </div></br>
+            </form>
+            <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" type="button" data-toggle="modal" data-target="#recoverPass"> Recuperar </a></p>   
+            <p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" type="button" data-toggle="modal" data-target="#signIn"> Registrarse </a></p>
+            <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->        
+        </div>
+        <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
+        <div class="modal-footer centrado">
+            <button onclick="ComprobarUsuario()" class="btn btn-sm active nunito fondoNaranja blanco">Entrar</button>  
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal para registrarse -->
+  <div class="modal fade" id="signIn" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header fondoOscuro">
+          <button type="button" class="close blanco" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title nunito blanco sizeM">Registrarse</h4>
+        </div>
+        <div class="modal-body centrado">
+            <form class="form-horizontal">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="email" type="text" class="form-control nunito sizeS" name="email" placeholder="Email">
+                </div></br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control nunito sizeS" name="password" placeholder="Contraseña">
+                </div></br>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                  <input id="passwordRepeat" type="password" class="form-control nunito sizeS" name="passwordRepeat" placeholder="Repetir contraseña">
+                </div></br>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                  <input id="telNum" type="text" class="form-control nunito sizeS" name="telefono" placeholder="Telefono">
+                </div></br>
+                <div class="input-group">
+                    <label class="sizeXS centrado"><input id="condiciones" type="checkbox" name="condiciones" style="margin: 6px;"> Acepto los Términos de uso y confirmo que he leído y comprendido la Política de privacidad.
+                      <a href="http://localhost:8080/ux/pdf/terminos.pdf">Politicas de privacidad</a></label>
+                </div>
+            </form>           
+        </div>
+        <div class="modal-footer centrado">
+            <button onclick="ComprobarUsuario()" class="btn active nunito fondoNaranja blanco">Registrarse</button>  
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<footer class="">
+    <!--Author: Matthew Equipo-3 GTI-->
+</footer>
+</html>
