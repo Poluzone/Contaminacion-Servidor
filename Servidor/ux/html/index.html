@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+            <script type="text/javascript" src="../js/PROXY.js"></script>
+            <script>
+              var proxy = new Proxy();
+          
+          
+              function InsertarUsuario() {
+          
+                var email = document.getElementById('emailR').value;
+                var pass = document.getElementById('passR').value;
+                var pass2 = document.getElementById('RpassR').value;
+                var tel = document.getElementById('telR').value;
+          
+                if (pass == pass2) {
+                  proxy.insertarUsuario(email, pass, tel);
+                }else {
+                  console.log("error");
+                }
+          
+              }
+          
+              function ComprobarUsuario() {
+          
+                var email = document.getElementById('email').value;
+                var pass = document.getElementById('pass').value;
+          
+                var data = {
+                  Email: email,
+                  Password: pass
+                };
+          
+                proxy.ComprobacionLogin(data);
+          
+              }
+            </script>
         <!--  css de bootsrap  -->
         <link rel="stylesheet" href="app/css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/estilos.css">
@@ -28,39 +62,79 @@
     <body>
         <!-- POP UPS -->
         <!-- Modal para login -->
-        <div class="modal fade" id="login" role="dialog">
-            <div class="modal-dialog modal-sm ">
+        <div class="modal fade" id="login">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <!-- Cabeza del modal, contiene el titulo del modal en este caso Iniciar Sesión -->
-                <div class="modal-header fondoOscuro">
-                <button type="button" class="close blanco" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title nunito blanco sizeM">Iniciar Sesión</h4>
+                <div class="modal-header fondoOscuro bordeOscuro">
+                    <h4 class="modal-title nunito blanco sizeTitlePopUp">Iniciar Sesión</h4>
+                    <button type="button" class="close azulOscuro" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Cuerpo del modal, contiene el formulario del modal para Iniciar Sesión comprobando el usuario y su contraseña y el enlace para registrarse -->
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <span class="input-group-text"><i class="material-icons">email</i></span>
                             <input id="email" type="text" class="form-control nunito sizeS" name="email" placeholder="Email">
                         </div></br>
+                            
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="password" type="password" class="form-control nunito sizeS" name="password" placeholder="Password">
+                            <span class="input-group-text"><i class="material-icons">https</i></span>
+                            <input id="pass" type="password" class="form-control nunito sizeS" name="password" placeholder="Password">
                         </div></br>
                     </form>
-                    <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" type="button" data-toggle="modal" data-target="#recoverPass"> Recuperar </a></p>   
-                    <p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" type="button" data-toggle="modal" data-target="#signIn"> Registrarse </a></p>
+                    <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" data-toggle="modal" data-target="#recoverPass"> Recuperar </a></p>   
+                    <p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" data-toggle="modal" data-target="#signIn"> Registrarse </a></p>
                     <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->        
                 </div>
                 <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
-                <div class="modal-footer centrado">
-                    <button onclick="ComprobarUsuario()" class="btn btn-sm active nunito fondoNaranja blanco">Entrar</button>  
+                <div class="modal-footer d-flex justify-content-center">
+                    <button onclick="ComprobarUsuario()" class="btn btn-primary nunito fondoNaranja bordeNaranja">Entrar</button>  
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                 </div>
             </div>
             </div>
         </div>
-
+        
+        <!-- Modal para registrarse -->
+        <div class="modal fade" id="signIn">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header fondoOscuro bordeOscuro">
+                <h4 class="modal-title nunito blanco sizeTitlePopUp">Registrarse</h4>
+                <button type="button" class="close azulOscuro bordeOscuro" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <form class="form-horizontal">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">email</i></span>
+                            <input id="emailR" type="text" class="form-control nunito sizeS" name="emailR" placeholder="Email">
+                        </div></br>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">https</i></span>
+                            <input id="passR" type="password" class="form-control nunito sizeS" name="passR" placeholder="Contraseña">
+                        </div></br>
+                        <div class="input-group">
+                        <span class="input-group-text"><i class="material-icons">https</i></span>
+                        <input id="RpassR" type="password" class="form-control nunito sizeS" name="RpassR" placeholder="Repetir contraseña">
+                        </div></br>
+                        <div class="input-group">
+                        <span class="input-group-text"><i class="material-icons">phone</i></span>
+                        <input id="telR" type="text" class="form-control nunito sizeS" name="telR" placeholder="Telefono">
+                        </div></br>
+                        <div class="input-group">
+                            <label class="sizeXS centrado"><input id="condiciones" type="checkbox" name="condiciones" style="margin: 6px;"> Acepto los Términos de uso y confirmo que he leído y comprendido la Política de privacidad.
+                            <a href="http://localhost:8080/ux/pdf/terminos.pdf">Politicas de privacidad</a></label>
+                        </div>
+                    </form>           
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button onclick="ComprobarUsuario()" class="btn btn-primary nunito fondoNaranja blanco">Registrarse</button>  
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+            </div>
+        </div>
 
         <!------------------------------------------------ Sección 1 -------------------------------------------------------->
 
@@ -80,10 +154,10 @@
                                         <a class="nav-link" href="#">Inicio<span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item a_login d-sm-none">
-                                        <a class="nav-link" href="#login" hi>Iniciar sesión</a>
+                                        <a class="nav-link" href="#login" data-toggle="modal" data-target="#login" hi>Iniciar sesión</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Registrarse</a>
+                                        <a class="nav-link" href="#signIn" data-toggle="modal" data-target="#signIn" hi>Registrarse</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">Tutoriales</a>
@@ -94,7 +168,7 @@
                                 </ul>
                                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                                     <li class="nav-item d-none d-xl-block">
-                                        <button type="button" class="btn btn-primary nunito bordeNaranja fondoNaranja">Iniciar sesión</button>
+                                        <button type="button" data-toggle="modal" data-target="#login" class="btn btn-primary nunito bordeNaranja fondoNaranja" >Iniciar sesión</button>
                                     </li>
                                 </ul>
                             </div>
@@ -106,7 +180,7 @@
                     <p class="p nunito">Poluzone es la app perfecta para registrar y estudiar la contaminación de tu ciudad. Gracias a su amplia red de sensores.
                     </p>
                     <div class="mt-5">
-                        <button type="button" class="btn btn-primary nunito bordeNaranja fondoNaranja">Regístrate</button>
+                        <button type="button" data-toggle="modal" data-target="#signIn" class="btn btn-primary nunito bordeNaranja fondoNaranja">Regístrate</button>
                         <div class="mt-2">
                             <h6>¿Ya tienes cuenta? <u><a href="" class="login_link azulOscuro">Iniciar sesión</a></u></h6>
                         </div>

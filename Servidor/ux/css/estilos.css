@@ -25,6 +25,9 @@
 .sizeS {
     font-size:12px;
 }
+.sizeTitlePopUp{
+    font-size:18px;
+}
 .sizeM {
     font-size:22px;
 }
@@ -38,7 +41,7 @@
     background-color: #393E46;
 }
 .fondoNaranja {
-    background-color: #F88E52;
+    background-color: #F88E52 !important;
 }
 .fondoBlanco {
     background-color: #ffffff;
