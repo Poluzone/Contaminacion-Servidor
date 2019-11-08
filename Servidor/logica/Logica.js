@@ -96,12 +96,13 @@ async GetUsuarioPorEmail(email) {
   }
 
   insertarUsuario(datos) {
-    var textoSQL = "insert into Usuarios values( $IdUsuario,$Email ,$Password , $Telefono )";
+    var textoSQL = "insert into Usuarios values( $IdUsuario,$Email ,$Password , $Telefono, $TipoUsuario)";
     var valoresParaSQL = {
       $IdUsuario: null,
       $Email: datos.Email,
       $Password: datos.Password,
-      $Telefono: datos.Telefono
+      $Telefono: datos.Telefono,
+      $TipoUsuario: datos.TipoUsuario
     };
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
