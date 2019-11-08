@@ -28,7 +28,7 @@ module.exports = class Logica {
     var valoresParaSQL = {
       $IdMedida: null,
       $IdTipoMedida: medida.IdTipoMedida,
-      $IdUsuario: 15,
+      $IdUsuario: medida.IdUsuario,
       $Valor:medida.Valor,
       $Tiempo:medida.Tiempo,
       $Latitud:medida.Latitud,
@@ -41,7 +41,7 @@ module.exports = class Logica {
     })
   }
 
-  async GetLaUltimaMedida(userId) {
+  async getLaUltimaMedidaPorUsuario(userId) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,

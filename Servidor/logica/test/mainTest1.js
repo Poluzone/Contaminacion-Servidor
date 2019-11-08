@@ -75,9 +75,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     it("probar insertarMedida",
       async function() {
         var medida = {
-
           IdTipoMedida: 2,
-          //IdUsuario: 6,
+          IdUsuario: 15,
           Valor: 243,
           Tiempo: 234324,
           Latitud: 234,
@@ -85,16 +84,16 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
         }
 
          await laLogica.insertarMedida(medida);
-        var res = await laLogica.GetLaUltimaMedida(15);
+        var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
         assert.equal(res.length, 1, "¿no hay un resulado?")
 
       })
 
-  it("probar GetLaUltimaMedida",
+  it("probar GetLaUltimaMedidaPorUsuario",
     async function() {
 
 
-      var res = await laLogica.GetLaUltimaMedida(15);
+      var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
 

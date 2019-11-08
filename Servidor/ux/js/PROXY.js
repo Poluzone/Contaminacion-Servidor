@@ -77,9 +77,9 @@ class Proxy {
   /**
    * GETultimaMedida()
    */
-  async GETultimaMedida(userId, callback) {
+  async GETultimaMedidaPorUsuario(userId, callback) {
 
-    fetch(IP_PUERTO + "/GETultimaMedida",{
+    fetch(IP_PUERTO + "/GETultimaMedidaPorUsuario",{
       method: 'POST', // or 'PUT'
       body: JSON.stringify(userId), // data can be `string` or {object}!
       headers: {

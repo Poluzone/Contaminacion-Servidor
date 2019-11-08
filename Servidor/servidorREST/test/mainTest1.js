@@ -92,10 +92,10 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   }) // it
 
 
-  it( "POST /GETultimaMedida ", function( hecho ) {
+  it( "POST /GETultimaMedidaPorUsuario ", function( hecho ) {
     var dato = 15;
     request.post(
-      { url : IP_PUERTO+"/GETultimaMedida",
+      { url : IP_PUERTO+"/GETultimaMedidaPorUsuario",
        headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
        body : JSON.stringify(dato)
       },

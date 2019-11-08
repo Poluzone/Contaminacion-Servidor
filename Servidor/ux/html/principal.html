@@ -55,7 +55,7 @@
                 console.log("El id del usuario es: "+datos);
 
                     //Le pasamos el id del usuario para recoger su ultima medida
-                proxy.GETultimaMedida(datos, function(dato){
+                proxy.GETultimaMedidaPorUsuario(datos, function(dato){
                     console.log(dato);
                     console.log("La ultima medida es: "+ dato);
                     var valor = dato[0].Valor;
