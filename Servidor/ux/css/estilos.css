@@ -15,16 +15,16 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: 'Nunito' !important;
 }
 
-
+.btn-primary {
+    background-color: #F88E52 !important;
+}
 .login_link:hover {
      color: #F88E52;
 }
 
-.nunito {
-    font-family: 'Nunito';
-}
 .sizeXS{
     font-size:8px;
 }
@@ -123,4 +123,142 @@ html, body {
 
 .centrarDiv{
     margin: auto;
+}
+
+
+/*Para el css del template de bootstrap*/
+/*Para la foto de fondo*/
+header.masthead {
+    text-align: center;
+    color: #fff;
+    background-image: url(../images/header-bg.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover
+}
+
+header.masthead .intro-text {
+    padding-top: 150px;
+    padding-bottom: 100px
+}
+
+header.masthead .intro-text .intro-lead-in {
+    font-size: 22px;
+    line-height: 22px;
+    margin-bottom: 50px;
+}
+
+header.masthead .intro-text .intro-heading {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 50px;
+    margin-bottom: 50px;
+}
+
+@media (min-width:768px) {
+    header.masthead .intro-text {
+        padding-top: 300px;
+        padding-bottom: 200px
+    }
+    header.masthead .intro-text .intro-lead-in {
+        font-size: 40px;
+        line-height: 40px;
+        margin-bottom: 50px;
+    }
+    header.masthead .intro-text .intro-heading {
+        font-size: 75px;
+        font-weight: 700;
+        line-height: 75px;
+        margin-bottom: 25px;
+    }
+}
+
+/*Para el navbar*/
+#mainNav {
+    background-color: #222831
+}
+
+#mainNav .navbar-toggler {
+    font-size: 12px;
+    right: 0;
+    padding: 13px;
+    text-transform: uppercase;
+    color: #fff;
+    border: 0;
+    background-color: #F88E52;
+}
+
+#mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+    color: #F88E52
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+    font-size: 90%;
+    font-weight: 400;
+    padding: .75em 0;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
+    color: #F88E52
+}
+
+@media (min-width:992px) {
+    #mainNav {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        transition: padding-top .3s, padding-bottom .3s;
+        border: none;
+        background-color: transparent
+    }
+    #mainNav .navbar-brand {
+        font-size: 1.75em;
+        transition: all .3s
+    }
+    #mainNav .navbar-nav .nav-item .nav-link {
+        padding: 1.1em 1em!important
+    }
+    #mainNav.navbar-shrink {
+        padding-top: 0;
+        padding-bottom: 0;
+        background-color: #222831
+    }
+    #mainNav.navbar-shrink .navbar-brand {
+        font-size: 1.25em;
+        padding: 12px 0
+    }
+}
+
+/*Para los objetos seleccionados*/
+::selection {
+    background: #F88E52;
+    text-shadow: none
+}
+
+/*Para quitar borde azul de los botones de bootstrap*/
+.btn, .btn-primary{
+    outline: none !important; 
+    box-shadow: none !important;
+    border-color: none !important;
+    border: none !important;
+}
+
+/*Para el boton de ver mapa*/
+.btn-xl {
+    font-size: 18px;
+    padding: 20px 40px !important;
+    font-style: bold;
+}
+
+/*Para las distintas secciones*/
+.page-section {
+    padding: 100px 0
+}
+
+@media (min-width:768px) {
+    section {
+        padding: 150px 0
+    }
 }
