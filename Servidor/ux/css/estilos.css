@@ -248,6 +248,10 @@ header.masthead .intro-text .intro-heading {
         font-size: 1.25em;
         padding: 12px 0
     }
+    #darkNav {
+        border: none;
+        background-color: #222831
+    }
 }
 
 /*Para los objetos seleccionados*/
@@ -287,3 +291,26 @@ header.masthead .intro-text .intro-heading {
 }
 
 /*Para sección de app*/
+
+
+
+
+
+
+
+
+
+
+
+/*Para la página del Admin*/
+.contenedor{
+    width: 100%;
+    height: 100%;
+}
+
+.cuerpo{
+}
+
+
+.footer{
+}
