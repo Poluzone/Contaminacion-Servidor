@@ -9,11 +9,13 @@
     background-size: cover;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Nunito' !important;
+    min-width: 775px;
 }
 
 .btn-primary {
@@ -179,11 +181,13 @@ header.masthead .intro-text .intro-heading {
         padding-top: 300px;
         padding-bottom: 200px
     }
+
     header.masthead .intro-text .intro-lead-in {
         font-size: 40px;
         line-height: 40px;
         margin-bottom: 50px;
     }
+
     header.masthead .intro-text .intro-heading {
         font-size: 75px;
         font-weight: 700;
@@ -208,7 +212,10 @@ header.masthead .intro-text .intro-heading {
     background-color: #F88E52;
 }
 
-#mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+#mainNav .navbar-brand.active,
+#mainNav .navbar-brand:active,
+#mainNav .navbar-brand:focus,
+#mainNav .navbar-brand:hover {
     color: #F88E52
 }
 
@@ -220,7 +227,8 @@ header.masthead .intro-text .intro-heading {
     color: #fff;
 }
 
-#mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
+#mainNav .navbar-nav .nav-item .nav-link.active,
+#mainNav .navbar-nav .nav-item .nav-link:hover {
     color: #F88E52
 }
 
@@ -232,22 +240,27 @@ header.masthead .intro-text .intro-heading {
         border: none;
         background-color: transparent
     }
+
     #mainNav .navbar-brand {
         font-size: 1.75em;
         transition: all .3s
     }
+
     #mainNav .navbar-nav .nav-item .nav-link {
-        padding: 1.1em 1em!important
+        padding: 1.1em 1em !important
     }
+
     #mainNav.navbar-shrink {
         padding-top: 0;
         padding-bottom: 0;
         background-color: #222831
     }
+
     #mainNav.navbar-shrink .navbar-brand {
         font-size: 1.25em;
         padding: 12px 0
     }
+
     #darkNav {
         border: none;
         background-color: #222831
@@ -263,7 +276,8 @@ header.masthead .intro-text .intro-heading {
 
 /*Para quitar borde azul de los botones de bootstrap*/
 
-.btn, .btn-primary {
+.btn,
+.btn-primary {
     outline: none !important;
     box-shadow: none !important;
     border-color: none !important;
@@ -303,14 +317,115 @@ header.masthead .intro-text .intro-heading {
 
 
 /*Para la página del Admin*/
-.contenedor{
+
+/* CONTENEDOR */
+.contenedor {
     width: 100%;
     height: 100%;
 }
 
-.cuerpo{
+/* CUERPO */
+.cuerpo {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+
+    height: 85%;
 }
 
+/* TARJETAS INFORMACION GENERAL */
+.tarjetasInfoGeneral {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
-.footer{
+    height: 15%;
+    min-width: 925px;
+
+    display: flex;
+    justify-content: space-between;
 }
+
+/* CADA TARJETA */
+
+.tarjeta {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
+
+    width: 20%;
+    height: 100%;
+    min-height: 58px;
+    min-width: 195px;
+    max-width: 220px;
+
+    display: flex;
+    justify-content: space-between;
+
+    overflow: auto;
+}
+
+/* DENTRO DE CADA TARJETA */
+
+
+.iconoTarjeta {
+    padding-bottom: .5rem;
+    padding-left: .4rem;
+    padding-top: .5rem;
+    
+    text-align: center;
+
+}
+
+.icono{
+    width: 3rem;
+    height: 3rem;
+}
+
+.textoTarjeta {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+
+    line-height: normal;
+    
+    text-align: center;
+    font-size: 1rem;
+
+
+}
+
+.valorTarjeta {
+    padding: 1.2rem;
+
+
+    text-align: center;
+    font-size: 1rem;
+
+
+}
+
+/* /DENTRO DE CADA TARJETA */
+
+/* /CADA TARJETA */
+
+/* /TARJETAS INFORMACION GENERAL */
+
+/* TARJETAS INFORMACION DE CADA SENSOR */
+
+.tarjetasInfoSensores {
+    height: 40%;
+}
+
+/* /TARJETAS INFORMACION DE CADA SENSOR */
+
+/* MAPA */
+
+
+.contenedorMapa {
+    height: 40%;
+}
+
+/* /MAPA */
+
+/* /CONTENEDOR */
+
+.footer {}

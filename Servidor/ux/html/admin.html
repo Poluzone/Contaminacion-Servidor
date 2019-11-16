@@ -68,7 +68,6 @@
             proxy.ComprobacionLogin(data);
 
         }
-
     </script>
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
@@ -90,8 +89,7 @@
 
     <!-- CSS de Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -99,55 +97,163 @@
     <![endif]-->
 </head>
 
-    <!----------------------------------------------------- BODY --------------------------------------------------------->
-    
+<!----------------------------------------------------- BODY --------------------------------------------------------->
+
 <body id="page-top" onload="checkCookie()">
     <!-------------------------------------------------- CONTENEDOR ----------------------------------------------------------->
 
     <div class="contenedor">
-        
+
         <!------------------------------------------------ NAVBAR -------------------------------------------------------->
-        
-        
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink" id="darkNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png"
-                        width="30" alt=""> Poluzone</a>
-                <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse"
-                    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <i class="material-icons">
-                        menu
-                    </i>
-                </a>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#perfil">Perfil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#contact">CERRAR SESIÓN</a>
-                        </li>
-                    </ul>
+
+        <div class="navbar">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink" id="darkNav">
+                <div class="container">
+                    <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png" width="30" alt=""> Poluzone</a>
+                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="material-icons">
+                            menu
+                        </i>
+                    </a>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav text-uppercase ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="#perfil">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="#contact">CERRAR SESIÓN</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-            
-        <!------------------------------------------------ CUERPO -------------------------------------------------------->
-    
-        <div class="cuerpo">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            
+            </nav>
+
         </div>
-    
+
+        <!------------------------------------------------ CUERPO -------------------------------------------------------->
+
+        <div class="cuerpo container">
+
+            <!----------------------------------- CONTENEDOR DE TARJETAS ----------------------------------------->
+
+            <div class="tarjetasInfoGeneral">
+
+                <!----------------------------------- TARJETA 1 ----------------------------------------->
+
+                <div class="tarjeta shadow bg-white rounded">
+
+
+                    <div class="iconoTarjeta">
+
+                        <img src="../images/sensor1.png" class="icono">
+
+                    </div>
+
+                    <div class="textoTarjeta">
+
+                        Número de sensores
+
+                    </div>
+
+                    <div class="valorTarjeta">
+
+                        232
+
+                    </div>
+
+                </div>
+                
+                <!----------------------------------- TARJETA 2 ----------------------------------------->
+
+                <div class="tarjeta shadow bg-white rounded">
+
+
+                    <div class="iconoTarjeta">
+
+                        <img src="../images/tick2.png" class="icono">
+
+                    </div>
+
+                    <div class="textoTarjeta">
+
+                        Sensores activos
+
+                    </div>
+
+                    <div class="valorTarjeta">
+
+                        232
+
+                    </div>
+
+                </div>
+                
+                <!----------------------------------- TARJETA 3 ----------------------------------------->
+
+                <div class="tarjeta shadow bg-white rounded">
+
+
+                    <div class="iconoTarjeta">
+
+                        <img src="../images/cross2.png" class="icono">
+
+                    </div>
+
+                    <div class="textoTarjeta">
+
+                        Sensores inactivos
+                        
+                    </div>
+
+                    <div class="valorTarjeta">
+
+                        232
+
+                    </div>
+
+                </div>
+                
+                <!----------------------------------- TARJETA 4 ----------------------------------------->
+
+                <div class="tarjeta shadow bg-white rounded">
+
+
+                    <div class="iconoTarjeta">
+
+                        <img src="../images/box2.png" class="icono">
+
+                    </div>
+
+                    <div class="textoTarjeta">
+
+                        Sensores<br>en stock
+
+                    </div>
+
+                    <div class="valorTarjeta">
+
+                        232
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="tarjetasInfoSensores">
+
+            </div>
+
+            <div class="contenedorMapa">
+
+            </div>
+
+
+
+        </div>
+
         <!------------------------------------------------ /CUERPO -------------------------------------------------------->
 
 
@@ -162,36 +268,29 @@
         </footer>
 
         <!------------------------------------------------ /FOOTER -------------------------------------------------------->
-        
-            </div>
-        <!-------------------------------------------------- /CONTENEDOR ----------------------------------------------------------->
-    
 
-        <!-- Librería jQuery requerida por los plugins de JavaScript -->
-        <script src="http://code.jquery.com/jquery.js"></script>
+    </div>
+    <!--/contenedor-->
 
-        <!-- Todos los plugins JavaScript de Bootstrap (también puedes
+    <!-------------------------------------------------- /CONTENEDOR ----------------------------------------------------------->
+
+
+    <!-- Librería jQuery requerida por los plugins de JavaScript -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+
+    <!-- Todos los plugins JavaScript de Bootstrap (también puedes
                 incluir archivos JavaScript individuales de los únicos
                 plugins que utilices) -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- Custom scripts for this template -->
-        <script src="../js/agency.min.js"></script>
-        <script src="../jquery-easing/jquery.easing.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="../js/agency.min.js"></script>
+    <script src="../jquery-easing/jquery.easing.min.js"></script>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    </body>
 
-        <!----------------------------------------------------- /BODY ----------------------------------------------------------->
+</body>
 
-    
-</html>
+<!----------------------------------------------------- /BODY -----------------------------------------------------------></html>
