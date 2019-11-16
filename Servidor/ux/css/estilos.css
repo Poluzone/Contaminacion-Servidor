@@ -371,12 +371,12 @@ header.masthead .intro-text .intro-heading {
     padding-bottom: .5rem;
     padding-left: .4rem;
     padding-top: .5rem;
-    
+
     text-align: center;
 
 }
 
-.icono{
+.icono {
     width: 3rem;
     height: 3rem;
 }
@@ -386,7 +386,7 @@ header.masthead .intro-text .intro-heading {
     padding-bottom: .5rem;
 
     line-height: normal;
-    
+
     text-align: center;
     font-size: 1rem;
 
@@ -409,10 +409,30 @@ header.masthead .intro-text .intro-heading {
 
 /* /TARJETAS INFORMACION GENERAL */
 
+/* SUBCUERPO */
+
+.subcuerpo {
+    width: 100%;
+    height: 80%;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
 /* TARJETAS INFORMACION DE CADA SENSOR */
 
 .tarjetasInfoSensores {
-    height: 40%;
+    width: 49%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* TARJETA TODOS LOS SENSORES Y TARJETA INFORMACION DE UN SENSOR */
+
+.tarjetaInfo {
+    height: 48%;
 }
 
 /* /TARJETAS INFORMACION DE CADA SENSOR */
@@ -421,10 +441,13 @@ header.masthead .intro-text .intro-heading {
 
 
 .contenedorMapa {
-    height: 40%;
+    height: 100%;
+    width: 49%;
 }
 
 /* /MAPA */
+
+/* /SUBCUERPO */
 
 /* /CONTENEDOR */
 
