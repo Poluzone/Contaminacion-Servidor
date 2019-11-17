@@ -4,11 +4,11 @@
 const path = require('path');
 const saltRounds = 10;
 
-module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
+module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   // .......................................................
   // GET /prueba
   // .......................................................
-  servidorExpress.get('/prueba', function(peticion, respuesta) {
+  servidorExpress.get('/prueba', function (peticion, respuesta) {
     console.log(" * GET /prueba ")
     respuesta.send("¡Funciona!")
   }) // get /prueba
@@ -17,7 +17,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
   // .......................................................
 
   servidorExpress.get('/GETsoloMedidas',
-    async function(peticion, respuesta) {
+    async function (peticion, respuesta) {
       console.log(" * GET /soloMedidas ")
 
       // averiguo el dni
@@ -42,20 +42,20 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
-     /**
-     * /GETidUsuario
-     * 
-     * Recoge el id que corresponda al usuario loggeado
-     */
-    servidorExpress.post('/GETidUsuario',
-    async function(peticion, respuesta) {
-      
+  /**
+  * /GETidUsuario
+  * 
+  * Recoge el id que corresponda al usuario loggeado
+  */
+  servidorExpress.post('/GETidUsuario',
+    async function (peticion, respuesta) {
+
       console.log(" * POST /idUsuario ");
 
-     // averiguo el dni
-     var dato = JSON.parse(peticion.body);
+      // averiguo el dni
+      var dato = JSON.parse(peticion.body);
 
-     console.log(dato);
+      console.log(dato);
 
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetIdDelUsuario(dato);
@@ -72,19 +72,19 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(idUser));
     })
 
-    /**
-     * /GETultimaMedidaPorUsuario
-     * 
-     * Recoge la última médida del usuario que se le diga -> devuelve un JSON con el dato, la fecha y la posición
-     */
-    servidorExpress.post('/GETultimaMedidaPorUsuario',
-    async function(peticion, respuesta) {
+  /**
+   * /GETultimaMedidaPorUsuario
+   * 
+   * Recoge la última médida del usuario que se le diga -> devuelve un JSON con el dato, la fecha y la posición
+   */
+  servidorExpress.post('/GETultimaMedidaPorUsuario',
+    async function (peticion, respuesta) {
       console.log(" * POST /ultimaMedidaPorUsuario ")
 
-     // averiguo el dni
-     var dato = JSON.parse(peticion.body);
+      // averiguo el dni
+      var dato = JSON.parse(peticion.body);
 
-     console.log(dato);
+      console.log(dato);
 
       // llamo a la función adecuada de la lógica
       var res = await laLogica.getLaUltimaMedidaPorUsuario(dato);
@@ -103,14 +103,14 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.send(JSON.stringify(res))
     })
-/**
-   * /GetUsuarioPorEmail/:email -> es una petición GET que llama a getUsuarioPorEmail() de la Lógica
-   * la cual recoge los datos del Usuario de la BBDD
-   * 
-   */
+  /**
+     * /GetUsuarioPorEmail/:email -> es una petición GET que llama a getUsuarioPorEmail() de la Lógica
+     * la cual recoge los datos del Usuario de la BBDD
+     * 
+     */
 
   servidorExpress.get('/GetUsuarioPorEmail/:email',
-    async function(peticion, respuesta) {
+    async function (peticion, respuesta) {
       console.log(" * GET /UsuarioPorEmail ")
       // averiguo el dni
       var dato = peticion.params.email
@@ -118,7 +118,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       console.log(dato)
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetUsuarioPorEmail(dato);
-     
+
       console.log(res.Email);
       console.log(res.Password);
       console.log(res.Telefono);
@@ -133,45 +133,45 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
-    /**
-   * /GetUsuarioPorEmail -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
-   * la cual recoge los datos del Usuario de la BBDD
-   * 
-   */
+  /**
+ * /GetUsuarioPorEmail -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
+ * la cual recoge los datos del Usuario de la BBDD
+ * 
+ */
 
   servidorExpress.post('/GetUsuarioPorEmail',
-  async function(peticion, respuesta) {
-    console.log(" * POST /UsuarioPorEmail ")
-    // averiguo el dni
-    var dato = peticion.body;
+    async function (peticion, respuesta) {
+      console.log(" * POST /UsuarioPorEmail ")
+      // averiguo el dni
+      var dato = peticion.body;
 
-    console.log("El dato introducido en el método: "+dato)
-    // llamo a la función adecuada de la lógica
-    var res = await laLogica.GetUsuarioPorEmail("rosa@gti.com");
-   
-    console.log(res.Email);
-    console.log(res.Nombre);
-    console.log(res.Telefono);
-    console.log(res.TipoUsuario);
+      console.log("El dato introducido en el método: " + dato)
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.GetUsuarioPorEmail("rosa@gti.com");
 
-    // si el array de resultados no tiene una casilla ...
-    if (res.length < 1) {
-      // 404: not found
-      respuesta.status(404).send("no encontré usuario: " + dato)
-      return
-    }
-    // todo ok
-    respuesta.send(JSON.stringify(res))
-  })
+      console.log(res.Email);
+      console.log(res.Nombre);
+      console.log(res.Telefono);
+      console.log(res.TipoUsuario);
 
-    /**
-   * /ComprobarLogin -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
-   * la cual devuelve el objeto USUARIO con el que compara la Password
-   * 
-   */
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré usuario: " + dato)
+        return
+      }
+      // todo ok
+      respuesta.send(JSON.stringify(res))
+    })
 
-    servidorExpress.post('/ComprobarLogin',
-    async function(peticion, respuesta) {
+  /**
+ * /ComprobarLogin -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
+ * la cual devuelve el objeto USUARIO con el que compara la Password
+ * 
+ */
+
+  servidorExpress.post('/ComprobarLogin',
+    async function (peticion, respuesta) {
       console.log(" * POST /ComprobarLogin ")
       // averiguo el dni
       var dato = JSON.parse(peticion.body);
@@ -187,33 +187,33 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
         return
       }
 
-      bcrypt.compare(dato.Email+dato.Password, resu[0].Password , function(err, res) {
-        if(!err){
+      bcrypt.compare(dato.Email + dato.Password, resu[0].Password, function (err, res) {
+        if (!err) {
           var data = {
             Usuario: resu,
             status: res,
           };
 
-            respuesta.send(data);
+          respuesta.send(data);
 
         }
       });
 
     })
 
-/**
-   * /insertarMedida -> es una petición POST que llama a insertarMedida() de la Lógica
-   * la cual añade la medida del sensor a la BBDD
-   * 
-   */
+  /**
+     * /insertarMedida -> es una petición POST que llama a insertarMedida() de la Lógica
+     * la cual añade la medida del sensor a la BBDD
+     * 
+     */
   servidorExpress.post('/insertarMedida',
-    async function(peticion, respuesta) {
+    async function (peticion, respuesta) {
       console.log(" * POST /insertarMedida")
       var datos = JSON.parse(peticion.body)
 
       // supuesto procesamiento
 
-       laLogica.insertarMedida(datos);
+      laLogica.insertarMedida(datos);
 
       respuesta.send("OK");
     }) // post / insertarPersona
@@ -225,47 +225,71 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
    * 
    */
   servidorExpress.post('/insertarUsuario',
-    async function(peticion, respuesta) {
+    async function (peticion, respuesta) {
       console.log(" * POST /insertarUsuario")
       var datos = JSON.parse(peticion.body)
 
-      bcrypt.hash(datos.Email+datos.Password, saltRounds, function(err, hash) {
+      bcrypt.hash(datos.Email + datos.Password, saltRounds, function (err, hash) {
         if (!err) {
           datos.Password = hash;
-          
-          laLogica.insertarUsuario(datos).then(function() {
-              var data = { status: true }
-              respuesta.send(JSON.stringify(data));
-            })
-            .catch (function(err) {
-              console.log(err) 
+
+          laLogica.insertarUsuario(datos).then(function () {
+            var data = { status: true }
+            respuesta.send(JSON.stringify(data));
+          })
+            .catch(function (err) {
+              console.log(err)
               var data = { status: false }
               respuesta.send(JSON.stringify(data));
             })
-        }else {
+        } else {
           var data = { status: false }
           console.log(err);
         }
-      }) }); // post / insertarPersona
+      })
+    }); // post / insertarPersona
 
-  servidorExpress.get('/ux/html/:archivo', function(peticion, respuesta) {
+
+  /*
+  * /getSensoresYSusUsuarios/ -> es una petición GET que llama a getSensoresYSusUsuarios() de la Lógica
+  * la cual recoge los datos de los sensores de la BBDD
+  */
+
+  servidorExpress.get('/getSensoresYSusUsuarios',
+    async function (peticion, respuesta) {
+      console.log(" * GET /getSensoresYSusUsuarios ")
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getSensoresYSusUsuarios();
+
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré sensores: " + dato)
+        return
+      }
+      // todo ok
+      respuesta.send(JSON.stringify(res))
+    })
+
+  servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
     var dir = path.resolve("../ux/html");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
 
-  servidorExpress.get('/ux/js/:archivo', function(peticion, respuesta) {
+  servidorExpress.get('/ux/js/:archivo', function (peticion, respuesta) {
     console.log(" JS:" + peticion.params.archivo);
     var dir = path.resolve("../ux/js");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
-  servidorExpress.get('/ux/css/:archivo', function(peticion, respuesta) {
+  servidorExpress.get('/ux/css/:archivo', function (peticion, respuesta) {
     console.log(" CSS:" + peticion.params.archivo);
     var dir = path.resolve("../ux/css");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
 
-  servidorExpress.get('/ux/images/:archivo', function(peticion, respuesta) {
+  servidorExpress.get('/ux/images/:archivo', function (peticion, respuesta) {
     console.log(" IMAGES:" + peticion.params.archivo);
     var dir = path.resolve("../ux/images");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
