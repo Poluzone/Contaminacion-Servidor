@@ -269,7 +269,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return
       }
       // todo ok
-      respuesta.send(JSON.stringify(res))
+      respuesta.status(200).send(JSON.stringify(res))
     })
 
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
