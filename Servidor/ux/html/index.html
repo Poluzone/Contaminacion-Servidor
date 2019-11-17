@@ -71,7 +71,7 @@
 
         </script>
         <!--  css de bootsrap  -->
-        <link rel="stylesheet" href="app/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/estilos.css">
 
         <!-- iconos Material Design -->
@@ -85,7 +85,7 @@
         <title>Poluzone | Home</title>
 
         <!-- CSS de Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
         <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
@@ -315,7 +315,7 @@
 
         <!-- Librería jQuery requerida por los plugins de JavaScript -->
         <script src="http://code.jquery.com/jquery.js"></script>
-
+f
         <!-- Todos los plugins JavaScript de Bootstrap (también puedes
 incluir archivos JavaScript individuales de los únicos
 plugins que utilices) -->
@@ -333,6 +333,10 @@ plugins que utilices) -->
                 var map = new google.maps.Map(document.getElementById("map"), {
                     zoom: 4,
                     center: location
+                });
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
                 });
                 }
         </script>
