@@ -2,6 +2,7 @@
 <html lang="es">
     <head>
         <script type="text/javascript" src="../js/PROXY.js"></script>
+        <script type="text/javascript" src="../js/map.js"></script>
         <script>
             var proxy = new Proxy();
 
@@ -315,7 +316,7 @@
 
         <!-- Librería jQuery requerida por los plugins de JavaScript -->
         <script src="http://code.jquery.com/jquery.js"></script>
-        f
+        
         <!-- Todos los plugins JavaScript de Bootstrap (también puedes
 incluir archivos JavaScript individuales de los únicos
 plugins que utilices) -->
@@ -327,21 +328,5 @@ plugins que utilices) -->
         <!-- Scripts para API Google Maps -->
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap"
                 type="text/javascript"></script>
-        <script>
-            function initMap(){
-                var location = {lat: 38.996, lng: -0.166};
-                var map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 4,
-                    center: location
-                });
-                var marker = new google.maps.Marker({
-                    position: location,
-                    map: map
-                });
-            }
-            function drawMeasure(){
-                
-            }
-        </script>
     </body>
 </html>
