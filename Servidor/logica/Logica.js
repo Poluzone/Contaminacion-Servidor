@@ -51,21 +51,7 @@ module.exports = class Logica {
         })
     }
 
-    //------------------------------------------------------------
-    //     getMedidasPorFecha()
-    //------------------------------------------------------------
-
-    async getTodasLasMedidasPorFecha(desde, hasta) {
-        var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN" +desde+ "AND" +hasta+ "ORDER BY IdMedida DESC";
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL,
-                                (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-            })
-        })
-    }//getLaMedidasPorFecha
-
-
+   
     /*async GetLaUltimaMedida(idUsuario) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
