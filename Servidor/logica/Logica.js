@@ -6,52 +6,53 @@ const sqlite3 = require("sqlite3")
 // .....................................................................
 // .....................................................................
 module.exports = class Logica {
-  // .................................................................
-  // nombreBD: Texto
-  // -->
-  // constructor () -->
-  // .................................................................
-  constructor(nombreBD, cb) {
-    this.laConexion = new sqlite3.Database(
-      nombreBD,
-      (err) => {
-        if (!err) {
-          this.laConexion.run("PRAGMA foreign_keys = ON")
+    // .................................................................
+    // nombreBD: Texto
+    // -->
+    // constructor () -->
+    // .................................................................
+    constructor(nombreBD, cb) {
+        this.laConexion = new sqlite3.Database(
+            nombreBD,
+            (err) => {
+                if (!err) {
+                    this.laConexion.run("PRAGMA foreign_keys = ON")
+                }
+                cb(err)
+            })
+    } // ()
+
+    async insertarMedida(medida) {
+        var textoSQL =
+            'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
+        var valoresParaSQL = {
+            $IdMedida: null,
+            $IdTipoMedida: medida.IdTipoMedida,
+            $IdUsuario: medida.IdUsuario,
+            $Valor:medida.Valor,
+            $Tiempo:medida.Tiempo,
+            $Latitud:medida.Latitud,
+            $Longitud:medida.Longitud
         }
-        cb(err)
-      })
-  } // ()
-
-  async insertarMedida(medida) {
-    var textoSQL =
-      'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
-    var valoresParaSQL = {
-      $IdMedida: null,
-      $IdTipoMedida: medida.IdTipoMedida,
-      $IdUsuario: medida.IdUsuario,
-      $Valor: medida.Valor,
-      $Tiempo: medida.Tiempo,
-      $Latitud: medida.Latitud,
-      $Longitud: medida.Longitud
-    }
-    return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err) {
-        (err ? rechazar(err) : resolver())
-      })
-    })
-  }
-
-  async getLaUltimaMedidaPorUsuario(userId) {
-    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario=" + userId + " ORDER BY IdMedida DESC LIMIT 0, 1";
-    return new Promise((resolver, rechazar) => {
-      this.laConexion.all(textoSQL,
-        (err, res) => {
-          (err ? rechazar(err) : resolver(res))
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+                (err ? rechazar(err) : resolver())
+            })
         })
-    })
-  }
+    }
 
-  /*async GetLaUltimaMedida(idUsuario) {
+    async getLaUltimaMedidaPorUsuario(userId) {
+        var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.all(textoSQL,
+                                (err, res) => {
+                (err ? rechazar(err) : resolver(res))
+            })
+        })
+    }
+
+   
+    /*async GetLaUltimaMedida(idUsuario) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
@@ -68,8 +69,7 @@ module.exports = class Logica {
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
-    })
-  }
+    }
 
   // .................................................................
   // email -> GetHashPorEmail() ->
@@ -83,9 +83,9 @@ module.exports = class Logica {
       this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
+
         })
-    })
-  }
+    }
 
   // .................................................................
   // email -> GetUsuarioPorEmail() ->
@@ -132,8 +132,7 @@ module.exports = class Logica {
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
-    })
-  }
+    }
 
   // .................................................................
   // -> getUsuarioPorIdSensor(idSensor) ->
