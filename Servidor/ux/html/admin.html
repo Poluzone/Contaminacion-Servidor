@@ -3,6 +3,12 @@
 
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
+    
+    <!-- Scripts para API Google Maps -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap"
+                type="text/javascript"></script>
+        <script type="text/javascript" src="../js/map.js"></script>
+    
     <script>
         var proxy = new Proxy();
 
@@ -302,7 +308,9 @@
 
                     <div class="contenedorMapa shadow bg-white rounded">
 
+                        <div class="map" id="map">
 
+                        </div>
 
                     </div>
 
