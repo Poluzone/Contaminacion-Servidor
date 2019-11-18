@@ -3,6 +3,10 @@
 
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
+       <!-- Scripts para API Google Maps -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap"
+                type="text/javascript"></script>
+        <script type="text/javascript" src="../js/map.js"></script>
     <script>
         var proxy = new Proxy();
 
@@ -151,9 +155,9 @@
     <!------------------------------------------------ Sección Mapa -------------------------------------------------------->
 
     <section class="page-section container-fluid" id="mapa">
-        <div class="container">
-            <img src="../images/mapagrande.png" class="img-fluid">
-        </div>
+        <div class="map" id="map">
+
+            </div>
     </section>
 
     <!------------------------------------------------ / Sección Mapa -------------------------------------------------------->
@@ -293,19 +297,19 @@
                 <div class="modal-body d-flex justify-content-center">
                     <form class="form-horizontal w-100">
                         <input id="textR" type="text" class="form-control nunito" name="textR" placeholder="Nombre">
-                        </br>
+                        <br>
                         <div class="input-group">
                             <input id="emailR" type="text" class="form-control nunito sizeM" name="emailR"
                                 placeholder="Email">
-                        </div></br>
+                        </div><br>
                         <div class="input-group">
                             <input id="telR" type="text" class="form-control nunito sizeM" name="telR"
                                 placeholder="Número de teléfono">
-                        </div></br>
+                        </div><br>
                         <div class="input-group">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"
                                 placeholder="Mensaje"></textarea>
-                        </div></br>
+                        </div><br>
                     </form>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
@@ -334,13 +338,13 @@
                             <span class="input-group-text"><i class="material-icons">email</i></span>
                             <input id="email" type="text" class="form-control nunito sizeS" name="email"
                                 placeholder="Email">
-                        </div></br>
+                        </div><br>
 
                         <div class="input-group">
                             <span class="input-group-text"><i class="material-icons">https</i></span>
                             <input id="pass" type="password" class="form-control nunito sizeS" name="password"
                                 placeholder="Password">
-                        </div></br>
+                        </div><br>
                     </form>
                     <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" data-toggle="modal"
                             data-target="#recoverPass" class="naranja"> Recuperar
@@ -373,22 +377,22 @@
                             <span class="input-group-text"><i class="material-icons">email</i></span>
                             <input id="emailR" type="text" class="form-control nunito sizeS" name="emailR"
                                 placeholder="Email">
-                        </div></br>
+                        </div><br>
                         <div class="input-group">
                             <span class="input-group-text"><i class="material-icons">https</i></span>
                             <input id="passR" type="password" class="form-control nunito sizeS" name="passR"
                                 placeholder="Contraseña">
-                        </div></br>
+                        </div><br>
                         <div class="input-group">
                             <span class="input-group-text"><i class="material-icons">https</i></span>
                             <input id="RpassR" type="password" class="form-control nunito sizeS" name="RpassR"
                                 placeholder="Repetir contraseña">
-                        </div></br>
+                        </div><br>
                         <div class="input-group">
                             <span class="input-group-text"><i class="material-icons">phone</i></span>
                             <input id="telR" type="text" class="form-control nunito sizeS" name="telR"
                                 placeholder="Telefono">
-                        </div></br>
+                        </div><br>
                         <div class="input-group">
                             <label class="sizeXS centrado"><input id="condiciones" type="checkbox" name="condiciones"
                                     style="margin: 6px;"> Acepto los Términos de uso
