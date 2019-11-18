@@ -402,19 +402,30 @@ header.masthead .intro-text .intro-heading {
 /* TARJETAS INFORMACION DE CADA SENSOR */
 
 .tarjetasInfoSensores {
+    justify-content: space-between;
 }
 
 /* TARJETA TODOS LOS SENSORES Y TARJETA INFORMACION DE UN SENSOR */
 
+.fila{
+    height: 50%;
+}
+
 .tarjetaInfo {
+    
+    height: 100%;
 }
 
 /* /TARJETAS INFORMACION DE CADA SENSOR */
 
 /* MAPA */
 
+.columnaMapa{
+    height: 100%;
+}
 
 .contenedorMapa {
+        height: 100%;
 }
 
 /* /MAPA */
