@@ -16,18 +16,25 @@ class logicaAdministracion {
 
     }
 
-    async getSensoresYUsuarios() {
+    async getSensoresYSusUsuarios() {
 
-        console.log("Llamada a getSensoresYUsuarios");
+        console.log("Llamada a getSensoresYSusUsuarios");
 
-        return 23;
-
-        /*fetch(IP_PUERTO + "/getSensoresYUsuarios", {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(data), // data can be `string` or {object}!
-        }).then(function (response) {
-            return response.json();
-        })*/
+        fetch(IP_PUERTO + "/getSensoresYSusUsuarios", {
+                method: 'GET', // or 'PUT'
+                mode: 'no-cors',
+                headers: {
+                    'User-Agent': 'jordi',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+            var json = response.json();
+                console.log("respuesta " + json.stringify);
+                //return response.json();
+            })
+            .then(function (datos) {
+                console.log("Datos: " + datos[0]);
+            });
 
     }
 

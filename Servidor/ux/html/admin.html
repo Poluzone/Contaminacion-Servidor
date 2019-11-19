@@ -21,7 +21,7 @@
 
         function llamadaALogicaAdministracion() {
 
-            var todosLosSensores = Promise.resolve(logicaAdmin.getSensoresYUsuarios());
+            var todosLosSensores = Promise.resolve(logicaAdmin.getSensoresYSusUsuarios());
 
             todosLosSensores.then(function(valor) {
                 console.log("Es quero " + valor);
