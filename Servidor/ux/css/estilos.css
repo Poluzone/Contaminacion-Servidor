@@ -509,9 +509,24 @@ header.masthead .intro-text .intro-heading {
     align-items: center;
 }
 
-.iconosEditar {
+.iconoAdd {
     width: 1.5rem;
     height: 1.5rem;
+}
+
+.iconoAdd:hover{
+    cursor: pointer;
+    content: url(../images/addHover.png);
+}
+
+.iconoCan {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoCan:hover{
+    cursor: pointer;
+        content: url(../images/canHover.png);
 }
 
 /* /TARJETAS INFORMACION DE CADA SENSOR */
