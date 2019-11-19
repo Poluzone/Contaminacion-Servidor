@@ -13,8 +13,24 @@
 
     <script>
         var proxy = new Proxy();
-        
-        var admin = new logicaAdministracion();
+
+        // Logica Administracion
+        var logicaAdmin = new logicaAdministracion();
+
+        window.addEventListener('load', llamadaALogicaAdministracion, false);
+
+        function llamadaALogicaAdministracion() {
+
+            var todosLosSensores = Promise.resolve(logicaAdmin.getSensoresYUsuarios());
+
+            todosLosSensores.then(function(valor) {
+                console.log("Es quero " + valor);
+            })
+
+        }
+
+        // /Logica Administracion
+
 
         function setCookie(cname, cvalue) {
             //var d = new Date();
@@ -78,7 +94,6 @@
             proxy.ComprobacionLogin(data);
 
         }
-
     </script>
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
@@ -467,6 +482,4 @@
 
 </body>
 
-<!----------------------------------------------------- /BODY ----------------------------------------------------------->
-
-</html>
+<!----------------------------------------------------- /BODY -----------------------------------------------------------></html>

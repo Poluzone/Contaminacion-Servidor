@@ -9,11 +9,26 @@
 const ip_puerto = "http://localhost:8080";
 
 class logicaAdministracion {
-    
-  constructor() {
-      
-    console.log("logicaAdministracion funcionando");
-      
-  }
-    
+
+    constructor() {
+
+        console.log("logicaAdministracion funcionando");
+
+    }
+
+    async getSensoresYUsuarios() {
+
+        console.log("Llamada a getSensoresYUsuarios");
+
+        return 23;
+
+        /*fetch(IP_PUERTO + "/getSensoresYUsuarios", {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(data), // data can be `string` or {object}!
+        }).then(function (response) {
+            return response.json();
+        })*/
+
+    }
+
 }
