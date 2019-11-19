@@ -51,7 +51,7 @@ module.exports = class Logica {
         })
     }
 
-   
+
     /*async GetLaUltimaMedida(idUsuario) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
@@ -69,7 +69,8 @@ module.exports = class Logica {
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
-    }
+    })
+  }
 
   // .................................................................
   // email -> GetHashPorEmail() ->
@@ -85,7 +86,7 @@ module.exports = class Logica {
           (err ? rechazar(err) : resolver(res))
 
         })
-    }
+    })}
 
   // .................................................................
   // email -> GetUsuarioPorEmail() ->
@@ -132,7 +133,8 @@ module.exports = class Logica {
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
-    }
+    })
+  }
 
   // .................................................................
   // -> getUsuarioPorIdSensor(idSensor) ->
