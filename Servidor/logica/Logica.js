@@ -46,14 +46,14 @@ module.exports = class Logica {
     //------------------------------------------------------------
 
     async getTodasLasMedidasPorFecha(desde, hasta) {
-        var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN" +desde+ "AND" +hasta+ "ORDER BY IdMedida DESC";
+        var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " +desde+ " AND " +hasta+ " ORDER BY IdMedida DESC";
         return new Promise((resolver, rechazar) => {
             this.laConexion.all(textoSQL,
                                 (err, res) => {
                 (err ? rechazar(err) : resolver(res))
             })
         })
-    }//getLaMedidasPorFecha
+    }//getTodasLasMedidasPorFecha()
 
     async GetLaUltimaMedida(userId) {
         var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
