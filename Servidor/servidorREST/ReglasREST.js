@@ -78,9 +78,9 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     // Recoge dos fechas, fecha desde y fecha hasta
     // devuelve todas las medidas entre estas dos medidas de tiempo
     // .......................................................
-    servidorExpress.get('/GetTodasLasMedidasPorFecha/',
+    servidorExpress.post('/GetTodasLasMedidasPorFecha/',
                         async function(peticion, respuesta){
-        console.log("* GET /TodasLasMedidasPorFecha")
+        console.log("* POST /TodasLasMedidasPorFecha")
 
         //Obtengo el body donde pondré los parámetros 
         var dato = JSON.parse(peticion.body);

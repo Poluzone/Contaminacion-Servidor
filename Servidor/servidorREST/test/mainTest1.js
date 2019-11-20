@@ -93,13 +93,13 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
  //GET TodasLasMedidasPorFecha()
     
-  it( "GET /GetTodasLasMedidasPorFecha ", function( hecho ) {
-    var desde = 234324;
-    var hasta = 234324;
-    request.get(
-      { url : IP_PUERTO+"/GETultimaMedida",
+  it( "POST/GetTodasLasMedidasPorFecha ", function( hecho ) {
+    var desde = 6;
+    var hasta = 7;
+    request.post(
+      { url : IP_PUERTO+"/GETtodasLasMedidasPorFecha",
        headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
-       body : JSON.stringify(dato)
+       body : JSON.stringify({'desde':desde, 'hasta':hasta})
       },
       function( err, respuesta, carga ) {
         var json = JSON.parse(carga);
