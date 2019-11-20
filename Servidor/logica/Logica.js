@@ -42,7 +42,7 @@ module.exports = class Logica {
     }
 
     //------------------------------------------------------------
-    //     getMedidasPorFecha()
+    //     getTodasLasMedidasPorFecha()
     //------------------------------------------------------------
 
     async getTodasLasMedidasPorFecha(desde, hasta) {

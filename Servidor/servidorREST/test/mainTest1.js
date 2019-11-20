@@ -91,7 +91,25 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     ) // .get
   }) // it
 
-
+ //GET TodasLasMedidasPorFecha()
+    
+  it( "GET /GetTodasLasMedidasPorFecha ", function( hecho ) {
+    var desde = 234324;
+    var hasta = 234324;
+    request.get(
+      { url : IP_PUERTO+"/GETultimaMedida",
+       headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
+       body : JSON.stringify(dato)
+      },
+      function( err, respuesta, carga ) {
+        var json = JSON.parse(carga);
+        assert.equal( err, null, "¿ha habido un error?" );
+        assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" );
+        hecho();
+      } // callback()
+    ) // .get
+  }) //probar getTodasLasMedidasPorFecha()
+    
   it( "POST /GETultimaMedida ", function( hecho ) {
     var dato = 15;
     request.post(
