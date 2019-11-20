@@ -19,11 +19,17 @@
         function llamadaALogicaAdministracion() {
             proxy.getSensoresYSusUsuarios(function(resp) {
                 console.log(resp);
+
+                console.log("hey bro");
+
+                var ul = document.getElementById("lista");
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode("Hola"));
+                ul.appendChild(li);
+
             });
 
         }
-
-        // /Logica Administracion
 
 
         function setCookie(cname, cvalue) {
@@ -338,12 +344,12 @@
 
                                 <div class="contenedorLista">
 
-                                    <ul class="lista">
+                                    <ul class="lista" id="lista">
 
                                         <!----------------------- ELEMENTO DE LA LISTA ------------------------->
 
 
-                                        <li class="tarjetaLista shadow-sm mb-1 bg-white">
+                                        <li class="tarjetaLista shadow-sm mb-1 bg-white" id="tarjetaLista">
 
                                             <div class="elementoLista row mr-0 ml-0">
 
