@@ -29,7 +29,6 @@ module.exports = class Logica {
             $IdMedida: null,
             $IdTipoMedida: medida.IdTipoMedida,
             $IdUsuario: medida.IdUsuario,
-            $IdUsuario: 15,
             $Valor:medida.Valor,
             $Tiempo:medida.Tiempo,
             $Latitud:medida.Latitud,
@@ -44,14 +43,6 @@ module.exports = class Logica {
 
     async getLaUltimaMedidaPorUsuario(userId) {
         var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
-
-        
-    //------------------------------------------------------------
-    //     getTodasLasMedidasPorFecha()
-    //------------------------------------------------------------
-
-    async getTodasLasMedidasPorFecha(intervalo) {
-        var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " +intervalo.desde+ " AND " +intervalo.hasta+ " ORDER BY IdMedida DESC";
         return new Promise((resolver, rechazar) => {
             this.laConexion.all(textoSQL,
                                 (err, res) => {
@@ -60,18 +51,6 @@ module.exports = class Logica {
         })
     }
 
-
-    }//getTodasLasMedidasPorFecha()
-
-    async GetLaUltimaMedida(userId) {
-        var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL,
-                                (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-            })
-        })
-    }
 
     /*async GetLaUltimaMedida(idUsuario) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
@@ -89,15 +68,9 @@ module.exports = class Logica {
       this.laConexion.all(textoSQL,
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
-    async GetIdDelUsuario(email) {
-        var textoSQL = "SELECT * FROM Usuarios WHERE Email='"+email+"';";
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL,
-                                (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-            })
         })
-    }
+    })
+  }
 
   // .................................................................
   // email -> GetHashPorEmail() ->
@@ -125,18 +98,9 @@ module.exports = class Logica {
       this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
-    async GetHashPorEmail(email) {
-        //  var textoSQL = "select Password from Usuarios where Email = $email ";
-        var valoresParaSQL = {
-            $email: email
-        };
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL,valoresParaSQL,
-                                (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-            })
         })
-    }
+    })
+  }
 
   // .................................................................
   // -> getSensoresYSusUsuarios() ->
@@ -168,16 +132,9 @@ module.exports = class Logica {
       this.laConexion.all(textoSQL, {},
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
-    async GetUsuarioPorEmail(email) {
-        var textoSQL = "select * from Usuarios where Email = $email ";
-        var valoresParaSQL = {  $email: email };
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL,valoresParaSQL,
-                                (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-            })
         })
-    }
+    })
+  }
 
   // .................................................................
   // -> getUsuarioPorIdSensor(idSensor) ->
@@ -249,45 +206,6 @@ module.exports = class Logica {
       })
     })
   } // ()
-    insertarUsuario(datos) {
-        var textoSQL = "insert into Usuarios values( $IdUsuario,$Email ,$Password , $Telefono )";
-        var valoresParaSQL = {
-            $IdUsuario: null,
-            $Email: datos.Email,
-            $Password: datos.Password,
-            $Telefono: datos.Telefono
-        };
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
-                (err ? rechazar(err) : resolver(res))
-            })
-        })
-    }
-
-    async borrarFilasDe(tabla) {
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.run(
-                "delete from " + tabla + ";",
-                (err) => (err ? rechazar(err) : resolver())
-            )
-        })
-    } // ()
-    // .................................................................
-    // borrarFilasDeTodasLasTablas() -->
-    // .................................................................
-    async borrarFilasDeTodasLasTablas() {
-        await this.borrarFilasDe("Usuarios")
-    } // ()
-    // .................................................................
-    // cerrar() -->
-    // .................................................................
-    cerrar() {
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.close((err) => {
-                (err ? rechazar(err) : resolver())
-            })
-        })
-    } // ()
 
 } // class
 // .....................................................................
