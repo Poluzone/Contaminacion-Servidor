@@ -125,4 +125,36 @@ class Proxy {
       callback(datos);
   });
   }
+    
+    /**
+   * getSensoresYSusUsuarios()
+   */
+    async getSensoresYSusUsuarios(callback) {
+
+        console.log("Llamada a getSensoresYSusUsuarios");
+
+        fetch(IP_PUERTO + "/getSensoresYSusUsuarios", {
+                method: 'GET', // or 'PUT'
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+                if (datos != undefined) {
+
+                    console.log("HOLA " + datos);
+                    callback(datos);
+
+
+                    console.log("Tenemos la última medida");
+                } else {
+                    console.log("No existe o no has puesto bien los datos");
+                }
+            }).catch(e => {
+                console.log("error: "+e);
+                return e;
+            });
+
+    }
+    
 }

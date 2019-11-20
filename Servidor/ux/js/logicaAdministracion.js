@@ -16,24 +16,34 @@ class logicaAdministracion {
 
     }
 
-    async getSensoresYSusUsuarios() {
+    async getSensoresYSusUsuarios(callback) {
 
         console.log("Llamada a getSensoresYSusUsuarios");
 
         fetch(IP_PUERTO + "/getSensoresYSusUsuarios", {
                 method: 'GET', // or 'PUT'
-                mode: 'no-cors',
                 headers: {
                     'User-Agent': 'jordi',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 }
             }).then(function (response) {
-            var json = response.json();
-                console.log("respuesta " + json.stringify);
-                //return response.json();
+                console.log("response ", response);
+                return response.json();
             })
             .then(function (datos) {
-                console.log("Datos: " + datos[0]);
+                if (datos != undefined) {
+
+                    console.log("HOLA " + datos);
+                    callback(datos);
+
+
+                    console.log("Tenemos la última medida");
+                } else {
+                    console.log("No existe o no has puesto bien los datos");
+                }
+            }).catch(e => {
+                console.log("error: "+e);
+                return e;
             });
 
     }
