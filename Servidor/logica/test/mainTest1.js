@@ -114,7 +114,13 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       var res = await laLogica.GetIdDelUsuario('mat@gmail.com');
       assert.equal(res.length, 1, "¿no hay un resulado?")
-
+      if(res.length < 1)
+      {
+        console.log("¿No hay resultado?");
+      }else
+      {
+        console.log(res);
+      }
 
     })
 

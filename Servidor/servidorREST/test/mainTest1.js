@@ -153,6 +153,9 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
         var json = JSON.parse(carga);
         assert.equal(err, null, "¿ha habido un error?");
         assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)");
+        
+        console.log(respuesta);
+
         hecho();
       } // callback()
     ) // .get

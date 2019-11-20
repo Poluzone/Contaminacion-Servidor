@@ -63,7 +63,7 @@ module.exports = class Logica {
   }*/
 
   async GetIdDelUsuario(email) {
-    var textoSQL = "SELECT * FROM Usuarios WHERE Email='" + email + "';";
+    var textoSQL = "SELECT idUsuario FROM Usuarios WHERE Email='" + email + "';";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {
