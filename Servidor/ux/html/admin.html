@@ -14,11 +14,10 @@
     <script>
         var proxy = new Proxy();
 
+        var sensores;
+        
         // Se llama a llamadaALogicaAdministracion cuando se crea la ventana
         window.addEventListener('load', llamadaALogicaAdministracion, false);
-
-        // Variable JSON donde se meteran todos los sensores
-        var sensores;
 
         function llamadaALogicaAdministracion() {
             proxy.getSensoresYSusUsuarios(function(resp) {
@@ -27,47 +26,50 @@
 
                 console.log("Numero de sensores: " + resp.length);
                 console.log("Primer sensor " + sensores[0]);
+                console.log("Adios " + 1);
 
-                crearElementosLista();
-                
-                console.log("numero del sensor: " + i);
+                crearElementosLista(0);
+                crearElementosLista(1);
 
             });
 
         }
 
-        function crearElementosLista() {
+        async function crearElementosLista(i) {
 
             var maxListaSensores = sensores.length;
+            var sensor;
+            var ul = document.getElementById("lista");
+            var li = document.createElement("li");
+            var divContenedor;
+            var div1 = document.createElement("div");
+            var div2 = document.createElement("div");
+            var div4 = document.createElement("div");
+            var div5 = document.createElement("div");
+            imagen = document.createElement("img");
 
-            var sensor = sensores[0];
+            //for await (int i = 0; i < maxListaSensores; i++) {
+            sensor = sensores[i];
 
             //for (int i = 0; i < maxListaSensores; i++) {
 
 
-            var ul = document.getElementById("lista");
-            var li = document.createElement("li");
             li.className = "tarjetaLista shadow-sm mb-1 bg-white";
 
-            var divContenedor = document.createElement("div");
+            divContenedor = document.createElement("div");
             divContenedor.className = "elementoLista row mr-0 ml-0";
             li.appendChild(divContenedor);
 
-            var div1 = document.createElement("div");
             div1.className = "columnasInfoSensor col-1";
             divContenedor.appendChild(div1);
-            imagen = document.createElement("img");
             imagen.className = "iconoDeCadaElemento";
 
-            var div2 = document.createElement("div");
-            div2.className = "columnasInfoSensor col-2 my-auto";
+            div2.className = "columnasInfoSensor col-3 my-auto";
             divContenedor.appendChild(div2);
 
-            var div4 = document.createElement("div");
-            div4.className = "columnasInfoSensor col-4 my-auto";
+            div4.className = "columnasInfoSensor col-3 my-auto";
             divContenedor.appendChild(div4);
 
-            var div5 = document.createElement("div");
             div5.className = "columnasInfoSensor col-5 my-auto";
             divContenedor.appendChild(div5);
 
@@ -88,6 +90,30 @@
             div4.appendChild(document.createTextNode(sensor.IdSensor));
             div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
             ul.appendChild(li);
+            console.log(sensor);
+
+            divContenedor.onclick = function() {
+                var divNombre = document.getElementById("Nombre");
+                divNombre.innerHTML = "";
+                divNombre.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+
+                var divTipo = document.getElementById("Tipo");
+                divTipo.innerHTML = "";
+                divTipo.appendChild(document.createTextNode(sensor.Usuario.TipoUsuario));
+
+                var divId = document.getElementById("Id");
+                divId.innerHTML = "";
+                divId.appendChild(document.createTextNode("Id: "+parseInt(sensor.IdTipoMedida)));
+
+                var divCorreo = document.getElementById("Correo");
+                divCorreo.innerHTML = "";
+                divCorreo.appendChild(document.createTextNode("Correo: "+sensor.Usuario.Email));
+
+                var divTelefono = document.getElementById("Telefono");
+                divTelefono.innerHTML = "";
+                divTelefono.appendChild(document.createTextNode("Telefono: "+parseInt(sensor.Usuario.Telefono)));
+
+            };
 
             //}
 
@@ -417,13 +443,13 @@
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-2 font-weight-bold">
+                                        <div class="columnasInfoSensor col-3 font-weight-bold">
 
                                             Tipo
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-4 font-weight-bold">
+                                        <div class="columnasInfoSensor col-3 font-weight-bold">
 
                                             Id sensor
 
@@ -504,6 +530,44 @@
                                 <div class="textoSensores my-auto col-3">
 
                                     INFORMACIÓN
+
+                                </div>
+
+                            </div>
+
+                            <div class="informacionUsuario col">
+
+                                <div class="divsInformacion row my-auto">
+
+                                    <div class="nombreYTipo my-auto" id="Nombre">
+
+
+
+                                    </div>
+
+                                    <div id="Tipo" class="nombreYTipo">
+
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="id row" id="Id">
+
+
+
+                                </div>
+
+                                <div class="correo row" id="Correo">
+
+
+
+                                </div>
+
+                                <div class="telefono row" id="Telefono">
+
+
 
                                 </div>
 
