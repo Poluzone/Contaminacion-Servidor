@@ -17,22 +17,42 @@
         // Se llama a llamadaALogicaAdministracion cuando se crea la ventana
         window.addEventListener('load', llamadaALogicaAdministracion, false);
 
+        // Variable JSON donde se meteran todos los sensores
+        var sensores;
+
         function llamadaALogicaAdministracion() {
             proxy.getSensoresYSusUsuarios(function(resp) {
-                console.log(resp);
-                
-                var sensores = resp;
+
+                sensores = resp;
 
                 console.log("Numero de sensores: " + resp.length);
+                console.log("Primer sensor " + sensores[0]);
 
-                    crearElementosLista();
-                    
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                crearElementosLista();
+                console.log("numero del sensor: " + i);
+
             });
 
         }
 
         function crearElementosLista() {
-            
+
+            var maxListaSensores = sensores.length;
+
+            var sensor = sensores[0];
+
+            //for (int i = 0; i < maxListaSensores; i++) {
+
+
             var ul = document.getElementById("lista");
             var li = document.createElement("li");
             li.className = "tarjetaLista shadow-sm mb-1 bg-white";
@@ -42,27 +62,43 @@
             li.appendChild(divContenedor);
 
             var div1 = document.createElement("div");
-            div1.className = "col-1";
+            div1.className = "columnasInfoSensor col-1";
             divContenedor.appendChild(div1);
+            imagen = document.createElement("img");
+            imagen.className = "iconoDeCadaElemento";
 
             var div2 = document.createElement("div");
-            div2.className = "col-2";
+            div2.className = "columnasInfoSensor col-2 my-auto";
             divContenedor.appendChild(div2);
 
             var div4 = document.createElement("div");
-            div4.className = "col-4";
+            div4.className = "columnasInfoSensor col-4 my-auto";
             divContenedor.appendChild(div4);
 
             var div5 = document.createElement("div");
-            div5.className = "col-5";
+            div5.className = "columnasInfoSensor col-5 my-auto";
             divContenedor.appendChild(div5);
 
-            div1.appendChild(document.createTextNode("0"));
-            div2.appendChild(document.createTextNode("f"));
-            div4.appendChild(document.createTextNode("Hola"));
-            div5.appendChild(document.createTextNode("Hola"));
+            var iconoEstado;
+
+            if (sensor.IdEstado == 0) {
+                iconoEstado = "tick3";
+            }
+            if (sensor.IdEstado == 1) {
+                iconoEstado = "cross3";
+            } else {
+                iconoEstado = "box3";
+            }
+
+            imagen.src = "../images/" + iconoEstado + ".png";
+            div1.appendChild(imagen);
+            div2.appendChild(document.createTextNode(sensor.IdTipoMedida));
+            div4.appendChild(document.createTextNode(sensor.IdSensor));
+            div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
             ul.appendChild(li);
-            
+
+            //}
+
         }
 
 
@@ -128,6 +164,7 @@
             proxy.ComprobacionLogin(data);
 
         }
+
     </script>
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
@@ -377,42 +414,76 @@
 
                                 <div class="contenedorLista">
 
+                                    <!----------------------- CABECERA NOMBRES CADA COLUMNA DE LA LISTA ------------------------->
+
+
+                                    <div class="nombresLista row mr-0 ml-0 border-bottom">
+
+                                        <div class="columnasInfoSensor col-1">
+
+                                            Estado
+
+                                        </div>
+
+                                        <div class="columnasInfoSensor col-2">
+
+                                            Tipo
+
+                                        </div>
+
+                                        <div class="columnasInfoSensor col-4">
+
+                                            Id sensor
+
+                                        </div>
+
+                                        <div class="columnasInfoSensor col-5">
+
+                                            Usuario
+
+                                        </div>
+
+                                    </div>
+
+                                    <!------------------------------------- LISTA --------------------------------------->
+
+
                                     <ul class="lista" id="lista">
 
                                         <!----------------------- ELEMENTO DE LA LISTA ------------------------->
 
 
-                                        <li class="tarjetaLista shadow-sm mb-1 bg-white" id="tarjetaLista">
+                                        <!--<li class="tarjetaLista shadow mb-1 bg-white" id="tarjetaLista">
 
                                             <div class="elementoLista row mr-0 ml-0">
 
-                                                <div class="col-1">
+                                                <div class="columnasInfoSensor col-1">
 
-                                                    0
-
-                                                </div>
-
-                                                <div class="col-2">
-
-                                                    NOX
+                                                    Estado
 
                                                 </div>
 
-                                                <div class="col-4">
+                                                <div class="columnasInfoSensor col-2">
 
-                                                    123456
+                                                    Tipo
 
                                                 </div>
 
-                                                <div class="col-5">
+                                                <div class="columnasInfoSensor col-4">
 
-                                                    Tu Padre El Cojo
+                                                    Id sensor
+
+                                                </div>
+
+                                                <div class="columnasInfoSensor col-5">
+
+                                                    Usuario
 
                                                 </div>
 
                                             </div>
 
-                                        </li>
+                                        </li>-->
 
                                         <!----------------------- /ELEMENTO DE LA LISTA ------------------------->
 
@@ -516,4 +587,6 @@
 
 </body>
 
-<!----------------------------------------------------- /BODY -----------------------------------------------------------></html>
+<!----------------------------------------------------- /BODY ----------------------------------------------------------->
+
+</html>

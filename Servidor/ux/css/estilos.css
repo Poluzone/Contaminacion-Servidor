@@ -381,7 +381,10 @@ header.masthead .intro-text .intro-heading {
     text-align: center;
     font-size: 1rem;
 
+}
 
+.textoTarjeta:hover{
+    cursor:default;
 }
 
 .valorTarjeta {
@@ -390,8 +393,10 @@ header.masthead .intro-text .intro-heading {
 
     text-align: center;
     font-size: 1rem;
+}
 
-
+.valorTarjeta:hover{
+    cursor:default;
 }
 
 /* /DENTRO DE CADA TARJETA */
@@ -439,8 +444,33 @@ header.masthead .intro-text .intro-heading {
     margin: 0% !important;
 }
 
+.iconoAdd {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoAdd:hover{
+    cursor: pointer;
+    content: url(../images/addHover.png);
+}
+
+.iconoCan {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoCan:hover{
+    cursor: pointer;
+        content: url(../images/canHover.png);
+}
+
+.nombresLista:hover{
+    cursor:default;
+}
+
 .contenedorLista {
     height: 80%;
+    overflow: hidden;
 }
 
 .lista {
@@ -481,8 +511,24 @@ header.masthead .intro-text .intro-heading {
     text-align: center;
 }
 
+.columnasInfoSensor{
+    text-align: center;
+}
+
+.col-1{
+    padding: 0% !important;
+}
+
+.iconoDeCadaElemento{
+    width: 100%;
+}
+
 .textoSensores {
     padding-left: 1rem;
+}
+
+.textoSensores:hover{
+    cursor:default;
 }
 
 .form-control{
@@ -507,26 +553,6 @@ header.masthead .intro-text .intro-heading {
     padding-left: 0% !important;
 
     align-items: center;
-}
-
-.iconoAdd {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.iconoAdd:hover{
-    cursor: pointer;
-    content: url(../images/addHover.png);
-}
-
-.iconoCan {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.iconoCan:hover{
-    cursor: pointer;
-        content: url(../images/canHover.png);
 }
 
 /* /TARJETAS INFORMACION DE CADA SENSOR */
