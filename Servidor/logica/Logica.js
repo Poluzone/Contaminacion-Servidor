@@ -111,6 +111,22 @@ module.exports = class Logica {
     var sensores = await this.getTodosLosSensores();
     for (var i = 0; i < sensores.length; i++) {
       var sensor = sensores[i]
+      
+      // Tipo del sensor
+      var idTipoMedida = sensor.IdTipoMedida;
+      var tiposSensores = await this.getTipoSensor(idTipoMedida);
+      var tipoSensor = tiposSensores[0].Descripcion
+      //console.log(tipoSensor);
+      sensores[i].TipoSensor = tipoSensor;
+
+      // Estado del sensor
+      var idEstado = sensor.IdEstado;
+      var estados = await this.getEstado(idEstado);
+      var estadoSensor = estados[0].Descripcion
+      //console.log(estadoSensor);
+      sensores[i].Estado = estadoSensor;
+
+      // Cogemos el Id para obtener el usuario correspondiente
       var idSensor = sensor.IdSensor;
       var usuario = await this.getUsuarioPorIdSensor(idSensor);
       sensores[i].Usuario = usuario[0];
@@ -118,6 +134,38 @@ module.exports = class Logica {
     console.log(sensores)
     return new Promise((resolver, rechazar) => {
       resolver(sensores)
+    })
+  }
+
+  // .................................................................
+  // tipoMedida -> getTipoSensor() ->
+  // Coge el tipo del sensor en texto a partir del tipo en nº
+  // .................................................................
+  async getTipoSensor(tipoMedida) {
+    var textoSQL = "select Descripcion from TipoSensor where IdTipoMedida = $tipoMedida";
+    var valoresParaSQL = { $tipoMedida: tipoMedida };
+    console.log("logica: getTipoSensor")
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  }
+
+  // .................................................................
+  // idEstado -> getEstado() ->
+  // Coge el tipo del sensor en texto a partir del tipo en nº
+  // .................................................................
+  async getEstado(idEstado) {
+    var textoSQL = "select Descripcion from Estados where IdEstado = $estado";
+    var valoresParaSQL = { $estado: idEstado };
+    console.log("logica: getEstado")
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
     })
   }
 
