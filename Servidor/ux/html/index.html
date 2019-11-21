@@ -72,6 +72,17 @@
             proxy.ComprobacionLogin(data);
 
         }
+        
+        function recibirMedidasFecha(intervalo){
+            //Recojo los datos de la base de datos
+            proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
+            console.log(datos);
+            console.log("AAAAAAAAAAAAAAAAAAAH");
+            
+            //
+        });
+    }
+        recibirMedidasFecha({"desde":6, "hasta": 7});
 
     </script>
 
@@ -156,7 +167,8 @@
 
     <section class="page-section container-fluid" id="mapa">
         <div class="map" id="map">
-
+               <button onclick="recibirMedidasFecha()"> </button>
+     
             </div>
     </section>
 
