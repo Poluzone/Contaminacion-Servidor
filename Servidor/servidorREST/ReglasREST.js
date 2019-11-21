@@ -192,7 +192,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   servidorExpress.post('/ComprobarLogin',
     async function (peticion, respuesta) {
       console.log(" * POST /ComprobarLogin ")
-      // averiguo el dni
       var dato = JSON.parse(peticion.body);
 
       console.log(dato)
@@ -305,6 +304,19 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         respuesta.status(404).send("no encontré sensores: " + dato)
         return
       }
+      // todo ok
+      respuesta.status(200).send(JSON.stringify(res))
+    })
+
+    servidorExpress.get('/getNumSensoresSegunEstado/:idestado',
+    async function (peticion, respuesta) {
+      console.log(" * GET /getNumSensoresSegunEstado/:idestado")
+      var dato = peticion.params.idestado
+      console.log("El dato introducido en el método: " + dato)
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getNumSensoresSegunEstado(dato);
+      console.log("La respuesta es: "+res);
+
       // todo ok
       respuesta.status(200).send(JSON.stringify(res))
     })

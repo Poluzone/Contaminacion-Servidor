@@ -238,10 +238,41 @@ module.exports = class Logica {
         })
     }//()
 
+
+    //------------------------------------------------------------
+    // Emilia Rosa van der Heide
+    // idestado -> getSensoresSegunEstado() ->
+    // devuelve los sensores según el estado
+    //------------------------------------------------------------
+    async getSensoresSegunEstado(idEstado) {
+      var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
+      var valoresParaSQL = { $idestado: idEstado };
+      console.log(textoSQL);
+      console.log(valoresParaSQL);
+      return new Promise((resolver, rechazar) => {
+         this.laConexion.all(textoSQL, valoresParaSQL,
+                             (err, res) => {
+             (err ? rechazar(err) : resolver(res))
+         })
+      })
+    }//()
+
+    //------------------------------------------------------------
+    // Emilia Rosa van der Heide
+    // idestado -> getNumSensoresSegunEstado() ->
+    // devuelve los sensores según el estado
+    //------------------------------------------------------------
+    async getNumSensoresSegunEstado(idEstado) {
+      var sensores = await this.getSensoresSegunEstado(idEstado);
+      console.log(sensores)
+      return new Promise((resolver, rechazar) => {
+        resolver(sensores.length)
+      })
+    }//()
+
   // .................................................................
   // datos -> insertarUsuario() ->
   // .................................................................
-
   insertarUsuario(datos) {
     var textoSQL = "insert into Usuarios values( $IdUsuario, $Email, $Password, $Nombre, $Telefono, $TipoUsuario)";
     var valoresParaSQL = {
