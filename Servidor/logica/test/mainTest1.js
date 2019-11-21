@@ -106,8 +106,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
           }
 
            await laLogica.insertarIdUsuarioConIdsensor(dato);
-
-          assert.equal(1, 1, "¿no hay un resulado?")
+          var res = await laLogica.getUsuarioPorIdSensor(19);
+          assert.equal(res.length, 1, "¿no hay un resulado?")
 
         })
 
