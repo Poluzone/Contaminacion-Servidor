@@ -83,16 +83,25 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     it("probar insertarMedida",
       async function() {
+            await laLogica.borrarFilasDeTodasLasTablas();
+        var IdTipoMedida = 2
+        var IdUsuari= 15
+        var Valor= 243
+        var Latitud = 38.95;
+        var Longitud = -0.17;
+        for(let j = 0; j<10;j++){
+        for(let i = 0; j<50; i++){
         var medida = {
-          IdTipoMedida: 2,
-          IdUsuario: 15,
-          Valor: 243,
-          Tiempo: 234324,
-          Latitud: 234,
-          Longitud:324
-        }
-
+          IdTipoMedida: IdTipoMedida+i,
+          IdUsuario: 15+1,
+          Valor: 243+i,
+          Tiempo: Date.now(),
+          Latitud: Latitud+i*0.003+j*0.003,
+          Longitud: Longitud+i*0.003+j*0.003
+            } 
          await laLogica.insertarMedida(medida);
+            }
+        }
         var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
         assert.equal(res.length, 1, "¿no hay un resulado?")
 
@@ -134,6 +143,5 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     }
 
       )//probar getTodasLasMedidasPorFecha()
-
 
 }) // describe

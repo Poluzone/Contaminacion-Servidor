@@ -77,12 +77,18 @@
             //Recojo los datos de la base de datos
             proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
             console.log(datos);
-            console.log("AAAAAAAAAAAAAAAAAAAH");
+            console.log("DATOS DE MEDIDAS POR FECHA");
+            for(let i = 0; i<datos.length;i++){
+                var medida = new google.maps.Marker({
+			         position: {lat:datos[i].Latitud,lng:datos[i].Longitud},
+			         map: getMap(),
+			         title: 'Golden Gate Bridge'
+			});
+            }
             
-            //
         });
     }
-        recibirMedidasFecha({"desde":6, "hasta": 7});
+        recibirMedidasFecha({"desde":234324, "hasta": 234324});
 
     </script>
 
@@ -167,7 +173,7 @@
 
     <section class="page-section container-fluid" id="mapa">
         <div class="map" id="map">
-               <button onclick="recibirMedidasFecha()"> </button>
+               
      
             </div>
     </section>
