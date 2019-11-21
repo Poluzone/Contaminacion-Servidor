@@ -157,21 +157,17 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetUsuarioPorEmail(dato.Email);
 
-      console.log(res.Email);
-      console.log(res.Nombre);
-      console.log(res.Telefono);
-      console.log(res.TipoUsuario);
-      console.log("La respuesta es: "+res);
+      console.log(res[0].Email);
+      console.log(res[0].Nombre);
+      console.log(res[0].Telefono);
+      console.log(res[0].TipoUsuario);
 
-      var usuario = {
-        Id: res[0].IdUsuario,
-        Email: res[0].Email,
-        Pass: res[0].Password,
-        Tipo: res[0].TipoUsuario,
-        Nombre: res[0].Nombre,
-        Telefono: res[0].Telefono
+      var data = {
+        Usuario: res,
+        k: "ok"
       }
 
+      console.log("La respuesta es: "+JSON.stringify(data));
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 1) {
@@ -180,7 +176,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return
       }
       // todo ok
-      respuesta.send(JSON.stringify(res));
+      respuesta.send(data);
     })
 
   /**
