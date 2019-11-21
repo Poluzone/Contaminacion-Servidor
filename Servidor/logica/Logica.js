@@ -41,6 +41,21 @@ module.exports = class Logica {
         })
     }
 
+    async insertarIdUsuarioConIdsensor(datos) {
+        var textoSQL =
+            'insert into UsuarioSensor values($IdUsuario,$IdSensor);'
+        var valoresParaSQL = {
+            $IdUsuario: datos.IdUsuario,
+            $IdSensor: datos.IdSensor
+
+        }
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+                (err ? rechazar(err) : resolver())
+            })
+        })
+    }
+
     async getLaUltimaMedidaPorUsuario(userId) {
         var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
         return new Promise((resolver, rechazar) => {
@@ -223,10 +238,41 @@ module.exports = class Logica {
         })
     }//()
 
+
+    //------------------------------------------------------------
+    // Emilia Rosa van der Heide
+    // idestado -> getSensoresSegunEstado() ->
+    // devuelve los sensores según el estado
+    //------------------------------------------------------------
+    async getSensoresSegunEstado(idEstado) {
+      var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
+      var valoresParaSQL = { $idestado: idEstado };
+      console.log(textoSQL);
+      console.log(valoresParaSQL);
+      return new Promise((resolver, rechazar) => {
+         this.laConexion.all(textoSQL, valoresParaSQL,
+                             (err, res) => {
+             (err ? rechazar(err) : resolver(res))
+         })
+      })
+    }//()
+
+    //------------------------------------------------------------
+    // Emilia Rosa van der Heide
+    // idestado -> getNumSensoresSegunEstado() ->
+    // devuelve los sensores según el estado
+    //------------------------------------------------------------
+    async getNumSensoresSegunEstado(idEstado) {
+      var sensores = await this.getSensoresSegunEstado(idEstado);
+      console.log(sensores)
+      return new Promise((resolver, rechazar) => {
+        resolver(sensores.length)
+      })
+    }//()
+
   // .................................................................
   // datos -> insertarUsuario() ->
   // .................................................................
-
   insertarUsuario(datos) {
     var textoSQL = "insert into Usuarios values( $IdUsuario, $Email, $Password, $Nombre, $Telefono, $TipoUsuario)";
     var valoresParaSQL = {
