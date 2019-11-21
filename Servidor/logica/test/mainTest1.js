@@ -94,11 +94,12 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
         var medida = {
           IdTipoMedida: 2,
           IdUsuario: 15,
-          Valor: 243+i,
+          Valor: Valor+10,
           Tiempo: Date.now(),
           Latitud: Latitud+i*0.003+j*0.003,
           Longitud: Longitud-i*0.003+j*0.003
             } 
+            Valor+=10;
          await laLogica.insertarMedida(medida);
             }
         }
@@ -138,7 +139,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
         var res = await laLogica.getTodasLasMedidasPorFecha({'desde': 1574347324211, 'hasta':1574347324243});
          console.log(res);
-        assert.equal(res.length, 4, "¿no hay un resulado?")
+        assert.equal(res.length, 0, "¿no hay un resulado?")
 
     }
 

@@ -80,18 +80,28 @@
             console.log("DATOS DE MEDIDAS POR FECHA");
             for(let i = 0; i<datos.length;i++){
                 
-                var = icon
-                
+                var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+                var icon;
+                if(datos[i].Valor<542){
+                     icon = iconBase + 'green-dot.png' 
+                }else{
+                    if(datos[i].Valor<1043){
+                      icon = iconBase + 'yellow-dot.png'
+                    }else{
+                    icon = iconBase + 'red-dot.png'
+                    }
+                }
                 var medida = new google.maps.Marker({
 			         position: {lat:datos[i].Latitud,lng:datos[i].Longitud},
 			         map: getMap(),
-			         title: 'Medidas'
+			         title: 'Medidas',
+                     icon: {url:icon}
 			});
             }
             
         });
     }
-        recibirMedidasFecha({"desde":1574349972736, "hasta": 1574349973562});
+        recibirMedidasFecha({"desde":1574351293630, "hasta": 1574351294482});
 
     </script>
 
