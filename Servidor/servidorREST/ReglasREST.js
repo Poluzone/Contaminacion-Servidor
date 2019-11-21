@@ -151,16 +151,27 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     async function (peticion, respuesta) {
       console.log(" * POST /UsuarioPorEmail ")
       // averiguo el dni
-      var dato = peticion.body;
+      var dato = JSON.parse(peticion.body);
 
-      console.log("El dato introducido en el método: " + dato)
+      console.log("El dato introducido en el método: " + dato.Email)
       // llamo a la función adecuada de la lógica
-      var res = await laLogica.GetUsuarioPorEmail("rosa@gti.com");
+      var res = await laLogica.GetUsuarioPorEmail(dato.Email);
 
       console.log(res.Email);
       console.log(res.Nombre);
       console.log(res.Telefono);
       console.log(res.TipoUsuario);
+      console.log("La respuesta es: "+res);
+
+      var usuario = {
+        Id: res[0].IdUsuario,
+        Email: res[0].Email,
+        Pass: res[0].Password,
+        Tipo: res[0].TipoUsuario,
+        Nombre: res[0].Nombre,
+        Telefono: res[0].Telefono
+      }
+
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 1) {
@@ -169,7 +180,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return
       }
       // todo ok
-      respuesta.send(JSON.stringify(res))
+      respuesta.send(JSON.stringify(res));
     })
 
   /**
