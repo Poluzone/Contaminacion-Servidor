@@ -142,13 +142,11 @@ class Proxy {
             .then(function (datos) {
                 if (datos != undefined) {
 
-                    console.log("HOLA " + datos);
+                    console.log("Datos: " + datos);
                     callback(datos);
 
-
-                    console.log("Tenemos la última medida");
                 } else {
-                    console.log("No existe o no has puesto bien los datos");
+                    console.log("No hay sensores");
                 }
             }).catch(e => {
                 console.log("error: "+e);
