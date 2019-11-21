@@ -136,6 +136,17 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       }
 
     })
+    
+        it("probar getTodasLasMedidasPorFecha",
+       async function(){
+
+        var res = await laLogica.getTodasLasMedidasPorFecha({'desde': 6, 'hasta':7});
+         console.log(res);
+        assert.equal(res.length, 2, "¿no hay un resulado?")
+
+    }
+
+      )//probar getTodasLasMedidasPorFecha()
 
 
 }) // describe
