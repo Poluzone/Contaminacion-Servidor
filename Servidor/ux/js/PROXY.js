@@ -126,9 +126,9 @@ class Proxy {
   });
   }
 
-    /**
-   * getSensoresYSusUsuarios()
-   */
+    //-------------------------------
+    // getSensoresYSusUsuarios()
+    //-------------------------------
     async getSensoresYSusUsuarios(callback) {
 
         console.log("Llamada a getSensoresYSusUsuarios");
