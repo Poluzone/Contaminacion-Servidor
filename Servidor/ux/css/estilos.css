@@ -633,7 +633,7 @@ header.masthead .intro-text .intro-heading {
 }
 
 .textoIncorrecto{
-    color: transparent;
+    color: red;
     margin-top: 1rem;
     text-align: center;
 }

@@ -16,6 +16,9 @@
 
         var sensores;
 
+        //Llamar a checkCockies antes de que se cargue el cuerpo para que no se pueda acceder a la pagina sin estar logineado
+        window.addEventListener('load', checkCookie, false);
+        
         // Se llama a llamadaALogicaAdministracion cuando se crea la ventana
         window.addEventListener('load', llamadaAgetSensoresYSusUsuarios, false);
 
@@ -175,13 +178,29 @@
 
         function checkCookie() {
             var user = getCookie("username");
-            var url = "http://localhost:8080/ux/html/principal.html";
-            if (user != "") {
-                alert("Los cookies funcionan estimado: " + user);
+            var url = "http://localhost:8080/ux/html/LoginAdmin.html";
+            if (user == "") {
+                //alert("No intentes entrar desde la url pillín");
                 var a = document.createElement("a");
                 a.href = url;
                 a.click();
             }
+            else{
+                alert("Los cookies funcionan estimado: " + user);
+            }
+        }
+
+        function eliminarCookies() {
+            console.log("Leyenda");
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+
+            var url = "http://localhost:8080/ux/html/LoginAdmin.html";
+            var a = document.createElement("a");
+            a.href = url;
+            a.click();
+
         }
 
 
@@ -213,12 +232,12 @@
             proxy.ComprobacionLogin(data);
 
         }
-        
-        function clicBotonAdd(){
+
+        function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
         }
-        
-        function clicBotonBorrar(){
+
+        function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
         }
 
@@ -253,7 +272,7 @@
 
 <!----------------------------------------------------- BODY --------------------------------------------------------->
 
-<body id="page-top" onload="checkCookie()">
+<body id="page-top" onload="">
     <!-------------------------------------------------- CONTENEDOR ----------------------------------------------------------->
 
     <div class="contenedor">
@@ -277,7 +296,7 @@
                                 <a class="nav-link js-scroll-trigger" href="#perfil">Perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link js-scroll-trigger" href="#contact">CERRAR SESIÓN</a>
+                                <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()" href="#contact">CERRAR SESIÓN</a>
                             </li>
                         </ul>
                     </div>

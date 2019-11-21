@@ -15,6 +15,7 @@
         }
 
         function getCookie(cname) {
+            console.log("Yee");
             var name = cname + "=";
             var ca = document.cookie.split(';');
             for (var i = 0; i < ca.length; i++) {
@@ -34,7 +35,6 @@
             var url = "http://localhost:8080/ux/html/admin.html";
             console.log("hey"+user);
             if (user != "") {
-                alert("Los cookies funcionan estimado: " + user);
                 var a = document.createElement("a");
                 a.href = url;
                 a.click();
@@ -58,8 +58,12 @@
         }
         
         function usuarioOContraseñaIncorrectos(){
+            
+            console.log("Estoy en usuarioOContraseñaIncorrectos");
+            
             var textoIncorrecto = document.getElementById('textoIncorrecto');
-            document.write(textoIncorrecto.fontcolor( "red" ));
+            textoIncorrecto.className = "textoIncorrecto";
+            document.getElementById("textoIncorrecto").innerHTML = "Usuario y/o contraseña incorrectos";
         }
 
     </script>
@@ -147,9 +151,7 @@
                             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                         </div>
                         <div class="textoIncorrecto" id="textoIncorrecto">
-                        
-                        Usuario o contraseña incorrectos.
-                        
+                            <br>
                         </div>
                     </div>
                 </div>
