@@ -129,7 +129,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar GetLaUltimaMedidaPorUsuario",
     async function() {
 
-
       var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
       assert.equal(res.length, 1, "¿no hay un resulado?")
 

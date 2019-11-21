@@ -51,9 +51,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   */
   servidorExpress.post('/GETidUsuario',
     async function (peticion, respuesta) {
-
-      console.log(" * POST /idUsuario ");
-
       // averiguo el dni
       var dato = JSON.parse(peticion.body);
 
@@ -157,11 +154,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetUsuarioPorEmail(dato.Email);
 
-      console.log(res.Email);
-      console.log(res.Nombre);
-      console.log(res.Telefono);
-      console.log(res.TipoUsuario);
-      console.log("La respuesta es: "+res);
 
       var usuario = {
         Id: res[0].IdUsuario,
@@ -179,8 +171,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         respuesta.status(404).send("no encontré usuario: " + dato)
         return
       }
-      // todo ok
-      respuesta.send(JSON.stringify(res));
+
+      respuesta.send(res[0]);
     })
 
   /**
@@ -192,6 +184,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   servidorExpress.post('/ComprobarLogin',
     async function (peticion, respuesta) {
       console.log(" * POST /ComprobarLogin ")
+      // averiguo el dni
       var dato = JSON.parse(peticion.body);
 
       console.log(dato)
@@ -308,19 +301,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
-    servidorExpress.get('/getNumSensoresSegunEstado/:idestado',
-    async function (peticion, respuesta) {
-      console.log(" * GET /getNumSensoresSegunEstado/:idestado")
-      var dato = peticion.params.idestado
-      console.log("El dato introducido en el método: " + dato)
-      // llamo a la función adecuada de la lógica
-      var res = await laLogica.getNumSensoresSegunEstado(dato);
-      console.log("La respuesta es: "+res);
-
-      // todo ok
-      respuesta.status(200).send(JSON.stringify(res))
-    })
-
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
     var dir = path.resolve("../ux/html");
@@ -343,7 +323,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     var dir = path.resolve("../ux/images");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
-    
+
     // .......................................................
     // getTodasLasMedidasPorFecha
     //
@@ -354,7 +334,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
                         async function(peticion, respuesta){
         console.log("* POST /TodasLasMedidasPorFecha")
 
-        //Obtengo el body donde pondré los parámetros 
+        //Obtengo el body donde pondré los parámetros
         var dato = JSON.parse(peticion.body);
 
         console.log(dato);

@@ -126,7 +126,7 @@ module.exports = class Logica {
     var sensores = await this.getTodosLosSensores();
     for (var i = 0; i < sensores.length; i++) {
       var sensor = sensores[i]
-      
+
       // Tipo del sensor
       var idTipoMedida = sensor.IdTipoMedida;
       var tiposSensores = await this.getTipoSensor(idTipoMedida);
@@ -146,7 +146,7 @@ module.exports = class Logica {
       var usuario = await this.getUsuarioPorIdSensor(idSensor);
       sensores[i].Usuario = usuario[0];
     }
-    console.log(sensores)
+    //console.log(sensores)
     return new Promise((resolver, rechazar) => {
       resolver(sensores)
     })
@@ -223,7 +223,7 @@ module.exports = class Logica {
       )
     })
   }
-    
+
     //------------------------------------------------------------
     //     getMedidasPorFecha()
     //------------------------------------------------------------
@@ -273,7 +273,7 @@ module.exports = class Logica {
   // .................................................................
   // datos -> insertarUsuario() ->
   // .................................................................
-  insertarUsuario(datos) {
+  async insertarUsuario(datos) {
     var textoSQL = "insert into Usuarios values( $IdUsuario, $Email, $Password, $Nombre, $Telefono, $TipoUsuario)";
     var valoresParaSQL = {
       $IdUsuario: null,
