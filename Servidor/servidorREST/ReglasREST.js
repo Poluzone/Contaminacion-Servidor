@@ -44,9 +44,9 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
   /**
   * /GETidUsuario
-  * 
+  *
   * Recoge el id que corresponda al usuario loggeado
-  * 
+  *
   * - Matthew Conde Oltra -
   */
   servidorExpress.post('/GETidUsuario',
@@ -67,7 +67,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       var idUser = {
         IdUsuario: res[0].IdUsuario
       }
-      
+
       // si el array de resultados no tiene una casilla ...
       if (res.length < 0) {
         // 404: not found
@@ -76,13 +76,13 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       }
       // todo ok
       respuesta.send(idUser);
-   
+
 
     })
 
   /**
    * /GETultimaMedidaPorUsuario
-   * 
+   *
    * Recoge la última médida del usuario que se le diga -> devuelve un JSON con el dato, la fecha y la posición
    */
   servidorExpress.post('/GETultimaMedidaPorUsuario',
@@ -114,7 +114,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   /**
      * /GetUsuarioPorEmail/:email -> es una petición GET que llama a getUsuarioPorEmail() de la Lógica
      * la cual recoge los datos del Usuario de la BBDD
-     * 
+     *
      */
 
   servidorExpress.get('/GetUsuarioPorEmail/:email',
@@ -144,7 +144,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   /**
  * /GetUsuarioPorEmail -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
  * la cual recoge los datos del Usuario de la BBDD
- * 
+ *
  */
 
   servidorExpress.post('/GetUsuarioPorEmail',
@@ -186,7 +186,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   /**
  * /ComprobarLogin -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
  * la cual devuelve el objeto USUARIO con el que compara la Password
- * 
+ *
  */
 
   servidorExpress.post('/ComprobarLogin',
@@ -223,7 +223,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   /**
      * /insertarMedida -> es una petición POST que llama a insertarMedida() de la Lógica
      * la cual añade la medida del sensor a la BBDD
-     * 
+     *
      */
   servidorExpress.post('/insertarMedida',
     async function (peticion, respuesta) {
@@ -240,8 +240,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   /**
    * /insertarUsuario -> es una petición POST que llama a insertarUsuario() de la Lógica
    * la cual añade el usuario a la BBDD
-   * 
-   * 
+   *
+   *
    */
   servidorExpress.post('/insertarUsuario',
     async function (peticion, respuesta) {
@@ -267,6 +267,24 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         }
       })
     }); // post / insertarPersona
+
+    /**
+     * /insertarUsuario -> es una petición POST que llama a insertarUsuario() de la Lógica
+     * la cual añade el usuario a la BBDD
+     *
+     *
+     */
+    servidorExpress.post('/insertarIdUsuarioConIdsensor',
+      async function (peticion, respuesta) {
+        console.log(" * POST /insertarIdUsuarioConIdsensor")
+        var datos = JSON.parse(peticion.body)
+
+        // supuesto procesamiento
+
+        laLogica.insertarIdUsuarioConIdsensor(datos);
+
+        respuesta.send("OK");
+      }); // post / insertarPersona
 
 
   /*
