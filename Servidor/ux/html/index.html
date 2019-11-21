@@ -4,7 +4,7 @@
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
        <!-- Scripts para API Google Maps -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap"
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization"
                 type="text/javascript"></script>
         <script type="text/javascript" src="../js/map.js"></script>
     <script>
@@ -78,6 +78,7 @@
             proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
             console.log(datos);
             console.log("DATOS DE MEDIDAS POR FECHA");
+            var poluzone = [];
             for(let i = 0; i<datos.length;i++){
                 
                 var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
@@ -96,9 +97,20 @@
 			         map: getMap(),
 			         title: 'Medidas',
                      icon: {url:icon}
-			});
-            }
-            
+			});      
+                   
+                   var puntoCalor = {location: new google.maps.LatLng(datos[i].Latitud, datos[i].Longitud), weight: datos[i].Valor};
+                
+                   poluzone.push(puntoCalor);
+                    
+             
+            }//for
+                var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: poluzone,
+                maxIntensity: 1243,
+                radius: 60
+                });
+                heatmap.setMap(getMap());
         });
     }
         recibirMedidasFecha({"desde":1574351293630, "hasta": 1574351294482});
