@@ -173,7 +173,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return
       }
 
-      respuesta.send(res[0]);
+      respuesta.send(data);
     })
 
   /**
