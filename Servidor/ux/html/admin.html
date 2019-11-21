@@ -213,6 +213,14 @@
             proxy.ComprobacionLogin(data);
 
         }
+        
+        function clicBotonAdd(){
+            console.log("Esto añadirá un sensor enlazado a un usuario");
+        }
+        
+        function clicBotonBorrar(){
+            console.log("Esto eliminará un sensor");
+        }
 
     </script>
 
@@ -441,13 +449,13 @@
 
                                     </div>
 
-                                    <div class="contenedorIconosEditar col-1 my-auto">
+                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()">
 
                                         <img src="../images/add.png" class="iconoAdd">
 
                                     </div>
 
-                                    <div class="contenedorIconosEditar col-1 my-auto">
+                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonBorrar()">
 
                                         <img src="../images/can.png" class="iconoCan">
 
