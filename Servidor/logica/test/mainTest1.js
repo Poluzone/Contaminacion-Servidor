@@ -85,19 +85,19 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       async function() {
             await laLogica.borrarFilasDeTodasLasTablas();
         var IdTipoMedida = 2
-        var IdUsuari= 15
+        var IdUsuario= 15
         var Valor= 243
         var Latitud = 38.95;
         var Longitud = -0.17;
         for(let j = 0; j<10;j++){
-        for(let i = 0; j<50; i++){
+        for(let i = 0; i<10; i++){
         var medida = {
-          IdTipoMedida: IdTipoMedida+i,
-          IdUsuario: 15+1,
+          IdTipoMedida: 2,
+          IdUsuario: 15,
           Valor: 243+i,
           Tiempo: Date.now(),
           Latitud: Latitud+i*0.003+j*0.003,
-          Longitud: Longitud+i*0.003+j*0.003
+          Longitud: Longitud-i*0.003+j*0.003
             } 
          await laLogica.insertarMedida(medida);
             }
@@ -136,9 +136,9 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
         it("probar getTodasLasMedidasPorFecha",
        async function(){
 
-        var res = await laLogica.getTodasLasMedidasPorFecha({'desde': 6, 'hasta':7});
+        var res = await laLogica.getTodasLasMedidasPorFecha({'desde': 1574347324211, 'hasta':1574347324243});
          console.log(res);
-        assert.equal(res.length, 2, "¿no hay un resulado?")
+        assert.equal(res.length, 4, "¿no hay un resulado?")
 
     }
 

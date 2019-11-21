@@ -79,16 +79,19 @@
             console.log(datos);
             console.log("DATOS DE MEDIDAS POR FECHA");
             for(let i = 0; i<datos.length;i++){
+                
+                var = icon
+                
                 var medida = new google.maps.Marker({
 			         position: {lat:datos[i].Latitud,lng:datos[i].Longitud},
 			         map: getMap(),
-			         title: 'Golden Gate Bridge'
+			         title: 'Medidas'
 			});
             }
             
         });
     }
-        recibirMedidasFecha({"desde":234324, "hasta": 234324});
+        recibirMedidasFecha({"desde":1574349972736, "hasta": 1574349973562});
 
     </script>
 
