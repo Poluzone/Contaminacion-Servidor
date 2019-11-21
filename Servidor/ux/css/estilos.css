@@ -560,25 +560,38 @@ header.masthead .intro-text .intro-heading {
     height: 80%;
 }
 
-.divsInformacion {
-    height: 20%;
-    padding: .8rem;
+.nombreTipoId {
+    
 }
 
-.nombreYTipo {
-    width: 50%;
+.datosSensor {
+    padding: .8rem;
+    padding-top: .4rem !important;
+
 }
 
-.id {
+.contenedor1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.datosUsuario {
     padding: .8rem;
+    padding-top: .4rem !important;
+
 }
 
 .correo {
     padding: .8rem;
+    padding-top: 0% !important;
+
 }
 
 .telefono {
     padding: .8rem;
+    padding-top: 0% !important;
+
 }
 
 /* /TARJETAS INFORMACION DE CADA SENSOR */

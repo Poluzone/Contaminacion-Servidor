@@ -36,6 +36,8 @@
 
         }
 
+        // Funcion que crea un numero de elementos en la lista equivalente al numero total de sensores en la base de datos
+
         function crearElementoLista(i) {
 
             var maxListaSensores = sensores.length;
@@ -49,11 +51,9 @@
             var div5 = document.createElement("div");
             imagen = document.createElement("img");
 
-            //for await (int i = 0; i < maxListaSensores; i++) {
             sensor = sensores[i];
 
-            //for (int i = 0; i < maxListaSensores; i++) {
-
+            // Creacion de los divs y texto de cada elemento -----------------------------------------
 
             li.className = "tarjetaLista shadow-sm mb-1 bg-white";
 
@@ -74,49 +74,79 @@
             div5.className = "columnasInfoSensor col-5 my-auto";
             divContenedor.appendChild(div5);
 
-            var iconoEstado;
+            var iconoEstado = "";
 
-            if (sensor.IdEstado == 0) {
+            console.log("que " + sensor.Estado);
+
+            if (sensor.Estado == "En Stock") {
+                console.log("nani " + sensor.Estado);
+                iconoEstado = "box3";
+            }
+            if (sensor.Estado == "Alquilado") {
+                console.log("nani " + sensor.Estado);
                 iconoEstado = "tick3";
             }
-            if (sensor.IdEstado == 1) {
+            if (sensor.Estado == "Averiado") {
+                console.log("nani " + sensor.Estado);
                 iconoEstado = "cross3";
-            } else {
-                iconoEstado = "box3";
             }
 
             imagen.src = "../images/" + iconoEstado + ".png";
             div1.appendChild(imagen);
-            div2.appendChild(document.createTextNode(sensor.IdTipoMedida));
+            div2.appendChild(document.createTextNode(sensor.TipoSensor));
             div4.appendChild(document.createTextNode(sensor.IdSensor));
             div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
             ul.appendChild(li);
             console.log(sensor);
 
+            // /Creacion de los divs y texto de cada elemento -----------------------------------------
+
+
+            // Relleno de informacion en la tarjeta INFORMACION -----------------------------------------
             divContenedor.onclick = function() {
+
+                var divTextoSensor = document.getElementById("TextoSensor");
+                divTextoSensor.innerHTML = "";
+                divTextoSensor.appendChild(document.createTextNode("Sensor: "));
+
+                var divIdSensor = document.getElementById("IdSensor");
+                divIdSensor.innerHTML = "";
+                divIdSensor.appendChild(document.createTextNode(parseInt(sensor.IdSensor)));
+
+                var divTipoSensor = document.getElementById("TipoSensor");
+                divTipoSensor.innerHTML = "";
+                divTipoSensor.appendChild(document.createTextNode(sensor.TipoSensor));
+
+                var divEstado = document.getElementById("Estado");
+                divEstado.innerHTML = "";
+                divEstado.appendChild(document.createTextNode(sensor.Estado));
+
+                var divTextoUsuario = document.getElementById("TextoUsuario");
+                divTextoUsuario.innerHTML = "";
+                divTextoUsuario.appendChild(document.createTextNode("Usuario: "));
+
+                var divTipoUsuario = document.getElementById("TipoUsuario");
+                divTipoUsuario.innerHTML = "";
+                divTipoUsuario.appendChild(document.createTextNode(sensor.Usuario.TipoUsuario));
+
+                var divIdUsuario = document.getElementById("IdUsuario");
+                divIdUsuario.innerHTML = "";
+                divIdUsuario.appendChild(document.createTextNode(sensor.Usuario.IdUsuario));
+
                 var divNombre = document.getElementById("Nombre");
                 divNombre.innerHTML = "";
                 divNombre.appendChild(document.createTextNode(sensor.Usuario.Nombre));
 
-                var divTipo = document.getElementById("Tipo");
-                divTipo.innerHTML = "";
-                divTipo.appendChild(document.createTextNode(sensor.Usuario.TipoUsuario));
-
-                var divId = document.getElementById("Id");
-                divId.innerHTML = "";
-                divId.appendChild(document.createTextNode("Id: " + parseInt(sensor.IdTipoMedida)));
-
                 var divCorreo = document.getElementById("Correo");
                 divCorreo.innerHTML = "";
-                divCorreo.appendChild(document.createTextNode("Correo: " + sensor.Usuario.Email));
+                divCorreo.appendChild(document.createTextNode(sensor.Usuario.Email));
 
                 var divTelefono = document.getElementById("Telefono");
                 divTelefono.innerHTML = "";
-                divTelefono.appendChild(document.createTextNode("Telefono: " + parseInt(sensor.Usuario.Telefono)));
+                divTelefono.appendChild(document.createTextNode(parseInt(sensor.Usuario.Telefono)));
 
             };
-
-            //}
+            // /Relleno de informacion en la tarjeta INFORMACION -----------------------------------------            
 
         }
 
@@ -538,27 +568,71 @@
 
                             <div class="informacionUsuario col">
 
-                                <div class="divsInformacion row my-auto">
+                                <div class="datosSensor row border-bottom" id="datosSensor">
 
-                                    <div class="nombreYTipo my-auto" id="Nombre">
-
-
-
-                                    </div>
-
-                                    <div id="Tipo" class="nombreYTipo">
+                                    <div class="datoSensor font-weight-bold" id="TextoSensor">
 
 
 
                                     </div>
 
+                                    <div class="contenedor1">
+
+                                        <div class="datoSensor" id="IdSensor">
+
+
+
+                                        </div>
+
+                                        <div class="datoSensor" id="TipoSensor">
+
+
+
+                                        </div>
+
+                                        <div class="datoSensor" id="Estado">
+
+
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
 
-                                <div class="id row" id="Id">
+                                <div class="datosUsuario row" id="datosUsuario">
+
+                                    <div id="TextoUsuario" class="nombreTipoId font-weight-bold">
 
 
+
+                                    </div>
+
+                                    <div class="contenedor1">
+
+
+                                        <div id="IdUsuario" class="nombreTipoId">
+
+
+
+                                        </div>
+
+                                        <div class="nombreTipoId" id="Nombre">
+
+
+
+                                        </div>
+
+                                        <div id="TipoUsuario" class="nombreTipoId">
+
+
+
+                                        </div>
+
+                                    </div>
 
                                 </div>
+
 
                                 <div class="correo row" id="Correo">
 
