@@ -85,10 +85,10 @@ function initMap(){
           ],
         center: location
     });
-    var marker = new google.maps.Marker({
+   /* var marker = new google.maps.Marker({
         position: location,
         map: map
-    });
+    });*/
 }
 function getMap(){
     return map;
