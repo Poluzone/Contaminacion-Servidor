@@ -181,4 +181,26 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       } // function
     )// get
   }) // it
+    
+     //GET TodasLasMedidasPorFecha()
+     //By Diego
+   //GET TodasLasMedidasPorFecha()
+
+  it( "POST/GetTodasLasMedidasPorFecha ", function( hecho ) {
+    var desde = 6;
+    var hasta = 7;
+    request.post(
+      { url : IP_PUERTO+"/GETtodasLasMedidasPorFecha",
+       headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
+       body : JSON.stringify({'desde':desde, 'hasta':hasta})
+      },
+      function( err, respuesta, carga ) {
+        var json = JSON.parse(carga);
+        assert.equal( err, null, "¿ha habido un error?" );
+        assert.equal( respuesta.statusCode, 200, "¿El código no es 200 (OK)" );
+        hecho();
+      } // callback()
+    ) // .post
+  }) //probar getTodasLasMedidasPorFecha()
+    
 }) // describe
