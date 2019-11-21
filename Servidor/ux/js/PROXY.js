@@ -125,7 +125,7 @@ class Proxy {
       callback(datos);
   });
   }
-    
+
     /**
    * getSensoresYSusUsuarios()
    */
@@ -155,4 +155,29 @@ class Proxy {
 
     }
     
+    //-------------------------------
+    // GetUltimasMedidasPorFecha()
+    //-------------------------------
+     async getTodasLasMedidasPorFecha(intervalo, callback) {
+
+    fetch(IP_PUERTO + "/GetTodasLasMedidasPorFecha",{
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(intervalo), // data can be `string` or {object}!
+      headers: {
+        'User-Agent': 'jordi',
+        'Content-Type': 'application/json'
+      }
+    }).then(function(response) {
+    return response.json();
+  })
+  .then(function(datos) {
+    if(datos != undefined){
+      console.log("Tenemos las última medidas desde: " +intervalo.desde+ " hasta " +intervalo.hasta);
+    }else{
+      console.log("No existe o no has puesto bien los datos");
+    }
+    callback(datos);
+  });
+  }
+
 }

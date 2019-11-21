@@ -46,6 +46,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   * /GETidUsuario
   * 
   * Recoge el id que corresponda al usuario loggeado
+  * 
+  * - Matthew Conde Oltra -
   */
   servidorExpress.post('/GETidUsuario',
     async function (peticion, respuesta) {
@@ -58,10 +60,14 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       console.log(dato);
 
       // llamo a la función adecuada de la lógica
-      var res = await laLogica.GetIdDelUsuario(dato);
+      var res = await laLogica.GetIdDelUsuario(dato.Email);
 
       console.log(res[0].IdUsuario);
-      var idUser = res[0].IdUsuario;
+
+      var idUser = {
+        IdUsuario: res[0].IdUsuario
+      }
+      
       // si el array de resultados no tiene una casilla ...
       if (res.length < 0) {
         // 404: not found
@@ -69,7 +75,9 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return;
       }
       // todo ok
-      respuesta.send(JSON.stringify(idUser));
+      respuesta.send(idUser);
+   
+
     })
 
   /**
@@ -294,6 +302,36 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     var dir = path.resolve("../ux/images");
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
+    
+    // .......................................................
+    // getTodasLasMedidasPorFecha
+    //
+    // Recoge dos fechas, fecha desde y fecha hasta
+    // devuelve todas las medidas entre estas dos medidas de tiempo
+    // .......................................................
+    servidorExpress.post('/GetTodasLasMedidasPorFecha/',
+                        async function(peticion, respuesta){
+        console.log("* POST /TodasLasMedidasPorFecha")
+
+        //Obtengo el body donde pondré los parámetros 
+        var dato = JSON.parse(peticion.body);
+
+        console.log(dato);
+
+        // llamo a la función adecuada de la lógica
+        var res = await laLogica.getTodasLasMedidasPorFecha(dato);
+
+        console.log(res);
+
+        // si el array de resultados no tiene una casilla ...
+        if (res.length < 0) {
+            // 404: not found
+            respuesta.status(404).send("no encontré medidas: " + dato)
+            return
+        }
+        // todo ok
+        respuesta.send(JSON.stringify(res))
+    })
 
 } // cargar()
 // .....................................................................

@@ -114,9 +114,26 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       var res = await laLogica.GetIdDelUsuario('mat@gmail.com');
       assert.equal(res.length, 1, "¿no hay un resulado?")
-
+      if(res.length < 1)
+      {
+        console.log("¿No hay resultado?");
+      }else
+      {
+        console.log(res);
+      }
 
     })
+    
+        it("probar getTodasLasMedidasPorFecha",
+       async function(){
+
+        var res = await laLogica.getTodasLasMedidasPorFecha({'desde': 6, 'hasta':7});
+         console.log(res);
+        assert.equal(res.length, 2, "¿no hay un resulado?")
+
+    }
+
+      )//probar getTodasLasMedidasPorFecha()
 
 
 }) // describe
