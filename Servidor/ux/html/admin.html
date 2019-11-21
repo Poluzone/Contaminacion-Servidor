@@ -15,11 +15,11 @@
         var proxy = new Proxy();
 
         var sensores;
-        
-        // Se llama a llamadaALogicaAdministracion cuando se crea la ventana
-        window.addEventListener('load', llamadaALogicaAdministracion, false);
 
-        function llamadaALogicaAdministracion() {
+        // Se llama a llamadaALogicaAdministracion cuando se crea la ventana
+        window.addEventListener('load', llamadaAgetSensoresYSusUsuarios, false);
+
+        function llamadaAgetSensoresYSusUsuarios() {
             proxy.getSensoresYSusUsuarios(function(resp) {
 
                 sensores = resp;
@@ -28,14 +28,15 @@
                 console.log("Primer sensor " + sensores[0]);
                 console.log("Adios " + 1);
 
-                crearElementosLista(0);
-                crearElementosLista(1);
+                for (var i = 0; i < sensores.length; i++) {
+                    crearElementoLista(i);
+                }
 
             });
 
         }
 
-        async function crearElementosLista(i) {
+        function crearElementoLista(i) {
 
             var maxListaSensores = sensores.length;
             var sensor;
@@ -103,15 +104,15 @@
 
                 var divId = document.getElementById("Id");
                 divId.innerHTML = "";
-                divId.appendChild(document.createTextNode("Id: "+parseInt(sensor.IdTipoMedida)));
+                divId.appendChild(document.createTextNode("Id: " + parseInt(sensor.IdTipoMedida)));
 
                 var divCorreo = document.getElementById("Correo");
                 divCorreo.innerHTML = "";
-                divCorreo.appendChild(document.createTextNode("Correo: "+sensor.Usuario.Email));
+                divCorreo.appendChild(document.createTextNode("Correo: " + sensor.Usuario.Email));
 
                 var divTelefono = document.getElementById("Telefono");
                 divTelefono.innerHTML = "";
-                divTelefono.appendChild(document.createTextNode("Telefono: "+parseInt(sensor.Usuario.Telefono)));
+                divTelefono.appendChild(document.createTextNode("Telefono: " + parseInt(sensor.Usuario.Telefono)));
 
             };
 
