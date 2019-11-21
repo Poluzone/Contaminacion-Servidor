@@ -98,6 +98,19 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       })
 
+      it("probar insertarIdUsuarioConIdsensor",
+        async function() {
+          var dato = {
+            IdUsuario: 19,
+            IdSensor: 2
+          }
+
+           await laLogica.insertarIdUsuarioConIdsensor(dato);
+
+          assert.equal(1, 1, "¿no hay un resulado?")
+
+        })
+
   it("probar GetLaUltimaMedidaPorUsuario",
     async function() {
 

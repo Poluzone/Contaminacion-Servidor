@@ -41,6 +41,21 @@ module.exports = class Logica {
         })
     }
 
+    async insertarIdUsuarioConIdsensor(datos) {
+        var textoSQL =
+            'insert into UsuarioSensor values($IdUsuario,$IdSensor);'
+        var valoresParaSQL = {
+            $IdUsuario: datos.IdUsuario,
+            $IdSensor: datos.IdSensor
+
+        }
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+                (err ? rechazar(err) : resolver())
+            })
+        })
+    }
+
     async getLaUltimaMedidaPorUsuario(userId) {
         var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
         return new Promise((resolver, rechazar) => {
