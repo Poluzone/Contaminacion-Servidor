@@ -52,7 +52,7 @@ class Proxy {
   }
 
   async ComprobacionLogin(data) {
-
+      console.log("Realizando ComprobacionLogin");
     fetch(IP_PUERTO + "/ComprobarLogin",{
       method: 'POST', // or 'PUT'
       body: JSON.stringify(data), // data can be `string` or {object}!
@@ -61,15 +61,18 @@ class Proxy {
         'Content-Type': 'application/json'
       }
     }).then(function(response) {
+              console.log("hola1");
     return response.json();
   })
   .then(function(datos) {
+                      console.log("hola2");
     if(datos.status == true){
       setCookie("username",datos.Usuario[0].Email);
       console.log("Iniciar sesion correcto y se han creado los cookies");
       checkCookie();
     }else{
       console.log("No existe o no has puesto bien los datos");
+      usuarioOContraseñaIncorrectos();
     }
   });
   }

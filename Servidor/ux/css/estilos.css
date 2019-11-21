@@ -616,4 +616,27 @@ header.masthead .intro-text .intro-heading {
 
 /* /CONTENEDOR */
 
+
+/* Estilos LoginAdmin */
+
+.contenedorLogin{
+    margin: 20%;
+}
+
+.entradaTexto{
+    color: white !important;
+}
+
+.recuperar:hover{
+    text-decoration: none;
+    color:#F5E0D3;
+}
+
+.textoIncorrecto{
+    color: transparent;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+
 .footer {}
