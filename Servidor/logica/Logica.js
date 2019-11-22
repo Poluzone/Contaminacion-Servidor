@@ -6,68 +6,68 @@ const sqlite3 = require("sqlite3")
 // .....................................................................
 // .....................................................................
 module.exports = class Logica {
-    // .................................................................
-    // nombreBD: Texto
-    // -->
-    // constructor () -->
-    // .................................................................
-    constructor(nombreBD, cb) {
-        this.laConexion = new sqlite3.Database(
-            nombreBD,
-            (err) => {
-                if (!err) {
-                    this.laConexion.run("PRAGMA foreign_keys = ON")
-                }
-                cb(err)
-            })
-    } // ()
-
-    async insertarMedida(medida) {
-        var textoSQL =
-            'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
-        var valoresParaSQL = {
-            $IdMedida: null,
-            $IdTipoMedida: medida.IdTipoMedida,
-            $IdUsuario: medida.IdUsuario,
-            $Valor:medida.Valor,
-            $Tiempo:medida.Tiempo,
-            $Latitud:medida.Latitud,
-            $Longitud:medida.Longitud
+  // .................................................................
+  // nombreBD: Texto
+  // -->
+  // constructor () -->
+  // .................................................................
+  constructor(nombreBD, cb) {
+    this.laConexion = new sqlite3.Database(
+      nombreBD,
+      (err) => {
+        if (!err) {
+          this.laConexion.run("PRAGMA foreign_keys = ON")
         }
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
-                (err ? rechazar(err) : resolver())
-            })
-        })
+        cb(err)
+      })
+  } // ()
+
+  async insertarMedida(medida) {
+    var textoSQL =
+      'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
+    var valoresParaSQL = {
+      $IdMedida: null,
+      $IdTipoMedida: medida.IdTipoMedida,
+      $IdUsuario: medida.IdUsuario,
+      $Valor: medida.Valor,
+      $Tiempo: medida.Tiempo,
+      $Latitud: medida.Latitud,
+      $Longitud: medida.Longitud
     }
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+        (err ? rechazar(err) : resolver())
+      })
+    })
+  }
 
-    async insertarIdUsuarioConIdsensor(datos) {
-        var textoSQL =
-            'insert into UsuarioSensor values($IdUsuario,$IdSensor);'
-        var valoresParaSQL = {
-            $IdUsuario: datos.IdUsuario,
-            $IdSensor: datos.IdSensor
+  async insertarIdUsuarioConIdsensor(datos) {
+    var textoSQL =
+      'insert into UsuarioSensor values($IdUsuario,$IdSensor);'
+    var valoresParaSQL = {
+      $IdUsuario: datos.IdUsuario,
+      $IdSensor: datos.IdSensor
 
-        }
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
-                (err ? rechazar(err) : resolver())
-            })
-        })
     }
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+        (err ? rechazar(err) : resolver())
+      })
+    })
+  }
 
-    async getLaUltimaMedidaPorUsuario(userId) {
-        var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+userId+" ORDER BY IdMedida DESC LIMIT 0, 1";
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL,
-                                (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-            })
+  async getLaUltimaMedidaPorUsuario(userId) {
+    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario=" + userId + " ORDER BY IdMedida DESC LIMIT 0, 1";
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
         })
-    }
+    })
+  }
 
 
-    /*async GetLaUltimaMedida(idUsuario) {
+  /*async GetLaUltimaMedida(idUsuario) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
@@ -101,14 +101,17 @@ module.exports = class Logica {
           (err ? rechazar(err) : resolver(res))
 
         })
-    })}
+    })
+  }
 
   // .................................................................
   // email -> GetUsuarioPorEmail() ->
   // .................................................................
   async GetUsuarioPorEmail(email) {
     var textoSQL = "select * from Usuarios where Email = $email ";
-    var valoresParaSQL = { $email: email };
+    var valoresParaSQL = {
+      $email: email
+    };
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {
@@ -158,7 +161,9 @@ module.exports = class Logica {
   // .................................................................
   async getTipoSensor(tipoMedida) {
     var textoSQL = "select Descripcion from TipoSensor where IdTipoMedida = $tipoMedida";
-    var valoresParaSQL = { $tipoMedida: tipoMedida };
+    var valoresParaSQL = {
+      $tipoMedida: tipoMedida
+    };
     console.log("logica: getTipoSensor")
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL, valoresParaSQL,
@@ -174,7 +179,9 @@ module.exports = class Logica {
   // .................................................................
   async getEstado(idEstado) {
     var textoSQL = "select Descripcion from Estados where IdEstado = $estado";
-    var valoresParaSQL = { $estado: idEstado };
+    var valoresParaSQL = {
+      $estado: idEstado
+    };
     console.log("logica: getEstado")
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL, valoresParaSQL,
@@ -205,7 +212,9 @@ module.exports = class Logica {
   // .................................................................
   async getUsuarioPorIdSensor(idSensor) {
     var textoSQL = "select IdUsuario from UsuarioSensor where IdSensor = $idSensor ";
-    var valoresParaSQL = { $idSensor: idSensor };
+    var valoresParaSQL = {
+      $idSensor: idSensor
+    };
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {
@@ -213,7 +222,9 @@ module.exports = class Logica {
           else {
             var id = res[0].IdUsuario
             textoSQL = "select * from Usuarios where IdUsuario = $id";
-            valoresParaSQL = { $id: id };
+            valoresParaSQL = {
+              $id: id
+            };
             this.laConexion.all(textoSQL, valoresParaSQL,
               (err, res) => {
                 (err ? rechazar(err) : resolver(res))
@@ -224,51 +235,53 @@ module.exports = class Logica {
     })
   }
 
-    //------------------------------------------------------------
-    //     getMedidasPorFecha()
-    //------------------------------------------------------------
+  //------------------------------------------------------------
+  //     getMedidasPorFecha()
+  //------------------------------------------------------------
 
-    async getTodasLasMedidasPorFecha(intervalo) {
-         var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " +intervalo.desde+ " AND " +intervalo.hasta+ " ORDER BY IdMedida DESC";
-        return new Promise((resolver, rechazar) => {
-            this.laConexion.all(textoSQL,
-                                (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-            })
+  async getTodasLasMedidasPorFecha(intervalo) {
+    var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
         })
-    }//()
+    })
+  } //()
 
 
-    //------------------------------------------------------------
-    // Emilia Rosa van der Heide
-    // idestado -> getSensoresSegunEstado() ->
-    // devuelve los sensores según el estado
-    //------------------------------------------------------------
-    async getSensoresSegunEstado(idEstado) {
-      var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
-      var valoresParaSQL = { $idestado: idEstado };
-      console.log(textoSQL);
-      console.log(valoresParaSQL);
-      return new Promise((resolver, rechazar) => {
-         this.laConexion.all(textoSQL, valoresParaSQL,
-                             (err, res) => {
-             (err ? rechazar(err) : resolver(res))
-         })
-      })
-    }//()
+  //------------------------------------------------------------
+  // Emilia Rosa van der Heide
+  // idestado -> getSensoresSegunEstado() ->
+  // devuelve los sensores según el estado
+  //------------------------------------------------------------
+  async getSensoresSegunEstado(idEstado) {
+    var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
+    var valoresParaSQL = {
+      $idestado: idEstado
+    };
+    console.log(textoSQL);
+    console.log(valoresParaSQL);
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  } //()
 
-    //------------------------------------------------------------
-    // Emilia Rosa van der Heide
-    // idestado -> getNumSensoresSegunEstado() ->
-    // devuelve los sensores según el estado
-    //------------------------------------------------------------
-    async getNumSensoresSegunEstado(idEstado) {
-      var sensores = await this.getSensoresSegunEstado(idEstado);
-      console.log(sensores)
-      return new Promise((resolver, rechazar) => {
-        resolver(sensores.length)
-      })
-    }//()
+  //------------------------------------------------------------
+  // Emilia Rosa van der Heide
+  // idestado -> getNumSensoresSegunEstado() ->
+  // devuelve los sensores según el estado
+  //------------------------------------------------------------
+  async getNumSensoresSegunEstado(idEstado) {
+    var sensores = await this.getSensoresSegunEstado(idEstado);
+    console.log(sensores)
+    return new Promise((resolver, rechazar) => {
+      resolver(sensores.length)
+    })
+  } //()
 
   // .................................................................
   // datos -> insertarUsuario() ->
@@ -284,7 +297,7 @@ module.exports = class Logica {
       $TipoUsuario: datos.TipoUsuario
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
