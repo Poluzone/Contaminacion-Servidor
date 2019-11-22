@@ -63,7 +63,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar getUsuarioPorIdSensor()",
     async function() {
 
-
       var res = await laLogica.getUsuarioPorIdSensor(1)
 
       assert.equal(res.length, 1, "¿no hay un resulado?")
@@ -74,10 +73,10 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
 
-      var res = await laLogica.getSensoresYSusUsuarios(1);
+      var res = await laLogica.getSensoresYSusUsuarios();
 
       assert.equal(res[0].IdSensor, 1, "no coge el idsensor correcto")
-      assert.equal(res[1].Usuario.Nombre, "Emilia Rosa", "el nombre no coincide")
+      assert.equal(res[1].Usuario.Nombre, "MAT", "el nombre no coincide")
 
 
     }) //it
