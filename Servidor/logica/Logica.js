@@ -260,8 +260,6 @@ module.exports = class Logica {
     var valoresParaSQL = {
       $idestado: idEstado
     };
-    console.log(textoSQL);
-    console.log(valoresParaSQL);
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {

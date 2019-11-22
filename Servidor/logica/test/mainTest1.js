@@ -76,9 +76,21 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       var res = await laLogica.getSensoresYSusUsuarios();
 
       assert.equal(res[0].IdSensor, 1, "no coge el idsensor correcto")
-      assert.equal(res[1].Usuario.Nombre, "MAT", "el nombre no coincide")
+      assert.equal(res[1].Usuario.Nombre, "Emilia Rosa", "el nombre no coincide")
 
 
+    }) //it
+
+    it("probar getTipoSensor()",
+    async function() {
+      var res = await laLogica.getTipoSensor(2);
+      assert.equal(res[0].Descripcion, "CO", "no coge la descripción correctamente")
+    }) //it
+
+    it("probar getEstado()",
+    async function() {
+      var res = await laLogica.getEstado(1);
+      assert.equal(res[0].Descripcion, "En Stock", "no coge la descripción correctamente")
     }) //it
 
 
@@ -156,7 +168,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
     })
-
+  it("probar getTodasLasMedidasPorFecha",
+  async function() {
         var res = await laLogica.getTodasLasMedidasPorFecha({'desde': 1574347324211, 'hasta':1574347324243});
          console.log(res);
         assert.equal(res.length, 0, "¿no hay un resulado?")

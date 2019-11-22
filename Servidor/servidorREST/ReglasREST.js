@@ -176,6 +176,20 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send(data);
     })
 
+
+    servidorExpress.get('/getNumSensoresSegunEstado/:idestado',
+    async function (peticion, respuesta) {
+      console.log(" * GET /getNumSensoresSegunEstado/:idestado")
+      var dato = peticion.params.idestado
+      console.log("El dato introducido en el método: " + dato)
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getNumSensoresSegunEstado(dato);
+      console.log("La respuesta es: "+res);
+
+      // todo ok
+      respuesta.status(200).send(JSON.stringify(res))
+    })
+
   /**
  * /ComprobarLogin -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
  * la cual devuelve el objeto USUARIO con el que compara la Password
