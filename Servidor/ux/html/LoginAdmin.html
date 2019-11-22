@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script type="text/javascript" src="../js/PROXY.js"></script>
+
+    <script>
+        var proxy = new Proxy();
+
+        function setCookie(cname, cvalue) {
+            //var d = new Date();
+            // d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            //var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + ";path=/";
+        }
+
+        function getCookie(cname) {
+            console.log("Yee");
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var user = getCookie("username");
+            var url = "http://localhost:8080/ux/html/admin.html";
+            console.log("hey"+user);
+            if (user != "") {
+                var a = document.createElement("a");
+                a.href = url;
+                a.click();
+            }
+        }
+
+        function ComprobarUsuario() {
+
+            var email = document.getElementById('email').value;
+            var pass = document.getElementById('pass').value;
+
+            var data = {
+                Email: email,
+                Password: pass
+            };
+
+            console.log("Llamada a comprobacion del login del Proxy")
+            
+            proxy.ComprobacionLogin(data);
+
+        }
+        
+        function usuarioOContraseñaIncorrectos(){
+            
+            console.log("Estoy en usuarioOContraseñaIncorrectos");
+            
+            var textoIncorrecto = document.getElementById('textoIncorrecto');
+            textoIncorrecto.className = "textoIncorrecto";
+            document.getElementById("textoIncorrecto").innerHTML = "Usuario y/o contraseña incorrectos";
+        }
+
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
+
+    <!--  css de bootsrap  -->
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- iconos Material Design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Poluzone | Admin</title>
+
+    <!-- CSS de Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<!----------------------------------------------------- BODY --------------------------------------------------------->
+
+<body id="page-top" onload="checkCookie()">
+    <!-------------------------------------------------- CONTENEDOR ----------------------------------------------------------->
+
+    <div class="contenedor">
+
+        <!------------------------------------------------ NAVBAR -------------------------------------------------------->
+
+        <div class="navbar">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink" id="darkNav">
+                <div class="container">
+                    <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png" width="30" alt=""> Poluzone</a>
+                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="material-icons">
+                            menu
+                        </i>
+                    </a>
+                </div>
+            </nav>
+
+        </div>
+
+        <!-------------------------------------------------- LOGIN ----------------------------------------------------------->
+
+        <div class="cuerpoLogin container">
+            <div class="contenedorLogin">
+                <div class="tarjetaLogin shadow-lg fondoOscuro rounded px-5 pt-5 pb-3">
+                    <div class="contenidoTarjetaLogin">
+                        <!-- Cabeza del modal, contiene el titulo del modal en este caso Iniciar Sesión -->
+                        <div class="fondoOscuro">
+                            <h4 class="nunito blanco sizeM">Iniciar sesión como Administrador</h4>
+                        </div>
+                        <!-- Cuerpo del modal, contiene el formulario del modal para Iniciar Sesión comprobando el usuario y su contraseña y el enlace para registrarse -->
+                        <div>
+                            <form class="form-horizontal">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input id="email" type="text" class="entradaTexto shadow form-control nunito sizeS" name="email" placeholder="Email">
+                                </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="pass" type="password" class="entradaTexto shadow form-control nunito sizeS" name="password" placeholder="Password">
+                                </div><br>
+                            </form>
+                            <p class="nunito text-white sizeS">¿Has olvidado tu contraseña?<a href="" class="recuperar naranja fondoOscuro" data-target="#recoverPass"> Recuperar </a></p>
+                            <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->
+                        </div>
+                        <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
+                        <div class="centrado">
+                            <button onclick="ComprobarUsuario()" class="btn btn-sm shadow active nunito fondoNaranja blanco">Entrar</button>
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                        </div>
+                        <div class="textoIncorrecto" id="textoIncorrecto">
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-------------------------------------------------- /LOGIN ----------------------------------------------------------->
+
+        <!------------------------------------------------ FOOTER -------------------------------------------------------->
+        <footer class="footer fixed-bottom">
+
+            <section class="section_4 text-center fondoOscuro p-1">
+                <p class="mt-2 nunito blanco nunito">&copy; Copyright 2019 GTI UPV. Todos los Derechos
+                    Reservados
+                </p>
+            </section>
+        </footer>
+
+        <!------------------------------------------------ /FOOTER -------------------------------------------------------->
+
+    </div>
+    <!--/contenedor-->
+
+    <!-------------------------------------------------- /CONTENEDOR ----------------------------------------------------------->
+
+
+    <!-- Librería jQuery requerida por los plugins de JavaScript -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+
+    <!-- Todos los plugins JavaScript de Bootstrap (también puedes
+                incluir archivos JavaScript individuales de los únicos
+                plugins que utilices) -->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="../js/agency.min.js"></script>
+    <script src="../jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</body>
+
+<!----------------------------------------------------- /BODY ----------------------------------------------------------->
+
+</html>

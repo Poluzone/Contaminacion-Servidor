@@ -2,8 +2,14 @@
 
 /* Clase para el tamaño del mapa */
 
+
 .map{
     height: 550px;
+    width: 100%;
+}
+
+.mapAdmin {
+    height: 500px;
     width: 100%;
 }
 
@@ -16,11 +22,13 @@
     background-size: cover;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Nunito' !important;
+    min-width: 775px;
 }
 
 .btn-primary {
@@ -186,11 +194,13 @@ header.masthead .intro-text .intro-heading {
         padding-top: 300px;
         padding-bottom: 200px
     }
+
     header.masthead .intro-text .intro-lead-in {
         font-size: 40px;
         line-height: 40px;
         margin-bottom: 50px;
     }
+
     header.masthead .intro-text .intro-heading {
         font-size: 75px;
         font-weight: 700;
@@ -215,7 +225,10 @@ header.masthead .intro-text .intro-heading {
     background-color: #F88E52;
 }
 
-#mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+#mainNav .navbar-brand.active,
+#mainNav .navbar-brand:active,
+#mainNav .navbar-brand:focus,
+#mainNav .navbar-brand:hover {
     color: #F88E52
 }
 
@@ -227,7 +240,8 @@ header.masthead .intro-text .intro-heading {
     color: #fff;
 }
 
-#mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
+#mainNav .navbar-nav .nav-item .nav-link.active,
+#mainNav .navbar-nav .nav-item .nav-link:hover {
     color: #F88E52
 }
 
@@ -239,21 +253,34 @@ header.masthead .intro-text .intro-heading {
         border: none;
         background-color: transparent
     }
+
     #mainNav .navbar-brand {
         font-size: 1.75em;
         transition: all .3s
     }
+
     #mainNav .navbar-nav .nav-item .nav-link {
-        padding: 1.1em 1em!important
+        padding: 1.1em 1em !important
     }
+
     #mainNav.navbar-shrink {
         padding-top: 0;
         padding-bottom: 0;
         background-color: #222831
     }
+
     #mainNav.navbar-shrink .navbar-brand {
         font-size: 1.25em;
         padding: 12px 0
+    }
+
+    #darkNav {
+        border: none;
+        background-color: #222831
+    }
+
+    #cuerpo {
+        margin-left: 0px !important;
     }
 }
 
@@ -266,7 +293,8 @@ header.masthead .intro-text .intro-heading {
 
 /*Para quitar borde azul de los botones de bootstrap*/
 
-.btn, .btn-primary {
+.btn,
+.btn-primary {
     outline: none !important;
     box-shadow: none !important;
     border-color: none !important;
@@ -294,3 +322,327 @@ header.masthead .intro-text .intro-heading {
 }
 
 /*Para sección de app*/
+
+
+
+
+
+
+
+
+
+
+
+/*Para la página del Admin*/
+
+/* CONTENEDOR */
+.contenedor {
+    width: 100%;
+    height: 100%;
+}
+
+/* CUERPO */
+.cuerpo {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+
+    height: 85%;
+}
+
+/* TARJETAS INFORMACION GENERAL */
+.tarjetasInfoGeneral {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+/* CADA TARJETA */
+
+.tarjeta {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* DENTRO DE CADA TARJETA */
+
+.iconoTarjeta {
+    padding-bottom: .5rem;
+    padding-left: .4rem;
+    padding-top: .5rem;
+}
+
+.icono {
+    width: 3rem;
+    height: 3rem;
+}
+
+.textoTarjeta {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+
+    line-height: normal;
+
+    text-align: center;
+    font-size: 1rem;
+
+}
+
+.textoTarjeta:hover {
+    cursor: default;
+}
+
+.valorTarjeta {
+    padding: 1rem;
+
+
+    text-align: center;
+    font-size: 1rem;
+}
+
+.valorTarjeta:hover {
+    cursor: default;
+}
+
+/* /DENTRO DE CADA TARJETA */
+
+/* /CADA TARJETA */
+
+/* /TARJETAS INFORMACION GENERAL */
+
+/* SUBCUERPO */
+
+.subcuerpo {
+    height: 80%;
+}
+
+/* TARJETAS INFORMACION DE CADA SENSOR */
+
+.tarjetasInfoSensores {
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* TARJETA TODOS LOS SENSORES Y TARJETA INFORMACION DE UN SENSOR */
+
+.fila {
+    height: 50%;
+}
+
+.tarjetaInfo {
+
+    height: 100%;
+}
+
+.contenedorSensores {
+    height: 100%;
+    padding: 0% !important;
+}
+
+.headerLista {
+    background-color: #222831;
+    color: white;
+
+    width: 100%;
+    height: 20% !important;
+
+    margin: 0% !important;
+}
+
+.iconoAdd {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoAdd:hover {
+    cursor: pointer;
+    content: url(../images/addHover.png);
+}
+
+.iconoCan {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoCan:hover {
+    cursor: pointer;
+    content: url(../images/canHover.png);
+}
+
+.nombresLista:hover {
+    cursor: default;
+}
+
+.contenedorLista {
+    height: 80%;
+    overflow: hidden;
+}
+
+.lista {
+    list-style-type: none;
+
+    height: 100%;
+
+    padding: 0% !important;
+
+    overflow: auto;
+}
+
+.tarjetaLista {
+    padding: 0% !important;
+
+    border-bottom: 1px;
+
+    width: 100%;
+
+    margin: 0% !important;
+
+    cursor: pointer;
+
+}
+
+.elementoLista {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+.elementoLista:hover {
+    background-color: #F5E0D3 !important;
+}
+
+.ul.li.div {
+    text-align: center;
+}
+
+.columnasInfoSensor {
+    text-align: center;
+}
+
+.col-1 {
+    padding: 0% !important;
+}
+
+.iconoDeCadaElemento {
+    width: 100%;
+}
+
+.textoSensores {
+    padding-left: 1rem;
+}
+
+.textoSensores:hover {
+    cursor: default;
+}
+
+.form-control {
+    background-color: #222831 !important;
+}
+
+.form-control.placeholder {
+    color: white;
+}
+
+.form-control:focus {
+    border-color: #F88E52 !important;
+    box-shadow: none !important;
+}
+
+.contenedorSearch {}
+
+.contenedorIconosEditar {
+    padding-top: 0% !important;
+    padding-bottom: 0% !important;
+    padding-right: 1rem !important;
+    padding-left: 0% !important;
+
+    align-items: center;
+}
+
+.informacionUsuario {
+    widows: 100%;
+    height: 80%;
+}
+
+.nombreTipoId {
+    
+}
+
+.datosSensor {
+    padding: .8rem;
+    padding-top: .4rem !important;
+
+}
+
+.contenedor1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.datosUsuario {
+    padding: .8rem;
+    padding-top: .4rem !important;
+
+}
+
+.correo {
+    padding: .8rem;
+    padding-top: 0% !important;
+
+}
+
+.telefono {
+    padding: .8rem;
+    padding-top: 0% !important;
+
+}
+
+/* /TARJETAS INFORMACION DE CADA SENSOR */
+
+/* MAPA */
+
+.columnaMapa {
+    height: 100%;
+}
+
+.contenedorMapa {
+    height: 100%;
+}
+
+.mapAdmin {
+    height: 100%;
+}
+
+/* /MAPA */
+
+/* /SUBCUERPO */
+
+/* /CONTENEDOR */
+
+
+/* Estilos LoginAdmin */
+
+.contenedorLogin{
+    margin: 20%;
+}
+
+.entradaTexto{
+    color: white !important;
+}
+
+.recuperar:hover{
+    text-decoration: none;
+    color:#F5E0D3;
+}
+
+.textoIncorrecto{
+    color: red;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+
+.footer {}
