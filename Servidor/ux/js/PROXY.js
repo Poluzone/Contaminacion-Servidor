@@ -131,7 +131,7 @@ class Proxy {
             });
     }
 
-    //-------------------------------
+    //------------Ivan---------------
     // getSensoresYSusUsuarios()
     //-------------------------------
     async getSensoresYSusUsuarios(callback) {
@@ -153,6 +153,35 @@ class Proxy {
                 } else {
                     console.log("No hay sensores");
                 }
+            }).catch(e => {
+                console.log("error: " + e);
+                return e;
+            });
+
+    }
+
+    //-------------Ivan--------------
+    // N: IdEstado -->
+    // getNumSensoresSegunEstado()
+    //-------------------------------
+    async getNumSensoresSegunEstado(estado, callback) {
+
+        console.log("Llamada a getNumSensoresSegunEstado con " + parseInt(estado));
+
+        fetch(IP_PUERTO + "/getNumSensoresSegunEstado/"+estado, {
+                method: 'GET', // or 'PUT'
+                headers: {
+                    'User-Agent': 'jordi',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+
+                callback(datos);
+
             }).catch(e => {
                 console.log("error: " + e);
                 return e;

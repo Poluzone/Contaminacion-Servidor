@@ -1,3 +1,5 @@
+<!-- Creado por Iván Romero Ruiz -->
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,13 +18,15 @@
 
         var sensores;
 
-        //Llamar a checkCockies antes de que se cargue el cuerpo para que no se pueda acceder a la pagina sin estar logineado
+        // Llamar a checkCookies antes de que se cargue el cuerpo para que no se pueda acceder a la pagina sin estar logineado
         window.addEventListener('load', checkCookie, false);
-        
-        // Se llama a llamadaALogicaAdministracion cuando se crea la ventana
-        window.addEventListener('load', llamadaAgetSensoresYSusUsuarios, false);
 
-        function llamadaAgetSensoresYSusUsuarios() {
+        // Se llama a llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores cuando se crea la ventana
+        window.addEventListener('load', llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores, false);
+
+        // Llamada al crearse la pagina para rellenar la lista de sensores mediante una llamada interna a la funcion crearElementoLista() para cada elemento
+        // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena en aqui
+        function llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores() {
             proxy.getSensoresYSusUsuarios(function(resp) {
 
                 sensores = resp;
@@ -35,12 +39,14 @@
                     crearElementoLista(i);
                 }
 
+                // Mostrar numero de sensores
+                rellenarTarjetasNumeroSensores();
+
             });
 
         }
 
         // Funcion que crea un numero de elementos en la lista equivalente al numero total de sensores en la base de datos
-
         function crearElementoLista(i) {
 
             var maxListaSensores = sensores.length;
@@ -79,18 +85,18 @@
 
             var iconoEstado = "";
 
-            console.log("que " + sensor.Estado);
+            //console.log("que " + sensor.Estado);
 
             if (sensor.Estado == "En Stock") {
-                console.log("nani " + sensor.Estado);
+                //console.log("nani " + sensor.Estado);
                 iconoEstado = "box3";
             }
             if (sensor.Estado == "Alquilado") {
-                console.log("nani " + sensor.Estado);
+                //console.log("nani " + sensor.Estado);
                 iconoEstado = "tick3";
             }
             if (sensor.Estado == "Averiado") {
-                console.log("nani " + sensor.Estado);
+                //console.log("nani " + sensor.Estado);
                 iconoEstado = "cross3";
             }
 
@@ -153,6 +159,47 @@
 
         }
 
+        // Mostrar numero de sensores totales y por estado
+        async function rellenarTarjetasNumeroSensores() {
+
+            var numeroSensores = document.getElementById("tarjetaTotal");
+            numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
+            
+            rellenarTarjetasNumeroSensoresPorEstado(1);
+            rellenarTarjetasNumeroSensoresPorEstado(2);
+            rellenarTarjetasNumeroSensoresPorEstado(3);
+        }
+
+        // N: idEstado -->
+        // rellenarTarjetasNumeroSensoresPorEstado
+        // N: numero de sensores con estado = idEstado
+        function rellenarTarjetasNumeroSensoresPorEstado(idestado) {
+            
+            var sensoresActivos = document.getElementById("tarjetaActivos");
+            var sensoresInactivos = document.getElementById("tarjetaInactivos");
+            var sensoresEnStock = document.getElementById("tarjetaEnStock");
+
+            var numeroSensoresSegunEstado = 0;
+            var estadoJson = {
+                "idestado": idestado
+            };
+            proxy.getNumSensoresSegunEstado(idestado, function(resp) {
+                numeroSensoresSegunEstado = resp;
+
+                if (idestado == 1) {
+                    sensoresEnStock.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 1 corresponde a sensores en stock
+                }
+                if (idestado == 2) {
+                    sensoresActivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 2 corresponde a sensores activos
+                }
+                if (idestado == 3) {
+                    sensoresInactivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 3 corresponde a sensores inactivos
+                }
+
+            });
+
+        }
+
 
         function setCookie(cname, cvalue) {
             //var d = new Date();
@@ -184,12 +231,12 @@
                 var a = document.createElement("a");
                 a.href = url;
                 a.click();
-            }
-            else{
+            } else {
                 alert("Los cookies funcionan estimado: " + user);
             }
         }
 
+        // Elimina las cookies de la pagina. Se le llama al clicar a Cerrar Sesion
         function eliminarCookies() {
             console.log("Leyenda");
             document.cookie.split(";").forEach(function(c) {
@@ -233,10 +280,12 @@
 
         }
 
+        // Funcion que se llamara al clicar el boton del mas que añadira una relacion Usuario-Sensor cambiando una por otra
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
         }
 
+        // Funcion que se llamara al clicar a la basura que elminiara una relacion Usuario-Sensor
         function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
         }
@@ -327,13 +376,13 @@
 
                         <div class="textoTarjeta my-auto font-weight-bold">
 
-                            Número de sensores
+                            Número de<br>sensores
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaTotal">
 
-                            232
+
 
                         </div>
 
@@ -356,13 +405,13 @@
 
                         <div class="textoTarjeta my-auto font-weight-bold">
 
-                            Sensores<br>activos
+                            Sensores<br>alquilados
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaActivos">
 
-                            232
+
 
                         </div>
 
@@ -384,13 +433,13 @@
 
                         <div class="textoTarjeta my-auto font-weight-bold">
 
-                            Sensores<br>inactivos
+                            Sensores<br>averiados
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaInactivos">
 
-                            232
+
 
                         </div>
 
@@ -416,9 +465,9 @@
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaEnStock">
 
-                            232
+
 
                         </div>
 

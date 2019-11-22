@@ -42,7 +42,7 @@ async function main() {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
         // Monitorear todas la peticiones
-        console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body)
+        //console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body)
         next()
     })
 
