@@ -10,8 +10,8 @@
     <script src="../js/logicaAdministracion.js"></script>
 
     <!-- Scripts para API Google Maps -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap" type="text/javascript"></script>
-    <script type="text/javascript" src="../js/map.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization" type="text/javascript"></script>
+    <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
     <script>
         var proxy = new Proxy();
@@ -26,6 +26,7 @@
 
         // Llamada al crearse la pagina para rellenar la lista de sensores mediante una llamada interna a la funcion crearElementoLista() para cada elemento
         // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena en aqui
+        // Tambien se llama a la creacion del mapa para que no se haga antes de las cookies
         function llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores() {
             proxy.getSensoresYSusUsuarios(function(resp) {
 
@@ -43,6 +44,12 @@
                 rellenarTarjetasNumeroSensores();
 
             });
+            
+            // Puntos del mapa
+        recibirMedidasFecha({
+            "desde": 0,
+            "hasta": 1574386240247
+        });
 
         }
 
@@ -385,12 +392,6 @@
                 heatmap.setMap(getMap());
         });
     }
-        
-        // Puntos del mapa
-        recibirMedidasFecha({
-            "desde": 0,
-            "hasta": 1574386240247
-        });
 
     </script>
 
@@ -838,7 +839,7 @@
 
                     <div class="contenedorMapa shadow bg-white rounded">
 
-                        <div class="mapAdmin" id="map">
+                        <div class="mapAdmin" id="mapAdmin">
 
                         </div>
 
