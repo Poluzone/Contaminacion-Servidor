@@ -3,7 +3,7 @@
 /* Clase para el tamaño del mapa */
 
 
-.map{
+.map {
     height: 550px;
     width: 100%;
 }
@@ -537,15 +537,15 @@ header.masthead .intro-text .intro-heading {
     cursor: default;
 }
 
-.form-control {
+.cajaDeTexto {
     background-color: #222831 !important;
 }
 
-.form-control.placeholder {
+.cajaDeTexto.placeholder {
     color: white;
 }
 
-.form-control:focus {
+.cajaDeTexto:focus {
     border-color: #F88E52 !important;
     box-shadow: none !important;
 }
@@ -566,9 +566,7 @@ header.masthead .intro-text .intro-heading {
     height: 80%;
 }
 
-.nombreTipoId {
-    
-}
+.nombreTipoId {}
 
 .datosSensor {
     padding: .8rem;
@@ -625,20 +623,21 @@ header.masthead .intro-text .intro-heading {
 
 /* Estilos LoginAdmin */
 
-.contenedorLogin{
+.contenedorLogin {
     margin: 20%;
 }
 
-.entradaTexto{
+.entradaTexto {
     color: white !important;
+    background-color: #222831 !important;
 }
 
-.recuperar:hover{
+.recuperar:hover {
     text-decoration: none;
-    color:#F5E0D3;
+    color: #F5E0D3;
 }
 
-.textoIncorrecto{
+.textoIncorrecto {
     color: red;
     margin-top: 1rem;
     text-align: center;
