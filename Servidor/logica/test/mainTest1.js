@@ -94,6 +94,19 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     }) //it
 
 
+    it("probar getSensoresSegunEstado()",
+    async function() {
+      var res = await laLogica.getSensoresSegunEstado(2);
+      assert.equal(res[0].IdSensor, "2", "no coge los sensores correctamente")
+    }) //it
+
+    it("probar getNumSensoresSegunEstado()",
+    async function() {
+      var res = await laLogica.getNumSensoresSegunEstado(1);
+      assert.equal(res, "1", "no coge el num de sensores correctamente")
+    }) //it
+
+
   it("probar GetUsuarioPorEmail",
     async function() {
 
