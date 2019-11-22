@@ -113,16 +113,30 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     })
 
-  it("probar insertarIdUsuarioConIdsensor",
-    async function() {
-      var dato = {
-        IdUsuario: 6,
-        IdSensor: 2
-      }
-
-      await laLogica.insertarIdUsuarioConIdsensor(dato);
-      var res = await laLogica.getUsuarioPorIdSensor(19);
-      assert.equal(res.length, 1, "¿no hay un resulado?")
+    it("probar insertarMedida",
+      async function() {
+            await laLogica.borrarFilasDeTodasLasTablas();
+        var IdTipoMedida = 2
+        var IdUsuario= 15
+        var Valor= 243
+        var Latitud = 38.95;
+        var Longitud = -0.17;
+        for(let j = 0; j<10;j++){
+        for(let i = 0; i<10; i++){
+        var medida = {
+          IdTipoMedida: 2,
+          IdUsuario: 15,
+          Valor: Valor+10,
+          Tiempo: Date.now(),
+          Latitud: Latitud+i*0.003+j*0.003,
+          Longitud: Longitud-i*0.003+j*0.003
+            }
+            Valor+=10;
+         await laLogica.insertarMedida(medida);
+            }
+        }
+        var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
+        assert.equal(res.length, 1, "¿no hay un resulado?")
 
     })
 
@@ -144,19 +158,12 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     })
 
-  it("probar getTodasLasMedidasPorFecha",
-    async function() {
-
-      var res = await laLogica.getTodasLasMedidasPorFecha({
-        'desde': 6,
-        'hasta': 7
-      });
-      //console.log(res);
-      assert.equal(res.length, 2, "¿no hay un resulado?")
+        var res = await laLogica.getTodasLasMedidasPorFecha({'desde': 1574347324211, 'hasta':1574347324243});
+         console.log(res);
+        assert.equal(res.length, 0, "¿no hay un resulado?")
 
     }
 
   ) //probar getTodasLasMedidasPorFecha()
-
 
 }) // describe

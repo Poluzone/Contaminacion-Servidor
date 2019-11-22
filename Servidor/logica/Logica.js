@@ -302,7 +302,7 @@ module.exports = class Logica {
   // borrarFilasDeTodasLasTablas() ->
   // .................................................................
   async borrarFilasDeTodasLasTablas() {
-    await this.borrarFilasDe("Usuarios")
+    await this.borrarFilasDe("Medidas")
   } // ()
   // .................................................................
   // cerrar() -->
