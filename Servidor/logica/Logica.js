@@ -22,6 +22,11 @@ module.exports = class Logica {
       })
   } // ()
 
+  // .................................................................
+  // Josep Carreres Fluixà
+  // medida -> insertarMedida() ->
+  // inserta Medida
+  // .................................................................
   async insertarMedida(medida) {
     var textoSQL =
       'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
@@ -41,13 +46,17 @@ module.exports = class Logica {
     })
   }
 
+  // .................................................................
+  // Josep Carreres Fluixà
+  // datos -> insertarIdUsuarioConIdsensor() ->
+  // inserta Un id de sensor con un id de usuario
+  // .................................................................
   async insertarIdUsuarioConIdsensor(datos) {
     var textoSQL =
       'insert into UsuarioSensor values($IdUsuario,$IdSensor);'
     var valoresParaSQL = {
       $IdUsuario: datos.IdUsuario,
       $IdSensor: datos.IdSensor
-
     }
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
@@ -56,6 +65,9 @@ module.exports = class Logica {
     })
   }
 
+  // .................................................................
+  // userId -> getLaUltimaMedidaPorUsuario() ->
+  // .................................................................
   async getLaUltimaMedidaPorUsuario(userId) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario=" + userId + " ORDER BY IdMedida DESC LIMIT 0, 1";
     return new Promise((resolver, rechazar) => {
@@ -77,6 +89,9 @@ module.exports = class Logica {
     })
   }*/
 
+  // .................................................................
+  // email -> GetIdDelUsuario() ->
+  // .................................................................
   async GetIdDelUsuario(email) {
     var textoSQL = "SELECT idUsuario FROM Usuarios WHERE Email='" + email + "';";
     return new Promise((resolver, rechazar) => {
@@ -88,24 +103,9 @@ module.exports = class Logica {
   }
 
   // .................................................................
-  // email -> GetHashPorEmail() ->
-  // .................................................................
-  async GetHashPorEmail(email) {
-    //  var textoSQL = "select Password from Usuarios where Email = $email ";
-    var valoresParaSQL = {
-      $email: email
-    };
-    return new Promise((resolver, rechazar) => {
-      this.laConexion.all(textoSQL, valoresParaSQL,
-        (err, res) => {
-          (err ? rechazar(err) : resolver(res))
-
-        })
-    })
-  }
-
-  // .................................................................
+  // Josep Carreres Fluixà
   // email -> GetUsuarioPorEmail() ->
+  // devuelve un Usuario dandole un email
   // .................................................................
   async GetUsuarioPorEmail(email) {
     var textoSQL = "select * from Usuarios where Email = $email ";
@@ -282,7 +282,9 @@ module.exports = class Logica {
   } //()
 
   // .................................................................
+  // Josep Carreres Fluixà
   // datos -> insertarUsuario() ->
+  // inserta usuario
   // .................................................................
   async insertarUsuario(datos) {
     var textoSQL = "insert into Usuarios values( $IdUsuario, $Email, $Password, $Nombre, $Telefono, $TipoUsuario)";
@@ -308,13 +310,15 @@ module.exports = class Logica {
         (err) => (err ? rechazar(err) : resolver())
       )
     })
-  } // ()
+  }
+
   // .................................................................
   // borrarFilasDeTodasLasTablas() ->
   // .................................................................
   async borrarFilasDeTodasLasTablas() {
     await this.borrarFilasDe("Medidas")
-  } // ()
+  }
+
   // .................................................................
   // cerrar() -->
   // .................................................................
@@ -324,7 +328,7 @@ module.exports = class Logica {
         (err ? rechazar(err) : resolver())
       })
     })
-  } // ()
+  }
 
 } // class
 // .....................................................................
