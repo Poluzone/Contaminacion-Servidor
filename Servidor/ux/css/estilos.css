@@ -215,6 +215,14 @@ header.masthead .intro-text .intro-heading {
     background-color: #222831
 }
 
+.intro-heading:hover{
+    cursor: default;
+}
+
+.intro-lead-in:hover{
+    cursor: default;
+}
+
 #mainNav .navbar-toggler {
     font-size: 12px;
     right: 0;
