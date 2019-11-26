@@ -343,6 +343,21 @@ header.masthead .intro-text .intro-heading {
 
 /*Para la página del Admin*/
 
+.cerrarSesion{
+    width: 30% !important;
+    padding-right: 0% !important;
+    
+    text-align: right;
+}
+
+.titulosModos{
+    color: #F88E52 !important;
+}
+
+.titulosModos:hover{
+    color: white !important;
+}
+
 /* CONTENEDOR */
 .contenedor {
     width: 100%;
