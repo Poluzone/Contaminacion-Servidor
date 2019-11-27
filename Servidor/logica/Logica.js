@@ -199,7 +199,7 @@ module.exports = class Logica {
     var textoSQL = "select * from Sensor";
     console.log("logica: getTodosLosSensores")
     return new Promise((resolver, rechazar) => {
-      this.laConexion.all(textoSQL, {},
+      this.laConexion.all(textoSQL,
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
@@ -239,7 +239,7 @@ module.exports = class Logica {
   //     getMedidasPorFecha()
   //------------------------------------------------------------
 
-  async getTodasLasMedidasPorFecha(intervalo) {
+   getTodasLasMedidasPorFecha(intervalo) {
     var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
@@ -255,7 +255,7 @@ module.exports = class Logica {
   // idestado -> getSensoresSegunEstado() ->
   // devuelve los sensores según el estado
   //------------------------------------------------------------
-  async getSensoresSegunEstado(idEstado) {
+   getSensoresSegunEstado(idEstado) {
     var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
     var valoresParaSQL = {
       $idestado: idEstado
@@ -286,7 +286,7 @@ module.exports = class Logica {
   // datos -> insertarUsuario() ->
   // inserta usuario
   // .................................................................
-  async insertarUsuario(datos) {
+  insertarUsuario(datos) {
     var textoSQL = "insert into Usuarios values( $IdUsuario, $Email, $Password, $Nombre, $Telefono, $TipoUsuario)";
     var valoresParaSQL = {
       $IdUsuario: null,
@@ -303,12 +303,51 @@ module.exports = class Logica {
     })
   }
 
-  async borrarFilasDe(tabla) {
+  // .................................................................
+  // Josep Carreres Fluixà
+  // sensor -> insertarSensor() ->
+  // inserta sensor
+  // .................................................................
+  insertarSensor(sensor) {
+    var textoSQL = "insert into Sensor values( $IdSensor, $IdTipoMedida, $IdEstado)";
+    var valoresParaSQL = {
+      $IdSensor: null,
+      $IdTipoMedida: sensor.IdTipoMedida,
+      $IdEstado: sensor.IdEstado,
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver(res))
+      })
+    })
+  }
+
+  // .................................................................
+  // tabla -> borrarFilasDe() ->
+  //  Le pasas el nombre de la tabla y lo elimina en la BD
+  // .................................................................
+  borrarFilasDe(tabla) {
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(
         "delete from " + tabla + ";",
         (err) => (err ? rechazar(err) : resolver())
       )
+    })
+  }
+
+  // .................................................................
+  // Idsensor -> borrarSensorPorID() ->
+  //  Le pasas el nombre del sensor y lo elimina en la BD
+  // .................................................................
+  borrarSensorPorID(idSensor) {
+    var textoSQL = "Delete from Sensor where IdSensor = $idSensor";
+    var valoresParaSQL = {
+      $idSensor:idSensor
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver())
+      })
     })
   }
 
