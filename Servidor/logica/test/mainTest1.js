@@ -225,13 +225,13 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   // Emilia Rosa van der Heide
   it("probar getMediaCalidadDelAireDeLaJornada",
   async function() {
-    var dato = {
+    var datos = {
       Intervalo: {
         desde: 0,
         hasta: Date.now() 
       },
       IdUsuario: 15};
-    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(dato.Intervalo, dato.IdUsuario);
+    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
 
     // 748 -> en el test insertarMedida empieza por 253 y crea 100 medidas de 10 en 10 (max valor 1243)
     // por tanto la media debería ser: (253+1243)/2 = 748

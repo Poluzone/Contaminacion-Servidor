@@ -278,10 +278,10 @@ module.exports = class Logica {
   // desde: N, hasta: N, IdUsuario: N -> getMediaCalidadDelAireDeLaJornada() -> R
   // obtiene la media de las medidas de la jornada
   //------------------------------------------------------------
-  async getMediaCalidadDelAireDeLaJornada(intervalo, idUsuario) {
+  async getMediaCalidadDelAireDeLaJornada(datos) {
     console.log("logica: getMediaCalidadDelAireDeLaJornada")
     // Obtenemos todas las medidas
-    var medidas = await this.getMedidasPorIdPorFecha(intervalo, idUsuario)
+    var medidas = await this.getMedidasPorIdPorFecha(datos.Intervalo, datos.IdUsuario)
     //console.log(medidas)
 
     // Hacemos el sumatorio de los valores
