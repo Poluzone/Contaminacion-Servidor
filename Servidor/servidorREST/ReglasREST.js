@@ -316,6 +316,33 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
+
+  /*
+  * /getMedidasPorIdPorFecha/ -> es una petición GET que llama a getMedidasPorIdPorFecha() de la Lógica
+  * la cual recoge los datos de todas las medidas de un usuario de la BBDD
+  */
+
+  servidorExpress.get('/getMedidasPorIdPorFecha',
+  async function (peticion, respuesta) {
+    console.log(" * GET /getMedidasPorIdPorFecha ")
+
+    var datos = JSON.parse(peticion.body)
+
+    // llamo a la función adecuada de la lógica
+    var res = await laLogica.getMedidasPorIdPorFecha(datos.Intervalo, datos.IdUsuario);
+
+    // si el array de resultados no tiene una casilla ...
+    if (res.length < 1) {
+      // 404: not found
+      respuesta.status(404).send("no encontré medidas: " + dato)
+      return
+    }
+    // todo ok
+    respuesta.status(200).send(JSON.stringify(res))
+  })
+
+
+
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
     var dir = path.resolve("../ux/html");

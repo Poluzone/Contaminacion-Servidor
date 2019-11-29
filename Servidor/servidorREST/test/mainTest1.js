@@ -220,4 +220,23 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     ) // .post
   }) //probar getTodasLasMedidasPorFecha()
 
+
+  it("Get /getMedidasPorIdPorFecha ", function (hecho) {
+    var dato = {Intervalo: 3, IdUsuario: 1};
+    request.get(
+      {
+        url: IP_PUERTO + "/getMedidasPorIdPorFecha",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(dato)
+      },
+      function (err, respuesta, carga) {
+        var json = JSON.parse(carga);
+        assert.equal(err, null, "¿ha habido un error?");
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)");
+        hecho();
+      } // callback()
+    ) // .get
+  }) // it
+
+
 }) // describe

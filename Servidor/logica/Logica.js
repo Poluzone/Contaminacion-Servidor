@@ -238,7 +238,6 @@ module.exports = class Logica {
   //------------------------------------------------------------
   //     getMedidasPorFecha()
   //------------------------------------------------------------
-
    getTodasLasMedidasPorFecha(intervalo) {
     var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
     return new Promise((resolver, rechazar) => {
@@ -247,6 +246,23 @@ module.exports = class Logica {
           (err ? rechazar(err) : resolver(res))
         })
     })
+  } //()
+
+
+  //------------------------------------------------------------
+  // Emilia Rosa van der Heide
+  // getMedidasPorIdPorFecha()
+  //------------------------------------------------------------
+  getMedidasPorIdPorFecha(intervalo, idUsuario) {
+    var textoSQL = "SELECT * FROM Medidas WHERE Idusuario EQUALS " + idUsuario + " WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
+  /*  return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    }) */
+    var ok = {ok: ok, oki: ok}
+    return ok;
   } //()
 
 
