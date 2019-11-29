@@ -226,7 +226,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       desde: 0,
       hasta: 1574855177660},
       IdUsuario: 15};
-    request.get(
+    request.post(
       {
         url: IP_PUERTO + "/getMediaCalidadDelAireDeLaJornada",
         headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },

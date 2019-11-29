@@ -323,14 +323,17 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   * la cual recoge los datos de todas las medidas de un usuario según un intervalo de la BBDD y calcula su media
   */
 
-  servidorExpress.get('/getMediaCalidadDelAireDeLaJornada',
+  servidorExpress.post('/getMediaCalidadDelAireDeLaJornada',
   async function (peticion, respuesta) {
     console.log(" * GET /getMediaCalidadDelAireDeLaJornada ")
 
+    console.log(peticion.body)
     var datos = JSON.parse(peticion.body)
 
     // llamo a la función adecuada de la lógica
-    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos.Intervalo, datos.IdUsuario);
+    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
+
+    respuesta = { res };
 
     // si el array de resultados no tiene una casilla ...
     if (res.length < 1) {
@@ -339,7 +342,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       return
     }
     // todo ok
-    respuesta.status(200).send(JSON.stringify(res))
+    console.log(respuesta)
+    respuesta.status(200).send(respuesta)
   })
 
 
