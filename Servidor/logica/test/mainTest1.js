@@ -206,6 +206,36 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }
 
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar insertarSensor()
+
+    // Emilia Rosa van der Heide
+    it("probar getMedidasPorIdPorFecha",
+    async function() {
+       var dato = {
+         Intervalo: {
+          desde: 0,
+          hasta: Date.now()
+        },
+        IdUsuario: 15};
+      var res = await laLogica.getMedidasPorIdPorFecha(dato.Intervalo, dato.IdUsuario);
+      assert.notEqual(res.length, 0, "¿no hay resultado?")
+    }
+  ) //probar getMedidasPorIdPorFecha()
+
+  // Emilia Rosa van der Heide
+  it("probar getMediaCalidadDelAireDeLaJornada",
+  async function() {
+    var dato = {
+      Intervalo: {
+        desde: 0,
+        hasta: Date.now() 
+      },
+      IdUsuario: 15};
+    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(dato.Intervalo, dato.IdUsuario);
+
+    // 748 -> en el test insertarMedida empieza por 253 y crea 100 medidas de 10 en 10 (max valor 1243)
+    // por tanto la media debería ser: (253+1243)/2 = 748
+    assert.equal(res, 748, "no calcula bien la media")
+  }) //probar getMediaCalidadDelAireDeLaJornada()
 
 }) // describe

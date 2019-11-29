@@ -221,11 +221,14 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
   }) //probar getTodasLasMedidasPorFecha()
 
 
-  it("Get /getMedidasPorIdPorFecha ", function (hecho) {
-    var dato = {Intervalo: 3, IdUsuario: 1};
+  it("Get /getMediaCalidadDelAireDeLaJornada ", function (hecho) {
+    var dato = {Intervalo: {
+      desde: 0,
+      hasta: 1574855177660},
+      IdUsuario: 15};
     request.get(
       {
-        url: IP_PUERTO + "/getMedidasPorIdPorFecha",
+        url: IP_PUERTO + "/getMediaCalidadDelAireDeLaJornada",
         headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
         body: JSON.stringify(dato)
       },

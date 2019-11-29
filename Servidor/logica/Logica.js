@@ -251,19 +251,50 @@ module.exports = class Logica {
 
   //------------------------------------------------------------
   // Emilia Rosa van der Heide
-  // getMedidasPorIdPorFecha()
+  // desde: N, hasta: N, IdUsuario: N -> getMedidasPorIdPorFecha() -> Medidas
+  // recoge las medidas de un usuario concreto
   //------------------------------------------------------------
   getMedidasPorIdPorFecha(intervalo, idUsuario) {
-    var textoSQL = "SELECT * FROM Medidas WHERE Idusuario EQUALS " + idUsuario + " WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
-  /*  return new Promise((resolver, rechazar) => {
-      this.laConexion.all(textoSQL,
+    console.log("logica: getMedidasPorIdPorFecha")
+    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario = $idUsuario AND Tiempo BETWEEN $desde AND $hasta ORDER BY IdMedida DESC";
+    console.log(textoSQL)
+    var valoresParaSQL = {
+      $idUsuario: idUsuario,
+      $desde: intervalo.desde,
+      $hasta: intervalo.hasta
+    };
+    console.log(valoresParaSQL)
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
-    }) */
-    var ok = {ok: ok, oki: ok}
-    return ok;
-  } //()
+    }) 
+  } // getMedidasPorIdPorFecha()
+
+
+  //------------------------------------------------------------
+  // Emilia Rosa van der Heide
+  // desde: N, hasta: N, IdUsuario: N -> getMediaCalidadDelAireDeLaJornada() -> R
+  // obtiene la media de las medidas de la jornada
+  //------------------------------------------------------------
+  async getMediaCalidadDelAireDeLaJornada(intervalo, idUsuario) {
+    console.log("logica: getMediaCalidadDelAireDeLaJornada")
+    // Obtenemos todas las medidas
+    var medidas = await this.getMedidasPorIdPorFecha(intervalo, idUsuario)
+    //console.log(medidas)
+
+    // Hacemos el sumatorio de los valores
+    var sumatorio = 0;
+    for (var i = 0; i < medidas.length; i++) {
+      sumatorio = sumatorio + medidas[i].Valor;
+    } 
+
+    // Calulamos la media
+    var media = sumatorio / medidas.length;
+
+    return media;
+  } // getMediaCalidadDelAireDeLaJornada()
 
 
   //------------------------------------------------------------

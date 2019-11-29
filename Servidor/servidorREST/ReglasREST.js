@@ -318,18 +318,19 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
 
   /*
-  * /getMedidasPorIdPorFecha/ -> es una petición GET que llama a getMedidasPorIdPorFecha() de la Lógica
-  * la cual recoge los datos de todas las medidas de un usuario de la BBDD
+  * Emilia Rosa van der Heide
+  * /getMediaCalidadDelAireDeLaJornada -> es una petición GET que llama a getMediaCalidadDelAireDeLaJornada() de la Lógica
+  * la cual recoge los datos de todas las medidas de un usuario según un intervalo de la BBDD y calcula su media
   */
 
-  servidorExpress.get('/getMedidasPorIdPorFecha',
+  servidorExpress.get('/getMediaCalidadDelAireDeLaJornada',
   async function (peticion, respuesta) {
-    console.log(" * GET /getMedidasPorIdPorFecha ")
+    console.log(" * GET /getMediaCalidadDelAireDeLaJornada ")
 
     var datos = JSON.parse(peticion.body)
 
     // llamo a la función adecuada de la lógica
-    var res = await laLogica.getMedidasPorIdPorFecha(datos.Intervalo, datos.IdUsuario);
+    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos.Intervalo, datos.IdUsuario);
 
     // si el array de resultados no tiene una casilla ...
     if (res.length < 1) {
