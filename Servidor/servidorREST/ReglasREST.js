@@ -333,7 +333,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     // llamo a la función adecuada de la lógica
     var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
 
-    respuesta = { res };
+    console.log(res)
+    var resJson = { media: res };
 
     // si el array de resultados no tiene una casilla ...
     if (res.length < 1) {
@@ -342,8 +343,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       return
     }
     // todo ok
-    console.log(respuesta)
-    respuesta.status(200).send(respuesta)
+    console.log(resJson)
+    respuesta.status(200).send(resJson)
   })
 
 
