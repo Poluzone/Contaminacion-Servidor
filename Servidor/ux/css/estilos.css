@@ -350,12 +350,24 @@ header.masthead .intro-text .intro-heading {
     text-align: right;
 }
 
-.titulosModos{
-    color: #F88E52 !important;
+.modoSensores{
+    color: #F88E52;
 }
 
-.titulosModos:hover{
-    color: white !important;
+.modoSensores:hover{
+    color: #F5E0D3;
+    
+    text-decoration: none;
+}
+
+.modoUsuarios{
+    color: white;
+}
+
+.modoUsuarios:hover{
+    color: #F5E0D3;
+    
+    text-decoration: none;
 }
 
 /* CONTENEDOR */

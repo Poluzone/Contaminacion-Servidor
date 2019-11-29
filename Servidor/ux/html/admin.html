@@ -44,12 +44,12 @@
                 rellenarTarjetasNumeroSensores();
 
             });
-            
+
             // Puntos del mapa
-        recibirMedidasFecha({
-            "desde": 0,
-            "hasta": 1574386240247
-        });
+            recibirMedidasFecha({
+                "desde": 0,
+                "hasta": 1574386240247
+            });
 
         }
 
@@ -296,102 +296,130 @@
         function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
         }
-        
+
         //Esto es para poder asignarle un nombre al gas dependiendo de su ID
-        function queGasSoy(dato){
+        function queGasSoy(dato) {
             var gas;
-            if(dato == 2){
+            if (dato == 2) {
                 gas = "CO";
-            }else{
-                if(dato == 3){
+            } else {
+                if (dato == 3) {
                     gas = "NOX";
-                }else{
-                    if(dato==4){
-                        gas="SO2";
-                    }else{
-                        gas="Gas Irritante";
+                } else {
+                    if (dato == 4) {
+                        gas = "SO2";
+                    } else {
+                        gas = "Gas Irritante";
                     }
                 }
             }
             return gas;
         }
-        
+
         //Recibe las medidas y dibuja los marcadores
-        function recibirMedidasFecha(intervalo){
+        function recibirMedidasFecha(intervalo) {
             //Recojo los datos de la base de datos
-            proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
-           // console.log(datos);
-            console.log("DATOS DE MEDIDAS POR FECHA"+datos.length);
-            var poluzone = [];
-                
-                 var infowindow = new google.maps.InfoWindow()
-                
-            for(let i = 0; i<datos.length;i++){
-                
-                var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
-                var icon;
-                /*if(datos[i].IdTipoMedida == 2){
-                    icon = iconBase + 'purple-dot.png'
-                }*/
-                if(datos[i].IdTipoMedida==1){
-                     icon = iconBase + 'green.png' 
-                }else{
-                    if(datos[i].IdTipoMedida==2){
-                      icon = iconBase + 'yellow.png'
-                    }else{
-                        if(datos[i].IdTipoMedida==3){
-                            icon = iconBase + 'red.png'
-                        }else{
-                            if(datos[i].IdTipoMedida==4){
-                            icon = iconBase + 'purple.png'
-                            }else{
-                                icon = iconBase + 'lightblue.png'
+            proxy.getTodasLasMedidasPorFecha(intervalo, function(datos) {
+                // console.log(datos);
+                console.log("DATOS DE MEDIDAS POR FECHA" + datos.length);
+                var poluzone = [];
+
+                var infowindow = new google.maps.InfoWindow()
+
+                for (let i = 0; i < datos.length; i++) {
+
+                    var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+                    var icon;
+                    /*if(datos[i].IdTipoMedida == 2){
+                        icon = iconBase + 'purple-dot.png'
+                    }*/
+                    if (datos[i].IdTipoMedida == 1) {
+                        icon = iconBase + 'green.png'
+                    } else {
+                        if (datos[i].IdTipoMedida == 2) {
+                            icon = iconBase + 'yellow.png'
+                        } else {
+                            if (datos[i].IdTipoMedida == 3) {
+                                icon = iconBase + 'red.png'
+                            } else {
+                                if (datos[i].IdTipoMedida == 4) {
+                                    icon = iconBase + 'purple.png'
+                                } else {
+                                    icon = iconBase + 'lightblue.png'
+                                }
                             }
                         }
                     }
-                }
-                var medida = new google.maps.Marker({
-			         position: {lat:datos[i].Latitud,lng:datos[i].Longitud},
-			         map: getMap(),
-			         title: 'Medidas',
-                     icon: {url:icon},
-                   });      
-                   
-                   var puntoCalor = {location: new google.maps.LatLng(datos[i].Latitud, datos[i].Longitud), weight: datos[i].Valor};
-                
-                   poluzone.push(puntoCalor);
-                
-                 var contentString = '<div id="content">'+
-                  '<div id="siteNotice">'+
-                  '</div>'+
-                  '<h1 id="firstHeading" class="firstHeading">'+datos[i].Valor.toString()+' ppb</h1>'+
-                  '<div id="bodyContent">'+
-                  '<p><b>'+queGasSoy(datos[i].IdTipoMedida)+'</b></p>'+
-                  '<p></p>'+
-                  '</div>'+
-                  '</div>';
+                    var medida = new google.maps.Marker({
+                        position: {
+                            lat: datos[i].Latitud,
+                            lng: datos[i].Longitud
+                        },
+                        map: getMap(),
+                        title: 'Medidas',
+                        icon: {
+                            url: icon
+                        },
+                    });
 
-                   
+                    var puntoCalor = {
+                        location: new google.maps.LatLng(datos[i].Latitud, datos[i].Longitud),
+                        weight: datos[i].Valor
+                    };
 
-                 
-                 google.maps.event.addListener(medida,'click', (function(marker,content,infowindow){ 
-        return function() {
-           infowindow.setContent(content);
-           infowindow.open(getMap(),marker);
-        };
-    })(medida,contentString,infowindow)); 
-                
-                    
-             
-            }//for
+                    poluzone.push(puntoCalor);
+
+                    var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<h1 id="firstHeading" class="firstHeading">' + datos[i].Valor.toString() + ' ppb</h1>' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + queGasSoy(datos[i].IdTipoMedida) + '</b></p>' +
+                        '<p></p>' +
+                        '</div>' +
+                        '</div>';
+
+
+
+
+                    google.maps.event.addListener(medida, 'click', (function(marker, content, infowindow) {
+                        return function() {
+                            infowindow.setContent(content);
+                            infowindow.open(getMap(), marker);
+                        };
+                    })(medida, contentString, infowindow));
+
+
+
+                } //for
                 var heatmap = new google.maps.visualization.HeatmapLayer({
-                data: poluzone,
-                maxIntensity: 1243,
-                radius: 60
+                    data: poluzone,
+                    maxIntensity: 1243,
+                    radius: 60
                 });
                 heatmap.setMap(getMap());
-        });
-    }
+            });
+        }
+
+        // Cambia la información de la página de sensores a usuarios
+        function cambioAUsuarios() {
+            console.log("Llamada a cambiarAUsuarios()");
+
+            var botonSensores = document.getElementById('modoSensores');
+            var botonUsuarios = document.getElementById('modoUsuarios');
+            var ul = document.getElementById("lista");
+            var li = document.getElementsByClassName("tarjetaLista");
+            var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+
+            botonUsuarios.style.color = '#F88E52';
+            botonSensores.style.color = 'white';
+
+            var i = 0;
+            while (i<=tamañoLista-1) {
+                ul.removeChild(li[0]);
+            }
+
+        }
 
     </script>
 
@@ -443,31 +471,31 @@
                         </i>
                     </a>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
-                        
+
                         <ul class="navbar-nav text-uppercase w-100">
-                            
-                            <li class="nav-item align-self-center">
-                                <a class="nav-link js-scroll-trigger titulosModos" onclick="" href="#contact">SENSORES</a>
+
+                            <li class="align-self-center ml-5">
+                                <a class="modoSensores" id="modoSensores" onclick="" href="#contact">SENSORES</a>
                             </li>
-                            
-                            <li class="nav-item align-self-center">
-                                <a class="nav-link js-scroll-trigger titulosModos" onclick="" href="#contact">USUARIOS</a>
+
+                            <li class="align-self-center ml-2">
+                                <a class="modoUsuarios" id="modoUsuarios" onclick="cambioAUsuarios()" href="#contact">USUARIOS</a>
                             </li>
-                            
+
                             <ul class="ml-auto w-100">
-                            
-                            <li class="cerrarSesion nav-item ml-auto">
-                                <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()" href="#contact">CERRAR SESIÓN</a>
-                            </li>
-                            
+
+                                <li class="cerrarSesion nav-item ml-auto">
+                                    <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()" href="#contact">CERRAR SESIÓN</a>
+                                </li>
+
                             </ul>
-                            
+
                         </ul>
-                        
+
                     </div>
-                    
+
                 </div>
-                
+
             </nav>
 
 
@@ -493,7 +521,7 @@
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta1">
 
                             Número de<br>sensores
 
@@ -522,7 +550,7 @@
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta2">
 
                             Sensores<br>alquilados
 
@@ -550,7 +578,7 @@
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta3">
 
                             Sensores<br>averiados
 
@@ -578,7 +606,7 @@
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta4">
 
                             Sensores<br>en stock
 
