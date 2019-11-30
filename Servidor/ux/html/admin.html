@@ -14,9 +14,52 @@
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
     <script>
+        // Declaracion de variables
         var proxy = new Proxy();
 
         var sensores;
+
+        var usuarios;
+
+        var primeraLlamadaA_rellenarTarjetasNumeroSensores = true; // Se utiliza para borrar previamente el texto con los numeros que hay en las tarjetas si no es la primera vez que se llama a rellenarTarjetasNumeroSensores, si esto no se hiciera no se visualizarian los numeros
+
+        var innerHTMLDetarjetaExtra; // Para guardar el contenido de la tarjeta4 antes de borrarla al cambiar al modo usuarios
+
+        var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
+
+        var modoActual = 0; // 0 si el modo actual es SENSORES y 1 si es USUARIOS
+
+        // VARIABLES INTERFAZ
+        var icono1;
+        var icono2;
+        var icono3;
+
+        var numeroSensores;
+        var sensoresActivos;
+        var sensoresInactivos;
+        var sensoresEnStock;
+        var contenedorSensoresEnStock;
+
+        var botonSensores;
+        var botonUsuarios;
+
+        var textoTarjeta1;
+        var textoTarjeta2;
+        var textoTarjeta3;
+
+        var textoSENSORESyUSUARIOS;
+
+        var textoColumna1;
+        var textoColumna2;
+        var textoColumna3;
+        var textoColumna4;
+
+        var pulse1;
+        var pulse2;
+
+        var tarjetaINFORMACION;
+
+        // Fin declaracion de variables
 
         // Llamar a checkCookies antes de que se cargue el cuerpo para que no se pueda acceder a la pagina sin estar logineado
         window.addEventListener('load', checkCookie, false);
@@ -25,8 +68,8 @@
         window.addEventListener('load', llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores, false);
 
         // Llamada al crearse la pagina para rellenar la lista de sensores mediante una llamada interna a la funcion crearElementoLista() para cada elemento
-        // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena en aqui
-        // Tambien se llama a la creacion del mapa para que no se haga antes de las cookies
+        // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena aqui
+        // Ademas se llama a la creacion del mapa para que no se haga antes de las cookies y se inicializan variables en relacion con la interfaz
         function llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores() {
             proxy.getSensoresYSusUsuarios(function(resp) {
 
@@ -50,6 +93,38 @@
                 "desde": 0,
                 "hasta": 1574386240247
             });
+
+            //ELEMENTOS DE LA INTERFAZ
+            icono1 = document.getElementById("icono1");
+            icono2 = document.getElementById("icono2");
+            icono3 = document.getElementById("icono3");
+
+            numeroSensores = document.getElementById("valorTarjeta1");
+            sensoresActivos = document.getElementById("valorTarjeta2");
+            sensoresInactivos = document.getElementById("valorTarjeta3");
+            sensoresEnStock = document.getElementById("valorTarjeta4");
+            contenedorSensoresEnStock = document.getElementById("tarjeta4");
+
+            botonSensores = document.getElementById('modoSensores');
+            botonUsuarios = document.getElementById('modoUsuarios');
+
+            textoTarjeta1 = document.getElementById("textoTarjeta1");
+            textoTarjeta2 = document.getElementById("textoTarjeta2");
+            textoTarjeta3 = document.getElementById("textoTarjeta3");
+
+            textoSENSORESyUSUARIOS = document.getElementById("textoSensores");
+
+            textoColumna1 = document.getElementById("textoColumna1");
+            textoColumna2 = document.getElementById("textoColumna2");
+            textoColumna3 = document.getElementById("textoColumna3");
+            textoColumna4 = document.getElementById("textoColumna4");
+
+            tarjetaINFORMACION = document.getElementById("informacionUsuario");
+
+            pulse1 = document.getElementById("pulse1");
+            pulse2 = document.getElementById("pulse2");
+
+            innerHTMLTarjetaINFORMACION = document.getElementById("informacionUsuario").innerHTML;
 
         }
 
@@ -166,41 +241,122 @@
 
         }
 
-        // Mostrar numero de sensores totales y por estado
+        // Llamadas a rellenarTarjetasNumeroSensoresPorEstado para cada estado asi como escribir el Numero de Sensores
         async function rellenarTarjetasNumeroSensores() {
 
-            var numeroSensores = document.getElementById("tarjetaTotal");
-            numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
+            rellenarTarjetasNumeroSensoresPorEstado(1, primeraLlamadaA_rellenarTarjetasNumeroSensores);
+            rellenarTarjetasNumeroSensoresPorEstado(2, primeraLlamadaA_rellenarTarjetasNumeroSensores);
+            rellenarTarjetasNumeroSensoresPorEstado(3, primeraLlamadaA_rellenarTarjetasNumeroSensores);
 
-            rellenarTarjetasNumeroSensoresPorEstado(1);
-            rellenarTarjetasNumeroSensoresPorEstado(2);
-            rellenarTarjetasNumeroSensoresPorEstado(3);
+            if (primeraLlamadaA_rellenarTarjetasNumeroSensores == false) {
+                numeroSensores.innerHTML = "";
+                numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
+            } else {
+                primeraLlamadaA_rellenarTarjetasNumeroSensores = false;
+            }
+
         }
 
-        // N: idEstado -->
+        // N: idEstado , bool: esLaPrimeraLlamada-->
         // rellenarTarjetasNumeroSensoresPorEstado
-        // N: numero de sensores con estado = idEstado
-        function rellenarTarjetasNumeroSensoresPorEstado(idestado) {
-
-            var sensoresActivos = document.getElementById("tarjetaActivos");
-            var sensoresInactivos = document.getElementById("tarjetaInactivos");
-            var sensoresEnStock = document.getElementById("tarjetaEnStock");
+        // El booleano se utiliza para borrar el texto que hay previamente si no es la primera vez que se llama a rellenarTarjetasNumeroSensores
+        function rellenarTarjetasNumeroSensoresPorEstado(idestado, esLaPrimeraLlamada) {
 
             var numeroSensoresSegunEstado = 0;
             var estadoJson = {
                 "idestado": idestado
             };
+
+            if (primeraLlamadaA_rellenarTarjetasNumeroSensores == false) {
+                contenedorSensoresEnStock.innerHTML = innerHTMLDetarjetaExtra;
+            }
+
             proxy.getNumSensoresSegunEstado(idestado, function(resp) {
                 numeroSensoresSegunEstado = resp;
 
                 if (idestado == 1) {
+                    if (esLaPrimeraLlamada == false) {
+                        sensoresEnStock.removeChild();
+                    }
                     sensoresEnStock.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 1 corresponde a sensores en stock
                 }
                 if (idestado == 2) {
+                    if (esLaPrimeraLlamada == false) {
+                        sensoresActivos.removeChild();
+                    }
                     sensoresActivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 2 corresponde a sensores activos
                 }
                 if (idestado == 3) {
+                    if (esLaPrimeraLlamada == false) {
+                        sensoresInactivos.removeChild();
+                    }
                     sensoresInactivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 3 corresponde a sensores inactivos
+                }
+
+            });
+
+        }
+
+        function llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios() {
+            console.log("llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios");
+
+            var tarjetaExtra = document.getElementById("tarjeta4");
+            innerHTMLDetarjetaExtra = tarjetaExtra.innerHTML;
+            tarjetaExtra.innerHTML = "";
+
+
+            /*proxy.getUsuariosYSusSensores(function(resp) {
+
+                usuarios = resp;
+
+                console.log("Numero de usuarios: " + resp.length);
+                console.log("Primer usuario " + sensores[0]);
+                console.log("Adios :) " + 1);
+
+                for (var i = 0; i < usuarios.length; i++) {
+                    crearElementoLista(i);
+                }
+
+                // Mostrar numero de sensores
+                rellenarTarjetasNumeroUsuarios();
+
+            });*/
+
+        }
+
+        // Llamadas a rellenarTarjetasNumeroSensoresPorEstado para cada estado asi como escribir el Numero de Usuarios
+        async function rellenarTarjetasNumeroUsuarios() {
+
+            var numeroUsuarios = document.getElementById("valorTarjeta1");
+            var tarjetaExtra = document.getElementById("tarjeta4");
+
+            numeroUsuarios.appendChild(document.createTextNode(parseInt(usuarios.length)));
+
+            rellenarTarjetasNumeroUsuariosPorTipo("Normal");
+            rellenarTarjetasNumeroUsuariosPorTipo("Conductor");
+            // Esta tarjeta la borramos porque solo necesitamos 3 para mostrar los numeros de usuariosç
+            tarjetaExtra.innerHTML = "";
+        }
+
+        // String: tipo -->
+        // rellenarTarjetasNumeroUsuariosPorTipo
+        function rellenarTarjetasNumeroUsuariosPorTipo(tipo) {
+
+            var usuariosNormales = document.getElementById("valorTarjeta2");
+            var usuariosConductores = document.getElementById("valorTarjeta3");
+
+            var numeroUsuariosSegunTipo = 0;
+            var estadoJson = {
+                "tipo": tipo
+            };
+            proxy.getNumUsuariosSegunTipo(tipo, function(resp) {
+                numeroUsuariosSegunTipo = resp;
+
+                if (tipo == "Normal") {
+                    usuariosNormales.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
+                }
+                if (tipo == "Conductor") {
+                    usuariosConductores.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
                 }
 
             });
@@ -405,19 +561,152 @@
         function cambioAUsuarios() {
             console.log("Llamada a cambiarAUsuarios()");
 
-            var botonSensores = document.getElementById('modoSensores');
-            var botonUsuarios = document.getElementById('modoUsuarios');
-            var ul = document.getElementById("lista");
-            var li = document.getElementsByClassName("tarjetaLista");
-            var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+            if (modoActual == 0) {
+                
+                // Pulso
+                pulse1.className="pulse1";
+                pulse2.classList.remove("pulse2");
 
-            botonUsuarios.style.color = '#F88E52';
-            botonSensores.style.color = 'white';
+                modoActual = 1;
 
-            var i = 0;
-            while (i<=tamañoLista-1) {
-                ul.removeChild(li[0]);
+                var ul = document.getElementById("lista");
+                var li = document.getElementsByClassName("tarjetaLista");
+                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+
+                var br1 = document.createElement("br");
+                var br2 = document.createElement("br");
+                var br3 = document.createElement("br");
+
+                // Cambio en los botones            
+                botonUsuarios.style.color = '#F88E52';
+                botonSensores.style.color = 'white';
+
+                var i = 0;
+                while (i <= tamañoLista - 1) {
+                    console.log(i);
+                    ul.removeChild(li[0]);
+                    i++;
+                }
+
+                // Rellenado de la lista y de las tarjetas
+                llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios();
+
+                // Cambio del texto de las tarjetas
+                textoTarjeta1.innerHTML = "";
+                textoTarjeta2.innerHTML = "";
+                textoTarjeta3.innerHTML = "";
+
+                textoTarjeta1.appendChild(document.createTextNode("Número de"));
+                textoTarjeta1.appendChild(br1);
+                textoTarjeta1.appendChild(document.createTextNode("usuarios"));
+                textoTarjeta2.appendChild(document.createTextNode("Usuarios"));
+                textoTarjeta2.appendChild(br2);
+                textoTarjeta2.appendChild(document.createTextNode("normales"));
+                textoTarjeta3.appendChild(document.createTextNode("Usuarios"));
+                textoTarjeta3.appendChild(br3);
+                textoTarjeta3.appendChild(document.createTextNode("conductores"));
+
+                // Cambio texto SENSORES a USUARIOS
+                textoSENSORESyUSUARIOS.innerHTML = "";
+                textoSENSORESyUSUARIOS.appendChild(document.createTextNode("USUARIOS"));
+
+                // Cambio nombre columnas de la de la lista
+
+                textoColumna1.innerHTML = "";
+                textoColumna2.innerHTML = "";
+                textoColumna3.innerHTML = "";
+                textoColumna4.innerHTML = "";
+
+                textoColumna1.appendChild(document.createTextNode("Tipo"));
+                textoColumna2.appendChild(document.createTextNode("Id usuario"));
+                textoColumna3.appendChild(document.createTextNode("Nombre"));
+                textoColumna4.appendChild(document.createTextNode("Id sensor"));
+
+                // Cambiar iconos de las tarjetas
+                icono1.src = "../images/todosLosUsers.png";
+                icono2.src = "../images/userNormal.png";
+                icono3.src = "../images/userConductor.png";
+
+                // Vaciado de la tarjeta INFORMACION
+                tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+
             }
+
+        }
+
+        function cambioASensores() {
+            console.log("Llamada a cambiarAUsuarios()");
+
+            if (modoActual == 1) {
+                
+                // Pulso
+                pulse2.className="pulse2";
+                pulse1.classList.remove("pulse1");
+
+                modoActual = 0;
+
+                var ul = document.getElementById("lista");
+                var li = document.getElementsByClassName("tarjetaLista");
+                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+
+                var br1 = document.createElement("br");
+                var br2 = document.createElement("br");
+                var br3 = document.createElement("br");
+
+                // Cambio en los botones
+                botonUsuarios.style.color = 'white';
+                botonSensores.style.color = '#F88E52';
+
+                var i = 0;
+                while (i <= tamañoLista - 1) {
+                    ul.removeChild(li[0]);
+                    i++;
+                }
+
+                // Rellenado de la lista y de las tarjetas
+                llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores();
+
+                // Cambio del texto de las tarjetas
+                textoTarjeta1.innerHTML = "";
+                textoTarjeta2.innerHTML = "";
+                textoTarjeta3.innerHTML = "";
+
+                textoTarjeta1.appendChild(document.createTextNode("Número de"));
+                textoTarjeta1.appendChild(br1);
+                textoTarjeta1.appendChild(document.createTextNode("sensores"));
+                textoTarjeta2.appendChild(document.createTextNode("Sensores"));
+                textoTarjeta2.appendChild(br2);
+                textoTarjeta2.appendChild(document.createTextNode("alquilados"));
+                textoTarjeta3.appendChild(document.createTextNode("Sensores"));
+                textoTarjeta3.appendChild(br3);
+                textoTarjeta3.appendChild(document.createTextNode("Averiados"));
+
+                //Cambio texto USUARIOS a SENSORES
+                textoSENSORESyUSUARIOS.innerHTML = "";
+                textoSENSORESyUSUARIOS.appendChild(document.createTextNode("SENSORES"));
+
+                // Cambio nombre columnas de la de la lista
+
+                textoColumna1.innerHTML = "";
+                textoColumna2.innerHTML = "";
+                textoColumna3.innerHTML = "";
+                textoColumna4.innerHTML = "";
+
+                textoColumna1.appendChild(document.createTextNode("Estado"));
+                textoColumna2.appendChild(document.createTextNode("Tipo"));
+                textoColumna3.appendChild(document.createTextNode("Id sensor"));
+                textoColumna4.appendChild(document.createTextNode("Usuario"));
+
+                // Cambiar iconos de las tarjetas
+                icono1.src = "../images/sensor1.png";
+                icono2.src = "../images/tick2.png";
+                icono3.src = "../images/cross2.png";
+
+                //Vaciado de la tarjeta INFORMACION
+                tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+
+            }
+
 
         }
 
@@ -457,9 +746,12 @@
 
     <div class="contenedor">
 
+        <span class="" id="pulse1"></span>
+        <span class="" id="pulse2"></span>
+
         <!------------------------------------------------ NAVBAR -------------------------------------------------------->
 
-        <div class="navbar">
+        <div class="navbar navbarAdmin">
 
             <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink8" id="darkNav">
@@ -475,7 +767,7 @@
                         <ul class="navbar-nav text-uppercase w-100">
 
                             <li class="align-self-center ml-5">
-                                <a class="modoSensores" id="modoSensores" onclick="" href="#contact">SENSORES</a>
+                                <a class="modoSensores" id="modoSensores" onclick="cambioASensores()" href="#contact">SENSORES</a>
                             </li>
 
                             <li class="align-self-center ml-2">
@@ -517,17 +809,17 @@
 
                         <div class="iconoTarjeta my-auto">
 
-                            <img src="../images/sensor1.png" class="icono">
+                            <img src="../images/sensor1.png" class="icono" id="icono1">
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta1">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta1" id="textoTarjeta1">
 
                             Número de<br>sensores
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaTotal">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta1">
 
 
 
@@ -546,17 +838,17 @@
 
                         <div class="iconoTarjeta my-auto">
 
-                            <img src="../images/tick2.png" class="icono">
+                            <img src="../images/tick2.png" class="icono" id="icono2">
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta2">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta2" id="textoTarjeta2">
 
                             Sensores<br>alquilados
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaActivos">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta2">
 
 
 
@@ -574,17 +866,17 @@
 
                         <div class="iconoTarjeta my-auto ">
 
-                            <img src="../images/cross2.png" class="icono">
+                            <img src="../images/cross2.png" class="icono" id="icono3">
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta3">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta3" id="textoTarjeta3">
 
                             Sensores<br>averiados
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaInactivos">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta3">
 
 
 
@@ -596,7 +888,7 @@
 
                 <!----------------------------------- TARJETA 4 ----------------------------------------->
 
-                <div class="col-lg-3">
+                <div class="col-lg-3" id="tarjeta4">
 
                     <div class="tarjeta shadow bg-white rounded my-auto">
 
@@ -606,13 +898,13 @@
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta4">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta4" id="textoTarjeta4">
 
                             Sensores<br>en stock
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaEnStock">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta4">
 
 
 
@@ -652,7 +944,7 @@
 
                                 <div class="headerLista row">
 
-                                    <div class="textoSensores my-auto col-3">
+                                    <div class="textoSensores my-auto col-3" id="textoSensores">
 
                                         SENSORES
 
@@ -691,25 +983,25 @@
 
                                     <div class="nombresLista row mr-0 ml-0 border-bottom">
 
-                                        <div class="columnasInfoSensor col-1 font-weight-bold">
+                                        <div class="columnasInfoSensor col-1 font-weight-bold" id="textoColumna1">
 
                                             Estado
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-3 font-weight-bold">
+                                        <div class="columnasInfoSensor col-3 font-weight-bold" id="textoColumna2">
 
                                             Tipo
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-3 font-weight-bold">
+                                        <div class="columnasInfoSensor col-3 font-weight-bold" id="textoColumna3">
 
                                             Id sensor
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-5 font-weight-bold">
+                                        <div class="columnasInfoSensor col-5 font-weight-bold" id="textoColumna4">
 
                                             Usuario
 
@@ -789,7 +1081,7 @@
 
                             </div>
 
-                            <div class="informacionUsuario col">
+                            <div class="informacionUsuario col" id="informacionUsuario">
 
                                 <div class="datosSensor row border-bottom" id="datosSensor">
 
@@ -906,7 +1198,7 @@
 
 
         <!------------------------------------------------ FOOTER -------------------------------------------------------->
-        <footer class="footer fixed-bottom">
+        <footer class="footer fixed-bottom footerAdmin">
 
             <section class="section_4 text-center fondoOscuro p-1">
                 <p class="mt-2 nunito blanco nunito">&copy; Copyright 2019 GTI UPV. Todos los Derechos
