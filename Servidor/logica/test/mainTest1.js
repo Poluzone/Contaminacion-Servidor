@@ -247,4 +247,18 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     }
   )
 
+    // Emilia Rosa van der Heide
+    it("probar indicarActividadNodo",
+    async function() {
+      var datos = {
+        estado: "Inactivo",
+        idSensor: 1
+      };
+      await laLogica.indicarActividadNodo(datos);
+
+      // llamar a getestado del sensor 1 para ver q ponga 3
+      //assert.notEqual(res.length, 0, "no están las medidas")
+    }
+  )
+
 }) // describe

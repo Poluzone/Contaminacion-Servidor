@@ -79,17 +79,6 @@ module.exports = class Logica {
     })
   }
 
-
-  /*async GetLaUltimaMedida(idUsuario) {
-    var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario="+$idUsuario+" ORDER BY IdMedida DESC LIMIT 0, 1";
-    return new Promise((resolver, rechazar) => {
-      this.laConexion.all(textoSQL,
-        (err, res) => {
-          (err ? rechazar(err) : resolver(res))
-        })
-    })
-  }*/
-
   // .................................................................
   // email -> GetIdDelUsuario() ->
   // .................................................................
@@ -363,6 +352,33 @@ module.exports = class Logica {
       $IdTipoMedida: sensor.IdTipoMedida,
       $IdEstado: sensor.IdEstado,
     };
+    
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver(res))
+      })
+    })
+  }
+
+
+  // .................................................................
+  // Emilia Rosa van der Heide
+  // actividad:texto, idsensor: N -> indicarActividadNodo() ->
+  // cambia el estado del nodo en la BBDD
+  // .................................................................
+  indicarActividadNodo(datos) {
+    console.log("logica: indicarActividadNodo")
+    var textoSQL = "UPDATE Sensor SET IdEstado = $IdEstado WHERE IdSensor = $IdSensor";
+    var estado;
+    var stringestado = datos.estado;
+    if (stringestado.localeCompare("Inactivo") == 0) estado = 3
+    else estado = 2
+    var valoresParaSQL = {
+      $IdSensor: datos.idSensor,
+      $IdEstado: estado,
+    };
+    console.log(textoSQL)
+    console.log(valoresParaSQL)
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
