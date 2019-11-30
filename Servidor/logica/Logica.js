@@ -251,6 +251,49 @@ module.exports = class Logica {
   } //()
 
   //------------------------------------------------------------
+  // Josep Carreres Fluixà
+  // getNumeroUsuariosTotales()
+  //------------------------------------------------------------
+
+  getNumeroUsuariosTotales() {
+    var textoSQL = "SELECT * FROM Usuarios";
+
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          if(!err){
+            resolver(res.length)
+          }else {
+            rechazar();
+          }
+        })
+    })
+  } //()
+
+  //------------------------------------------------------------
+  // Josep Carreres Fluixà
+  // getNumeroUsuariosTotalesPorTipo()
+  //------------------------------------------------------------
+
+  getNumeroUsuariosTotalesPorTipo(tipoUsuario) {
+    var textoSQL = "SELECT * FROM Usuarios where TipoUsuario = $TipoUsuario";
+    var valoresParaSQL = {
+      $TipoUsuario: tipoUsuario
+    };
+
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,valoresParaSQL,
+        (err, res) => {
+          if(!err){
+            resolver(res.length)
+          }else {
+            rechazar(err);
+          }
+        })
+    })
+  } //()
+
+  //------------------------------------------------------------
   //     getMedidasPorFecha()
   //------------------------------------------------------------
 

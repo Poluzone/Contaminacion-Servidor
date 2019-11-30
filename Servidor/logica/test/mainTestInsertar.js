@@ -248,4 +248,25 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
   ) //probar getTodasLasMedidasPorFecha()
 
+  it("probar getNumeroUsuariosTotales",
+    async function() {
+
+      var res = await laLogica.getNumeroUsuariosTotales();
+      assert.equal(res, 14, "¿no hay un resulado?")
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+
+    it("probar getNumeroUsuariosTotalesPorTipo",
+      async function() {
+
+        var res = await laLogica.getNumeroUsuariosTotalesPorTipo("normal");
+        assert.equal(res, 7, "¿no hay un resulado?")
+
+      }
+
+    ) //probar getTodasLasMedidasPorFecha()
+
 }) // describe

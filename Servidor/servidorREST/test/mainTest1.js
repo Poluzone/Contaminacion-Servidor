@@ -169,6 +169,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       } // callback()
     ) // .get
   }) // it
+
+
 /*
   it("POST /GetUsuarioPorEmail", function (hecho) {
     var dato = "prueba1@hotmail.com";
@@ -240,6 +242,36 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
       } // function
     )// get
+  }) // it
+
+  // Test Josep
+  it("probar getNumeroUsuariosTotales", function (hecho) {
+    request.get(
+      {
+        url: IP_PUERTO + "/getNumeroUsuariosTotales",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' }
+      },
+      function (err, respuesta, carga) {
+        var json = JSON.parse(carga);
+        assert.equal(err, null, "¿ha habido un error?");
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)");
+        hecho();
+
+      } // function
+    )// get
+  }) // it
+
+  it("GET /getNumeroUsuariosTotalesPorTipo/normal ", function (hecho) {
+
+    request.get(
+      { url: IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/normal", headers: { 'User-Agent': 'jordi' } },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+
+        hecho()
+      } // callback()
+    ) // .get
   }) // it
 
      //GET TodasLasMedidasPorFecha()
