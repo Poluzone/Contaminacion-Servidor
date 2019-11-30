@@ -238,4 +238,13 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     assert.equal(res, 748, "no calcula bien la media")
   }) //probar getMediaCalidadDelAireDeLaJornada()
 
+  // Emilia Rosa van der Heide
+  it("probar getMedidasEstacionOficialGandia",
+    async function() {
+      var res = await laLogica.getMedidasEstacionOficialGandia();
+      console.log(res)
+      assert.equal(res.length, 15, "no están todas las medidas")
+    }
+  )
+
 }) // describe

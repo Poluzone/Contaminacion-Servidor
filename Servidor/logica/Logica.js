@@ -2,6 +2,8 @@
 // Logica.js
 // .....................................................................
 const sqlite3 = require("sqlite3")
+const estacionOficial = require('./Estacion-oficial');
+let getMedidasEstacion = estacionOficial.getMedidasEstacion();
 
 // .....................................................................
 // .....................................................................
@@ -367,6 +369,18 @@ module.exports = class Logica {
         (err ? rechazar(err) : resolver(res))
       })
     })
+  }
+
+
+  // .................................................................
+  // Emilia Rosa van der Heide
+  // -> getMedidasEstacionOficialGandia() -> medidas
+  // recibe las medidas de la estacion oficial de Gandia
+  // .................................................................
+  async getMedidasEstacionOficialGandia() {
+    var data = getMedidasEstacion
+    console.log(data)
+    return data;
   }
 
   // .................................................................

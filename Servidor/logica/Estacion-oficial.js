@@ -1,3 +1,9 @@
+// .....................................................................
+// Estacion-oficial.js
+// Recoge los datos de gandia de la estacion oficial
+// Hecho por Joan Cipria Moreno Teodoro
+// Adaptado por Emilia Rosa van der Heide
+// .....................................................................
 // Importar JSDOM
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -11,7 +17,8 @@ const options = {
 const urlDatosGandia = "http://www.cma.gva.es/cidam/emedio/atmosfera/jsp/pde.jsp?PDE.CONT=912&estacion=5&titulo=46131002-Gandia&provincia=null&municipio=null&red=0&PDE.SOLAPAS.Mostrar=1111";
 const urlDatos = "http://www.cma.gva.es/cidam/emedio/atmosfera/jsp/datos_on_line.jsp";
 
-(async function () {
+module.exports = {
+  getMedidasEstacion: async function () {
   // Array donde guardaremos las medidas
   let data = [];
 
@@ -44,6 +51,7 @@ const urlDatos = "http://www.cma.gva.es/cidam/emedio/atmosfera/jsp/datos_on_line
     }
   })
   // Mostramos array medidas
-  console.log(data);
+  return data;
   //console.log(JSON.stringify(data));
-}())
+  }
+}
