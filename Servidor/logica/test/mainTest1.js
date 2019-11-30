@@ -243,7 +243,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
       var res = await laLogica.getMedidasEstacionOficialGandia();
       console.log(res)
-      assert.equal(res.length, 15, "no están todas las medidas")
+      assert.notEqual(res.length, 0, "no están las medidas")
     }
   )
 

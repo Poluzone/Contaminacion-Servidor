@@ -3,7 +3,6 @@
 // .....................................................................
 const sqlite3 = require("sqlite3")
 const estacionOficial = require('./Estacion-oficial');
-let getMedidasEstacion = estacionOficial.getMedidasEstacion();
 
 // .....................................................................
 // .....................................................................
@@ -378,7 +377,8 @@ module.exports = class Logica {
   // recibe las medidas de la estacion oficial de Gandia
   // .................................................................
   async getMedidasEstacionOficialGandia() {
-    var data = getMedidasEstacion
+    console.log("logica: getMedidasEstacionOficialGandia")
+    var data = await estacionOficial.getMedidasEstacion();
     console.log(data)
     return data;
   }
