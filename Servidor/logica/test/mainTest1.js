@@ -233,8 +233,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       IdUsuario: 15};
     var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
 
-    console.log(res)
-
     // 748 -> en el test insertarMedida empieza por 253 y crea 100 medidas de 10 en 10 (max valor 1243)
     // por tanto la media debería ser: (253+1243)/2 = 748
     assert.equal(res, 748, "no calcula bien la media")
