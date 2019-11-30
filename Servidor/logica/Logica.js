@@ -280,6 +280,7 @@ module.exports = class Logica {
   //------------------------------------------------------------
   async getMediaCalidadDelAireDeLaJornada(datos) {
     console.log("logica: getMediaCalidadDelAireDeLaJornada")
+    console.log(datos)
     // Obtenemos todas las medidas
     var medidas = await this.getMedidasPorIdPorFecha(datos.Intervalo, datos.IdUsuario)
     //console.log(medidas)
@@ -289,7 +290,7 @@ module.exports = class Logica {
     for (var i = 0; i < medidas.length; i++) {
       sumatorio = sumatorio + medidas[i].Valor;
     } 
-
+    console.log("aaaaaa"+Date.now())
     // Calulamos la media
     var media = sumatorio / medidas.length;
 
