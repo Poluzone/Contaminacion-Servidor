@@ -63,11 +63,18 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar getUsuarioPorIdSensor()",
     async function() {
 
-      var res = await laLogica.getUsuarioPorIdSensor(1)
-
+      var res = await laLogica.getUsuarioPorIdSensor(1);
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
     }) //it
+
+    it("probar getUsuarioPorIdUsuario()",
+      async function() {
+
+        var res = await laLogica.getUsuarioPorIdUsuario(15);
+        assert.equal(res.length, 1, "¿no hay un resulado?")
+
+      }) //it
 
   it("probar getSensoresYSusUsuarios()",
     async function() {
@@ -196,16 +203,35 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
       var sensor = {
+        IdSensor:99,
         IdTipoMedida: 2,
         IdEstado: 2,
       }
-      var err = await laLogica.insertarSensor(sensor);
+      var resu = await laLogica.insertarSensor(sensor);
       var res = await laLogica.getNumSensoresSegunEstado(2);
-      assert.equal(res, 2, "¿no hay un resulado?")
-      await laLogica.borrarSensorPorID(3);
+      assert.equal(res, 3, "¿no hay un resulado?")
+      await laLogica.borrarSensorPorID(99);
 
     }
 
   ) //probar getTodasLasMedidasPorFecha()
+
+
+    it("probar desvincularUsuarioDeSensorPorIdUsuario",
+      async function() {
+
+        var datos = {
+          IdSensor:99,
+          IdUsuario:6
+        }
+        var resu = await laLogica.insertarIdUsuarioConIdsensor(datos);
+        await laLogica.desvincularUsuarioDeSensorPorIdUsuario(6);
+        await laLogica.getUsuarioPorIdSensor(99);
+        assert.equal(res, 0, "¿no hay un resulado?")
+
+
+      }
+
+    ) //probar getTodasLasMedidasPorFecha()
 
 }) // describe

@@ -61,6 +61,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     ) // .post
   })
 
+
+
   it("probar POST /insertarIdUsuarioConIdsensor", function (hecho) {
     var dato = {
       IdUsuario: 19,
@@ -73,6 +75,47 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
         url: IP_PUERTO + "/insertarIdUsuarioConIdsensor",
         headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
         body: JSON.stringify(dato)
+      },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+        assert.equal(carga, "OK", "¿La carga no es OK")
+        hecho()
+      } // callback
+    ) // .post
+  })
+
+  it("probar POST /insertarSensor", function (hecho) {
+    var dato = {
+      IdSensor:99,
+      IdTipoMedida:2,
+      IdEstado:2
+
+    }
+
+    request.post(
+      {
+        url: IP_PUERTO + "/insertarSensor",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(dato)
+      },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+        assert.equal(carga, "OK", "¿La carga no es OK")
+        hecho()
+      } // callback
+    ) // .post
+  })
+
+  it("probar POST /borrarSensorPorID", function (hecho) {
+
+
+    request.post(
+      {
+        url: IP_PUERTO + "/borrarSensorPorID",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(99)
       },
       function (err, respuesta, carga) {
         assert.equal(err, null, "¿ha habido un error?")

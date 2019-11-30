@@ -294,6 +294,31 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       }); // post / insertarPersona
 
 
+      servidorExpress.post('/insertarSensor',
+        async function (peticion, respuesta) {
+          console.log(" * POST /insertarSensor")
+          var datos = JSON.parse(peticion.body)
+
+          // supuesto procesamiento
+
+          laLogica.insertarSensor(datos);
+
+          respuesta.send("OK");
+        }); // post / insertarPersona
+
+        servidorExpress.post('/borrarSensorPorID',
+           function (peticion, respuesta) {
+            console.log(" * POST /borrarSensorPorID")
+            var id = JSON.parse(peticion.body)
+
+            // supuesto procesamiento
+
+            laLogica.borrarSensorPorID(id);
+
+            respuesta.send("OK");
+          }); // post / insertarPersona
+
+
   /*
   * /getSensoresYSusUsuarios/ -> es una petición GET que llama a getSensoresYSusUsuarios() de la Lógica
   * la cual recoge los datos de los sensores de la BBDD
@@ -315,29 +340,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(JSON.stringify(res))
     })
-
-  servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
-    console.log(" HTML:" + peticion.params.archivo);
-    var dir = path.resolve("../ux/html");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
-  });
-
-  servidorExpress.get('/ux/js/:archivo', function (peticion, respuesta) {
-    console.log(" JS:" + peticion.params.archivo);
-    var dir = path.resolve("../ux/js");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
-  });
-  servidorExpress.get('/ux/css/:archivo', function (peticion, respuesta) {
-    console.log(" CSS:" + peticion.params.archivo);
-    var dir = path.resolve("../ux/css");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
-  });
-
-  servidorExpress.get('/ux/images/:archivo', function (peticion, respuesta) {
-    console.log(" IMAGES:" + peticion.params.archivo);
-    var dir = path.resolve("../ux/images");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
-  });
 
     // .......................................................
     // getTodasLasMedidasPorFecha
@@ -368,6 +370,30 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         // todo ok
         respuesta.send(JSON.stringify(res))
     })
+
+
+      servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
+        console.log(" HTML:" + peticion.params.archivo);
+        var dir = path.resolve("../ux/html");
+        respuesta.sendfile(dir + "/" + peticion.params.archivo);
+      });
+
+      servidorExpress.get('/ux/js/:archivo', function (peticion, respuesta) {
+        console.log(" JS:" + peticion.params.archivo);
+        var dir = path.resolve("../ux/js");
+        respuesta.sendfile(dir + "/" + peticion.params.archivo);
+      });
+      servidorExpress.get('/ux/css/:archivo', function (peticion, respuesta) {
+        console.log(" CSS:" + peticion.params.archivo);
+        var dir = path.resolve("../ux/css");
+        respuesta.sendfile(dir + "/" + peticion.params.archivo);
+      });
+
+      servidorExpress.get('/ux/images/:archivo', function (peticion, respuesta) {
+        console.log(" IMAGES:" + peticion.params.archivo);
+        var dir = path.resolve("../ux/images");
+        respuesta.sendfile(dir + "/" + peticion.params.archivo);
+      });
 
 } // cargar()
 // .....................................................................
