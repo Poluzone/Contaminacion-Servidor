@@ -310,12 +310,11 @@
             innerHTMLDetarjetaExtra = tarjeta4.innerHTML;
             tarjeta4.innerHTML = "";
 
-            proxy.getNumeroUsuariosTotales(function(resp) {
-
-                usuarios = resp;
-
-            });
+            usuarios=0;
             
+            // Mostrar numero de usuarios
+            rellenarTarjetasNumeroUsuarios();
+
             /*proxy.getUsuariosYSusSensores(function(resp) {
 
                 usuarios = resp;
@@ -328,17 +327,16 @@
                     crearElementoLista(i);
                 }
 
-                // Mostrar numero de sensores
-                rellenarTarjetasNumeroUsuarios();
-
             });*/
 
         }
 
         // Llamadas a rellenarTarjetasNumeroSensoresPorEstado para cada estado asi como escribir el Numero de Usuarios
         async function rellenarTarjetasNumeroUsuarios() {
+            console.log("rellenarTarjetasNumeroUsuarios");
 
-            numeroUsuarios.appendChild(document.createTextNode(parseInt(usuarios.length)));
+            //numeroUsuarios.removeChild();
+            numeroUsuarios.appendChild(document.createTextNode(parseInt(usuarios)));
 
             rellenarTarjetasNumeroUsuariosPorTipo("Normal");
             rellenarTarjetasNumeroUsuariosPorTipo("Conductor");
@@ -358,12 +356,14 @@
                 numeroUsuariosSegunTipo = resp;
 
                 if (tipo == "Normal") {
-                    usuariosNormales.removeChild();
+                    //usuariosNormales.removeChild();
                     usuariosNormales.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
+                    usuarios=usuarios+numeroUsuariosSegunTipo;
                 }
                 if (tipo == "Conductor") {
-                    usuariosConductores.removeChild();
+                    //usuariosConductores.removeChild();
                     usuariosConductores.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
+                    usuarios=usuarios+numeroUsuariosSegunTipo;
                 }
 
             });
