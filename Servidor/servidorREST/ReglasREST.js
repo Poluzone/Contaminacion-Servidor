@@ -316,6 +316,65 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
+  
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /getMedidasEstacionOficialGandia/ -> es una petición GET que llama a 
+  * getMedidasEstacionOficialGandia() de la Lógica
+  * la cual recoge los datos las medidas oficiales de gandia en este
+  * momento
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  servidorExpress.get('/getMedidasEstacionOficialGandia',
+  async function (peticion, respuesta) {
+    console.log(" * GET /getMedidasEstacionOficialGandia ")
+
+    // llamo a la función adecuada de la lógica
+    var res = await laLogica.getMedidasEstacionOficialGandia();
+
+    // si el array de resultados no tiene una casilla ...
+    if (res.length < 1) {
+      // 404: not found
+      respuesta.status(404).send("no encontré medidas: " + dato)
+      return
+    }
+    // todo ok
+    respuesta.status(200).send(JSON.stringify(res))
+  })
+
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /getMediaCalidadDelAireDeLaJornada -> es una petición GET que llama a 
+  * getMediaCalidadDelAireDeLaJornada() de la Lógica la cual recoge los datos 
+  * de todas las medidas de un usuario según un intervalo de la BBDD y 
+  * calcula su media
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+  servidorExpress.post('/getMediaCalidadDelAireDeLaJornada',
+  async function (peticion, respuesta) {
+    console.log(" * GET /getMediaCalidadDelAireDeLaJornada ")
+
+    console.log(peticion.body)
+    var datos = JSON.parse(peticion.body)
+
+    // llamo a la función adecuada de la lógica
+    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
+    var resJson = { media: res };
+
+    // si el array de resultados no tiene una casilla ...
+    if (res.length < 1) {
+      // 404: not found
+      respuesta.status(404).send("no encontré medidas: " + dato)
+      return
+    }
+    // todo ok
+    console.log(resJson)
+    respuesta.status(200).send(resJson)
+  })
+
+
+
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
     var dir = path.resolve("../ux/html");
