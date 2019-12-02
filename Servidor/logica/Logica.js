@@ -115,9 +115,9 @@ module.exports = class Logica {
   // -> getTodosLosUsuariosYSusSensores() -> JSON con todos los usuarios y su sensor
   // .................................................................
   async getTodosLosUsuariosYSusSensores() {
-    var res = [{usuario: {nombre: "hola"}, telefono: 9}]
-  /*  var sensores = await this.getTodosLosSensores();
-    for (var i = 0; i < sensores.length; i++) {
+    var res = await this.getTodosLosUsuario();
+    console.log(res)
+  /*  for (var i = 0; i < sensores.length; i++) {
       var sensor = sensores[i]
 
       // Tipo del sensor
@@ -178,6 +178,22 @@ module.exports = class Logica {
     //console.log(sensores)
     return new Promise((resolver, rechazar) => {
       resolver(sensores)
+    })
+  }
+
+  // .................................................................
+  // Emilia Rosa van der Heide
+  // -> getTodosLosUsuario() -> JSON: usuarios
+  // Coge la info de todos los usuarios
+  // .................................................................
+  async getTodosLosUsuario() {
+    var textoSQL = "select * from Usuarios";
+    console.log("logica: getTodosLosUsuario")
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
     })
   }
 
@@ -261,10 +277,10 @@ module.exports = class Logica {
     })
   }
 
-  //------------------------------------------------------------
+  // .................................................................
   //     getMedidasPorFecha()
-  //------------------------------------------------------------
-   getTodasLasMedidasPorFecha(intervalo) {
+  // .................................................................
+  getTodasLasMedidasPorFecha(intervalo) {
     var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
@@ -275,11 +291,11 @@ module.exports = class Logica {
   } //()
 
 
-  //------------------------------------------------------------
+  // .................................................................
   // Emilia Rosa van der Heide
   // desde: N, hasta: N, IdUsuario: N -> getMedidasPorIdPorFecha() -> Medidas
   // recoge las medidas de un usuario concreto
-  //------------------------------------------------------------
+  // .................................................................
   getMedidasDeEsteUsuarioPorFecha(intervalo, idUsuario) {
     console.log("logica: getMedidasPorIdPorFecha")
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario = $idUsuario AND Tiempo BETWEEN $desde AND $hasta ORDER BY IdMedida DESC";
@@ -299,11 +315,11 @@ module.exports = class Logica {
   } // getMedidasPorIdPorFecha()
 
 
-  //------------------------------------------------------------
+  // .................................................................
   // Emilia Rosa van der Heide
   // desde: N, hasta: N, IdUsuario: N -> getMediaCalidadDelAireDeLaJornada() -> R
   // obtiene la media de las medidas de la jornada
-  //------------------------------------------------------------
+  // .................................................................
   async getMediaCalidadDelAireDeLaJornada(datos) {
     console.log("logica: getMediaCalidadDelAireDeLaJornada")
     // Obtenemos todas las medidas
@@ -323,12 +339,12 @@ module.exports = class Logica {
   } // getMediaCalidadDelAireDeLaJornada()
 
 
-  //------------------------------------------------------------
+  // .................................................................
   // Emilia Rosa van der Heide
   // idestado -> getSensoresSegunEstado() ->
   // devuelve los sensores según el estado
-  //------------------------------------------------------------
-   getSensoresSegunEstado(idEstado) {
+  // .................................................................
+  getSensoresSegunEstado(idEstado) {
     var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
     var valoresParaSQL = {
       $idestado: idEstado
@@ -341,11 +357,11 @@ module.exports = class Logica {
     })
   } //()
 
-  //------------------------------------------------------------
+  // .................................................................
   // Emilia Rosa van der Heide
   // idestado -> getNumSensoresSegunEstado() ->
   // devuelve los sensores según el estado
-  //------------------------------------------------------------
+  // .................................................................
   async getNumSensoresSegunEstado(idEstado) {
     var sensores = await this.getSensoresSegunEstado(idEstado);
     console.log(sensores)

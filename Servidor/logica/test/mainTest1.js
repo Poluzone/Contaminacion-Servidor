@@ -276,7 +276,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
    console.log(res)
    // llamar a getestado del sensor 1 para ver q ponga 3
-   assert.equal(res.length, 1, "no existen usuario")
+   assert.notEqual(res.length, 0, "no existen usuarios")
  }
 )
 
