@@ -220,44 +220,4 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     ) // .post
   }) //probar getTodasLasMedidasPorFecha()
 
-
-  // Emilia Rosa van der Heide
-  it("Get /getMediaCalidadDelAireDeLaJornada ", function (hecho) {
-    var dato = {Intervalo: {
-      desde: 0,
-      hasta: Date.now()},
-      IdUsuario: 15 };
-    request.post(
-      {
-        url: IP_PUERTO + "/getMediaCalidadDelAireDeLaJornada",
-        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
-        body: JSON.stringify(dato)
-      },
-      function (err, respuesta, carga) {
-        var json = JSON.parse(carga);
-        assert.equal(err, null, "¿ha habido un error?");
-        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)");
-        hecho();
-      } // callback()
-    ) // .get
-  }) // it
-
-
-  // Emilia Rosa van der Heide
-  it("Get /getMedidasEstacionOficialGandia ", function (hecho) {
-      request.get(
-        {
-          url: IP_PUERTO + "/getMedidasEstacionOficialGandia",
-          headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
-        },
-        function (err, respuesta, carga) {
-          var json = JSON.parse(carga);
-          assert.equal(err, null, "¿ha habido un error?");
-          assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)");
-          hecho();
-        } // callback()
-      ) // .get
-    }) // it
-
-
 }) // describe
