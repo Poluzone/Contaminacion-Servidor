@@ -60,6 +60,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }) //it
 
+
   it("probar getUsuarioPorIdSensor()",
     async function() {
 
@@ -209,7 +210,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   ) //probar insertarSensor()
 
     // Emilia Rosa van der Heide
-    it("probar getMedidasPorIdPorFecha",
+    it("probar getMedidasDeEsteUsuarioPorFecha",
     async function() {
        var dato = {
          Intervalo: {
@@ -217,7 +218,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
           hasta: Date.now()
         },
         IdUsuario: 15};
-      var res = await laLogica.getMedidasPorIdPorFecha(dato.Intervalo, dato.IdUsuario);
+      var res = await laLogica.getMedidasDeEsteUsuarioPorFecha(dato.Intervalo, dato.IdUsuario);
       assert.notEqual(res.length, 0, "¿no hay resultado?")
     }
   ) //probar getMedidasPorIdPorFecha()

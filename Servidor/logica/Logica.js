@@ -244,7 +244,7 @@ module.exports = class Logica {
   // desde: N, hasta: N, IdUsuario: N -> getMedidasPorIdPorFecha() -> Medidas
   // recoge las medidas de un usuario concreto
   //------------------------------------------------------------
-  getMedidasPorIdPorFecha(intervalo, idUsuario) {
+  getMedidasDeEsteUsuarioPorFecha(intervalo, idUsuario) {
     console.log("logica: getMedidasPorIdPorFecha")
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario = $idUsuario AND Tiempo BETWEEN $desde AND $hasta ORDER BY IdMedida DESC";
     console.log(textoSQL)
@@ -271,7 +271,7 @@ module.exports = class Logica {
   async getMediaCalidadDelAireDeLaJornada(datos) {
     console.log("logica: getMediaCalidadDelAireDeLaJornada")
     // Obtenemos todas las medidas
-    var medidas = await this.getMedidasPorIdPorFecha(datos.Intervalo, datos.IdUsuario)
+    var medidas = await this.getMedidasDeEsteUsuarioPorFecha(datos.Intervalo, datos.IdUsuario)
     //console.log(medidas)
 
     // Hacemos el sumatorio de los valores
