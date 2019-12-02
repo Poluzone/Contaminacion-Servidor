@@ -188,6 +188,35 @@ class Proxy {
             });
 
     }
+    
+    //------------Ivan---------------
+    // getUsuariosYSusSensores()
+    //-------------------------------
+    async getUsuariosYSusSensores(callback) {
+
+        console.log("Llamada a ");
+
+        fetch(IP_PUERTO + "/get", {
+                method: 'GET', // or 'PUT'
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+                if (datos != undefined) {
+
+                    console.log("Datos: " + datos);
+                    callback(datos);
+
+                } else {
+                    console.log("No hay usuarios");
+                }
+            }).catch(e => {
+                console.log("error: " + e);
+                return e;
+            });
+
+    }
 
     //-------------------------------
     // GetUltimasMedidasPorFecha()

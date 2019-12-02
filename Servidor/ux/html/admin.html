@@ -104,6 +104,10 @@
             sensoresInactivos = document.getElementById("valorTarjeta3");
             sensoresEnStock = document.getElementById("valorTarjeta4");
             contenedorSensoresEnStock = document.getElementById("tarjeta4");
+            numeroUsuarios = document.getElementById("valorTarjeta1");
+            usuariosNormales = document.getElementById("valorTarjeta2");
+            usuariosConductores = document.getElementById("valorTarjeta3");
+            tarjetaEliminada = document.getElementById("valorTarjeta4");
 
             botonSensores = document.getElementById('modoSensores');
             botonUsuarios = document.getElementById('modoUsuarios');
@@ -248,6 +252,7 @@
             rellenarTarjetasNumeroSensoresPorEstado(2, primeraLlamadaA_rellenarTarjetasNumeroSensores);
             rellenarTarjetasNumeroSensoresPorEstado(3, primeraLlamadaA_rellenarTarjetasNumeroSensores);
 
+            // Si es la primera vez que se llama a esta funcion no se pueden borrar los numeros para volver a rellenarlos porque al cargarse la pagina estos numeros no estan todavia
             if (primeraLlamadaA_rellenarTarjetasNumeroSensores == false) {
                 numeroSensores.innerHTML = "";
                 numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
@@ -327,23 +332,17 @@
         // Llamadas a rellenarTarjetasNumeroSensoresPorEstado para cada estado asi como escribir el Numero de Usuarios
         async function rellenarTarjetasNumeroUsuarios() {
 
-            var numeroUsuarios = document.getElementById("valorTarjeta1");
-            var tarjetaExtra = document.getElementById("tarjeta4");
-
             numeroUsuarios.appendChild(document.createTextNode(parseInt(usuarios.length)));
 
             rellenarTarjetasNumeroUsuariosPorTipo("Normal");
             rellenarTarjetasNumeroUsuariosPorTipo("Conductor");
             // Esta tarjeta la borramos porque solo necesitamos 3 para mostrar los numeros de usuariosç
-            tarjetaExtra.innerHTML = "";
+            tarjetaEliminada.innerHTML = "";
         }
 
         // String: tipo -->
         // rellenarTarjetasNumeroUsuariosPorTipo
         function rellenarTarjetasNumeroUsuariosPorTipo(tipo) {
-
-            var usuariosNormales = document.getElementById("valorTarjeta2");
-            var usuariosConductores = document.getElementById("valorTarjeta3");
 
             var numeroUsuariosSegunTipo = 0;
             var estadoJson = {
@@ -394,8 +393,6 @@
                 var a = document.createElement("a");
                 a.href = url;
                 a.click();
-            } else {
-                alert("Los cookies funcionan estimado: " + user);
             }
         }
 
@@ -562,9 +559,9 @@
             console.log("Llamada a cambiarAUsuarios()");
 
             if (modoActual == 0) {
-                
+
                 // Pulso
-                pulse1.className="pulse1";
+                pulse1.className = "pulse1";
                 pulse2.classList.remove("pulse2");
 
                 modoActual = 1;
@@ -638,9 +635,9 @@
             console.log("Llamada a cambiarAUsuarios()");
 
             if (modoActual == 1) {
-                
+
                 // Pulso
-                pulse2.className="pulse2";
+                pulse2.className = "pulse2";
                 pulse1.classList.remove("pulse1");
 
                 modoActual = 0;
@@ -745,10 +742,10 @@
     <!-------------------------------------------------- CONTENEDOR ----------------------------------------------------------->
 
     <div class="contenedor">
-
-        <span class="" id="pulse1"></span>
-        <span class="" id="pulse2"></span>
-
+        <div class="contenedorPulsos">
+            <span class="" id="pulse1"></span>
+            <span class="" id="pulse2"></span>
+        </div>
         <!------------------------------------------------ NAVBAR -------------------------------------------------------->
 
         <div class="navbar navbarAdmin">

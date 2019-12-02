@@ -529,9 +529,12 @@ header.masthead .intro-text .intro-heading {
 
     height: 100%;
 
-    padding: 0% !important;
+    padding-left: 0% !important;
+    padding-top: .5% !important;
 
     overflow: auto;
+    
+    background: #C9CFD8;
 }
 
 .tarjetaLista {
@@ -669,7 +672,10 @@ header.masthead .intro-text .intro-heading {
 /* Estilos LoginAdmin */
 
 .contenedorLogin {
-    margin: 20%;
+    margin-top: 17%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 20%;
 }
 
 .entradaTexto {
@@ -690,18 +696,22 @@ header.masthead .intro-text .intro-heading {
 
 /* Animacion fondo */
 
+.contenedorPulsos{
+    height: 2px;
+}
+
 .pulse1 {
     position: relative;
     z-index:2;
     margin-left: 35%;
     display: block;
     width: 2px;
-    height: 0px;
+    height: 2px;
     border-radius: 50%;
     background: transparent;
     cursor: default;
     box-shadow: 0 0 0 rgba(248, 142, 82, 0.4);
-    animation: pulse 2s;
+    animation: pulse 1.5s;
 }
 
 .pulse2 {
@@ -710,12 +720,12 @@ header.masthead .intro-text .intro-heading {
     margin-left: 28%;
     display: block;
     width: 2px;
-    height: 0px;
+    height: 2px;
     border-radius: 50%;
     background: transparent;
     cursor: default;
     box-shadow: 0 0 0 rgba(248, 142, 82, 0.4);
-    animation: pulse 2s;
+    animation: pulse 1.5s;
 }
 
 @-webkit-keyframes pulse {
