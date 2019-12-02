@@ -49,22 +49,30 @@ module.exports = class Logica {
 
   // .................................................................
   // Josep Carreres Fluixà
-  // datos -> insertarIdUsuarioConIdsensor() ->
-  // inserta Un id de sensor con un id de usuario
+  // datos -> vincularSensorConUsuario() ->
+  // vincula usuario con sensor y cambia el estado del sensor
   // .................................................................
-  async insertarIdUsuarioConIdsensor(datos) {
+  async vincularSensorConUsuario(datos) {
     var textoSQL =
       'insert into UsuarioSensor values($IdUsuario,$IdSensor);'
     var valoresParaSQL = {
       $IdUsuario: datos.IdUsuario,
-      $IdSensor: datos.IdSensor
+      $IdSensor: datos.IdSensor,
     }
+
+    var dato = {
+      estado: "Activo",
+      idSensor: datos.IdSensor,
+    }
+    await this.indicarActividadNodo(dato);
+
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+      this.laConexion.run(textoSQL, valoresParaSQL, async function(err) {
         (err ? rechazar(err) : resolver())
       })
     })
   }
+
 
   // .................................................................
   // userId -> getLaUltimaMedidaPorUsuario() ->
@@ -136,7 +144,7 @@ module.exports = class Logica {
 
   // .................................................................
   // Emilia Rosa van der Heide
-  // -> getSensoresYSusUsuarios() ->
+  // -> ensoresYSusUsuarios() ->
   // llama a getTodosLosSensores
   // y getUsuarioPorIdSensor
   // .................................................................
@@ -342,27 +350,6 @@ module.exports = class Logica {
     })
   } //()
 
-  //------------------------------------------------------------
-  //     getMedidasPorFecha()
-  //------------------------------------------------------------
-
-
-  // .................................................................
-  // -> getSensorPorIdUsuario(idUsuario) ->
-  // Coge la info de un sensor a partir del id de su usuario
-  // .................................................................
-  async getSensorPorIdUsuario(idUsuario) {
-    var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor, Estados.Descripcion Estado FROM Sensor INNER JOIN  UsuarioSensor ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
-    var valoresParaSQL = {
-      $idUsuario: idUsuario
-    };
-    return new Promise((resolver, rechazar) => {
-        this.laConexion.all(textoSQL, valoresParaSQL,
-          (err, res) => {
-            (err ? rechazar(err) : resolver(res))
-          })
-    })
-  }
 
   // .................................................................
   //     getMedidasPorFecha()
@@ -559,6 +546,8 @@ module.exports = class Logica {
     })
   }
 
+
+
   // .................................................................
   // tabla -> borrarFilasDe() ->
   //  Le pasas el nombre de la tabla y lo elimina en la BD
@@ -608,11 +597,19 @@ module.exports = class Logica {
   // IDUsuario -> desvincularUsuarioDeSensorPorIdUsuario() ->
   //  Le pasas el nombre del sensor y lo elimina en la BD
   // .................................................................
-  desvincularUsuarioDeSensorPorIdUsuario(idUsuario) {
+  async desvincularUsuarioDeSensorPorIdUsuario(idUsuario) {
     var textoSQL = "Delete from UsuarioSensor where IdUsuario = $idUsuario";
     var valoresParaSQL = {
       $idUsuario: idUsuario
     };
+
+    var idSensor = await this.getSensorPorIdUsuario(idUsuario);
+    console.log(idSensor);
+    var dato = {
+      estado: "Inactivo",
+      idSensor: idSensor[0].IdSensor,
+    }
+    await this.indicarActividadNodo(dato);
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver())
