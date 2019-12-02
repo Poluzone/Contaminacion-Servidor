@@ -247,7 +247,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     }
   )
 
-    // Emilia Rosa van der Heide
+ /*   // Emilia Rosa van der Heide
     it("probar indicarActividadNodo",
     async function() {
       var datos = {
@@ -259,6 +259,16 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       // llamar a getestado del sensor 1 para ver q ponga 3
       //assert.notEqual(res.length, 0, "no están las medidas")
     }
-  )
+  )*/
+
+  // Emilia Rosa van der Heide
+  it("probar getTodosLosUsuariosYSusSensores",
+  async function() {
+    var res = await laLogica.getTodosLosUsuariosYSusSensores();
+
+    // llamar a getestado del sensor 1 para ver q ponga 3
+    assert.equal(res.length, 1, "no están las medidas")
+  }
+)
 
 }) // describe

@@ -111,6 +111,42 @@ module.exports = class Logica {
   }
 
   // .................................................................
+  // Emilia Rosa van der Heide
+  // -> getTodosLosUsuariosYSusSensores() -> JSON con todos los usuarios y su sensor
+  // .................................................................
+  async getTodosLosUsuariosYSusSensores() {
+    var res = {usuario: {nombre: "hola"}, telefono: 9}
+  /*  var sensores = await this.getTodosLosSensores();
+    for (var i = 0; i < sensores.length; i++) {
+      var sensor = sensores[i]
+
+      // Tipo del sensor
+      var idTipoMedida = sensor.IdTipoMedida;
+      var tiposSensores = await this.getTipoSensor(idTipoMedida);
+      var tipoSensor = tiposSensores[0].Descripcion
+      //console.log(tipoSensor);
+      sensores[i].TipoSensor = tipoSensor;
+
+      // Estado del sensor
+      var idEstado = sensor.IdEstado;
+      var estados = await this.getEstado(idEstado);
+      var estadoSensor = estados[0].Descripcion
+      //console.log(estadoSensor);
+      sensores[i].Estado = estadoSensor;
+
+      // Cogemos el Id para obtener el usuario correspondiente
+      var idSensor = sensor.IdSensor;
+      var usuario = await this.getUsuarioPorIdSensor(idSensor);
+      sensores[i].Usuario = usuario[0];
+    }*/
+    //console.log(sensores)
+    return new Promise((resolver, rechazar) => {
+      resolver(res)
+    })
+  }
+
+  // .................................................................
+  // Emilia Rosa van der Heide
   // -> getSensoresYSusUsuarios() ->
   // llama a getTodosLosSensores
   // y getUsuarioPorIdSensor
