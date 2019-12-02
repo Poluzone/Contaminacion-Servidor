@@ -312,10 +312,7 @@
 
             usuarios = 0;
 
-            // Mostrar numero de usuarios
-            rellenarTarjetasNumeroUsuarios();
-
-            /*proxy.getUsuariosYSusSensores(function(resp) {
+            proxy.getTodosLosUsuariosYSusSensores(function(resp) {
 
                 usuarios = resp;
 
@@ -327,7 +324,10 @@
                     crearElementoLista(i);
                 }
 
-            });*/
+                // Mostrar numero de usuarios
+                rellenarTarjetasNumeroUsuarios();
+
+            });
 
         }
 
@@ -366,7 +366,7 @@
                     console.log(tipo + " " + numeroUsuariosSegunTipo);
 
                     // Se rellena la tarjeta con el numero de usuarios totales despues de haber sumado los normales y los conductores
-                    numeroUsuarios.innerHTML="";
+                    numeroUsuarios.innerHTML = "";
                     numeroUsuarios.appendChild(document.createTextNode(parseInt(usuarios)));
                 }
 

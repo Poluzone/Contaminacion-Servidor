@@ -192,14 +192,14 @@ class Proxy {
     }
     
     //------------Ivan---------------
-    // getUsuariosYSusSensores()
-    // --> json con todos los usuarios
+    // getTodosLosUsuariosYSusSensores()
+    // --> json con todos los sensores
     //-------------------------------
-    async getNumeroUsuariosTotales(callback) {
+    async getTodosLosUsuariosYSusSensores(callback) {
 
-        console.log("Llamada a getNumeroUsuariosTotales");
+        console.log("Llamada a getTodosLosUsuariosYSusSensores");
 
-        fetch(IP_PUERTO + "/getNumeroUsuariosTotales", {
+        fetch(IP_PUERTO + "/getTodosLosUsuariosYSusSensores", {
                 method: 'GET', // or 'PUT'
             }).then(function (response) {
                 console.log("response ", response);
@@ -214,6 +214,30 @@ class Proxy {
                 } else {
                     console.log("No hay usuarios");
                 }
+            }).catch(e => {
+                console.log("error: " + e);
+                return e;
+            });
+
+    }
+    
+    //------------Ivan---------------
+    // getNumeroUsuariosTotales()
+    // --> json con todos los usuarios
+    //-------------------------------
+    async getNumeroUsuariosTotales(callback) {
+
+        console.log("Llamada a getNumeroUsuariosTotales");
+
+        fetch(IP_PUERTO + "/getNumeroUsuariosTotales", {
+                method: 'GET', // or 'PUT'
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+                    callback(datos);
+
             }).catch(e => {
                 console.log("error: " + e);
                 return e;
