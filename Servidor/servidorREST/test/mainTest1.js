@@ -61,10 +61,12 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     ) // .post
   })
 
+
+
   it("probar POST /insertarIdUsuarioConIdsensor", function (hecho) {
     var dato = {
-      IdUsuario: 19,
-      IdSensor:2
+      IdUsuario: 14,
+      IdSensor:3
 
     }
 
@@ -82,6 +84,109 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       } // callback
     ) // .post
   })
+
+  it("probar POST /insertarSensor", function (hecho) {
+    var dato = {
+      IdSensor:99,
+      IdTipoMedida:2,
+      IdEstado:2
+
+    }
+
+    request.post(
+      {
+        url: IP_PUERTO + "/insertarSensor",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(dato)
+      },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+        assert.equal(carga, "OK", "¿La carga no es OK")
+        hecho()
+      } // callback
+    ) // .post
+  })
+
+  it("probar POST /borrarSensorPorID", function (hecho) {
+
+
+    request.post(
+      {
+        url: IP_PUERTO + "/borrarSensorPorID",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(99)
+      },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+        assert.equal(carga, "OK", "¿La carga no es OK")
+        hecho()
+      } // callback
+    ) // .post
+  })
+
+  it("probar POST /borrarUsuarioPorId", function (hecho) {
+
+
+    request.post(
+      {
+        url: IP_PUERTO + "/borrarUsuarioPorId",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(27)
+      },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+        assert.equal(carga, "OK", "¿La carga no es OK")
+        hecho()
+      } // callback
+    ) // .post
+  })
+
+  it("probar POST /desvincularUsuarioDeSensorPorIdUsuario", function (hecho) {
+
+
+    request.post(
+      {
+        url: IP_PUERTO + "/desvincularUsuarioDeSensorPorIdUsuario",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(14)
+      },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+        assert.equal(carga, "OK", "¿La carga no es OK")
+        hecho()
+      } // callback
+    ) // .post
+  })
+
+
+    it("probar POST /editarInformacionUsuario", function (hecho) {
+
+      var datos = {
+        IdUsuario:14,
+        Password:"TestEd",
+        Email:"TestEd",
+        Telefono:8943
+
+      }
+
+      request.post(
+        {
+          url: IP_PUERTO + "/editarInformacionUsuario",
+          headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+          body: JSON.stringify(datos)
+        },
+        function (err, respuesta, carga) {
+          assert.equal(err, null, "¿ha habido un error?")
+          assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+          assert.equal(carga, "OK", "¿La carga no es OK")
+          hecho()
+        } // callback
+      ) // .post
+    })
 
   it("probar POST /ComprobarLogin", function (hecho) {
     var dato = {
@@ -126,6 +231,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       } // callback()
     ) // .get
   }) // it
+
+
 /*
   it("POST /GetUsuarioPorEmail", function (hecho) {
     var dato = "prueba1@hotmail.com";
@@ -197,6 +304,36 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
       } // function
     )// get
+  }) // it
+
+  // Test Josep
+  it("probar getNumeroUsuariosTotales", function (hecho) {
+    request.get(
+      {
+        url: IP_PUERTO + "/getNumeroUsuariosTotales",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' }
+      },
+      function (err, respuesta, carga) {
+        var json = JSON.parse(carga);
+        assert.equal(err, null, "¿ha habido un error?");
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)");
+        hecho();
+
+      } // function
+    )// get
+  }) // it
+
+  it("GET /getNumeroUsuariosTotalesPorTipo/normal ", function (hecho) {
+
+    request.get(
+      { url: IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/normal", headers: { 'User-Agent': 'jordi' } },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+
+        hecho()
+      } // callback()
+    ) // .get
   }) // it
 
      //GET TodasLasMedidasPorFecha()

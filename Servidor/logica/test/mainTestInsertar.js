@@ -36,15 +36,15 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       }
 
       try {
-        laLogica.insertarUsuario(datos)
+        await laLogica.insertarUsuario(datos)
       } catch (err) {
         error = err
       }
 
-      var res = await laLogica.GetUsuarioPorEmail("Test")
+      var res = await laLogica.GetUsuarioPorEmail("test1@gti.com")
 
       assert.equal(res.length, 1, "¿no hay un resulado?")
-      assert.equal(res[0].Email, "Test", "¿no es 1234A?")
+      assert.equal(res[0].Email, "test1@gti.com", "¿no es 1234A?")
 
 
     }) //it
@@ -56,7 +56,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       var res = await laLogica.getTodosLosSensores()
 
-      assert.equal(res.length, 2, "¿no hay un resulado?")
+      assert.equal(res.length, 3, "¿no hay un resulado?")
 
     }) //it
 
@@ -64,8 +64,15 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar getUsuarioPorIdSensor()",
     async function() {
 
-      var res = await laLogica.getUsuarioPorIdSensor(1)
+      var res = await laLogica.getUsuarioPorIdSensor(1);
+      assert.equal(res.length, 1, "¿no hay un resulado?")
 
+    }) //it
+
+  it("probar getUsuarioPorIdUsuario()",
+    async function() {
+
+      var res = await laLogica.getUsuarioPorIdUsuario(15);
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
     }) //it
@@ -201,13 +208,14 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
       var sensor = {
+        IdSensor: 99,
         IdTipoMedida: 2,
         IdEstado: 2,
       }
-      var err = await laLogica.insertarSensor(sensor);
+      var resu = await laLogica.insertarSensor(sensor);
       var res = await laLogica.getNumSensoresSegunEstado(2);
-      assert.equal(res, 2, "¿no hay un resulado?")
-      await laLogica.borrarSensorPorID(3);
+      assert.equal(res, 3, "¿no hay un resulado?")
+      await laLogica.borrarSensorPorID(99);
 
     }
 
@@ -288,5 +296,87 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
    assert.notEqual(res.length, 0, "no tiene sensor")
  }
 )
+
+
+
+  it("probar insertarIdUsuarioConIdsensor",
+    async function() {
+
+      var datos = {
+        IdSensor: 3,
+        IdUsuario: 6
+      }
+      await laLogica.insertarIdUsuarioConIdsensor(datos);
+
+      var res = await laLogica.getUsuarioPorIdSensor(3);
+      assert.equal(res.length, 1, "¿no hay un resulado?")
+      await laLogica.desvincularUsuarioDeSensorPorIdUsuario(6);
+
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+  it("probar desvincularUsuarioDeSensorPorIdUsuario",
+    async function() {
+
+      await laLogica.desvincularUsuarioDeSensorPorIdUsuario(6);
+      var res = await laLogica.getUsuarioPorIdSensor(3);
+      assert.equal(res, 0, "¿no hay un resulado?")
+
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+  it("probar borrarUsuarioPorId",
+    async function() {
+
+      await laLogica.borrarUsuarioPorId(18);
+      var res = await laLogica.getUsuarioPorIdUsuario(18);
+      assert.equal(res, 0, "¿no hay un resulado?")
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+  it("probar getNumeroUsuariosTotales",
+    async function() {
+
+      var res = await laLogica.getNumeroUsuariosTotales();
+      assert.equal(res, 14, "¿no hay un resulado?")
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+  it("probar editarInformacionUsuarioPorId",
+    async function() {
+
+      var datos = {
+        IdUsuario: 14,
+        Email: "test2",
+        Password: "test2",
+        Telefono: 68414
+      }
+
+      await laLogica.editarInformacionUsuario(datos);
+      var res = await laLogica.getUsuarioPorIdUsuario(14);
+      assert.equal(res[0].Email , "test2", "¿no hay un resulado?")
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+
+    it("probar getNumeroUsuariosTotalesPorTipo",
+      async function() {
+
+        var res = await laLogica.getNumeroUsuariosTotalesPorTipo("normal");
+        assert.equal(res, 7, "¿no hay un resulado?")
+
+      }
+
+    ) //probar getTodasLasMedidasPorFecha()
 
 }) // describe

@@ -238,33 +238,113 @@ module.exports = class Logica {
   }
 
   // .................................................................
+  // Josep Carreres Fluixà
   // -> getUsuarioPorIdSensor(idSensor) ->
   // Coge la info de un usuario a partir del id de su sensor
   // .................................................................
   async getUsuarioPorIdSensor(idSensor) {
-    var textoSQL = "select IdUsuario from UsuarioSensor where IdSensor = $idSensor ";
+    var textoSQL = "SELECT IdUsuario FROM UsuarioSensor WHERE IdSensor = $idSensor ";
     var valoresParaSQL = {
       $idSensor: idSensor
     };
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL, valoresParaSQL,
-        (err, res) => {
-          if (err) console.log(err)
-          else {
-            var id = res[0].IdUsuario
-            textoSQL = "select * from Usuarios where IdUsuario = $id";
-            valoresParaSQL = {
-              $id: id
-            };
-            this.laConexion.all(textoSQL, valoresParaSQL,
-              (err, res) => {
-                (err ? rechazar(err) : resolver(res))
-              })
+        async (err, res) => {
+          if (!err) {
+            if (res.length == 0) {
+              resolver(0);
+            } else {
+              var resu = await this.getUsuarioPorIdUsuario(res[0].IdUsuario);
+              resolver(resu);
+            }
+          } else {
+            rechazar(err);
           }
-        }
-      )
+        })
     })
   }
+
+  // .................................................................
+  // -> getSensorPorIdUsuario(idUsuario) ->
+  // Coge la info de un sensor a partir del id de su usuario
+  // .................................................................
+  async getSensorPorIdUsuario(idUsuario) {
+    var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor, Estados.Descripcion Estado FROM Sensor INNER JOIN  UsuarioSensor ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
+    var valoresParaSQL = {
+      $idUsuario: idUsuario
+    };
+    return new Promise((resolver, rechazar) => {
+        this.laConexion.all(textoSQL, valoresParaSQL,
+          (err, res) => {
+            (err ? rechazar(err) : resolver(res))
+          })
+    })
+  }
+
+  //------------------------------------------------------------
+  // Josep Carreres Fluixà
+  // getUsuarioPorIdUsuario()
+  //------------------------------------------------------------
+
+  getUsuarioPorIdUsuario(idUsuario) {
+    var textoSQL = "SELECT * FROM Usuarios WHERE IdUsuario = $idUsuario ";
+    var valoresParaSQL = {
+      $idUsuario: idUsuario
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  } //()
+
+  //------------------------------------------------------------
+  // Josep Carreres Fluixà
+  // getNumeroUsuariosTotales()-->Entero
+  //------------------------------------------------------------
+
+  getNumeroUsuariosTotales() {
+    var textoSQL = "SELECT * FROM Usuarios";
+
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          if(!err){
+            resolver(res.length)
+          }else {
+            rechazar();
+          }
+        })
+    })
+  } //()
+
+  //------------------------------------------------------------
+  // Josep Carreres Fluixà
+  // tipoUsuario-->getNumeroUsuariosTotalesPorTipo()--> Entero
+  //------------------------------------------------------------
+
+  getNumeroUsuariosTotalesPorTipo(tipoUsuario) {
+    var textoSQL = "SELECT * FROM Usuarios where TipoUsuario = $TipoUsuario";
+    var valoresParaSQL = {
+      $TipoUsuario: tipoUsuario
+    };
+
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,valoresParaSQL,
+        (err, res) => {
+          if(!err){
+            resolver(res.length)
+          }else {
+            rechazar(err);
+          }
+        })
+    })
+  } //()
+
+  //------------------------------------------------------------
+  //     getMedidasPorFecha()
+  //------------------------------------------------------------
 
 
   // .................................................................
@@ -318,7 +398,7 @@ module.exports = class Logica {
         (err, res) => {
           (err ? rechazar(err) : resolver(res))
         })
-    }) 
+    })
   } // getMedidasDeEsteUsuarioPorFecha()
 
 
@@ -337,7 +417,7 @@ module.exports = class Logica {
     var sumatorio = 0;
     for (var i = 0; i < medidas.length; i++) {
       sumatorio = sumatorio + medidas[i].Valor;
-    } 
+    }
 
     // Calulamos la media
     var media = sumatorio / medidas.length;
@@ -407,11 +487,11 @@ module.exports = class Logica {
   insertarSensor(sensor) {
     var textoSQL = "insert into Sensor values( $IdSensor, $IdTipoMedida, $IdEstado)";
     var valoresParaSQL = {
-      $IdSensor: null,
+      $IdSensor: sensor.IdSensor,
       $IdTipoMedida: sensor.IdTipoMedida,
       $IdEstado: sensor.IdEstado,
     };
-    
+
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
@@ -460,6 +540,26 @@ module.exports = class Logica {
   }
 
   // .................................................................
+  // Josep Carreres Fluixà
+  // idUsuario -> editarInformacionUsuario() ->
+  // edita informacion de un usuario pasandole un json con los datos a cambiar y su ID
+  // .................................................................
+  editarInformacionUsuario(datos) {
+    var textoSQL = "UPDATE Usuarios SET Email = $email , Password = $password , Telefono = $telefono WHERE IdUsuario = $idUsuario;";
+    var valoresParaSQL = {
+      $email: datos.Email,
+      $password: datos.Password,
+      $telefono: datos.Telefono,
+      $idUsuario: datos.IdUsuario
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver(res))
+      })
+    })
+  }
+
+  // .................................................................
   // tabla -> borrarFilasDe() ->
   //  Le pasas el nombre de la tabla y lo elimina en la BD
   // .................................................................
@@ -479,7 +579,39 @@ module.exports = class Logica {
   borrarSensorPorID(idSensor) {
     var textoSQL = "Delete from Sensor where IdSensor = $idSensor";
     var valoresParaSQL = {
-      $idSensor:idSensor
+      $idSensor: idSensor
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver())
+      })
+    })
+  }
+
+  // .................................................................
+  // idUsuario -> borrarUsuarioPorId() ->
+  //  Le pasas el id y lo elimina en la BD
+  // .................................................................
+  borrarUsuarioPorId(idUsuario) {
+    var textoSQL = "Delete from Usuarios where IdUsuario = $idUsuario";
+    var valoresParaSQL = {
+      $idUsuario: idUsuario
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver())
+      })
+    })
+  }
+
+  // .................................................................
+  // IDUsuario -> desvincularUsuarioDeSensorPorIdUsuario() ->
+  //  Le pasas el nombre del sensor y lo elimina en la BD
+  // .................................................................
+  desvincularUsuarioDeSensorPorIdUsuario(idUsuario) {
+    var textoSQL = "Delete from UsuarioSensor where IdUsuario = $idUsuario";
+    var valoresParaSQL = {
+      $idUsuario: idUsuario
     };
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
