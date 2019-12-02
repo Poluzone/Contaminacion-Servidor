@@ -280,6 +280,50 @@ module.exports = class Logica {
       resolver(sensores.length)
     })
   } //()
+    
+    //------------------------------------------------------------
+  // Josep Carreres Fluixà
+  // getNumeroUsuariosTotales()
+  //------------------------------------------------------------
+
+  async getNumeroUsuariosTotales() {
+    console.log("Llamada a getNumeroUsuariosTotales()");
+    var textoSQL = "SELECT * FROM Usuarios";
+
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          if(!err){
+            resolver(res.length)
+          }else {
+            rechazar();
+          }
+        })
+    })
+  } //()
+
+  //------------------------------------------------------------
+  // Josep Carreres Fluixà
+  // getNumeroUsuariosTotalesPorTipo()
+  //------------------------------------------------------------
+
+  async getNumeroUsuariosTotalesPorTipo(tipoUsuario) {
+    var textoSQL = "SELECT * FROM Usuarios where TipoUsuario = $TipoUsuario";
+    var valoresParaSQL = {
+      $TipoUsuario: tipoUsuario
+    };
+
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,valoresParaSQL,
+        (err, res) => {
+          if(!err){
+            resolver(res.length)
+          }else {
+            rechazar(err);
+          }
+        })
+    })
+  } //()
 
   // .................................................................
   // datos -> insertarUsuario() ->

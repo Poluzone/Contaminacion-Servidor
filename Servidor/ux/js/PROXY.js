@@ -228,7 +228,7 @@ class Proxy {
     //-------------------------------
     async getNumeroUsuariosTotalesPorTipo(estado, callback) {
 
-        console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + parseInt(estado));
+        console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + estado);
 
         fetch(IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/"+estado, {
                 method: 'GET', // or 'PUT'

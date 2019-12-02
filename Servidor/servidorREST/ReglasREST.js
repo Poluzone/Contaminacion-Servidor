@@ -339,6 +339,29 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     respuesta.sendfile(dir + "/" + peticion.params.archivo);
   });
 
+    
+    servidorExpress.get('/getNumeroUsuariosTotales',
+    async function(peticion, respuesta) {
+      console.log(" * GET /getNumeroUsuariosTotales ")
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getNumeroUsuariosTotales();
+
+      // si el array de resultados no tiene una casilla ..
+      // todo ok
+      respuesta.status(200).send(JSON.stringify(res))
+    })
+
+
+    servidorExpress.get('/getNumeroUsuariosTotalesPorTipo/:tipo',
+      async function(peticion, respuesta) {
+
+        var dato = peticion.params.tipo
+        var res = await laLogica.getNumeroUsuariosTotalesPorTipo(dato);
+        // todo ok
+        respuesta.status(200).send(JSON.stringify(res))
+      })
+    
     // .......................................................
     // getTodasLasMedidasPorFecha
     //

@@ -258,6 +258,7 @@
                 numeroSensores.innerHTML = "";
                 numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
             } else {
+                numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
                 primeraLlamadaA_rellenarTarjetasNumeroSensores = false;
             }
 
@@ -313,6 +314,12 @@
 
                 usuarios = resp;
 
+            });
+            
+            /*proxy.getUsuariosYSusSensores(function(resp) {
+
+                usuarios = resp;
+
                 console.log("Numero de usuarios: " + resp.length);
                 console.log("Primer usuario " + sensores[0]);
                 console.log("Adios :) " + 1);
@@ -324,7 +331,7 @@
                 // Mostrar numero de sensores
                 rellenarTarjetasNumeroUsuarios();
 
-            });
+            });*/
 
         }
 
@@ -351,9 +358,11 @@
                 numeroUsuariosSegunTipo = resp;
 
                 if (tipo == "Normal") {
+                    usuariosNormales.removeChild();
                     usuariosNormales.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
                 }
                 if (tipo == "Conductor") {
+                    usuariosConductores.removeChild();
                     usuariosConductores.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
                 }
 
