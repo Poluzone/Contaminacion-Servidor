@@ -106,7 +106,7 @@ module.exports = class Logica {
   // devuelve un Usuario dandole un email
   // .................................................................
   async GetUsuarioPorEmail(email) {
-    var textoSQL = "select * from Usuarios where Email = $email ";
+    var textoSQL = "SELECT Usuarios.IdUsuario, Usuarios.Email, Usuarios.Nombre, Usuarios.Password, Usuarios.Telefono, Usuarios.TipoUsuario, UsuarioSensor.IdSensor FROM Usuarios LEFT JOIN UsuarioSensor ON Usuarios.IdUsuario = UsuarioSensor.IdUsuario WHERE Email = $email ";
     var valoresParaSQL = {
       $email: email
     };

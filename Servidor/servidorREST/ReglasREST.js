@@ -567,7 +567,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
  // llamo a la función adecuada de la lógica
  await laLogica.indicarActividadNodo(dato);
-  res = {ok: ok}
+  res = {ok: "ok"}
  respuesta.send(JSON.stringify(res))
 })
 
