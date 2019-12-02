@@ -554,6 +554,24 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     })
 
 
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /indicarActividadNodo -> es una petición POST que llama a
+  * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ servidorExpress.post('/indicarActividadNodo/',
+ async function(peticion, respuesta){
+ console.log("* POST /indicarActividadNodo")
+
+ var dato = JSON.parse(peticion.body);
+
+ // llamo a la función adecuada de la lógica
+ await laLogica.indicarActividadNodo(dato);
+  res = {ok: ok}
+ respuesta.send(JSON.stringify(res))
+})
+
+
 
 
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {

@@ -176,7 +176,7 @@ module.exports = class Logica {
   // Coge la info de todos los usuarios
   // .................................................................
   async getTodosLosUsuarios() {
-    var textoSQL = "select * from Usuarios";
+    var textoSQL = "SELECT Usuarios.IdUsuario, Usuarios.Email, Usuarios.Nombre, Usuarios.Password, Usuarios.Telefono, Usuarios.TipoUsuario, UsuarioSensor.IdSensor FROM Usuarios LEFT JOIN UsuarioSensor ON Usuarios.IdUsuario = UsuarioSensor.IdUsuario";
     console.log("logica: getTodosLosUsuarios")
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
@@ -269,7 +269,7 @@ module.exports = class Logica {
   // Coge la info de un sensor a partir del id de su usuario
   // .................................................................
   async getSensorPorIdUsuario(idUsuario) {
-    var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor, Estados.Descripcion Estado FROM Sensor INNER JOIN  UsuarioSensor ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
+    var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor, Estados.Descripcion Estado FROM Sensor INNER JOIN UsuarioSensor ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
     var valoresParaSQL = {
       $idUsuario: idUsuario
     };
@@ -451,7 +451,7 @@ module.exports = class Logica {
   // .................................................................
   async getNumSensoresSegunEstado(idEstado) {
     var sensores = await this.getSensoresSegunEstado(idEstado);
-    console.log(sensores)
+    //console.log(sensores)
     return new Promise((resolver, rechazar) => {
       resolver(sensores.length)
     })
@@ -535,7 +535,7 @@ module.exports = class Logica {
   async getMedidasEstacionOficialGandia() {
     console.log("logica: getMedidasEstacionOficialGandia")
     var data = await estacionOficial.getMedidasEstacion();
-    console.log(data)
+    //console.log(data)
     return data;
   }
 
