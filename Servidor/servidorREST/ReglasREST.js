@@ -373,6 +373,36 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     respuesta.status(200).send(resJson)
   })
 
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * - Matthew Conde Oltra -
+  *
+  * /getMedidasDeEsteUsuarioPorFecha -> es una petición GET que llama a 
+  * getMedidasDeEsteUsuarioPorFecha() de la Lógica la cual devuelve todas las
+  * medidas del idUsuario pasado desde, hasta una fecha
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+  servidorExpress.post('/getMedidasDeEsteUsuarioPorFecha',
+    async function (peticion, respuesta) {
+      console.log(" * GET /getMedidasDeEsteUsuarioPorFecha ")
+
+      console.log(peticion.body)
+      var datos = JSON.parse(peticion.body)
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getMedidasDeEsteUsuarioPorFecha(datos[0].Intervalo, datos[0].IdUsuario);
+      console.log(res);
+      //var resJson = { media: res };
+
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré medidas: " + dato)
+        return
+      }
+      // todo ok
+      console.log(JSON.parse(res));
+      respuesta.status(200).send(JSON.parse(res))
+  });
 
 
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {

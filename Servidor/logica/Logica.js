@@ -245,7 +245,7 @@ module.exports = class Logica {
   // recoge las medidas de un usuario concreto
   //------------------------------------------------------------
   getMedidasDeEsteUsuarioPorFecha(intervalo, idUsuario) {
-    console.log("logica: getMedidasPorIdPorFecha")
+    console.log("logica: getMedidasDeEsteUsuarioPorFecha")
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario = $idUsuario AND Tiempo BETWEEN $desde AND $hasta ORDER BY IdMedida DESC";
     console.log(textoSQL)
     var valoresParaSQL = {
@@ -260,7 +260,7 @@ module.exports = class Logica {
           (err ? rechazar(err) : resolver(res))
         })
     }) 
-  } // getMedidasPorIdPorFecha()
+  } // getMedidasDeEsteUsuarioPorFecha()
 
 
   //------------------------------------------------------------
