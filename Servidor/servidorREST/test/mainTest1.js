@@ -220,6 +220,14 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     ) // .post
   }) //probar getTodasLasMedidasPorFecha()
 
+  /**************************************************************************
+   * - Matthew Conde Oltra -
+   * POST /GETMedidasDeEsteUsuarioPorFecha
+   * 
+   * Este test comprueba que se llame bien a getMedidasDeEsteUsuarioPorFecha
+   * devolviendo todas las medidas del usuario introducido, desde, hasta una 
+   * fecha. 
+   *************************************************************************/
   
   it("POST /GETMedidasDeEsteUsuarioPorFecha ", function (hecho) {
     var dato = {
@@ -237,11 +245,13 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       },
       function (err, respuesta, carga) {
         var json = JSON.parse(carga);
-        console.log("EL json "+carga);
+        //console.log("EL json "+respuesta);
         //assert.equal(err, null, "¿ha habido un error?");
         assert.equal(200, 200, "¿El código no es 200 (OK)");
 
-        console.log(respuesta);
+        //console.log(respuesta.body);
+        console.log(json);
+
 
         hecho();
       } // callback()

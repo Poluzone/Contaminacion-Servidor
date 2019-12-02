@@ -389,9 +389,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       var datos = JSON.parse(peticion.body)
 
       // llamo a la función adecuada de la lógica
-      var res = await laLogica.getMedidasDeEsteUsuarioPorFecha(datos[0].Intervalo, datos[0].IdUsuario);
-      console.log(res);
-      //var resJson = { media: res };
+      var res = await laLogica.getMedidasDeEsteUsuarioPorFecha(datos.Intervalo, datos.IdUsuario);
+      //console.log(res);
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 1) {
@@ -400,8 +399,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return
       }
       // todo ok
-      console.log(JSON.parse(res));
-      respuesta.status(200).send(JSON.parse(res))
+      respuesta.status(200).send(res)
   });
 
 
