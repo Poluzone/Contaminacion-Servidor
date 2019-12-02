@@ -4,8 +4,21 @@
 
 
 .map {
-    height: 550px;
+    height: 500px;
     width: 100%;
+ 
+}
+
+
+/* Leyenda del mapa */
+
+.leyenda_mapa{
+   position: relative; 
+   top:6px;     
+   right: 235px;    
+   width:680px; 
+   height:30px;
+   z-index: 2000;
 }
 
 .mapAdmin {
