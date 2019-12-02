@@ -103,6 +103,11 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
   it("probar getNumSensoresSegunEstado()",
     async function() {
+      var datos = {
+        estado: "Stock",
+        idSensor: 1
+      };
+      await laLogica.indicarActividadNodo(datos);
       var res = await laLogica.getNumSensoresSegunEstado(1);
       assert.equal(res, "1", "no coge el num de sensores correctamente")
     }) //it
@@ -259,6 +264,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       // llamar a getestado del sensor 1 para ver q ponga 3
       //assert.notEqual(res.length, 0, "no están las medidas")
+
+      
     }
   )
 

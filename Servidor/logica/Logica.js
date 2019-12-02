@@ -372,7 +372,8 @@ module.exports = class Logica {
     var estado;
     var stringestado = datos.estado;
     if (stringestado.localeCompare("Inactivo") == 0) estado = 3
-    else estado = 2
+    else if (stringestado.localeCompare("Activo") == 0) estado = 2
+    else estado = 1
     var valoresParaSQL = {
       $IdSensor: datos.idSensor,
       $IdEstado: estado,
