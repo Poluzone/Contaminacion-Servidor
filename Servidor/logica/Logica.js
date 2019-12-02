@@ -410,6 +410,22 @@ module.exports = class Logica {
   }
 
   // .................................................................
+  // idUsuario -> borrarUsuarioPorId() ->
+  //  Le pasas el id y lo elimina en la BD
+  // .................................................................
+  borrarUsuarioPorId(idUsuario) {
+    var textoSQL = "Delete from Usuarios where IdUsuario = $idUsuario";
+    var valoresParaSQL = {
+      $idUsuario: idUsuario
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver())
+      })
+    })
+  }
+
+  // .................................................................
   // IDUsuario -> desvincularUsuarioDeSensorPorIdUsuario() ->
   //  Le pasas el nombre del sensor y lo elimina en la BD
   // .................................................................
