@@ -115,33 +115,22 @@ module.exports = class Logica {
   // -> getTodosLosUsuariosYSusSensores() -> JSON con todos los usuarios y su sensor
   // .................................................................
   async getTodosLosUsuariosYSusSensores() {
-    var res = await this.getTodosLosUsuario();
-    console.log(res)
-  /*  for (var i = 0; i < sensores.length; i++) {
-      var sensor = sensores[i]
+    console.log("logica: getTodosLosUsuariosYSusSensores")
+    var usuarios = await this.getTodosLosUsuarios();
+    //console.log(usuarios)
+    for (var i = 0; i < usuarios.length; i++) {
+      var usuario = usuarios[i]
 
-      // Tipo del sensor
-      var idTipoMedida = sensor.IdTipoMedida;
-      var tiposSensores = await this.getTipoSensor(idTipoMedida);
-      var tipoSensor = tiposSensores[0].Descripcion
-      //console.log(tipoSensor);
-      sensores[i].TipoSensor = tipoSensor;
-
-      // Estado del sensor
-      var idEstado = sensor.IdEstado;
-      var estados = await this.getEstado(idEstado);
-      var estadoSensor = estados[0].Descripcion
-      //console.log(estadoSensor);
-      sensores[i].Estado = estadoSensor;
-
-      // Cogemos el Id para obtener el usuario correspondiente
-      var idSensor = sensor.IdSensor;
-      var usuario = await this.getUsuarioPorIdSensor(idSensor);
-      sensores[i].Usuario = usuario[0];
-    }*/
+      // Cogemos el Id para obtener el sensor correspondiente
+      var idUser = usuario.IdUsuario;
+      var sensor = await this.getSensorPorIdUsuario(idUser);
+      console.log(sensor)
+      if (sensor[0] != undefined) usuarios[i].Sensor = sensor[0];
+      else usuarios[i].Sensor = null;
+    }
     //console.log(sensores)
     return new Promise((resolver, rechazar) => {
-      resolver(res)
+      resolver(usuarios)
     })
   }
 
@@ -183,12 +172,12 @@ module.exports = class Logica {
 
   // .................................................................
   // Emilia Rosa van der Heide
-  // -> getTodosLosUsuario() -> JSON: usuarios
+  // -> getTodosLosUsuarios() -> JSON: usuarios
   // Coge la info de todos los usuarios
   // .................................................................
-  async getTodosLosUsuario() {
+  async getTodosLosUsuarios() {
     var textoSQL = "select * from Usuarios";
-    console.log("logica: getTodosLosUsuario")
+    console.log("logica: getTodosLosUsuarios")
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {
@@ -274,6 +263,24 @@ module.exports = class Logica {
           }
         }
       )
+    })
+  }
+
+
+  // .................................................................
+  // -> getSensorPorIdUsuario(idUsuario) ->
+  // Coge la info de un sensor a partir del id de su usuario
+  // .................................................................
+  async getSensorPorIdUsuario(idUsuario) {
+    var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor, Estados.Descripcion Estado FROM Sensor INNER JOIN  UsuarioSensor ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
+    var valoresParaSQL = {
+      $idUsuario: idUsuario
+    };
+    return new Promise((resolver, rechazar) => {
+        this.laConexion.all(textoSQL, valoresParaSQL,
+          (err, res) => {
+            (err ? rechazar(err) : resolver(res))
+          })
     })
   }
 
