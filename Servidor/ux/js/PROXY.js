@@ -133,6 +133,7 @@ class Proxy {
 
     //------------Ivan---------------
     // getSensoresYSusUsuarios()
+    // --> json con todos los sensores
     //-------------------------------
     async getSensoresYSusUsuarios(callback) {
 
@@ -163,6 +164,7 @@ class Proxy {
     //-------------Ivan--------------
     // N: IdEstado -->
     // getNumSensoresSegunEstado()
+    // --> N: numero de sensores segun estado
     //-------------------------------
     async getNumSensoresSegunEstado(estado, callback) {
 
@@ -191,12 +193,13 @@ class Proxy {
     
     //------------Ivan---------------
     // getUsuariosYSusSensores()
+    // --> json con todos los usuarios
     //-------------------------------
-    async getUsuariosYSusSensores(callback) {
+    async getNumeroUsuariosTotales(callback) {
 
-        console.log("Llamada a ");
+        console.log("Llamada a getNumeroUsuariosTotales");
 
-        fetch(IP_PUERTO + "/get", {
+        fetch(IP_PUERTO + "/getNumeroUsuariosTotales", {
                 method: 'GET', // or 'PUT'
             }).then(function (response) {
                 console.log("response ", response);
@@ -211,6 +214,36 @@ class Proxy {
                 } else {
                     console.log("No hay usuarios");
                 }
+            }).catch(e => {
+                console.log("error: " + e);
+                return e;
+            });
+
+    }
+    
+    //-------------Ivan--------------
+    // String: tipo -->
+    // getNumeroUsuariosTotalesporTipo()
+    // --> N: numero de usuarios segun tipo
+    //-------------------------------
+    async getNumeroUsuariosTotalesPorTipo(estado, callback) {
+
+        console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + parseInt(estado));
+
+        fetch(IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/"+estado, {
+                method: 'GET', // or 'PUT'
+                headers: {
+                    'User-Agent': 'jordi',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+
+                callback(datos);
+
             }).catch(e => {
                 console.log("error: " + e);
                 return e;

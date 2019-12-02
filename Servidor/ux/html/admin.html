@@ -115,6 +115,7 @@
             textoTarjeta1 = document.getElementById("textoTarjeta1");
             textoTarjeta2 = document.getElementById("textoTarjeta2");
             textoTarjeta3 = document.getElementById("textoTarjeta3");
+            tarjeta4 = document.getElementById("tarjeta4");
 
             textoSENSORESyUSUARIOS = document.getElementById("textoSensores");
 
@@ -305,12 +306,10 @@
         function llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios() {
             console.log("llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios");
 
-            var tarjetaExtra = document.getElementById("tarjeta4");
-            innerHTMLDetarjetaExtra = tarjetaExtra.innerHTML;
-            tarjetaExtra.innerHTML = "";
+            innerHTMLDetarjetaExtra = tarjeta4.innerHTML;
+            tarjeta4.innerHTML = "";
 
-
-            /*proxy.getUsuariosYSusSensores(function(resp) {
+            proxy.getNumeroUsuariosTotales(function(resp) {
 
                 usuarios = resp;
 
@@ -325,7 +324,7 @@
                 // Mostrar numero de sensores
                 rellenarTarjetasNumeroUsuarios();
 
-            });*/
+            });
 
         }
 
@@ -348,7 +347,7 @@
             var estadoJson = {
                 "tipo": tipo
             };
-            proxy.getNumUsuariosSegunTipo(tipo, function(resp) {
+            proxy.getNumeroUsuariosTotalesPorTipo(tipo, function(resp) {
                 numeroUsuariosSegunTipo = resp;
 
                 if (tipo == "Normal") {
