@@ -210,11 +210,11 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       var sensor = {
         IdSensor: 99,
         IdTipoMedida: 2,
-        IdEstado: 2,
+        IdEstado: 1,
       }
       var resu = await laLogica.insertarSensor(sensor);
       var res = await laLogica.getNumSensoresSegunEstado(2);
-      assert.equal(res, 2, "¿no hay un resulado?")
+      assert.equal(res, 1, "¿no hay un resulado?")
 
     }
 
@@ -289,16 +289,13 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
  it("probar getSensorPorIdUsuario",
  async function() {
    var res = await laLogica.getSensorPorIdUsuario(15);
-
-   //console.log(res)
-   // llamar a getestado del sensor 1 para ver q ponga 3
    assert.notEqual(res.length, 0, "no tiene sensor")
  }
 )
 
 
 
-  it("probar insertarIdUsuarioConIdsensor",
+  it("probar vincularSensorConUsuario",
     async function() {
 
       var datos = {
@@ -307,7 +304,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       }
 
 
-      await laLogica.insertarIdUsuarioConIdsensor(datos);
+      await laLogica.vincularSensorConUsuario(datos);
 
       var res = await laLogica.getUsuarioPorIdSensor(99);
       assert.equal(res.length, 1, "¿no hay un resulado?")
@@ -334,8 +331,9 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
       await laLogica.borrarSensorPorID(99);
-      var res = await laLogica.getSensoresSegunEstado(2);
-      assert.equal(res, 1, "¿no hay un resulado?")
+      var res = await laLogica.getSensoresSegunEstado(3);
+    
+      assert.equal(res.length, 0, "¿no hay un resulado?")
 
     }
 

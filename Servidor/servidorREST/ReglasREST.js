@@ -294,7 +294,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
       // supuesto procesamiento
 
-      laLogica.insertarIdUsuarioConIdsensor(datos);
+      laLogica.vincularSensorConUsuario(datos);
 
       respuesta.send("OK");
     }); // post / insertarPersona
