@@ -360,12 +360,12 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
   /**************************************************************************
    * - Matthew Conde Oltra -
    * POST /GETMedidasDeEsteUsuarioPorFecha
-   * 
+   *
    * Este test comprueba que se llame bien a getMedidasDeEsteUsuarioPorFecha
-   * devolviendo todas las medidas del usuario introducido, desde, hasta una 
-   * fecha. 
+   * devolviendo todas las medidas del usuario introducido, desde, hasta una
+   * fecha.
    *************************************************************************/
-  
+
   it("POST /GETMedidasDeEsteUsuarioPorFecha ", function (hecho) {
     var dato = {
       Intervalo: {
@@ -387,7 +387,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
         assert.equal(200, 200, "¿El código no es 200 (OK)");
 
         //console.log(respuesta.body);
-        console.log(json);
+      //  console.log(json);
 
 
         hecho();

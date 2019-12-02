@@ -56,7 +56,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       var res = await laLogica.getTodosLosSensores()
 
-      assert.equal(res.length, 3, "¿no hay un resulado?")
+      assert.equal(res.length, 2, "¿no hay un resulado?")
 
     }) //it
 
@@ -214,8 +214,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       }
       var resu = await laLogica.insertarSensor(sensor);
       var res = await laLogica.getNumSensoresSegunEstado(2);
-      assert.equal(res, 3, "¿no hay un resulado?")
-      await laLogica.borrarSensorPorID(99);
+      assert.equal(res, 2, "¿no hay un resulado?")
 
     }
 
@@ -241,7 +240,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     var datos = {
       Intervalo: {
         desde: 0,
-        hasta: Date.now() 
+        hasta: Date.now()
       },
       IdUsuario: 15};
     var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
@@ -271,7 +270,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       // llamar a getestado del sensor 1 para ver q ponga 3
       //assert.notEqual(res.length, 0, "no están las medidas")
 
-      
+
     }
   )*/
 
@@ -303,14 +302,15 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
       var datos = {
-        IdSensor: 3,
+        IdSensor: 99,
         IdUsuario: 6
       }
+
+
       await laLogica.insertarIdUsuarioConIdsensor(datos);
 
-      var res = await laLogica.getUsuarioPorIdSensor(3);
+      var res = await laLogica.getUsuarioPorIdSensor(99);
       assert.equal(res.length, 1, "¿no hay un resulado?")
-      await laLogica.desvincularUsuarioDeSensorPorIdUsuario(6);
 
 
     }
@@ -321,9 +321,21 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
       await laLogica.desvincularUsuarioDeSensorPorIdUsuario(6);
-      var res = await laLogica.getUsuarioPorIdSensor(3);
+      var res = await laLogica.getUsuarioPorIdSensor(99);
       assert.equal(res, 0, "¿no hay un resulado?")
 
+
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+  it("probar borrarSensorPorID",
+    async function() {
+
+      await laLogica.borrarSensorPorID(99);
+      var res = await laLogica.getSensoresSegunEstado(2);
+      assert.equal(res, 1, "¿no hay un resulado?")
 
     }
 
@@ -332,9 +344,9 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar borrarUsuarioPorId",
     async function() {
 
-      await laLogica.borrarUsuarioPorId(18);
-      var res = await laLogica.getUsuarioPorIdUsuario(18);
-      assert.equal(res, 0, "¿no hay un resulado?")
+      await laLogica.borrarUsuarioPorId(28);
+      var res = await laLogica.GetUsuarioPorEmail("test1@gti.com");
+      assert.equal(res, null, "¿no hay un resulado?")
 
     }
 
@@ -344,7 +356,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     async function() {
 
       var res = await laLogica.getNumeroUsuariosTotales();
-      assert.equal(res, 14, "¿no hay un resulado?")
+      assert.equal(res, 13, "¿no hay un resulado?")
 
     }
 

@@ -504,13 +504,13 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     // devuelve todas las medidas entre estas dos medidas de tiempo
     // .......................................................
     servidorExpress.post('/GetTodasLasMedidasPorFecha/',
-                        async function(peticion, respuesta){
+      async function(peticion, respuesta){
         console.log("* POST /TodasLasMedidasPorFecha")
 
         //Obtengo el body donde pondré los parámetros
         var dato = JSON.parse(peticion.body);
 
-        console.log(dato);
+        //console.log(dato);
 
         // llamo a la función adecuada de la lógica
         var res = await laLogica.getTodasLasMedidasPorFecha(dato);
