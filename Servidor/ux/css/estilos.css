@@ -4,27 +4,17 @@
 
 
 .map {
-    height: 500px;
+    height: 475px;
     width: 100%;
- 
-}
-
-
-/* Leyenda del mapa */
-
-.leyenda_mapa{
-   position: relative; 
-   top:6px;     
-   right: 235px;    
-   width:680px; 
-   height:30px;
-   z-index: 2000;
 }
 
 .mapAdmin {
     height: 500px;
     width: 100%;
 }
+
+/* Clase para la Leyenda del mapa */
+
 
 /* Clase para los tipos de fuentes */
 
