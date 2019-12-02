@@ -115,7 +115,7 @@ module.exports = class Logica {
   // -> getTodosLosUsuariosYSusSensores() -> JSON con todos los usuarios y su sensor
   // .................................................................
   async getTodosLosUsuariosYSusSensores() {
-    var res = {usuario: {nombre: "hola"}, telefono: 9}
+    var res = [{usuario: {nombre: "hola"}, telefono: 9}]
   /*  var sensores = await this.getTodosLosSensores();
     for (var i = 0; i < sensores.length; i++) {
       var sensor = sensores[i]
