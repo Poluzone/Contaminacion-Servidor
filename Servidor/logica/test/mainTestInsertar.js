@@ -252,13 +252,21 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
   // Emilia Rosa van der Heide
   it("probar getMedidasEstacionOficialGandia",
+  async function() {
+    var res = await laLogica.getMedidasEstacionOficialGandia();
+    assert.notEqual(res.length, 0, "no calcula bien la media")
+  }) //probar getMediaCalidadDelAireDeLaJornada()
+
+
+  // Emilia Rosa van der Heide
+  it("probar getEstacionesOficiales",
     async function() {
-      var res = await laLogica.getMedidasEstacionOficialGandia();
-      assert.notEqual(res.length, 0, "no están las medidas")
+      var res = await laLogica.getEstacionesOficiales();
+      assert.notEqual(res.length, 0, "no están las estaciones")
     }
   )
 
- /*   // Emilia Rosa van der Heide
+    // Emilia Rosa van der Heide
     it("probar indicarActividadNodo",
     async function() {
       var datos = {
@@ -272,7 +280,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
 
     }
-  )*/
+  )
 
  // Emilia Rosa van der Heide
  it("probar getTodosLosUsuariosYSusSensores",

@@ -132,7 +132,7 @@ module.exports = class Logica {
       // Cogemos el Id para obtener el sensor correspondiente
       var idUser = usuario.IdUsuario;
       var sensor = await this.getSensorPorIdUsuario(idUser);
-      console.log(sensor)
+      //console.log(sensor)
       if (sensor[0] != undefined) usuarios[i].Sensor = sensor[0];
       else usuarios[i].Sensor = null;
     }
@@ -373,13 +373,13 @@ module.exports = class Logica {
   getMedidasDeEsteUsuarioPorFecha(intervalo, idUsuario) {
     console.log("logica: getMedidasDeEsteUsuarioPorFecha")
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario = $idUsuario AND Tiempo BETWEEN $desde AND $hasta ORDER BY IdMedida DESC";
-    console.log(textoSQL)
+    //console.log(textoSQL)
     var valoresParaSQL = {
       $idUsuario: idUsuario,
       $desde: intervalo.desde,
       $hasta: intervalo.hasta
     };
-    console.log(valoresParaSQL)
+    //console.log(valoresParaSQL)
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {
@@ -522,8 +522,30 @@ module.exports = class Logica {
   async getMedidasEstacionOficialGandia() {
     console.log("logica: getMedidasEstacionOficialGandia")
     var data = await estacionOficial.getMedidasEstacion();
-    //console.log(data)
-    return data;
+    
+    var estaciones = await this.getEstacionesOficiales()
+    //console.log(estaciones.length)
+    for (var i = 0; i < estaciones.length; i++) {
+      var municipio = estaciones[i].Municipio
+      if(municipio.localeCompare("Gandia") == 0) estaciones[i].Medidas = data[0];
+    }
+
+    return estaciones;
+  }
+
+  // .................................................................
+  // Emilia Rosa van der Heide
+  // -> getEstacionesOficiales() -> estaciones
+  // .................................................................
+  async getEstacionesOficiales() {
+    var textoSQL = "select * from Estaciones;";
+    console.log("logica: getTodosLosSensores")
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
   }
 
   // .................................................................
@@ -604,7 +626,7 @@ module.exports = class Logica {
     };
 
     var idSensor = await this.getSensorPorIdUsuario(idUsuario);
-    console.log(idSensor);
+    //console.log(idSensor);
     var dato = {
       estado: "Inactivo",
       idSensor: idSensor[0].IdSensor,

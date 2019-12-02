@@ -572,6 +572,21 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 })
 
 
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /indicarActividadNodo -> es una petición POST que llama a
+  * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ servidorExpress.get('/getMedidasEstacionOficialGandia/',
+ async function(peticion, respuesta){
+ console.log("* POST /getMedidasEstacionOficialGandia")
+
+ // llamo a la función adecuada de la lógica
+ var res = await laLogica.getMedidasEstacionOficialGandia();
+ respuesta.send(JSON.stringify(res))
+})
+
+
 
 
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
