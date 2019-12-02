@@ -101,7 +101,7 @@
             var poluzone = [];
                 
                  var infowindow = new google.maps.InfoWindow()
-                
+            //asigno un marcador dependiendo de la medida    
             for(let i = 0; i<datos.length;i++){
                 
                 var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
@@ -126,6 +126,7 @@
                         }
                     }
                 }
+                //dibuja los marcadores
                 var medida = new google.maps.Marker({
 			         position: {lat:datos[i].Latitud,lng:datos[i].Longitud},
 			         map: getMap(),
@@ -253,7 +254,7 @@
 
     <section class="page-section container-fluid" id="mapa">
         <div class="map" id="map">
-               
+        <div class="leyenda_mapa" id="leyenda_mapa"></div>
      
             </div>
     </section>
