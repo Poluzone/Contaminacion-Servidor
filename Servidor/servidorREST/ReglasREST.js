@@ -456,6 +456,32 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         respuesta.send(JSON.stringify(res))
     })
 
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /getTodosLosUsuariosYSusSensores -> es una petición GET que llama a 
+  * getTodosLosUsuariosYSusSensores() de la Lógica la cual recoge los datos 
+  * de todos los usuarios 
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    servidorExpress.get('/getTodosLosUsuariosYSusSensores/',
+        async function(peticion, respuesta){
+        console.log("* GET /getTodosLosUsuariosYSusSensores")
+
+        // llamo a la función adecuada de la lógica
+        var res = await laLogica.getTodosLosUsuariosYSusSensores();
+
+        console.log(res);
+
+        // si el array de resultados no tiene una casilla ...
+        if (res.length < 0) {
+            // 404: not found
+            respuesta.status(404).send("no encontré usuarios: " + dato)
+            return
+        }
+        // todo ok
+        respuesta.send(JSON.stringify(res))
+    })
+
 } // cargar()
 // .....................................................................
 // .....................................................................

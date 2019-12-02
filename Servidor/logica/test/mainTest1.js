@@ -75,7 +75,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
 
       var res = await laLogica.getSensoresYSusUsuarios();
-
       assert.equal(res[0].IdSensor, 1, "no coge el idsensor correcto")
       assert.equal(res[1].Usuario.Nombre, "Emilia Rosa", "el nombre no coincide")
 
@@ -248,12 +247,11 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar getMedidasEstacionOficialGandia",
     async function() {
       var res = await laLogica.getMedidasEstacionOficialGandia();
-      console.log(res)
       assert.notEqual(res.length, 0, "no están las medidas")
     }
   )
 
-    // Emilia Rosa van der Heide
+ /*   // Emilia Rosa van der Heide
     it("probar indicarActividadNodo",
     async function() {
       var datos = {
@@ -267,6 +265,28 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       
     }
-  )
+  )*/
+
+ // Emilia Rosa van der Heide
+ it("probar getTodosLosUsuariosYSusSensores",
+ async function() {
+   var res = await laLogica.getTodosLosUsuariosYSusSensores();
+
+   console.log(res)
+   // llamar a getestado del sensor 1 para ver q ponga 3
+   assert.notEqual(res.length, 0, "no existen usuarios")
+ }
+)
+
+ // Emilia Rosa van der Heide
+ it("probar getSensorPorIdUsuario",
+ async function() {
+   var res = await laLogica.getSensorPorIdUsuario(15);
+
+   //console.log(res)
+   // llamar a getestado del sensor 1 para ver q ponga 3
+   assert.notEqual(res.length, 0, "no tiene sensor")
+ }
+)
 
 }) // describe
