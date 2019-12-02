@@ -36,15 +36,15 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       }
 
       try {
-        laLogica.insertarUsuario(datos)
+        await laLogica.insertarUsuario(datos)
       } catch (err) {
         error = err
       }
 
-      var res = await laLogica.GetUsuarioPorEmail("Test")
+      var res = await laLogica.GetUsuarioPorEmail("test1@gti.com")
 
       assert.equal(res.length, 1, "¿no hay un resulado?")
-      assert.equal(res[0].Email, "Test", "¿no es 1234A?")
+      assert.equal(res[0].Email, "test1@gti.com", "¿no es 1234A?")
 
 
     }) //it
@@ -264,6 +264,24 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       var res = await laLogica.getNumeroUsuariosTotales();
       assert.equal(res, 14, "¿no hay un resulado?")
+
+    }
+
+  ) //probar getTodasLasMedidasPorFecha()
+
+  it("probar editarInformacionUsuarioPorId",
+    async function() {
+
+      var datos = {
+        IdUsuario: 14,
+        Email: "test2",
+        Password: "test2",
+        Telefono: 68414
+      }
+
+      await laLogica.editarInformacionUsuario(datos);
+      var res = await laLogica.getUsuarioPorIdUsuario(14);
+      assert.equal(res[0].Email , "test2", "¿no hay un resulado?")
 
     }
 

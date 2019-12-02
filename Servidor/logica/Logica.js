@@ -381,6 +381,26 @@ module.exports = class Logica {
   }
 
   // .................................................................
+  // Josep Carreres Fluixà
+  // idUsuario -> editarInformacionUsuario() ->
+  // edita informacion de un usuario pasandole un json con los datos a cambiar y su ID
+  // .................................................................
+  editarInformacionUsuario(datos) {
+    var textoSQL = "UPDATE Usuarios SET Email = $email , Password = $password , Telefono = $telefono WHERE IdUsuario = $idUsuario;";
+    var valoresParaSQL = {
+      $email: datos.Email,
+      $password: datos.Password,
+      $telefono: datos.Telefono,
+      $idUsuario: datos.IdUsuario
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver(res))
+      })
+    })
+  }
+
+  // .................................................................
   // tabla -> borrarFilasDe() ->
   //  Le pasas el nombre de la tabla y lo elimina en la BD
   // .................................................................
