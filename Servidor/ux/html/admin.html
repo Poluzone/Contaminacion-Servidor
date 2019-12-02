@@ -283,19 +283,19 @@
 
                 if (idestado == 1) {
                     if (esLaPrimeraLlamada == false) {
-                        sensoresEnStock.removeChild();
+                        sensoresEnStock.innerHTML = "";
                     }
                     sensoresEnStock.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 1 corresponde a sensores en stock
                 }
                 if (idestado == 2) {
                     if (esLaPrimeraLlamada == false) {
-                        sensoresActivos.removeChild();
+                        sensoresActivos.innerHTML = "";
                     }
                     sensoresActivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 2 corresponde a sensores activos
                 }
                 if (idestado == 3) {
                     if (esLaPrimeraLlamada == false) {
-                        sensoresInactivos.removeChild();
+                        sensoresInactivos.innerHTML = "";
                     }
                     sensoresInactivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 3 corresponde a sensores inactivos
                 }
@@ -310,8 +310,8 @@
             innerHTMLDetarjetaExtra = tarjeta4.innerHTML;
             tarjeta4.innerHTML = "";
 
-            usuarios=0;
-            
+            usuarios = 0;
+
             // Mostrar numero de usuarios
             rellenarTarjetasNumeroUsuarios();
 
@@ -335,18 +335,16 @@
         async function rellenarTarjetasNumeroUsuarios() {
             console.log("rellenarTarjetasNumeroUsuarios");
 
-            //numeroUsuarios.removeChild();
-            numeroUsuarios.appendChild(document.createTextNode(parseInt(usuarios)));
-
             rellenarTarjetasNumeroUsuariosPorTipo("Normal");
             rellenarTarjetasNumeroUsuariosPorTipo("Conductor");
             // Esta tarjeta la borramos porque solo necesitamos 3 para mostrar los numeros de usuariosç
-            tarjetaEliminada.innerHTML = "";
+            //tarjetaEliminada.innerHTML = "";
+
         }
 
         // String: tipo -->
         // rellenarTarjetasNumeroUsuariosPorTipo
-        function rellenarTarjetasNumeroUsuariosPorTipo(tipo) {
+        async function rellenarTarjetasNumeroUsuariosPorTipo(tipo) {
 
             var numeroUsuariosSegunTipo = 0;
             var estadoJson = {
@@ -356,14 +354,20 @@
                 numeroUsuariosSegunTipo = resp;
 
                 if (tipo == "Normal") {
-                    //usuariosNormales.removeChild();
+                    usuariosNormales.innerHTML = "";
                     usuariosNormales.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
-                    usuarios=usuarios+numeroUsuariosSegunTipo;
+                    usuarios = usuarios + numeroUsuariosSegunTipo;
+                    console.log(tipo + " " + numeroUsuariosSegunTipo);
                 }
                 if (tipo == "Conductor") {
-                    //usuariosConductores.removeChild();
+                    usuariosConductores.innerHTML = "";
                     usuariosConductores.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
-                    usuarios=usuarios+numeroUsuariosSegunTipo;
+                    usuarios = usuarios + numeroUsuariosSegunTipo;
+                    console.log(tipo + " " + numeroUsuariosSegunTipo);
+
+                    // Se rellena la tarjeta con el numero de usuarios totales despues de haber sumado los normales y los conductores
+                    numeroUsuarios.innerHTML="";
+                    numeroUsuarios.appendChild(document.createTextNode(parseInt(usuarios)));
                 }
 
             });
