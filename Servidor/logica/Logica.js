@@ -207,6 +207,7 @@ module.exports = class Logica {
   }
 
   // .................................................................
+  // Josep Carreres Fluixà
   // -> getUsuarioPorIdSensor(idSensor) ->
   // Coge la info de un usuario a partir del id de su sensor
   // .................................................................
@@ -252,7 +253,7 @@ module.exports = class Logica {
 
   //------------------------------------------------------------
   // Josep Carreres Fluixà
-  // getNumeroUsuariosTotales()
+  // getNumeroUsuariosTotales()-->Entero
   //------------------------------------------------------------
 
   getNumeroUsuariosTotales() {
@@ -272,7 +273,7 @@ module.exports = class Logica {
 
   //------------------------------------------------------------
   // Josep Carreres Fluixà
-  // getNumeroUsuariosTotalesPorTipo()
+  // tipoUsuario-->getNumeroUsuariosTotalesPorTipo()--> Entero
   //------------------------------------------------------------
 
   getNumeroUsuariosTotalesPorTipo(tipoUsuario) {

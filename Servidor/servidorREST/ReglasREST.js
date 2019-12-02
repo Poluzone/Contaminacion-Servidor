@@ -324,6 +324,48 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       respuesta.send("OK");
     }); // post / insertarPersona
 
+  servidorExpress.post('/borrarUsuarioPorId',
+    function(peticion, respuesta) {
+
+      console.log(" * POST /borrarUsuarioPorId")
+
+      var id = JSON.parse(peticion.body)
+
+      // supuesto procesamiento
+
+      laLogica.borrarUsuarioPorId(id);
+
+      respuesta.send("OK");
+    }); // post / insertarPersona
+
+    servidorExpress.post('/desvincularUsuarioDeSensorPorIdUsuario',
+      function(peticion, respuesta) {
+
+        console.log(" * POST /desvincularUsuarioDeSensorPorIdUsuario")
+
+        var id = JSON.parse(peticion.body)
+
+        // supuesto procesamiento
+
+        laLogica.desvincularUsuarioDeSensorPorIdUsuario(id);
+
+        respuesta.send("OK");
+      }); // post / insertarPersona
+
+      servidorExpress.post('/editarInformacionUsuario',
+        function(peticion, respuesta) {
+
+          console.log(" * POST /editarInformacionUsuario")
+
+          var datos = JSON.parse(peticion.body)
+
+          // supuesto procesamiento
+
+          laLogica.editarInformacionUsuario(datos);
+
+          respuesta.send("OK");
+        }); // post / insertarPersona
+
 
   /*
    * /getSensoresYSusUsuarios/ -> es una petición GET que llama a getSensoresYSusUsuarios() de la Lógica
@@ -362,14 +404,14 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     })
 
 
-    servidorExpress.get('/getNumeroUsuariosTotalesPorTipo/:tipo',
-      async function(peticion, respuesta) {
+  servidorExpress.get('/getNumeroUsuariosTotalesPorTipo/:tipo',
+    async function(peticion, respuesta) {
 
-        var dato = peticion.params.tipo
-        var res = await laLogica.getNumeroUsuariosTotalesPorTipo(dato);
-        // todo ok
-        respuesta.status(200).send(JSON.stringify(res))
-      })
+      var dato = peticion.params.tipo
+      var res = await laLogica.getNumeroUsuariosTotalesPorTipo(dato);
+      // todo ok
+      respuesta.status(200).send(JSON.stringify(res))
+    })
 
   // .......................................................
   // getTodasLasMedidasPorFecha
