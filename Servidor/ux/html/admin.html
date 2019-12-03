@@ -632,7 +632,6 @@ Modificado: 3/12/19
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
 
-            if (hayAlgunElementoSeleccionado) {
                 botonModal.classList.remove("invisible");
                 if (modoActual == 0) {
                     textoModal.innerHTML = "";
@@ -645,12 +644,7 @@ Modificado: 3/12/19
                     botonModal.innerHTML = "";
                     botonModal.appendChild(document.createTextNode("AÑADIR"));
                 }
-            } else {
-                textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para añadirlo"));
-                botonModal.innerHTML = "";
-                botonModal.classList.add("invisible");
-            }
+            
 
         }
 
@@ -662,7 +656,7 @@ Modificado: 3/12/19
                 botonModal.classList.remove("invisible");
                 if (modoActual == 0) {
                     textoModal.innerHTML = "";
-                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
                     botonModal.appendChild(document.createTextNode("BORRAR"));
                 } else {
