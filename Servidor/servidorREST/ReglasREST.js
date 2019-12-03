@@ -449,14 +449,14 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * - Matthew Conde Oltra -
   *
-  * /getMedidasDeEsteUsuarioPorFecha -> es una petición GET que llama a
+  * /getMedidasDeEsteUsuarioPorFecha -> es una petición POST que llama a
   * getMedidasDeEsteUsuarioPorFecha() de la Lógica la cual devuelve todas las
   * medidas del idUsuario pasado desde, hasta una fecha
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   servidorExpress.post('/getMedidasDeEsteUsuarioPorFecha',
     async function (peticion, respuesta) {
-      console.log(" * GET /getMedidasDeEsteUsuarioPorFecha ")
+      console.log(" * POST /getMedidasDeEsteUsuarioPorFecha ")
 
       console.log(peticion.body)
       var datos = JSON.parse(peticion.body)
@@ -474,6 +474,33 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(res)
   });
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * - Matthew Conde Oltra -
+  *
+  * /getEstacionesOficiales -> es una petición POST que llama a
+  * getEstacionesOficiales() de la Lógica la cual devuelve todas las
+  * estaciones de la Comunidad Valenciana
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+ servidorExpress.post('/getEstacionesOficiales',
+ async function (peticion, respuesta) {
+   console.log(" * POST /getEstacionesOficiales ")
+
+
+   // llamo a la función adecuada de la lógica
+   var res = await laLogica.getEstacionesOficiales();
+   console.log(res);
+
+   // si el array de resultados no tiene una casilla ...
+   if (res.length < 1) {
+     // 404: not found
+     respuesta.status(404).send("no encontré estaciones")
+     return
+   }
+   // todo ok
+   respuesta.status(200).send(res)
+});
 
   servidorExpress.get('/getNumeroUsuariosTotales',
     async function(peticion, respuesta) {

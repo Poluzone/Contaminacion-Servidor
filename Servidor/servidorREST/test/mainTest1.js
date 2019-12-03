@@ -370,7 +370,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     var dato = {
       Intervalo: {
         desde: 0,
-        hasta: Date.now()
+        hasta: 0
       },
       IdUsuario:15
     };
@@ -388,6 +388,37 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
         //console.log(respuesta.body);
       //  console.log(json);
+
+
+        hecho();
+      } // callback()
+    ) // .get
+  }) // it
+
+  /**************************************************************************
+   * - Matthew Conde Oltra -
+   * POST /getEstacionesOficiales
+   *
+   * Este test comprueba que se llame bien a getEstacionesOficiales
+   * devolviendo todas las estaciones de la BBDD
+   *************************************************************************/
+
+  it("POST /getEstacionesOficiales ", function (hecho) {
+    
+    request.post(
+      {
+        url: IP_PUERTO + "/getEstacionesOficiales",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: null
+      },
+      function (err, respuesta, carga) {
+        var json = JSON.parse(carga);
+        //console.log("EL json "+respuesta);
+        //assert.equal(err, null, "¿ha habido un error?");
+        assert.equal(200, 200, "¿El código no es 200 (OK)");
+
+        //console.log(respuesta.body);
+        console.log(json);
 
 
         hecho();
