@@ -70,9 +70,15 @@ class Proxy {
         }).then(function (datos) {
             console.log("hola2");
             if (datos.status == true) {
-                setCookie("username", datos.Usuario[0].Email);
-                console.log("Iniciar sesion correcto y se han creado los cookies");
-                checkCookie();
+                if (datos.Usuario[0].TipoUsuario == "Admin") {
+                    setCookie("username", datos.Usuario[0].Email);
+                    console.log("Iniciar sesion correcto y se han creado los cookies");
+                    checkCookie();
+                } else {
+                    console.log("El usuario que intenta iniciar sesión no es Admin");                    
+                    elUsuarioNoEsAdmin();
+                }
+
             } else {
                 console.log("No existe o no has puesto bien los datos");
             }
@@ -170,7 +176,7 @@ class Proxy {
 
         console.log("Llamada a getNumSensoresSegunEstado con " + parseInt(estado));
 
-        fetch(IP_PUERTO + "/getNumSensoresSegunEstado/"+estado, {
+        fetch(IP_PUERTO + "/getNumSensoresSegunEstado/" + estado, {
                 method: 'GET', // or 'PUT'
                 headers: {
                     'User-Agent': 'jordi',
@@ -190,7 +196,7 @@ class Proxy {
             });
 
     }
-    
+
     //------------Ivan---------------
     // getTodosLosUsuariosYSusSensores()
     // --> json con todos los usuarios
@@ -220,7 +226,7 @@ class Proxy {
             });
 
     }
-    
+
     //------------Ivan---------------
     // getNumeroUsuariosTotales()
     // --> N: numero de TODOS los usuarios 
@@ -236,7 +242,7 @@ class Proxy {
                 return response.json();
             })
             .then(function (datos) {
-                    callback(datos);
+                callback(datos);
 
             }).catch(e => {
                 console.log("error: " + e);
@@ -244,7 +250,7 @@ class Proxy {
             });
 
     }
-    
+
     //-------------Ivan--------------
     // String: tipo -->
     // getNumeroUsuariosTotalesPorTipo()
@@ -254,7 +260,7 @@ class Proxy {
 
         console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + estado);
 
-        fetch(IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/"+estado, {
+        fetch(IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/" + estado, {
                 method: 'GET', // or 'PUT'
                 headers: {
                     'User-Agent': 'jordi',

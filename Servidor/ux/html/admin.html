@@ -342,13 +342,13 @@ Modificado: 3/12/19
                 divEstado.innerHTML = "";
                 
                 if(usuario.Sensor!=null){
-                    divTipoSensor.appendChild(document.createTextNode(usuario.Sensor.IdSensor));
+                    divTipoSensor.appendChild(document.createTextNode(usuario.Sensor.TipoSensor));
                     divEstado.appendChild(document.createTextNode(usuario.Sensor.Estado));
                     divIdSensor.appendChild(document.createTextNode(parseInt(usuario.IdSensor)));
                 } else{
                     divTipoSensor.appendChild(document.createTextNode(""));
                     divEstado.appendChild(document.createTextNode(""));
-                    divIdSensor.appendChild(document.createTextNode(""));
+                    divIdSensor.appendChild(document.createTextNode("No tiene sensor"));
                 }
 
                 var divTextoUsuario = document.getElementById("TextoUsuario");

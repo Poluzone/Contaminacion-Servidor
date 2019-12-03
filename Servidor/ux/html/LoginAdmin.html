@@ -1,4 +1,8 @@
-<!-- Creado por Iván Romero Ruiz -->
+<!-- 
+admin.html
+Creado por Iván Romero Ruiz 
+Modificado: 3/12/19
+-->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -61,11 +65,20 @@
         
         function usuarioOContraseñaIncorrectos(){
             
-            console.log("Estoy en usuarioOContraseñaIncorrectos");
+            console.log("usuarioOContraseñaIncorrectos");
             
             var textoIncorrecto = document.getElementById('textoIncorrecto');
             textoIncorrecto.className = "textoIncorrecto";
             document.getElementById("textoIncorrecto").innerHTML = "Usuario y/o contraseña incorrectos";
+        }
+        
+        function elUsuarioNoEsAdmin(){
+            
+            console.log("elUsuarioNoEsAdmin");
+            
+            var textoIncorrecto = document.getElementById('textoIncorrecto');
+            textoIncorrecto.className = "textoIncorrecto";
+            document.getElementById("textoIncorrecto").innerHTML = "El usuario introducido no es un Administrador";
         }
 
     </script>
