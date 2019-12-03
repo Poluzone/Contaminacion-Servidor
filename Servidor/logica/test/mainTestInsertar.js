@@ -194,11 +194,11 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar getTodasLasMedidasPorFecha",
     async function() {
       var res = await laLogica.getTodasLasMedidasPorFecha({
-        'desde': 1574347324211,
-        'hasta': 1574347324243
+        'desde': 0,
+        'hasta': 0
       });
       console.log(res);
-      assert.equal(res.length, 0, "¿no hay un resulado?")
+      assert.equal(res.length, 100, "¿no hay un resulado?")
 
     }
 

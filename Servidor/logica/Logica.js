@@ -355,7 +355,11 @@ module.exports = class Logica {
   //     getMedidasPorFecha()
   // .................................................................
   getTodasLasMedidasPorFecha(intervalo) {
-    var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
+      if(intervalo.desde == 0 && intervalo.hasta == 0){
+          var textoSQL = "SELECT * FROM Medidas"
+      } else {
+          var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
+      }
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {
@@ -372,12 +376,7 @@ module.exports = class Logica {
   // .................................................................
   getMedidasDeEsteUsuarioPorFecha(intervalo, idUsuario) {
     console.log("logica: getMedidasDeEsteUsuarioPorFecha")
-      //Según el convenio si hasta y desde son cero, devuelve todas las medidas
-      if(intervalo.hasta && intervalo.desde == 0){
-          var textoSQL = "SELECT * FROM medidas WHERE IdUsuario = $idUsuario"
-      } else {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario = $idUsuario AND Tiempo BETWEEN $desde AND $hasta ORDER BY IdMedida DESC";
-      }
     //console.log(textoSQL)
     var valoresParaSQL = {
       $idUsuario: idUsuario,
