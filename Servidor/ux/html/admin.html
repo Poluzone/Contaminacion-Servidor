@@ -1,4 +1,8 @@
-<!-- Creado por Iván Romero Ruiz -->
+<!-- 
+admin.html
+Creado por Iván Romero Ruiz 
+Modificado: 3/12/19
+-->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -22,7 +26,7 @@
 
         var usuarios;
 
-        var numeroTotalDeUsuarios = 0;
+        var numeroTotalDeUsuarios;
 
         var primeraLlamadaA_rellenarTarjetasNumeroSensores = true; // Se utiliza para borrar previamente el texto con los numeros que hay en las tarjetas si no es la primera vez que se llama a rellenarTarjetasNumeroSensores, si esto no se hiciera no se visualizarian los numeros
 
@@ -131,8 +135,10 @@
 
             pulse1 = document.getElementById("pulse1");
             pulse2 = document.getElementById("pulse2");
-
-            innerHTMLTarjetaINFORMACION = document.getElementById("informacionUsuario").innerHTML;
+            
+            if(primeraLlamadaA_rellenarTarjetasNumeroSensores == true){ // Se guarda la estructura de la tarjeta informacion cuando se llama por primera vez para vaciarla posteriormente
+                innerHTMLTarjetaINFORMACION = document.getElementById("informacionUsuario").innerHTML;
+            }
 
         }
 
@@ -198,7 +204,7 @@
             ul.appendChild(li);
             console.log(sensor);
 
-            // Relleno de informacion en la tarjeta INFORMACION -----------------------------------------
+            // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
             divContenedor.onclick = function() {
 
                 var divTextoSensor = document.getElementById("TextoSensor");
@@ -320,7 +326,7 @@
             ul.appendChild(li);
             console.log(usuario);
 
-            // Relleno de informacion en la tarjeta INFORMACION -----------------------------------------
+            // Relleno de informacion en la tarjeta INFORMACION al clicar un usuario-----------------------------------------
             divContenedor.onclick = function() {
 
                 var divTextoSensor = document.getElementById("TextoSensor");
@@ -329,15 +335,22 @@
 
                 var divIdSensor = document.getElementById("IdSensor");
                 divIdSensor.innerHTML = "";
-                divIdSensor.appendChild(document.createTextNode(parseInt(usuario.IdSensor)));
 
                 var divTipoSensor = document.getElementById("TipoSensor");
                 divTipoSensor.innerHTML = "";
-                divTipoSensor.appendChild(document.createTextNode(usuario.Sensor.IdSensor));
-
+                
                 var divEstado = document.getElementById("Estado");
                 divEstado.innerHTML = "";
-                divEstado.appendChild(document.createTextNode(sensor.Sensor.Estado));
+                
+                if(usuario.Sensor!=null){
+                    divTipoSensor.appendChild(document.createTextNode(usuario.Sensor.IdSensor));
+                    divEstado.appendChild(document.createTextNode(usuario.Sensor.Estado));
+                    divIdSensor.appendChild(document.createTextNode(parseInt(usuario.IdSensor)));
+                } else{
+                    divTipoSensor.appendChild(document.createTextNode(""));
+                    divEstado.appendChild(document.createTextNode(""));
+                    divIdSensor.appendChild(document.createTextNode(""));
+                }
 
                 var divTextoUsuario = document.getElementById("TextoUsuario");
                 divTextoUsuario.innerHTML = "";
@@ -693,7 +706,9 @@
         function cambioAUsuarios() {
             console.log("Llamada a cambiarAUsuarios()");
 
-            if (modoActual == 0) {
+            if (modoActual == 0) { // Solo funciona cuando el modo previo al clic es el contrario
+                
+                numeroTotalDeUsuarios = 0;
 
                 // Pulso
                 pulse1.className = "pulse1";
@@ -769,7 +784,7 @@
         function cambioASensores() {
             console.log("Llamada a cambiarAUsuarios()");
 
-            if (modoActual == 1) {
+            if (modoActual == 1) { // Solo funciona cuando el modo previo al clic es el contrario
 
                 // Pulso
                 pulse2.className = "pulse2";

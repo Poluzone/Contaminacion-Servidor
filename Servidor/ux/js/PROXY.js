@@ -193,7 +193,7 @@ class Proxy {
     
     //------------Ivan---------------
     // getTodosLosUsuariosYSusSensores()
-    // --> json con todos los sensores
+    // --> json con todos los usuarios
     //-------------------------------
     async getTodosLosUsuariosYSusSensores(callback) {
 
@@ -223,7 +223,7 @@ class Proxy {
     
     //------------Ivan---------------
     // getNumeroUsuariosTotales()
-    // --> json con todos los usuarios
+    // --> N: numero de TODOS los usuarios 
     //-------------------------------
     async getNumeroUsuariosTotales(callback) {
 
@@ -247,7 +247,7 @@ class Proxy {
     
     //-------------Ivan--------------
     // String: tipo -->
-    // getNumeroUsuariosTotalesporTipo()
+    // getNumeroUsuariosTotalesPorTipo()
     // --> N: numero de usuarios segun tipo
     //-------------------------------
     async getNumeroUsuariosTotalesPorTipo(estado, callback) {
