@@ -550,6 +550,14 @@ header.masthead .intro-text .intro-heading {
 
 }
 
+.elementoNaranja{
+    background-color: #F88E52;
+}
+
+.elementoNaranja:hover{
+    background-color: #F7A171 !important;
+}
+
 .elementoLista {
 
     width: 100%;
@@ -558,7 +566,7 @@ header.masthead .intro-text .intro-heading {
 }
 
 .elementoLista:hover {
-    background-color: #F5E0D3 !important;
+    background-color: #F5E0D3;
 }
 
 .ul.li.div {

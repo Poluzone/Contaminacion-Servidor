@@ -29,6 +29,10 @@ Modificado: 3/12/19
 
         var primeraLlamadaA_rellenarTarjetasNumeroSensores = true; // Se utiliza para borrar previamente el texto con los numeros que hay en las tarjetas si no es la primera vez que se llama a rellenarTarjetasNumeroSensores, si esto no se hiciera no se visualizarian los numeros
 
+        var hayAlgunElementoSeleccionado = false;
+
+        var elementoSeleccionado; // Se utiliza para cambiar el color del elemento seleccionado
+
         var innerHTMLDetarjetaExtra; // Para guardar el contenido de la tarjeta4 antes de borrarla al cambiar al modo usuarios
 
         var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
@@ -134,8 +138,8 @@ Modificado: 3/12/19
 
             pulse1 = document.getElementById("pulse1");
             pulse2 = document.getElementById("pulse2");
-            
-            if(primeraLlamadaA_rellenarTarjetasNumeroSensores == true){ // Se guarda la estructura de la tarjeta informacion cuando se llama por primera vez para vaciarla posteriormente
+
+            if (primeraLlamadaA_rellenarTarjetasNumeroSensores == true) { // Se guarda la estructura de la tarjeta informacion cuando se llama por primera vez para vaciarla posteriormente
                 innerHTMLTarjetaINFORMACION = document.getElementById("informacionUsuario").innerHTML;
             }
 
@@ -205,6 +209,15 @@ Modificado: 3/12/19
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
             divContenedor.onclick = function() {
+
+                if (hayAlgunElementoSeleccionado == true) {
+                    elementoSeleccionado.classList.remove("elementoNaranja");
+                }
+
+                divContenedor.classList.add("elementoNaranja");
+                elementoSeleccionado = divContenedor;
+
+                hayAlgunElementoSeleccionado = true;
 
                 var divTextoSensor = document.getElementById("TextoSensor");
                 divTextoSensor.innerHTML = "";
@@ -301,7 +314,7 @@ Modificado: 3/12/19
                 //console.log("nani " + sensor.Estado);
                 iconoTipo = "userConductor";
             }
-            if (usuario.TipoUsuario == "Admin"){ // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
+            if (usuario.TipoUsuario == "Admin") { // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
                 return;
             }
 
@@ -328,6 +341,15 @@ Modificado: 3/12/19
             // Relleno de informacion en la tarjeta INFORMACION al clicar un usuario-----------------------------------------
             divContenedor.onclick = function() {
 
+                if (hayAlgunElementoSeleccionado == true) {
+                    elementoSeleccionado.classList.remove("elementoNaranja");
+                }
+
+                divContenedor.classList.add("elementoNaranja");
+                elementoSeleccionado = divContenedor;
+                
+                hayAlgunElementoSeleccionado = true;
+
                 var divTextoSensor = document.getElementById("TextoSensor");
                 divTextoSensor.innerHTML = "";
                 divTextoSensor.appendChild(document.createTextNode("Sensor: "));
@@ -337,15 +359,15 @@ Modificado: 3/12/19
 
                 var divTipoSensor = document.getElementById("TipoSensor");
                 divTipoSensor.innerHTML = "";
-                
+
                 var divEstado = document.getElementById("Estado");
                 divEstado.innerHTML = "";
-                
-                if(usuario.Sensor!=null){
+
+                if (usuario.Sensor != null) {
                     divTipoSensor.appendChild(document.createTextNode(usuario.Sensor.TipoSensor));
                     divEstado.appendChild(document.createTextNode(usuario.Sensor.Estado));
                     divIdSensor.appendChild(document.createTextNode(parseInt(usuario.IdSensor)));
-                } else{
+                } else {
                     divTipoSensor.appendChild(document.createTextNode(""));
                     divEstado.appendChild(document.createTextNode(""));
                     divIdSensor.appendChild(document.createTextNode("No tiene sensor"));
@@ -706,7 +728,9 @@ Modificado: 3/12/19
             console.log("Llamada a cambiarAUsuarios()");
 
             if (modoActual == 0) { // Solo funciona cuando el modo previo al clic es el contrario
-                
+
+                hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
+
                 numeroTotalDeUsuarios = 0;
 
                 // Pulso
@@ -784,6 +808,8 @@ Modificado: 3/12/19
             console.log("Llamada a cambiarAUsuarios()");
 
             if (modoActual == 1) { // Solo funciona cuando el modo previo al clic es el contrario
+
+                hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
 
                 // Pulso
                 pulse2.className = "pulse2";
