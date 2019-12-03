@@ -515,7 +515,13 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
         // llamo a la función adecuada de la lógica
         var res = await laLogica.getTodasLasMedidasPorFecha(dato);
 
-        console.log(res);
+        console.log(res[0]);
+        var data = {
+          medidas: res,
+          k: "ok"
+        }
+
+        console.log("La respuesta es: " + JSON.stringify(data));
 
         // si el array de resultados no tiene una casilla ...
         if (res.length < 0) {
@@ -524,7 +530,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
             return
         }
         // todo ok
-        respuesta.send(JSON.stringify(res))
+        respuesta.status(200).send(data)
     })
 
 
