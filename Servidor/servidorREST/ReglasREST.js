@@ -490,8 +490,11 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
    // llamo a la función adecuada de la lógica
    var res = await laLogica.getEstacionesOficiales();
-   console.log(res);
-
+   //console.log(res);
+   var data = {
+     estaciones: res,
+     k: 'ok'
+   };
    // si el array de resultados no tiene una casilla ...
    if (res.length < 1) {
      // 404: not found
@@ -499,7 +502,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
      return
    }
    // todo ok
-   respuesta.status(200).send(res)
+   respuesta.status(200).send(data)
 });
 
   servidorExpress.get('/getNumeroUsuariosTotales',
