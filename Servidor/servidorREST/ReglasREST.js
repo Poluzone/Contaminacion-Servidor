@@ -389,32 +389,6 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
-
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /getMedidasEstacionOficialGandia/ -> es una petición GET que llama a
-  * getMedidasEstacionOficialGandia() de la Lógica
-  * la cual recoge los datos las medidas oficiales de gandia en este
-  * momento
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-  servidorExpress.get('/getMedidasEstacionOficialGandia',
-  async function (peticion, respuesta) {
-    console.log(" * GET /getMedidasEstacionOficialGandia ")
-
-    // llamo a la función adecuada de la lógica
-    var res = await laLogica.getMedidasEstacionOficialGandia();
-
-    // si el array de resultados no tiene una casilla ...
-    if (res.length < 1) {
-      // 404: not found
-      respuesta.status(404).send("no encontré medidas: " + dato)
-      return
-    }
-    // todo ok
-    respuesta.status(200).send(JSON.stringify(res))
-  })
-
-
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * Emilia Rosa van der Heide
   * /getMediaCalidadDelAireDeLaJornada -> es una petición GET que llama a
@@ -473,9 +447,8 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(res)
   });
-    
-    servidorExpress.get('/getNumeroUsuariosTotales',
-                        
+
+  servidorExpress.get('/getNumeroUsuariosTotales',
     async function(peticion, respuesta) {
       console.log(" * GET /getNumeroUsuariosTotales ")
 
@@ -486,6 +459,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(JSON.stringify(res))
     })
+
 
   servidorExpress.get('/getNumeroUsuariosTotalesPorTipo/:tipo',
     async function(peticion, respuesta) {
@@ -569,24 +543,6 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
   res = {ok: "ok"}
  respuesta.send(JSON.stringify(res))
 })
-
-
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /indicarActividadNodo -> es una petición POST que llama a
-  * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
- servidorExpress.get('/getMedidasEstacionOficialGandia/',
- async function(peticion, respuesta){
- console.log("* POST /getMedidasEstacionOficialGandia")
-
- // llamo a la función adecuada de la lógica
- var res = await laLogica.getMedidasEstacionOficialGandia();
- respuesta.send(JSON.stringify(res))
-})
-
-
-
 
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
     console.log(" HTML:" + peticion.params.archivo);
