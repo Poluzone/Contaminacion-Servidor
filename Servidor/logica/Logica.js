@@ -355,7 +355,11 @@ module.exports = class Logica {
   //     getMedidasPorFecha()
   // .................................................................
   getTodasLasMedidasPorFecha(intervalo) {
-    var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
+      if(intervalo.desde == 0 && intervalo.hasta == 0){
+          var textoSQL = "SELECT * FROM Medidas"
+      } else {
+          var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
+      }
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {

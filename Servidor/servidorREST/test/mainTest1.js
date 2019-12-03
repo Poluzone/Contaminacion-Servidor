@@ -341,8 +341,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
    //GET TodasLasMedidasPorFecha()
 
   it( "POST/GetTodasLasMedidasPorFecha ", function( hecho ) {
-    var desde = 6;
-    var hasta = 7;
+    var desde = 0;
+    var hasta = 0;
     request.post(
       { url : IP_PUERTO+"/GETtodasLasMedidasPorFecha",
        headers : { 'User-Agent' : 'jordi', 'Content-Type' : 'application/json' },
