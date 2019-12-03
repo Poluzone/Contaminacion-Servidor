@@ -632,16 +632,24 @@ Modificado: 3/12/19
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
 
-            if (modoActual == 0) {
-                textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
-                botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("AÑADIR"));
+            if (hayAlgunElementoSeleccionado) {
+                botonModal.classList.remove("invisible");
+                if (modoActual == 0) {
+                    textoModal.innerHTML = "";
+                    textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
+                    botonModal.innerHTML = "";
+                    botonModal.appendChild(document.createTextNode("AÑADIR"));
+                } else {
+                    textoModal.innerHTML = "";
+                    textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
+                    botonModal.innerHTML = "";
+                    botonModal.appendChild(document.createTextNode("AÑADIR"));
+                }
             } else {
                 textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
+                textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para añadirlo"));
                 botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("AÑADIR"));
+                botonModal.classList.add("invisible");
             }
 
         }
@@ -650,16 +658,24 @@ Modificado: 3/12/19
         function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
 
-            if (modoActual == 0) {
-                textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
-                botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("BORRAR"));
+            if (hayAlgunElementoSeleccionado) {
+                botonModal.classList.remove("invisible");
+                if (modoActual == 0) {
+                    textoModal.innerHTML = "";
+                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                    botonModal.innerHTML = "";
+                    botonModal.appendChild(document.createTextNode("BORRAR"));
+                } else {
+                    textoModal.innerHTML = "";
+                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                    botonModal.innerHTML = "";
+                    botonModal.appendChild(document.createTextNode("BORRAR"));
+                }
             } else {
                 textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para borrarlo"));
                 botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("BORRAR"));
+                botonModal.classList.add("invisible");
             }
 
         }
