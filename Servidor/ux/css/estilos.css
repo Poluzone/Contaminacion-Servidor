@@ -15,8 +15,6 @@
 
 /* Clase para la Leyenda del mapa */
 .gradient {
-    background: rgb(255,0,0);
-    background: linear-gradient(180deg, rgba(255,0,0,1) 0%, rgba(249,255,0,1) 55%, rgba(9,255,0,1) 100%);
 }
 
 /* Clase para los tipos de fuentes */
