@@ -15,9 +15,7 @@ Modificado: 3/12/19
     <script src="../js/logicaAdministracion.js"></script>
 
     <!-- Scripts para API Google Maps -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization"
-        type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization" type="text/javascript"></script>
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
     <script>
@@ -47,6 +45,9 @@ Modificado: 3/12/19
         var icono2;
         var icono3;
 
+        var botonModal;
+        var textoModal;
+
         var numeroSensores;
         var sensoresActivos;
         var sensoresInactivos;
@@ -61,6 +62,9 @@ Modificado: 3/12/19
         var textoTarjeta3;
 
         var textoSENSORESyUSUARIOS;
+
+        var botonAdd;
+        var botonBorrar;
 
         var textoColumna1;
         var textoColumna2;
@@ -84,7 +88,7 @@ Modificado: 3/12/19
         // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena aqui
         // Ademas se llama a la creacion del mapa para que no se haga antes de las cookies y se inicializan variables en relacion con la interfaz
         function llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores() {
-            proxy.getSensoresYSusUsuarios(function (resp) {
+            proxy.getSensoresYSusUsuarios(function(resp) {
 
                 sensores = resp;
 
@@ -111,6 +115,9 @@ Modificado: 3/12/19
             icono1 = document.getElementById("icono1");
             icono2 = document.getElementById("icono2");
             icono3 = document.getElementById("icono3");
+
+            botonModal = document.getElementById("botonModal");
+            textoModal = document.getElementById("textoModal");
 
             numeroSensores = document.getElementById("valorTarjeta1");
             sensoresActivos = document.getElementById("valorTarjeta2");
@@ -216,7 +223,7 @@ Modificado: 3/12/19
             console.log(sensor);
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
-            divContenedor.onclick = function () {
+            divContenedor.onclick = function() {
 
                 if (hayAlgunElementoSeleccionado == true) {
                     elementoSeleccionado.classList.remove("elementoNaranja");
@@ -351,7 +358,7 @@ Modificado: 3/12/19
             console.log(usuario);
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un usuario-----------------------------------------
-            divContenedor.onclick = function () {
+            divContenedor.onclick = function() {
 
                 if (hayAlgunElementoSeleccionado == true) {
                     elementoSeleccionado.classList.remove("elementoNaranja");
@@ -359,7 +366,7 @@ Modificado: 3/12/19
 
                 divContenedor.classList.add("elementoNaranja");
                 elementoSeleccionado = divContenedor;
-                
+
                 hayAlgunElementoSeleccionado = true;
 
                 var divTextoSensor = document.getElementById("TextoSensor");
@@ -445,7 +452,7 @@ Modificado: 3/12/19
                 contenedorSensoresEnStock.innerHTML = innerHTMLDetarjetaExtra;
             }
 
-            proxy.getNumSensoresSegunEstado(idestado, function (resp) {
+            proxy.getNumSensoresSegunEstado(idestado, function(resp) {
                 numeroSensoresSegunEstado = resp;
 
                 if (idestado == 1) {
@@ -479,7 +486,7 @@ Modificado: 3/12/19
 
             usuarios = 0;
 
-            proxy.getTodosLosUsuariosYSusSensores(function (resp) {
+            proxy.getTodosLosUsuariosYSusSensores(function(resp) {
 
                 usuarios = resp;
 
@@ -517,7 +524,7 @@ Modificado: 3/12/19
             var estadoJson = {
                 "tipo": tipo
             };
-            proxy.getNumeroUsuariosTotalesPorTipo(tipo, function (resp) {
+            proxy.getNumeroUsuariosTotalesPorTipo(tipo, function(resp) {
                 numeroUsuariosSegunTipo = resp;
 
                 if (tipo == "Normal") {
@@ -580,7 +587,7 @@ Modificado: 3/12/19
         // Elimina las cookies de la pagina. Se le llama al clicar a Cerrar Sesion
         function eliminarCookies() {
             console.log("Leyenda");
-            document.cookie.split(";").forEach(function (c) {
+            document.cookie.split(";").forEach(function(c) {
                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
             });
 
@@ -624,11 +631,37 @@ Modificado: 3/12/19
         // Funcion que se llamara al clicar el boton del mas que añadira una relacion Usuario-Sensor cambiando una por otra
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
+
+            if (modoActual == 0) {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("AÑADIR"));
+            } else {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("AÑADIR"));
+            }
+
         }
 
         // Funcion que se llamara al clicar a la basura que elminiara una relacion Usuario-Sensor
         function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
+
+            if (modoActual == 0) {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("BORRAR"));
+            } else {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("BORRAR"));
+            }
+
         }
 
         //Esto es para poder asignarle un nombre al gas dependiendo de su ID
@@ -653,7 +686,7 @@ Modificado: 3/12/19
         //Recibe las medidas y dibuja los marcadores
         function recibirMedidasFecha(intervalo) {
             //Recojo los datos de la base de datos
-            proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
+            proxy.getTodasLasMedidasPorFecha(intervalo, function(datos) {
                 // console.log(datos);
                 console.log("DATOS DE MEDIDAS POR FECHA" + datos.length);
                 var poluzone = [];
@@ -716,8 +749,8 @@ Modificado: 3/12/19
 
 
 
-                    google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
-                        return function () {
+                    google.maps.event.addListener(medida, 'click', (function(marker, content, infowindow) {
+                        return function() {
                             infowindow.setContent(content);
                             infowindow.open(getMap(), marker);
                         };
@@ -920,7 +953,8 @@ Modificado: 3/12/19
                     li[i].style.display = "none";
                 }
             }
-        } 
+        }
+
     </script>
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
@@ -942,8 +976,7 @@ Modificado: 3/12/19
 
     <!-- CSS de Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -956,11 +989,35 @@ Modificado: 3/12/19
 <body id="page-top" onload="">
     <!-------------------------------------------------- CONTENEDOR ----------------------------------------------------------->
 
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="4" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title naranja" id="modalLabel">ATENCIÓN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="textoModal">
+                    Texto del modal
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-lg" id="botonModal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="contenedor">
+
+        <!---- PULSOS ---->
         <div class="contenedorPulsos">
             <span class="" id="pulse1"></span>
             <span class="" id="pulse2"></span>
         </div>
+
         <!------------------------------------------------ NAVBAR -------------------------------------------------------->
 
         <div class="navbar navbarAdmin">
@@ -968,11 +1025,8 @@ Modificado: 3/12/19
             <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink8" id="darkNav">
                 <div class="container">
-                    <a class="navbar-brand js-scroll-trigger nunito" href="index.html"><img src="../images/earth.png"
-                            width="30" alt=""> Poluzone</a>
-                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse"
-                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                    <a class="navbar-brand js-scroll-trigger nunito" href="index.html"><img src="../images/earth.png" width="30" alt=""> Poluzone</a>
+                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="material-icons">
                             menu
                         </i>
@@ -982,20 +1036,17 @@ Modificado: 3/12/19
                         <ul class="navbar-nav text-uppercase w-100">
 
                             <li class="align-self-center ml-5">
-                                <a class="modoSensores" id="modoSensores" onclick="cambioASensores()"
-                                    href="#contact">SENSORES</a>
+                                <a class="modoSensores" id="modoSensores" onclick="cambioASensores()" href="#contact">SENSORES</a>
                             </li>
 
                             <li class="align-self-center ml-2">
-                                <a class="modoUsuarios" id="modoUsuarios" onclick="cambioAUsuarios()"
-                                    href="#contact">USUARIOS</a>
+                                <a class="modoUsuarios" id="modoUsuarios" onclick="cambioAUsuarios()" href="#contact">USUARIOS</a>
                             </li>
 
                             <ul class="ml-auto w-100">
 
                                 <li class="cerrarSesion nav-item ml-auto">
-                                    <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()"
-                                        href="#contact">CERRAR SESIÓN</a>
+                                    <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()" href="#contact">CERRAR SESIÓN</a>
                                 </li>
 
                             </ul>
@@ -1170,21 +1221,19 @@ Modificado: 3/12/19
 
                                     <div class="contenedorSearch col-7 my-auto">
 
-                                        <input class="cajaDeTexto form-control form-control-sm ml-3 w-75 text-light"
-                                            id="barraSensores" type="text" placeholder="Buscar palabras clave..."
-                                            aria-label="Search" onkeyup="buscador()">
+                                        <input class="cajaDeTexto form-control form-control-sm ml-3 w-75 text-light" id="barraSensores" type="text" placeholder="Buscar palabras clave..." aria-label="Search" onkeyup="buscador()">
 
                                     </div>
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()">
 
-                                        <img src="../images/add.png" class="iconoAdd">
+                                        <img src="../images/add.png" class="iconoAdd" data-toggle="modal" data-target="#modal">
 
                                     </div>
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonBorrar()">
 
-                                        <img src="../images/can.png" class="iconoCan">
+                                        <img src="../images/can.png" class="iconoCan" data-toggle="modal" data-target="#modal">
 
 
                                     </div>
@@ -1446,15 +1495,9 @@ Modificado: 3/12/19
     <script src="../js/agency.min.js"></script>
     <script src="../jquery-easing/jquery.easing.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
 </body>
