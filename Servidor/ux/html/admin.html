@@ -23,8 +23,10 @@ Modificado: 3/12/19
         var proxy = new Proxy();
 
         var sensores;
+        var unSensor
 
         var usuarios;
+        var unUsuario;
 
         var numeroTotalDeUsuarios;
 
@@ -170,7 +172,7 @@ Modificado: 3/12/19
             imagen = document.createElement("img");
 
             sensor = sensores[i];
-
+            unSensor = sensor;
             // Creacion de los divs y texto de cada elemento -----------------------------------------
 
             li.className = "tarjetaLista shadow-sm mb-1 bg-white";
@@ -295,6 +297,7 @@ Modificado: 3/12/19
             imagen = document.createElement("img");
 
             usuario = usuarios[i];
+            unUsuario = usuario;
 
             // Creacion de los divs y texto de cada elemento -----------------------------------------
 
@@ -632,19 +635,18 @@ Modificado: 3/12/19
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
 
-                botonModal.classList.remove("invisible");
-                if (modoActual == 0) {
-                    textoModal.innerHTML = "";
-                    textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
-                    botonModal.innerHTML = "";
-                    botonModal.appendChild(document.createTextNode("AÑADIR"));
-                } else {
-                    textoModal.innerHTML = "";
-                    textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
-                    botonModal.innerHTML = "";
-                    botonModal.appendChild(document.createTextNode("AÑADIR"));
-                }
-            
+            botonModal.classList.remove("invisible");
+            if (modoActual == 0) {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("AÑADIR"));
+            } else {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("AÑADIR"));
+            }
 
         }
 
@@ -672,6 +674,12 @@ Modificado: 3/12/19
                 botonModal.classList.add("invisible");
             }
 
+        }
+
+        function eliminarSensorOUsuario() {
+            if (modoActual == 0) {
+                proxy.borrarSensorPorID(unSensor.IdSensor);
+            }
         }
 
         //Esto es para poder asignarle un nombre al gas dependiendo de su ID
@@ -1014,7 +1022,7 @@ Modificado: 3/12/19
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary btn-lg" id="botonModal">Save changes</button>
+                    <button type="button" class="btn btn-primary btn-lg" id="botonModal" onclick="eliminarSensorOUsuario()" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>

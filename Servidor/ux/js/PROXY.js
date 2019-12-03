@@ -306,5 +306,21 @@ class Proxy {
                 callback(datos);
             });
     }
+    
+    //-------------------------------
+    // borrarSensorPorID()
+    //-------------------------------
+    async borrarSensorPorID(id, callback){
+        fetch(IP_PUERTO + "/borrarSensorPorID", {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(id), // data can be `string` or {object}!
+                headers: {
+                    'User-Agent': 'jordi',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+                return response.json();
+            });
+    }
 
 }
