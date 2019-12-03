@@ -10,11 +10,14 @@ Modificado: 3/12/19
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
 
+    <script type="text/javascript" src="../js/barra-busqueda.js"></script>
     <!-- Scripts para API Google Maps -->
     <script src="../js/logicaAdministracion.js"></script>
 
     <!-- Scripts para API Google Maps -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization" type="text/javascript"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization"
+        type="text/javascript"></script>
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
     <script>
@@ -81,7 +84,7 @@ Modificado: 3/12/19
         // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena aqui
         // Ademas se llama a la creacion del mapa para que no se haga antes de las cookies y se inicializan variables en relacion con la interfaz
         function llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores() {
-            proxy.getSensoresYSusUsuarios(function(resp) {
+            proxy.getSensoresYSusUsuarios(function (resp) {
 
                 sensores = resp;
 
@@ -183,23 +186,28 @@ Modificado: 3/12/19
             divContenedor.appendChild(div5);
 
             var iconoEstado = "";
+            var iconoAlt = ""
 
             //console.log("que " + sensor.Estado);
 
             if (sensor.Estado == "En Stock") {
                 //console.log("nani " + sensor.Estado);
                 iconoEstado = "box3";
+                iconoAlt = "En Stock"
             }
             if (sensor.Estado == "Alquilado") {
                 //console.log("nani " + sensor.Estado);
                 iconoEstado = "tick3";
+                iconoAlt = "Alquilado"
             }
             if (sensor.Estado == "Averiado") {
                 //console.log("nani " + sensor.Estado);
                 iconoEstado = "cross3";
+                iconoAlt = "Averiado"
             }
 
             imagen.src = "../images/" + iconoEstado + ".png";
+            imagen.alt = iconoAlt;
             div1.appendChild(imagen);
             div2.appendChild(document.createTextNode(sensor.TipoSensor));
             div4.appendChild(document.createTextNode(sensor.IdSensor));
@@ -208,7 +216,7 @@ Modificado: 3/12/19
             console.log(sensor);
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
-            divContenedor.onclick = function() {
+            divContenedor.onclick = function () {
 
                 if (hayAlgunElementoSeleccionado == true) {
                     elementoSeleccionado.classList.remove("elementoNaranja");
@@ -303,22 +311,26 @@ Modificado: 3/12/19
             divContenedor.appendChild(div5);
 
             var iconoTipo = "";
+            var iconoAlt = "";
 
             //console.log("que " + sensor.Estado);
 
             if (usuario.TipoUsuario == "Normal") {
                 //console.log("nani " + sensor.Estado);
                 iconoTipo = "userNormal";
+                iconoAlt = "Normal";
             }
             if (usuario.TipoUsuario == "Conductor") {
                 //console.log("nani " + sensor.Estado);
                 iconoTipo = "userConductor";
+                iconoAlt = "Conductor";
             }
             if (usuario.TipoUsuario == "Admin") { // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
                 return;
             }
 
             imagen.src = "../images/" + iconoTipo + ".png";
+            imagen.alt = iconoAlt;
             div1.appendChild(imagen);
             if (usuario.IdUsuario == null) {
                 div2.appendChild(document.createTextNode(""));
@@ -339,7 +351,7 @@ Modificado: 3/12/19
             console.log(usuario);
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un usuario-----------------------------------------
-            divContenedor.onclick = function() {
+            divContenedor.onclick = function () {
 
                 if (hayAlgunElementoSeleccionado == true) {
                     elementoSeleccionado.classList.remove("elementoNaranja");
@@ -433,7 +445,7 @@ Modificado: 3/12/19
                 contenedorSensoresEnStock.innerHTML = innerHTMLDetarjetaExtra;
             }
 
-            proxy.getNumSensoresSegunEstado(idestado, function(resp) {
+            proxy.getNumSensoresSegunEstado(idestado, function (resp) {
                 numeroSensoresSegunEstado = resp;
 
                 if (idestado == 1) {
@@ -467,7 +479,7 @@ Modificado: 3/12/19
 
             usuarios = 0;
 
-            proxy.getTodosLosUsuariosYSusSensores(function(resp) {
+            proxy.getTodosLosUsuariosYSusSensores(function (resp) {
 
                 usuarios = resp;
 
@@ -505,7 +517,7 @@ Modificado: 3/12/19
             var estadoJson = {
                 "tipo": tipo
             };
-            proxy.getNumeroUsuariosTotalesPorTipo(tipo, function(resp) {
+            proxy.getNumeroUsuariosTotalesPorTipo(tipo, function (resp) {
                 numeroUsuariosSegunTipo = resp;
 
                 if (tipo == "Normal") {
@@ -568,7 +580,7 @@ Modificado: 3/12/19
         // Elimina las cookies de la pagina. Se le llama al clicar a Cerrar Sesion
         function eliminarCookies() {
             console.log("Leyenda");
-            document.cookie.split(";").forEach(function(c) {
+            document.cookie.split(";").forEach(function (c) {
                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
             });
 
@@ -641,7 +653,7 @@ Modificado: 3/12/19
         //Recibe las medidas y dibuja los marcadores
         function recibirMedidasFecha(intervalo) {
             //Recojo los datos de la base de datos
-            proxy.getTodasLasMedidasPorFecha(intervalo, function(datos) {
+            proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
                 // console.log(datos);
                 console.log("DATOS DE MEDIDAS POR FECHA" + datos.length);
                 var poluzone = [];
@@ -704,8 +716,8 @@ Modificado: 3/12/19
 
 
 
-                    google.maps.event.addListener(medida, 'click', (function(marker, content, infowindow) {
-                        return function() {
+                    google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                        return function () {
                             infowindow.setContent(content);
                             infowindow.open(getMap(), marker);
                         };
@@ -884,6 +896,33 @@ Modificado: 3/12/19
 
     </script>
 
+    <!-- Barra de busqueda (barra-busqueda.js)-->
+    <script>
+        function buscador() {
+            // Declare variables
+            var input, filter, ul, li, a, i, txtValue, imgalt, filtro;
+            input = document.getElementById('barraSensores');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("lista");
+
+            li = ul.getElementsByTagName('li');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                divContenedor = li[i].getElementsByTagName("div")[0];
+                imgalt = divContenedor.getElementsByTagName("div")[0].getElementsByTagName("img")[0].alt;
+                filtro = divContenedor.textContent + imgalt
+                txtValue = filtro;
+                console.log(txtValue)
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        } 
+    </script>
+
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
 
     <!--  css de bootsrap  -->
@@ -903,7 +942,8 @@ Modificado: 3/12/19
 
     <!-- CSS de Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -928,8 +968,11 @@ Modificado: 3/12/19
             <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink8" id="darkNav">
                 <div class="container">
-                    <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png" width="30" alt=""> Poluzone</a>
-                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png"
+                            width="30" alt=""> Poluzone</a>
+                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
                         <i class="material-icons">
                             menu
                         </i>
@@ -939,17 +982,20 @@ Modificado: 3/12/19
                         <ul class="navbar-nav text-uppercase w-100">
 
                             <li class="align-self-center ml-5">
-                                <a class="modoSensores" id="modoSensores" onclick="cambioASensores()" href="#contact">SENSORES</a>
+                                <a class="modoSensores" id="modoSensores" onclick="cambioASensores()"
+                                    href="#contact">SENSORES</a>
                             </li>
 
                             <li class="align-self-center ml-2">
-                                <a class="modoUsuarios" id="modoUsuarios" onclick="cambioAUsuarios()" href="#contact">USUARIOS</a>
+                                <a class="modoUsuarios" id="modoUsuarios" onclick="cambioAUsuarios()"
+                                    href="#contact">USUARIOS</a>
                             </li>
 
                             <ul class="ml-auto w-100">
 
                                 <li class="cerrarSesion nav-item ml-auto">
-                                    <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()" href="#contact">CERRAR SESIÓN</a>
+                                    <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()"
+                                        href="#contact">CERRAR SESIÓN</a>
                                 </li>
 
                             </ul>
@@ -1124,7 +1170,9 @@ Modificado: 3/12/19
 
                                     <div class="contenedorSearch col-7 my-auto">
 
-                                        <input class="cajaDeTexto form-control form-control-sm ml-3 w-75 text-light" type="text" placeholder="Buscar palabras clave..." aria-label="Search">
+                                        <input class="cajaDeTexto form-control form-control-sm ml-3 w-75 text-light"
+                                            id="barraSensores" type="text" placeholder="Buscar palabras clave..."
+                                            aria-label="Search" onkeyup="buscador()">
 
                                     </div>
 
@@ -1398,9 +1446,15 @@ Modificado: 3/12/19
     <script src="../js/agency.min.js"></script>
     <script src="../jquery-easing/jquery.easing.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 
 </body>
