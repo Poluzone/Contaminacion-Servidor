@@ -23,14 +23,14 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // averiguo el dni
       var dato = peticion.params.dato
 
-      console.log(dato)
+      //console.log(dato)
 
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetSoloMedidas();
 
-      console.log(res.dato);
-      console.log(res.fecha);
-      console.log(res.posicion);
+      //console.log(res.dato);
+      //console.log(res.fecha);
+      //console.log(res.posicion);
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 0) {
@@ -54,12 +54,12 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // averiguo el dni
       var dato = JSON.parse(peticion.body);
 
-      console.log(dato);
+      //console.log(dato);
 
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetIdDelUsuario(dato.Email);
 
-      console.log(res[0].IdUsuario);
+      //console.log(res[0].IdUsuario);
 
       var idUser = {
         IdUsuario: res[0].IdUsuario
@@ -89,15 +89,15 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // averiguo el dni
       var dato = JSON.parse(peticion.body);
 
-      console.log(dato);
+      //console.log(dato);
 
       // llamo a la función adecuada de la lógica
       var res = await laLogica.getLaUltimaMedidaPorUsuario(dato);
 
-      console.log(res[0].Valor);
-      console.log(res[0].Tiempo);
-      console.log(res[0].Latitud);
-      console.log(res[0].Longitud);
+      //console.log(res[0].Valor);
+      //console.log(res[0].Tiempo);
+      //console.log(res[0].Latitud);
+      //console.log(res[0].Longitud);
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 0) {
@@ -120,13 +120,13 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // averiguo el dni
       var dato = peticion.params.email
 
-      console.log(dato)
+      //console.log(dato)
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetUsuarioPorEmail(dato);
 
-      console.log(res.Email);
-      console.log(res.Password);
-      console.log(res.Telefono);
+      //console.log(res.Email);
+      //console.log(res.Password);
+      //console.log(res.Telefono);
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 1) {
@@ -154,10 +154,10 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // llamo a la función adecuada de la lógica
       var res = await laLogica.GetUsuarioPorEmail(dato.Email);
 
-      console.log(res[0].Email);
-      console.log(res[0].Nombre);
-      console.log(res[0].Telefono);
-      console.log(res[0].TipoUsuario);
+      //console.log(res[0].Email);
+      //console.log(res[0].Nombre);
+      //console.log(res[0].Telefono);
+      //console.log(res[0].TipoUsuario);
 
       var data = {
         Usuario: res,
@@ -202,7 +202,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // averiguo el dni
       var dato = JSON.parse(peticion.body);
 
-      console.log(dato)
+      //console.log(dato)
       // llamo a la función adecuada de la lógica
       var resu = await laLogica.GetUsuarioPorEmail(dato.Email);
 
@@ -431,7 +431,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
     async function (peticion, respuesta) {
       console.log(" * GET /getMedidasDeEsteUsuarioPorFecha ")
 
-      console.log(peticion.body)
+      //console.log(peticion.body)
       var datos = JSON.parse(peticion.body)
 
       // llamo a la función adecuada de la lógica
@@ -488,7 +488,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
         // llamo a la función adecuada de la lógica
         var res = await laLogica.getTodasLasMedidasPorFecha(dato);
 
-        console.log(res);
+        //console.log(res);
 
         // si el array de resultados no tiene una casilla ...
         if (res.length < 0) {
@@ -514,7 +514,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
         // llamo a la función adecuada de la lógica
         var res = await laLogica.getTodosLosUsuariosYSusSensores();
 
-        console.log(res);
+        //console.log(res);
 
         // si el array de resultados no tiene una casilla ...
         if (res.length < 0) {

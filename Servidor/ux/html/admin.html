@@ -220,7 +220,12 @@ Modificado: 3/12/19
             div1.appendChild(imagen);
             div2.appendChild(document.createTextNode(sensor.TipoSensor));
             div4.appendChild(document.createTextNode(sensor.IdSensor));
-            div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+            if(sensor.Estado!="En stock"){ // Si esta en Stock no tendra ningun usuario asignado
+                div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+            } else{
+                div5.appendChild(document.createTextNode(""));
+            }
+            
             ul.appendChild(li);
             console.log(sensor);
 
