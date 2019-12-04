@@ -551,11 +551,15 @@ module.exports = class Logica {
   // Idsensor -> borrarSensorPorID() ->
   //  Le pasas el nombre del sensor y lo elimina en la BD
   // .................................................................
-  borrarSensorPorID(idSensor) {
+  async borrarSensorPorID(idSensor) {
     var textoSQL = "Delete from Sensor where IdSensor = $idSensor";
     var valoresParaSQL = {
       $idSensor: idSensor
     };
+    var res = await this.getUsuarioPorIdSensor(idSensor);
+    if(res){
+        await this.desvincularUsuarioDeSensorPorIdUsuario(res[0].IdUsuario);
+    }
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver())
