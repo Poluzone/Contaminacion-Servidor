@@ -336,7 +336,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
   it("probar borrarSensorPorID",
     async function() {
 
-      await laLogica.borrarSensorPorID(56);
+      await laLogica.borrarSensorPorID(99);
       var res = await laLogica.getSensoresSegunEstado(3);
 
       assert.equal(res.length, 0, "¿no hay un resulado?")
