@@ -172,7 +172,7 @@ Modificado: 3/12/19
             imagen = document.createElement("img");
 
             sensor = sensores[i];
-            unSensor = sensor;
+            
             // Creacion de los divs y texto de cada elemento -----------------------------------------
 
             li.className = "tarjetaLista shadow-sm mb-1 bg-white";
@@ -226,6 +226,8 @@ Modificado: 3/12/19
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
             divContenedor.onclick = function() {
+                
+                unSensor = sensor;
 
                 if (hayAlgunElementoSeleccionado == true) {
                     elementoSeleccionado.classList.remove("elementoNaranja");
@@ -297,7 +299,6 @@ Modificado: 3/12/19
             imagen = document.createElement("img");
 
             usuario = usuarios[i];
-            unUsuario = usuario;
 
             // Creacion de los divs y texto de cada elemento -----------------------------------------
 
@@ -362,6 +363,8 @@ Modificado: 3/12/19
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un usuario-----------------------------------------
             divContenedor.onclick = function() {
+                
+            unUsuario = usuario;                
 
                 if (hayAlgunElementoSeleccionado == true) {
                     elementoSeleccionado.classList.remove("elementoNaranja");
@@ -678,6 +681,9 @@ Modificado: 3/12/19
 
         function eliminarSensorOUsuario() {
             if (modoActual == 0) {
+                console.log("Borrado sensor: "+unSensor.IdSensor);
+                
+                elementoSeleccionado.innerHTML="";
                 proxy.borrarSensorPorID(unSensor.IdSensor);
             }
         }

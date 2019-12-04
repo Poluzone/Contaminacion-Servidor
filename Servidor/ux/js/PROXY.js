@@ -318,8 +318,6 @@ class Proxy {
                     'User-Agent': 'jordi',
                     'Content-Type': 'application/json'
                 }
-            }).then(function (response) {
-                return response.json();
             });
     }
 
