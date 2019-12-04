@@ -635,13 +635,19 @@ Modificado: 3/12/19
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
 
-            botonModal.classList.remove("invisible");
+            // Para apartado Sensores
             if (modoActual == 0) {
-                textoModal.innerHTML = "";
+                console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
+              /*  textoModal.innerHTML = "";
                 textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
                 botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("AÑADIR"));
-            } else {
+                botonModal.appendChild(document.createTextNode("AÑADIR")); */
+                botonModal.click = anyadirSensor();
+            }
+            // Para apartado Usuarios 
+            else {
+                $("#modal").modal();
+                botonModal.classList.remove("invisible");
                 textoModal.innerHTML = "";
                 textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
                 botonModal.innerHTML = "";
@@ -657,15 +663,19 @@ Modificado: 3/12/19
             if (hayAlgunElementoSeleccionado) {
                 botonModal.classList.remove("invisible");
                 if (modoActual == 0) {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
                     botonModal.appendChild(document.createTextNode("BORRAR"));
+                    botonModal.onclick = eliminarSensorOUsuario();
                 } else {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
                     botonModal.appendChild(document.createTextNode("BORRAR"));
+                    botonModal.onclick = eliminarSensorOUsuario();
                 }
             } else {
                 textoModal.innerHTML = "";
@@ -679,6 +689,17 @@ Modificado: 3/12/19
         function eliminarSensorOUsuario() {
             if (modoActual == 0) {
                 proxy.borrarSensorPorID(unSensor.IdSensor);
+            }
+        }
+
+        // Emilia Rosa van der Heide
+        // -> anyadirSensor -> ok
+        // para añadir un sensor en la bbdd con QR
+        function anyadirSensor() {
+            if (modoActual == 0) {
+                $("#modal").modal("hide");
+                console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
+                $("#modal-anyadir-sensor").modal();
             }
         }
 
@@ -1022,7 +1043,7 @@ Modificado: 3/12/19
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary btn-lg" id="botonModal" onclick="eliminarSensorOUsuario()" data-dismiss="modal">Save changes</button>
+                    <button type="button" class="btn btn-primary btn-lg" id="botonModal" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>
@@ -1245,7 +1266,7 @@ Modificado: 3/12/19
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()">
 
-                                        <img src="../images/add.png" class="iconoAdd" data-toggle="modal" data-target="#modal">
+                                        <img src="../images/add.png" class="iconoAdd" data-target="#modal">
 
                                     </div>
 
@@ -1500,6 +1521,29 @@ Modificado: 3/12/19
     <!--/contenedor-->
 
     <!-------------------------------------------------- /CONTENEDOR ----------------------------------------------------------->
+
+
+
+    <!-- Modal añadir sensor-->
+  <div class="modal fade" id="modal-anyadir-sensor" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 
     <!-- Librería jQuery requerida por los plugins de JavaScript -->
