@@ -1,4 +1,4 @@
-const IP_PUERTO = "http://localhost:8080";
+const URL = "https://juconol.upv.edu.es";
 
 
 class Proxy {
@@ -14,7 +14,7 @@ class Proxy {
             posicion: posicion
         };
 
-        fetch(IP_PUERTO + "/insertarMedida", {
+        fetch(URL + "/insertarMedida", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -35,7 +35,7 @@ class Proxy {
             Telefono: tel
         };
 
-        fetch(IP_PUERTO + "/insertarUsuario", {
+        fetch(URL + "/insertarUsuario", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -54,7 +54,7 @@ class Proxy {
     async ComprobacionLogin(data) {
         console.log("Realizando ComprobacionLogin");
 
-        fetch(IP_PUERTO + "/ComprobarLogin", {
+        fetch(URL + "/ComprobarLogin", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -84,7 +84,7 @@ class Proxy {
      */
     async GETultimaMedidaPorUsuario(userId, callback) {
 
-        fetch(IP_PUERTO + "/GETultimaMedidaPorUsuario", {
+        fetch(URL + "/GETultimaMedidaPorUsuario", {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(userId), // data can be `string` or {object}!
                 headers: {
@@ -109,7 +109,7 @@ class Proxy {
      */
     async GETidUsuario(username, callback) {
 
-        fetch(IP_PUERTO + "/GETidUsuario", {
+        fetch(URL + "/GETidUsuario", {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(username), // data
                 headers: {
@@ -138,7 +138,7 @@ class Proxy {
 
         console.log("Llamada a getSensoresYSusUsuarios");
 
-        fetch(IP_PUERTO + "/getSensoresYSusUsuarios", {
+        fetch(URL + "/getSensoresYSusUsuarios", {
                 method: 'GET', // or 'PUT'
             }).then(function (response) {
                 console.log("response ", response);
@@ -168,7 +168,7 @@ class Proxy {
 
         console.log("Llamada a getNumSensoresSegunEstado con " + parseInt(estado));
 
-        fetch(IP_PUERTO + "/getNumSensoresSegunEstado/"+estado, {
+        fetch(URL + "/getNumSensoresSegunEstado/"+estado, {
                 method: 'GET', // or 'PUT'
                 headers: {
                     'User-Agent': 'jordi',
@@ -194,7 +194,7 @@ class Proxy {
     //-------------------------------
     async getTodasLasMedidasPorFecha(intervalo, callback) {
 
-        fetch(IP_PUERTO + "/GetTodasLasMedidasPorFecha", {
+        fetch(URL + "/GetTodasLasMedidasPorFecha", {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(intervalo), // data can be `string` or {object}!
                 headers: {

@@ -232,7 +232,7 @@
 
         function checkCookie() {
             var user = getCookie("username");
-            var url = "http://localhost:8080/ux/html/LoginAdmin.html";
+            var url = "https://juconol.upv.edu.es/ux/html/LoginAdmin.html";
             if (user == "") {
                 //alert("No intentes entrar desde la url pillín");
                 var a = document.createElement("a");
@@ -250,7 +250,7 @@
                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
             });
 
-            var url = "http://localhost:8080/ux/html/LoginAdmin.html";
+            var url = "https://juconol.upv.edu.es/ux/html/LoginAdmin.html";
             var a = document.createElement("a");
             a.href = url;
             a.click();

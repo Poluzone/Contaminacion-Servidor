@@ -6,7 +6,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
-const Logica = require("../logica/Logica.js")
+const Logica = require("./Logica.js")
+const Logica = require("./Logica.js")
+const puerto = process.env.PORT || 8080;
 // .....................................................................
 // .....................................................................
 function cargarLogica(fichero) {
@@ -51,7 +53,7 @@ async function main() {
     var reglas = require("./ReglasREST.js")
     reglas.cargar(servidorExpress, laLogica, bcrypt)
     // arranco el servidor
-    var servicio = servidorExpress.listen(8080, function () {
+    var servicio = servidorExpress.listen(puerto, function () {
         console.log("servidor REST escuchando en el puerto 8080 ")
     })
     // capturo control-c para cerrar el servicio ordenadamente
