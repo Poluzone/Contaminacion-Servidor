@@ -205,12 +205,13 @@ class Proxy {
                 return response.json();
             })
             .then(function (datos) {
-                if (datos != undefined) {
+                console.log(datos)
+                if (datos != undefined ) {
                     console.log("Tenemos las última medidas desde: " + intervalo.desde + " hasta " + intervalo.hasta);
+                    callback(datos);
                 } else {
                     console.log("No existe o no has puesto bien los datos");
                 }
-                callback(datos);
             });
     }
 
