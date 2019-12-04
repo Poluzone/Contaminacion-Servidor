@@ -48,7 +48,7 @@ async function main() {
 
 
     // cargo las reglas REST
-    var reglas = require("./ReglasREST.js")
+    var reglas = require("../Servidor/ReglasREST.js")
     reglas.cargar(servidorExpress, laLogica, bcrypt)
     // arranco el servidor
     var servicio = servidorExpress.listen(8080, function () {
