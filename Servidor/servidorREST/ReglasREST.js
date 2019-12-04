@@ -314,9 +314,11 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
   servidorExpress.post('/borrarSensorPorID',
     function(peticion, respuesta) {
-      console.log(" * POST /borrarSensorPorID")
-      var id = JSON.parse(peticion.body)
+      
+      var id = JSON.parse(peticion.body);
 
+      console.log(" * POST /borrarSensorPorID "+id);
+      
       // supuesto procesamiento
 
       laLogica.borrarSensorPorID(id);

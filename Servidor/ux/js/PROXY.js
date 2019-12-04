@@ -75,7 +75,7 @@ class Proxy {
                     console.log("Iniciar sesion correcto y se han creado los cookies");
                     checkCookie();
                 } else {
-                    console.log("El usuario que intenta iniciar sesión no es Admin");                    
+                    console.log("El usuario que intenta iniciar sesión no es Admin");
                     elUsuarioNoEsAdmin();
                 }
 
@@ -306,19 +306,29 @@ class Proxy {
                 callback(datos);
             });
     }
-    
+
     //-------------------------------
     // borrarSensorPorID()
     //-------------------------------
-    async borrarSensorPorID(id, callback){
+    async borrarSensorPorID(id, callback) {
+
+        /*var idJson = {
+            id: id
+        };*/
+
         fetch(IP_PUERTO + "/borrarSensorPorID", {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(id), // data can be `string` or {object}!
-                headers: {
-                    'User-Agent': 'jordi',
-                    'Content-Type': 'application/json'
-                }
-            });
+            method: 'POST', // or 'PUT'
+            body: id.toString(), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
     }
 
 }
