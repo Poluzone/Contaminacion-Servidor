@@ -2,7 +2,6 @@
 // Logica.js
 // .....................................................................
 const sqlite3 = require("sqlite3")
-const estacionOficial = require('./Estacion-oficial');
 
 // .....................................................................
 // .....................................................................
@@ -514,41 +513,6 @@ module.exports = class Logica {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
-    })
-  }
-
-
-  // .................................................................
-  // Emilia Rosa van der Heide
-  // -> getMedidasEstacionOficialGandia() -> medidas
-  // recibe las medidas de la estacion oficial de Gandia
-  // .................................................................
-  async getMedidasEstacionOficialGandia() {
-    console.log("logica: getMedidasEstacionOficialGandia")
-    var data = await estacionOficial.getMedidasEstacion();
-    
-    var estaciones = await this.getEstacionesOficiales()
-    //console.log(estaciones.length)
-    for (var i = 0; i < estaciones.length; i++) {
-      var municipio = estaciones[i].Municipio
-      if(municipio.localeCompare("Gandia") == 0) estaciones[i].Medidas = data[0];
-    }
-
-    return estaciones;
-  }
-
-  // .................................................................
-  // Emilia Rosa van der Heide
-  // -> getEstacionesOficiales() -> estaciones
-  // .................................................................
-  async getEstacionesOficiales() {
-    var textoSQL = "select * from Estaciones;";
-    console.log("logica: getTodosLosSensores")
-    return new Promise((resolver, rechazar) => {
-      this.laConexion.all(textoSQL,
-        (err, res) => {
-          (err ? rechazar(err) : resolver(res))
-        })
     })
   }
 

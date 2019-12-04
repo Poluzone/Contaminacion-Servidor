@@ -60,7 +60,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }) //it
 
-
   it("probar getUsuarioPorIdSensor()",
     async function() {
 
@@ -88,26 +87,26 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }) //it
 
-  it("probar getTipoSensor()",
+    it("probar getTipoSensor()",
     async function() {
       var res = await laLogica.getTipoSensor(2);
       assert.equal(res[0].Descripcion, "CO", "no coge la descripción correctamente")
     }) //it
 
-  it("probar getEstado()",
+    it("probar getEstado()",
     async function() {
       var res = await laLogica.getEstado(1);
       assert.equal(res[0].Descripcion, "En Stock", "no coge la descripción correctamente")
     }) //it
 
 
-  it("probar getSensoresSegunEstado()",
+    it("probar getSensoresSegunEstado()",
     async function() {
       var res = await laLogica.getSensoresSegunEstado(2);
       assert.equal(res[0].IdSensor, "2", "no coge los sensores correctamente")
     }) //it
 
-  it("probar getNumSensoresSegunEstado()",
+    it("probar getNumSensoresSegunEstado()",
     async function() {
       var datos = {
         estado: "Stock",
@@ -149,30 +148,30 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     })
 
-  it("probar insertarMedida",
-    async function() {
-      await laLogica.borrarFilasDeTodasLasTablas();
-      var IdTipoMedida = 2
-      var IdUsuario = 15
-      var Valor = 243
-      var Latitud = 38.95;
-      var Longitud = -0.17;
-      for (let j = 0; j < 10; j++) {
-        for (let i = 0; i < 10; i++) {
-          var medida = {
-            IdTipoMedida: 2,
-            IdUsuario: 15,
-            Valor: Valor + 10,
-            Tiempo: Date.now(),
-            Latitud: Latitud + i * 0.003 + j * 0.003,
-            Longitud: Longitud - i * 0.003 + j * 0.003
-          }
-          Valor += 10;
-          await laLogica.insertarMedida(medida);
+    it("probar insertarMedida",
+      async function() {
+            await laLogica.borrarFilasDeTodasLasTablas();
+        var IdTipoMedida = 2
+        var IdUsuario= 15
+        var Valor= 243
+        var Latitud = 38.95;
+        var Longitud = -0.17;
+        for(let j = 0; j<10;j++){
+        for(let i = 0; i<10; i++){
+        var medida = {
+          IdTipoMedida: 2,
+          IdUsuario: 15,
+          Valor: Valor+10,
+          Tiempo: Date.now(),
+          Latitud: Latitud+i*0.003+j*0.003,
+          Longitud: Longitud-i*0.003+j*0.003
+            }
+            Valor+=10;
+         await laLogica.insertarMedida(medida);
+            }
         }
-      }
-      var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
-      assert.equal(res.length, 1, "¿no hay un resulado?")
+        var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
+        assert.equal(res.length, 1, "¿no hay un resulado?")
 
     })
 
@@ -182,6 +181,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
       var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
+
     })
 
   it("probar GetIdUsuario",
@@ -190,6 +190,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       var res = await laLogica.GetIdDelUsuario('mat@gmail.com');
       assert.equal(res.length, 1, "¿no hay un resulado?")
+
     })
   it("probar getTodasLasMedidasPorFecha",
     async function() {
