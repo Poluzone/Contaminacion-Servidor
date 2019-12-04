@@ -7,7 +7,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const Logica = require("./Logica.js")
-const Logica = require("./Logica.js")
 const puerto = process.env.PORT || 8080;
 // .....................................................................
 // .....................................................................
@@ -28,7 +27,7 @@ function cargarLogica(fichero) {
 // main()
 // .....................................................................
 async function main() {
-    var laLogica = await cargarLogica("../bd/datos.db")
+    var laLogica = await cargarLogica("./bd/datos.db")
     // creo el servidor
     var servidorExpress = express()
     // para poder acceder a la carga de la petición http

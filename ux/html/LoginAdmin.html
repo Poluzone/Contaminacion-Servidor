@@ -8,7 +8,7 @@
 
     <script>
         var proxy = new Proxy();
-
+        var direccion = "https://juconol.upv.edu.es";
         function setCookie(cname, cvalue) {
             //var d = new Date();
             // d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -34,7 +34,7 @@
 
         function checkCookie() {
             var user = getCookie("username");
-            var url = "https://juconol.upv.edu.es";
+            var url = direccion+"/ux/html/admin.html";
             console.log("hey"+user);
             if (user != "") {
                 var a = document.createElement("a");
