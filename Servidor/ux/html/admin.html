@@ -70,7 +70,8 @@ Modificado: 3/12/19
         // Tarjeta SENSORES / USUARIOS
         var textoSENSORESyUSUARIOS;
 
-        var botonAdd;
+        var iconoAdd;
+        var iconoAddInnerHTML;
         var botonBorrar;
 
         var textoColumna1;
@@ -147,6 +148,8 @@ Modificado: 3/12/19
             tarjeta4 = document.getElementById("tarjeta4");
 
             textoSENSORESyUSUARIOS = document.getElementById("textoSensores");
+            
+            iconoAdd = document.getElementById("botonAdd");
 
             textoColumna1 = document.getElementById("textoColumna1");
             textoColumna2 = document.getElementById("textoColumna2");
@@ -208,17 +211,17 @@ Modificado: 3/12/19
 
             if (sensor.Estado == "En Stock") {
                 //console.log("nani " + sensor.Estado);
-                iconoEstado = "box3";
+                iconoEstado = "box2";
                 iconoAlt = "En Stock"
             }
             if (sensor.Estado == "Alquilado") {
                 //console.log("nani " + sensor.Estado);
-                iconoEstado = "tick3";
+                iconoEstado = "tick2";
                 iconoAlt = "Alquilado"
             }
             if (sensor.Estado == "Averiado") {
                 //console.log("nani " + sensor.Estado);
-                iconoEstado = "cross3";
+                iconoEstado = "cross2";
                 iconoAlt = "Averiado"
             }
 
@@ -299,7 +302,7 @@ Modificado: 3/12/19
                     divTipoUsuario.appendChild(document.createTextNode(""));
 
                     divIdUsuario.innerHTML = "";
-                    divIdUsuario.appendChild(document.createTextNode("El sensor está en Stock"));
+                    divIdUsuario.appendChild(document.createTextNode("El sensor está en inventario"));
 
                     divNombre.innerHTML = "";
                     divNombre.appendChild(document.createTextNode(""));
@@ -578,7 +581,7 @@ Modificado: 3/12/19
                     numeroTotalDeUsuarios = numeroTotalDeUsuarios + numeroUsuariosSegunTipo;
                     console.log(tipo + " " + numeroUsuariosSegunTipo);
 
-                    console.log("me cago en dios " + numeroTotalDeUsuarios);
+                    console.log("Numero total de usuarios " + numeroTotalDeUsuarios);
 
                     // Se rellena la tarjeta con el numero de usuarios totales despues de haber sumado los normales y los conductores
                     numeroUsuarios.innerHTML = "";
@@ -883,6 +886,10 @@ Modificado: 3/12/19
                 // Cambio texto SENSORES a USUARIOS
                 textoSENSORESyUSUARIOS.innerHTML = "";
                 textoSENSORESyUSUARIOS.appendChild(document.createTextNode("USUARIOS"));
+                
+                // Eliminado boton Add
+                iconoAddInnerHTML = iconoAdd.innerHTML;
+                iconoAdd.innerHTML = "";
 
                 // Cambio nombre columnas de la de la lista
 
@@ -960,6 +967,9 @@ Modificado: 3/12/19
                 //Cambio texto USUARIOS a SENSORES
                 textoSENSORESyUSUARIOS.innerHTML = "";
                 textoSENSORESyUSUARIOS.appendChild(document.createTextNode("SENSORES"));
+                
+                // Añadir boton Add
+                iconoAdd.innerHTML = iconoAddInnerHTML;
 
                 // Cambio nombre columnas de la de la lista
 
@@ -1284,7 +1294,7 @@ Modificado: 3/12/19
 
                                     </div>
 
-                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()">
+                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()" id="botonAdd">
 
                                         <img src="../images/add.png" class="iconoAdd" data-toggle="modal" data-target="#modal">
 
