@@ -8,6 +8,7 @@ Modificado: 3/12/19
 <html lang="es">
 
 <head>
+    <script type="text/javascript" src="../js/instascan.min.js"></script>
     <script type="text/javascript" src="../js/PROXY.js"></script>
 
     <script type="text/javascript" src="../js/barra-busqueda.js"></script>
@@ -674,13 +675,19 @@ Modificado: 3/12/19
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
 
-            botonModal.classList.remove("invisible");
+            // botonModal.classList.remove("invisible");
             if (modoActual == 0) {
-                textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
-                botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("AÑADIR"));
-            } else {
+                console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
+                /*  textoModal.innerHTML = "";
+                  textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
+                  botonModal.innerHTML = "";
+                  botonModal.appendChild(document.createTextNode("AÑADIR")); */
+                botonModal.click = anyadirSensor();
+            }
+            // Para apartado Usuarios 
+            else {
+                $("#modal").modal();
+                botonModal.classList.remove("invisible");
                 textoModal.innerHTML = "";
                 textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
                 botonModal.innerHTML = "";
@@ -696,11 +703,14 @@ Modificado: 3/12/19
             if (hayAlgunElementoSeleccionado) {
                 botonModal.classList.remove("invisible");
                 if (modoActual == 0) {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
                     botonModal.appendChild(document.createTextNode("BORRAR"));
+                    botonModal.onclick = eliminarSensorOUsuario();
                 } else {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
@@ -711,8 +721,34 @@ Modificado: 3/12/19
                 textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para borrarlo"));
                 botonModal.innerHTML = "";
                 botonModal.classList.add("invisible");
+                botonModal.onclick = eliminarSensorOUsuario();
             }
 
+        }
+
+
+        // Emilia Rosa van der Heide
+        // -> anyadirSensor -> ok
+        // para añadir un sensor en la bbdd con QR
+        function anyadirSensor() {
+            if (modoActual == 0) {
+                $("#modal").modal("hide");
+                console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
+                $("#modal-anyadir-sensor").modal();
+                let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+                scanner.addListener('scan', function (content) {
+                    console.log(content);
+                });
+                Instascan.Camera.getCameras().then(function (cameras) {
+                    if (cameras.length > 0) {
+                        scanner.start(cameras[0]);
+                    } else {
+                        console.error('No cameras found.');
+                    }
+                }).catch(function (e) {
+                    console.error(e);
+                });
+            }
         }
 
         function eliminarSensorOUsuario() {
@@ -1287,8 +1323,7 @@ Modificado: 3/12/19
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()">
 
-                                        <img src="../images/add.png" class="iconoAdd" data-toggle="modal"
-                                            data-target="#modal">
+                                        <img src="../images/add.png" class="iconoAdd" data-target="#modal">
 
                                     </div>
 
@@ -1546,8 +1581,31 @@ Modificado: 3/12/19
     <!-------------------------------------------------- /CONTENEDOR ----------------------------------------------------------->
 
 
+    <!-- Modal añadir sensor-->
+    <div class="modal fade" id="modal-anyadir-sensor" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Añadir sensor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                    <video id="preview"></video>
+                    <button type="button" class="btn btn-primary">Escanear QR</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Librería jQuery requerida por los plugins de JavaScript -->
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
 
     <!-- Todos los plugins JavaScript de Bootstrap (también puedes
                 incluir archivos JavaScript individuales de los únicos
