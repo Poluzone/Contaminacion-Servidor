@@ -73,102 +73,8 @@
 
             }
 
-            //Esto es para poder asignarle un nombre al gas dependiendo de su ID
-            function queGasSoy(dato){
-                var gas;
-                if(dato == 2){
-                    gas = "CO";
-                }else{
-                    if(dato == 3){
-                        gas = "NOX";
-                    }else{
-                        if(dato==4){
-                            gas="SO2";
-                        }else{
-                            gas="Gas Irritante";
-                        }
-                    }
-                }
-                return gas;
-            }
 
             //Recibe las medidas y dibuja los marcadores
-            function recibirMedidasFecha(intervalo){
-                //Recojo los datos de la base de datos
-                proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
-                    // console.log(datos);
-                    console.log("DATOS DE MEDIDAS POR FECHA");
-                    var poluzone = [];
-
-                    var infowindow = new google.maps.InfoWindow()
-                    //asigno un marcador dependiendo de la medida    
-                    for(let i = 0; i<datos.length;i++){
-
-                        var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
-                        var icon;
-                        /*if(datos[i].IdTipoMedida == 2){
-                    icon = iconBase + 'purple-dot.png'
-                }*/
-                        if(datos[i].IdTipoMedida==1){
-                            icon = iconBase + 'green.png' 
-                        }else{
-                            if(datos[i].IdTipoMedida==2){
-                                icon = iconBase + 'yellow.png'
-                            }else{
-                                if(datos[i].IdTipoMedida==3){
-                                    icon = iconBase + 'red.png'
-                                }else{
-                                    if(datos[i].IdTipoMedida==4){
-                                        icon = iconBase + 'purple.png'
-                                    }else{
-                                        icon = iconBase + 'lightblue.png'
-                                    }
-                                }
-                            }
-                        }
-                        //dibuja los marcadores
-                        var medida = new google.maps.Marker({
-                            position: {lat:datos[i].Latitud,lng:datos[i].Longitud},
-                            map: getMap(),
-                            title: 'Medidas',
-                            icon: {url:icon},
-                        });      
-
-                        var puntoCalor = {location: new google.maps.LatLng(datos[i].Latitud, datos[i].Longitud), weight: datos[i].Valor};
-
-                        poluzone.push(puntoCalor);
-
-                        var contentString = '<div id="content">'+
-                            '<div id="siteNotice">'+
-                            '</div>'+
-                            '<h1 id="firstHeading" class="firstHeading">'+datos[i].Valor.toString()+' ppb</h1>'+
-                            '<div id="bodyContent">'+
-                            '<p><b>'+queGasSoy(datos[i].IdTipoMedida)+'</b></p>'+
-                            '<p></p>'+
-                            '</div>'+
-                            '</div>';
-
-
-
-
-                        google.maps.event.addListener(medida,'click', (function(marker,content,infowindow){ 
-                            return function() {
-                                infowindow.setContent(content);
-                                infowindow.open(getMap(),marker);
-                            };
-                        })(medida,contentString,infowindow)); 
-
-
-
-                    }//for
-                    var heatmap = new google.maps.visualization.HeatmapLayer({
-                        data: poluzone,
-                        maxIntensity: 1243,
-                        radius: 60
-                    });
-                    heatmap.setMap(getMap());
-                });
-            }
             recibirMedidasFecha({"desde":0, "hasta": 0});
 
         </script>
@@ -266,11 +172,10 @@
                         </div>
                     </div>
                     <div class="col-sm-9">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            </div>
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary">Left</button>
+                            <button type="button" class="btn btn-secondary">Middle</button>
+                            <button type="button" class="btn btn-secondary">Right</button>
                         </div>
                     </div>
                 </div>
