@@ -640,7 +640,7 @@ module.exports = class Logica {
         var idSensor = await this.getSensorPorIdUsuario(idUsuario);
         //console.log(idSensor);
         var dato = {
-            estado: "Inactivo",
+            estado: "En Stock",
             idSensor: idSensor[0].IdSensor,
         }
         await this.indicarActividadNodo(dato);

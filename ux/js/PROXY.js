@@ -1,5 +1,5 @@
-//const url = "http://localhost:8080";
-const url = "https://juconol.upv.edu.es";
+const url = "http://localhost:8080";
+//const url = "https://juconol.upv.edu.es";
 
 class Proxy {
     constructor() {
@@ -329,6 +329,28 @@ class Proxy {
             console.log("error: " + e);
             return e;
         });
+    }
+    
+    //-------------Ivan--------------
+    // N: id de un sensor -->
+    // getNumeroUsuariosTotalesPorTipo()
+    //-------------------------------
+    async desvincularUsuarioDeSensorPorIdUsuario(id){
+        
+        fetch(url + "/desvincularUsuarioDeSensorPorIdUsuario", {
+            method: 'POST', // or 'PUT'
+            body: id.toString(), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
+        
     }
 
 }

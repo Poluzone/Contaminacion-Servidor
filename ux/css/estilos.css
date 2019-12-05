@@ -473,6 +473,16 @@ header.masthead .intro-text .intro-heading {
     height: 100%;
 }
 
+.iconoDesvincular:hover{
+    cursor: pointer;
+    content: url(../images/desvincularNaranja.png);
+}
+
+.iconoDesvincular{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
 /* TARJETA TODOS LOS SENSORES Y TARJETA INFORMACION DE UN SENSOR */
 
 .fila {
