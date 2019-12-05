@@ -143,11 +143,12 @@ module.exports = class Logica {
 
     // .................................................................
     // Emilia Rosa van der Heide
-    // -> ensoresYSusUsuarios() ->
+    // -> getSensoresYSusUsuarios() ->
     // llama a getTodosLosSensores
     // y getUsuarioPorIdSensor
     // .................................................................
     async getSensoresYSusUsuarios() {
+        console.log("Logica: getSensoresYSusUsuarios()")
         var sensores = await this.getTodosLosSensores();
         for (var i = 0; i < sensores.length; i++) {
             var sensor = sensores[i]
@@ -165,11 +166,15 @@ module.exports = class Logica {
             var estadoSensor = estados[0].Descripcion
             //console.log(estadoSensor);
             sensores[i].Estado = estadoSensor;
-
             // Cogemos el Id para obtener el usuario correspondiente
             var idSensor = sensor.IdSensor;
-            var usuario = await this.getUsuarioPorIdSensor(idSensor);
-            sensores[i].Usuario = usuario[0];
+            if (idEstado != 1) {
+                var usuario = await this.getUsuarioPorIdSensor(idSensor);
+                sensores[i].Usuario = usuario[0];
+            }
+            else {
+                sensores[i].Usuario = null
+            }
         }
         //console.log(sensores)
         return new Promise((resolver, rechazar) => {
