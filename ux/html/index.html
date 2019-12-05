@@ -102,23 +102,23 @@
 
                     var infowindow = new google.maps.InfoWindow()
                     //asigno un marcador dependiendo de la medida    
-                    for(let i = 0; i<datos.length;i++){
+                    for(let i = 0; i<datos["medidas"].length;i++){
 
                         var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
                         var icon;
                         /*if(datos[i].IdTipoMedida == 2){
                     icon = iconBase + 'purple-dot.png'
                 }*/
-                        if(datos[i].IdTipoMedida==1){
+                        if(datos["medidas"][i].IdTipoMedida==1){
                             icon = iconBase + 'green.png' 
                         }else{
-                            if(datos[i].IdTipoMedida==2){
+                            if(datos["medidas"][i].IdTipoMedida==2){
                                 icon = iconBase + 'yellow.png'
                             }else{
-                                if(datos[i].IdTipoMedida==3){
+                                if(datos["medidas"][i].IdTipoMedida==3){
                                     icon = iconBase + 'red.png'
                                 }else{
-                                    if(datos[i].IdTipoMedida==4){
+                                    if(datos["medidas"][i].IdTipoMedida==4){
                                         icon = iconBase + 'purple.png'
                                     }else{
                                         icon = iconBase + 'lightblue.png'
@@ -128,22 +128,22 @@
                         }
                         //dibuja los marcadores
                         var medida = new google.maps.Marker({
-                            position: {lat:datos[i].Latitud,lng:datos[i].Longitud},
+                            position: {lat:datos["medidas"][i].Latitud,lng:datos["medidas"][i].Longitud},
                             map: getMap(),
                             title: 'Medidas',
                             icon: {url:icon},
                         });      
 
-                        var puntoCalor = {location: new google.maps.LatLng(datos[i].Latitud, datos[i].Longitud), weight: datos[i].Valor};
+                        var puntoCalor = {location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor};
 
                         poluzone.push(puntoCalor);
 
                         var contentString = '<div id="content">'+
                             '<div id="siteNotice">'+
                             '</div>'+
-                            '<h1 id="firstHeading" class="firstHeading">'+datos[i].Valor.toString()+' ppb</h1>'+
+                            '<h1 id="firstHeading" class="firstHeading">'+datos["medidas"][i].Valor.toString()+' ppb</h1>'+
                             '<div id="bodyContent">'+
-                            '<p><b>'+queGasSoy(datos[i].IdTipoMedida)+'</b></p>'+
+                            '<p><b>'+queGasSoy(datos["medidas"][i].IdTipoMedida)+'</b></p>'+
                             '<p></p>'+
                             '</div>'+
                             '</div>';
@@ -534,7 +534,7 @@
 
 
         <!-- Librería jQuery requerida por los plugins de JavaScript -->
-        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="https://code.jquery.com/jquery.js"></script>
 
         <!-- Todos los plugins JavaScript de Bootstrap (también puedes
 incluir archivos JavaScript individuales de los únicos
