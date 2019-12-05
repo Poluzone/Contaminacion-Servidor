@@ -1,5 +1,5 @@
-const IP_PUERTO = "http://localhost:8080";
-
+//const url = "http://localhost:8080";
+const url = "https://juconol.upv.edu.es";
 
 class Proxy {
     constructor() {
@@ -14,7 +14,7 @@ class Proxy {
             posicion: posicion
         };
 
-        fetch(IP_PUERTO + "/insertarMedida", {
+        fetch(url + "/insertarMedida", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -35,7 +35,7 @@ class Proxy {
             Telefono: tel
         };
 
-        fetch(IP_PUERTO + "/insertarUsuario", {
+        fetch(url + "/insertarUsuario", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -54,7 +54,7 @@ class Proxy {
     async ComprobacionLogin(data) {
         console.log("Realizando ComprobacionLogin");
 
-        fetch(IP_PUERTO + "/ComprobarLogin", {
+        fetch(url + "/ComprobarLogin", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -91,7 +91,7 @@ class Proxy {
      */
     async GETultimaMedidaPorUsuario(userId, callback) {
 
-        fetch(IP_PUERTO + "/GETultimaMedidaPorUsuario", {
+        fetch(url + "/GETultimaMedidaPorUsuario", {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(userId), // data can be `string` or {object}!
                 headers: {
@@ -116,7 +116,7 @@ class Proxy {
      */
     async GETidUsuario(username, callback) {
 
-        fetch(IP_PUERTO + "/GETidUsuario", {
+        fetch(url + "/GETidUsuario", {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(username), // data
                 headers: {
@@ -146,7 +146,7 @@ class Proxy {
 
         console.log("Llamada a getSensoresYSusUsuarios");
 
-        fetch(IP_PUERTO + "/getSensoresYSusUsuarios", {
+        fetch(url + "/getSensoresYSusUsuarios", {
                 method: 'GET', // or 'PUT'
             }).then(function (response) {
                 console.log("response ", response);
@@ -177,7 +177,7 @@ class Proxy {
 
         console.log("Llamada a getNumSensoresSegunEstado con " + parseInt(estado));
 
-        fetch(IP_PUERTO + "/getNumSensoresSegunEstado/" + estado, {
+        fetch(url + "/getNumSensoresSegunEstado/" + estado, {
                 method: 'GET', // or 'PUT'
                 headers: {
                     'User-Agent': 'jordi',
@@ -206,7 +206,7 @@ class Proxy {
 
         console.log("Llamada a getTodosLosUsuariosYSusSensores");
 
-        fetch(IP_PUERTO + "/getTodosLosUsuariosYSusSensores", {
+        fetch(url + "/getTodosLosUsuariosYSusSensores", {
                 method: 'GET', // or 'PUT'
             }).then(function (response) {
                 console.log("response ", response);
@@ -236,7 +236,7 @@ class Proxy {
 
         console.log("Llamada a getNumeroUsuariosTotales");
 
-        fetch(IP_PUERTO + "/getNumeroUsuariosTotales", {
+        fetch(url + "/getNumeroUsuariosTotales", {
                 method: 'GET', // or 'PUT'
             }).then(function (response) {
                 console.log("response ", response);
@@ -261,7 +261,7 @@ class Proxy {
 
         console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + estado);
 
-        fetch(IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/" + estado, {
+        fetch(url + "/getNumeroUsuariosTotalesPorTipo/" + estado, {
                 method: 'GET', // or 'PUT'
                 headers: {
                     'User-Agent': 'jordi',
@@ -287,7 +287,7 @@ class Proxy {
     //-------------------------------
     async getTodasLasMedidasPorFecha(intervalo, callback) {
 
-        fetch(IP_PUERTO + "/GetTodasLasMedidasPorFecha", {
+        fetch(url + "/GetTodasLasMedidasPorFecha", {
                 method: 'POST', // or 'PUT'
                 body: JSON.stringify(intervalo), // data can be `string` or {object}!
                 headers: {
@@ -316,7 +316,7 @@ class Proxy {
             id: id
         };*/
 
-        fetch(IP_PUERTO + "/borrarSensorPorID", {
+        fetch(url + "/borrarSensorPorID", {
             method: 'POST', // or 'PUT'
             body: id.toString(), // data can be `string` or {object}!
             headers: {

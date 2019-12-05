@@ -23,7 +23,10 @@ Modificado: 3/12/19
     <script>
         // Declaracion de variables
         var proxy = new Proxy();
-
+        //Para el local
+        //var direccion = "https://localhost:8080";
+        //Para el plesk
+        var direccion = "https://juconol.upv.edu.es";
         var sensores;
         var unSensor
 
@@ -617,8 +620,7 @@ Modificado: 3/12/19
 
         function checkCookie() {
             var user = getCookie("username");
-            var url = "http://localhost:8080/ux/html/LoginAdmin.html";
-            //https://juconol.upv.edu.es
+            var url = direccion+"/ux/html/LoginAdmin.html";
             if (user == "") {
                 //alert("No intentes entrar desde la url pillín");
                 var a = document.createElement("a");
@@ -634,7 +636,7 @@ Modificado: 3/12/19
                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
             });
 
-            var url = "http://localhost:8080/ux/html/LoginAdmin.html";
+            var url = direccion+"/ux/html/LoginAdmin.html";
             var a = document.createElement("a");
             a.href = url;
             a.click();
