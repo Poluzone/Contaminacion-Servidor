@@ -6,7 +6,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
-const Logica = require("../logica/Logica.js")
+const Logica = require("../Servidor/Logica.js")
 // .....................................................................
 // .....................................................................
 function cargarLogica(fichero) {
@@ -26,7 +26,7 @@ function cargarLogica(fichero) {
 // main()
 // .....................................................................
 async function main() {
-    var laLogica = await cargarLogica("../bd/datos.db")
+    var laLogica = await cargarLogica("../Servidor/bd/datos.db")
     // creo el servidor
     var servidorExpress = express()
     // para poder acceder a la carga de la petición http
@@ -48,7 +48,7 @@ async function main() {
 
 
     // cargo las reglas REST
-    var reglas = require("./ReglasREST.js")
+    var reglas = require("../Servidor/ReglasREST.js")
     reglas.cargar(servidorExpress, laLogica, bcrypt)
     // arranco el servidor
     var servicio = servidorExpress.listen(8080, function () {
