@@ -378,7 +378,7 @@ Modificado: 3/12/19
                 iconoTipo = "userConductor";
                 iconoAlt = "Conductor";
             }
-            if (usuario.TipoUsuario == "Admin") { // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
+            if (usuario.TipoUsuario != "Normal" && usuario.TipoUsuario != "Conductor") { // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
                 return;
             }
 
