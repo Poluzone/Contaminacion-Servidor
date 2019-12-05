@@ -515,22 +515,27 @@ header.masthead .intro-text .intro-heading {
     content: url(../images/canHover.png);
 }
 
-.nombresLista:hover {
-    cursor: default;
-}
-
 .contenedorLista {
     height: 80%;
     overflow: hidden;
 }
 
+.nombresLista{
+    height: 12%;    
+}
+
+.nombresLista:hover {
+    cursor: default;
+}
+
 .lista {
     list-style-type: none;
 
-    height: 10.5rem;
+    height: 89%;
 
     padding-left: 0% !important;
     padding-top: .5% !important;
+    margin-bottom: 0% !important;
 
     overflow: auto;
     
