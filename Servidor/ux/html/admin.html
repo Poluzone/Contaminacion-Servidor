@@ -38,7 +38,7 @@ Modificado: 3/12/19
 
         var innerHTMLDetarjetaExtra; // Para guardar el contenido de la tarjeta4 antes de borrarla al cambiar al modo usuarios
 
-        var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
+        var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo o borramos sensor/usuario. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
 
         var modoActual = 0; // 0 si el modo actual es SENSORES y 1 si es USUARIOS
 
@@ -718,6 +718,8 @@ Modificado: 3/12/19
 
                 elementoSeleccionado.innerHTML = "";
                 proxy.borrarSensorPorID(unSensor.IdSensor);
+                
+                tarjetaINFORMACION.innerHTML=innerHTMLTarjetaINFORMACION;
             }
         }
 
