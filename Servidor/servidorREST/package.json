@@ -11,13 +11,11 @@
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
-    "canvas": "^2.6.0",
     "express": "*",
     "request": "*",
     "sqlite3": "^4.1.0"
   },
   "devDependencies": {
-    "jsdom": "^15.2.1",
     "mocha": "*"
   }
 }
