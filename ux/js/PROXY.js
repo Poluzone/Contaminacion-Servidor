@@ -344,7 +344,7 @@ class Proxy {
             IdEstado: 1
         }
 
-        fetch(IP_PUERTO + "/insertarSensor", {
+        fetch(url + "/insertarSensor", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(datosSensor), // data can be `string` or {object}!
             headers: {
