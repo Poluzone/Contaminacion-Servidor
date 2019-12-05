@@ -512,6 +512,7 @@ module.exports = class Logica {
     // inserta sensor
     // .................................................................
     insertarSensor(sensor) {
+        console.log("Logica: insertarsensor")
         var textoSQL = "insert into Sensor values( $IdSensor, $IdTipoMedida, $IdEstado)";
         var valoresParaSQL = {
             $IdSensor: sensor.IdSensor,

@@ -9,6 +9,8 @@ Modificado: 3/12/19
 
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
+    <script type="text/javascript" src="../js/instascan.min.js"></script>
+    <script type="text/javascript" src="../js/QR-anyadir-sensor.js"></script>
 
     <script type="text/javascript" src="../js/barra-busqueda.js"></script>
     <!-- Scripts para API Google Maps -->
@@ -20,7 +22,7 @@ Modificado: 3/12/19
         type="text/javascript"></script>
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
-    <script>
+    <script type="text/javascript">
         // Declaracion de variables
         var proxy = new Proxy();
         //Para el local
@@ -680,13 +682,14 @@ Modificado: 3/12/19
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
 
-            botonModal.classList.remove("invisible");
+            // botonModal.classList.remove("invisible");
             if (modoActual == 0) {
-                textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
-                botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("AÑADIR"));
-            } else {
+                crearEscanerQR();
+            }
+            // Para apartado Usuarios 
+            else {
+                $("#modal").modal();
+                botonModal.classList.remove("invisible");
                 textoModal.innerHTML = "";
                 textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
                 botonModal.innerHTML = "";
@@ -702,11 +705,14 @@ Modificado: 3/12/19
             if (hayAlgunElementoSeleccionado) {
                 botonModal.classList.remove("invisible");
                 if (modoActual == 0) {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
                     botonModal.appendChild(document.createTextNode("BORRAR"));
+                    botonModal.onclick = eliminarSensorOUsuario();
                 } else {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
@@ -717,6 +723,7 @@ Modificado: 3/12/19
                 textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para borrarlo"));
                 botonModal.innerHTML = "";
                 botonModal.classList.add("invisible");
+                botonModal.onclick = eliminarSensorOUsuario();
             }
 
         }
@@ -1302,8 +1309,7 @@ Modificado: 3/12/19
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()" id="botonAdd">
 
-                                        <img src="../images/add.png" class="iconoAdd" data-toggle="modal"
-                                            data-target="#modal">
+                                        <img src="../images/add.png" class="iconoAdd" data-target="#modal">
 
                                     </div>
 
@@ -1560,6 +1566,29 @@ Modificado: 3/12/19
 
     <!-------------------------------------------------- /CONTENEDOR ----------------------------------------------------------->
 
+
+    <!-- Modal añadir sensor-->
+    <div class="modal fade" id="modal-anyadir-sensor" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Añadir sensor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Escanea el QR del sensor para añadirlo a la base de datos.</p>
+                    <video id="preview" class="w-100"></video>
+                    <p id="qr-escaneado-p">QR escaneado: </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="anyadirSensor()">Añadir sensor</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Librería jQuery requerida por los plugins de JavaScript -->
     <script src="https://code.jquery.com/jquery.js"></script>
