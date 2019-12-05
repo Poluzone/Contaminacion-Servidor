@@ -70,11 +70,18 @@ class Proxy {
         }).then(function (datos) {
             console.log("hola2");
             if (datos.status == true) {
-                setCookie("username", datos.Usuario[0].Email);
-                console.log("Iniciar sesion correcto y se han creado los cookies");
-                checkCookie();
+                if (datos.Usuario[0].TipoUsuario == "Admin") {
+                    setCookie("username", datos.Usuario[0].Email);
+                    console.log("Iniciar sesion correcto y se han creado los cookies");
+                    checkCookie();
+                } else {
+                    console.log("El usuario que intenta iniciar sesión no es Admin");
+                    elUsuarioNoEsAdmin();
+                }
+
             } else {
                 console.log("No existe o no has puesto bien los datos");
+                usuarioOContraseñaIncorrectos();
             }
         });
     }
@@ -133,6 +140,7 @@ class Proxy {
 
     //------------Ivan---------------
     // getSensoresYSusUsuarios()
+    // --> json con todos los sensores
     //-------------------------------
     async getSensoresYSusUsuarios(callback) {
 
@@ -163,12 +171,97 @@ class Proxy {
     //-------------Ivan--------------
     // N: IdEstado -->
     // getNumSensoresSegunEstado()
+    // --> N: numero de sensores segun estado
     //-------------------------------
     async getNumSensoresSegunEstado(estado, callback) {
 
         console.log("Llamada a getNumSensoresSegunEstado con " + parseInt(estado));
 
-        fetch(IP_PUERTO + "/getNumSensoresSegunEstado/"+estado, {
+        fetch(IP_PUERTO + "/getNumSensoresSegunEstado/" + estado, {
+                method: 'GET', // or 'PUT'
+                headers: {
+                    'User-Agent': 'jordi',
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+
+                callback(datos);
+
+            }).catch(e => {
+                console.log("error: " + e);
+                return e;
+            });
+
+    }
+
+    //------------Ivan---------------
+    // getTodosLosUsuariosYSusSensores()
+    // --> json con todos los usuarios
+    //-------------------------------
+    async getTodosLosUsuariosYSusSensores(callback) {
+
+        console.log("Llamada a getTodosLosUsuariosYSusSensores");
+
+        fetch(IP_PUERTO + "/getTodosLosUsuariosYSusSensores", {
+                method: 'GET', // or 'PUT'
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+                if (datos != undefined) {
+
+                    console.log("Datos: " + datos);
+                    callback(datos);
+
+                } else {
+                    console.log("No hay usuarios");
+                }
+            }).catch(e => {
+                console.log("error: " + e);
+                return e;
+            });
+
+    }
+
+    //------------Ivan---------------
+    // getNumeroUsuariosTotales()
+    // --> N: numero de TODOS los usuarios 
+    //-------------------------------
+    async getNumeroUsuariosTotales(callback) {
+
+        console.log("Llamada a getNumeroUsuariosTotales");
+
+        fetch(IP_PUERTO + "/getNumeroUsuariosTotales", {
+                method: 'GET', // or 'PUT'
+            }).then(function (response) {
+                console.log("response ", response);
+                return response.json();
+            })
+            .then(function (datos) {
+                callback(datos);
+
+            }).catch(e => {
+                console.log("error: " + e);
+                return e;
+            });
+
+    }
+
+    //-------------Ivan--------------
+    // String: tipo -->
+    // getNumeroUsuariosTotalesPorTipo()
+    // --> N: numero de usuarios segun tipo
+    //-------------------------------
+    async getNumeroUsuariosTotalesPorTipo(estado, callback) {
+
+        console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + estado);
+
+        fetch(IP_PUERTO + "/getNumeroUsuariosTotalesPorTipo/" + estado, {
                 method: 'GET', // or 'PUT'
                 headers: {
                     'User-Agent': 'jordi',
@@ -212,6 +305,30 @@ class Proxy {
                 }
                 callback(datos);
             });
+    }
+
+    //-------------------------------
+    // borrarSensorPorID()
+    //-------------------------------
+    async borrarSensorPorID(id, callback) {
+
+        /*var idJson = {
+            id: id
+        };*/
+
+        fetch(IP_PUERTO + "/borrarSensorPorID", {
+            method: 'POST', // or 'PUT'
+            body: id.toString(), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
     }
 
 }

@@ -1,4 +1,8 @@
-<!-- Creado por Iván Romero Ruiz -->
+<!-- 
+admin.html
+Creado por Iván Romero Ruiz 
+Modificado: 3/12/19
+-->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -6,17 +10,84 @@
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
 
+    <script type="text/javascript" src="../js/barra-busqueda.js"></script>
     <!-- Scripts para API Google Maps -->
     <script src="../js/logicaAdministracion.js"></script>
 
     <!-- Scripts para API Google Maps -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization" type="text/javascript"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization"
+        type="text/javascript"></script>
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
     <script>
+        // Declaracion de variables
         var proxy = new Proxy();
 
         var sensores;
+        var unSensor
+
+        var usuarios;
+        var unUsuario;
+
+        var numeroTotalDeUsuarios;
+
+        var primeraLlamadaA_rellenarTarjetasNumeroSensores = true; // Se utiliza para borrar previamente el texto con los numeros que hay en las tarjetas si no es la primera vez que se llama a rellenarTarjetasNumeroSensores, si esto no se hiciera no se visualizarian los numeros
+
+        var hayAlgunElementoSeleccionado = false; // Para saber si hay algun elemento seleccionado y poder cambiar su color o borrarlo
+
+        var elementoSeleccionado; // Se utiliza para cambiar el color del elemento seleccionado
+
+        var innerHTMLDetarjetaExtra; // Para guardar el contenido de la tarjeta4 antes de borrarla al cambiar al modo usuarios
+
+        var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
+
+        var modoActual = 0; // 0 si el modo actual es SENSORES y 1 si es USUARIOS
+
+        // VARIABLES INTERFAZ
+
+        // Imagenes
+        var icono1;
+        var icono2;
+        var icono3;
+
+        // Modal
+        var botonModal;
+        var textoModal;
+
+        // Tarjetas superiores
+        var numeroSensores;
+        var sensoresActivos;
+        var sensoresInactivos;
+        var sensoresEnStock;
+        var contenedorSensoresEnStock;
+        var textoTarjeta1;
+        var textoTarjeta2;
+        var textoTarjeta3;
+
+        // Modos
+        var botonSensores;
+        var botonUsuarios;
+
+        // Tarjeta SENSORES / USUARIOS
+        var textoSENSORESyUSUARIOS;
+
+        var botonAdd;
+        var botonBorrar;
+
+        var textoColumna1;
+        var textoColumna2;
+        var textoColumna3;
+        var textoColumna4;
+
+        // Pulso
+        var pulse1;
+        var pulse2;
+
+        // Tarjeta INFORMACION
+        var tarjetaINFORMACION;
+
+        // Fin declaracion de variables
 
         // Llamar a checkCookies antes de que se cargue el cuerpo para que no se pueda acceder a la pagina sin estar logineado
         window.addEventListener('load', checkCookie, false);
@@ -24,11 +95,11 @@
         // Se llama a llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores cuando se crea la ventana
         window.addEventListener('load', llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores, false);
 
-        // Llamada al crearse la pagina para rellenar la lista de sensores mediante una llamada interna a la funcion crearElementoLista() para cada elemento
-        // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena en aqui
-        // Tambien se llama a la creacion del mapa para que no se haga antes de las cookies
+        // Llamada al crearse la pagina para rellenar la lista de sensores mediante una llamada interna a la funcion crearSensorLista() para cada elemento
+        // Tambien llama a la funcion que escribe el numero de sensores de las 4 tarjetas ya que necesita la variable sensores que se rellena aqui
+        // Ademas se llama a la creacion del mapa para que no se haga antes de las cookies y se inicializan variables en relacion con la interfaz
         function llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores() {
-            proxy.getSensoresYSusUsuarios(function(resp) {
+            proxy.getSensoresYSusUsuarios(function (resp) {
 
                 sensores = resp;
 
@@ -37,24 +108,67 @@
                 console.log("Adios " + 1);
 
                 for (var i = 0; i < sensores.length; i++) {
-                    crearElementoLista(i);
+                    crearSensorLista(i);
                 }
 
                 // Mostrar numero de sensores
                 rellenarTarjetasNumeroSensores();
 
             });
-            
+
             // Puntos del mapa
-        recibirMedidasFecha({
-            "desde": 0,
-            "hasta": 0
-        });
+
+            recibirMedidasFecha({
+                "desde": 0,
+                "hasta": 0
+            });
+
+            //ELEMENTOS DE LA INTERFAZ
+            icono1 = document.getElementById("icono1");
+            icono2 = document.getElementById("icono2");
+            icono3 = document.getElementById("icono3");
+
+            botonModal = document.getElementById("botonModal");
+            textoModal = document.getElementById("textoModal");
+
+            numeroSensores = document.getElementById("valorTarjeta1");
+            sensoresActivos = document.getElementById("valorTarjeta2");
+            sensoresInactivos = document.getElementById("valorTarjeta3");
+            sensoresEnStock = document.getElementById("valorTarjeta4");
+            contenedorSensoresEnStock = document.getElementById("tarjeta4");
+            numeroUsuarios = document.getElementById("valorTarjeta1");
+            usuariosNormales = document.getElementById("valorTarjeta2");
+            usuariosConductores = document.getElementById("valorTarjeta3");
+            tarjetaEliminada = document.getElementById("valorTarjeta4");
+
+            botonSensores = document.getElementById('modoSensores');
+            botonUsuarios = document.getElementById('modoUsuarios');
+
+            textoTarjeta1 = document.getElementById("textoTarjeta1");
+            textoTarjeta2 = document.getElementById("textoTarjeta2");
+            textoTarjeta3 = document.getElementById("textoTarjeta3");
+            tarjeta4 = document.getElementById("tarjeta4");
+
+            textoSENSORESyUSUARIOS = document.getElementById("textoSensores");
+
+            textoColumna1 = document.getElementById("textoColumna1");
+            textoColumna2 = document.getElementById("textoColumna2");
+            textoColumna3 = document.getElementById("textoColumna3");
+            textoColumna4 = document.getElementById("textoColumna4");
+
+            tarjetaINFORMACION = document.getElementById("informacionUsuario");
+
+            pulse1 = document.getElementById("pulse1");
+            pulse2 = document.getElementById("pulse2");
+
+            if (primeraLlamadaA_rellenarTarjetasNumeroSensores == true) { // Se guarda la estructura de la tarjeta informacion cuando se llama por primera vez para vaciarla posteriormente
+                innerHTMLTarjetaINFORMACION = document.getElementById("informacionUsuario").innerHTML;
+            }
 
         }
 
         // Funcion que crea un numero de elementos en la lista equivalente al numero total de sensores en la base de datos
-        function crearElementoLista(i) {
+        function crearSensorLista(i) {
 
             var maxListaSensores = sensores.length;
             var sensor;
@@ -68,7 +182,7 @@
             imagen = document.createElement("img");
 
             sensor = sensores[i];
-
+            console.log("Skeroo " + JSON.stringify(sensor.Usuario))
             // Creacion de los divs y texto de cada elemento -----------------------------------------
 
             li.className = "tarjetaLista shadow-sm mb-1 bg-white";
@@ -91,35 +205,53 @@
             divContenedor.appendChild(div5);
 
             var iconoEstado = "";
+            var iconoAlt = ""
 
             //console.log("que " + sensor.Estado);
 
             if (sensor.Estado == "En Stock") {
                 //console.log("nani " + sensor.Estado);
                 iconoEstado = "box3";
+                iconoAlt = "En Stock"
             }
             if (sensor.Estado == "Alquilado") {
                 //console.log("nani " + sensor.Estado);
                 iconoEstado = "tick3";
+                iconoAlt = "Alquilado"
             }
             if (sensor.Estado == "Averiado") {
                 //console.log("nani " + sensor.Estado);
                 iconoEstado = "cross3";
+                iconoAlt = "Averiado"
             }
 
             imagen.src = "../images/" + iconoEstado + ".png";
+            imagen.alt = iconoAlt;
             div1.appendChild(imagen);
             div2.appendChild(document.createTextNode(sensor.TipoSensor));
             div4.appendChild(document.createTextNode(sensor.IdSensor));
-            div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+            if (sensor.Usuario != null) { // Si esta en Stock no tendra ningun usuario asignado
+                div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+            } else {
+                div5.appendChild(document.createTextNode(""));
+            }
+
             ul.appendChild(li);
             console.log(sensor);
 
-            // /Creacion de los divs y texto de cada elemento -----------------------------------------
+            // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
+            divContenedor.onclick = function () {
 
+                unSensor = sensor;
 
-            // Relleno de informacion en la tarjeta INFORMACION -----------------------------------------
-            divContenedor.onclick = function() {
+                if (hayAlgunElementoSeleccionado == true) {
+                    elementoSeleccionado.classList.remove("elementoNaranja");
+                }
+
+                divContenedor.classList.add("elementoNaranja");
+                elementoSeleccionado = divContenedor;
+
+                hayAlgunElementoSeleccionado = true;
 
                 var divTextoSensor = document.getElementById("TextoSensor");
                 divTextoSensor.innerHTML = "";
@@ -138,69 +270,322 @@
                 divEstado.appendChild(document.createTextNode(sensor.Estado));
 
                 var divTextoUsuario = document.getElementById("TextoUsuario");
+                var divTipoUsuario = document.getElementById("TipoUsuario");
+                var divIdUsuario = document.getElementById("IdUsuario");
+                var divNombre = document.getElementById("Nombre");
+                var divCorreo = document.getElementById("Correo");
+                var divTelefono = document.getElementById("Telefono");
+
+                if (sensor.Usuario != null) {
+                    divTextoUsuario.innerHTML = "";
+                    divTextoUsuario.appendChild(document.createTextNode("Usuario: "));
+
+                    divTipoUsuario.innerHTML = "";
+                    divTipoUsuario.appendChild(document.createTextNode(sensor.Usuario.TipoUsuario));
+
+                    divIdUsuario.innerHTML = "";
+                    divIdUsuario.appendChild(document.createTextNode(sensor.Usuario.IdUsuario));
+
+                    divNombre.innerHTML = "";
+                    divNombre.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+
+                    divCorreo.innerHTML = "";
+                    divCorreo.appendChild(document.createTextNode(sensor.Usuario.Email));
+
+                    divTelefono.innerHTML = "";
+                    divTelefono.appendChild(document.createTextNode(parseInt(sensor.Usuario.Telefono)));
+                } else {
+                    divTextoUsuario.innerHTML = "";
+                    divTextoUsuario.appendChild(document.createTextNode("Usuario: "));
+
+                    divTipoUsuario.innerHTML = "";
+                    divTipoUsuario.appendChild(document.createTextNode(""));
+
+                    divIdUsuario.innerHTML = "";
+                    divIdUsuario.appendChild(document.createTextNode("El sensor está en Stock"));
+
+                    divNombre.innerHTML = "";
+                    divNombre.appendChild(document.createTextNode(""));
+
+                    divCorreo.innerHTML = "";
+                    divCorreo.appendChild(document.createTextNode(""));
+
+                    divTelefono.innerHTML = "";
+                    divTelefono.appendChild(document.createTextNode(""));
+                }
+
+            };
+
+        }
+
+        // Funcion que crea un numero de elementos en la lista equivalente al numero total de sensores en la base de datos
+        function crearUsuarioLista(i) {
+
+            console.log("Llamada a crearUsuarioLista()");
+
+            var maxListaUsuarios = numeroTotalDeUsuarios;
+            var usuario;
+            var ul = document.getElementById("lista");
+            var li = document.createElement("li");
+            var divContenedor;
+            var div1 = document.createElement("div");
+            var div2 = document.createElement("div");
+            var div4 = document.createElement("div");
+            var div5 = document.createElement("div");
+            imagen = document.createElement("img");
+
+            usuario = usuarios[i];
+
+            // Creacion de los divs y texto de cada elemento -----------------------------------------
+
+            li.className = "tarjetaLista shadow-sm mb-1 bg-white";
+
+            divContenedor = document.createElement("div");
+            divContenedor.className = "elementoLista row mr-0 ml-0";
+            li.appendChild(divContenedor);
+
+            div1.className = "columnasInfoSensor col-1";
+            divContenedor.appendChild(div1);
+            imagen.className = "iconoDeCadaElemento";
+
+            div2.className = "columnasInfoSensor col-3 my-auto";
+            divContenedor.appendChild(div2);
+
+            div4.className = "columnasInfoSensor col-3 my-auto";
+            divContenedor.appendChild(div4);
+
+            div5.className = "columnasInfoSensor col-5 my-auto";
+            divContenedor.appendChild(div5);
+
+            var iconoTipo = "";
+            var iconoAlt = "";
+
+            //console.log("que " + sensor.Estado);
+
+            if (usuario.TipoUsuario == "Normal") {
+                //console.log("nani " + sensor.Estado);
+                iconoTipo = "userNormal";
+                iconoAlt = "Normal";
+            }
+            if (usuario.TipoUsuario == "Conductor") {
+                //console.log("nani " + sensor.Estado);
+                iconoTipo = "userConductor";
+                iconoAlt = "Conductor";
+            }
+            if (usuario.TipoUsuario == "Admin") { // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
+                return;
+            }
+
+            imagen.src = "../images/" + iconoTipo + ".png";
+            imagen.alt = iconoAlt;
+            div1.appendChild(imagen);
+            if (usuario.IdUsuario == null) {
+                div2.appendChild(document.createTextNode(""));
+            } else {
+                div2.appendChild(document.createTextNode(usuario.IdUsuario));
+            }
+            if (usuario.Nombre == null) {
+                div4.appendChild(document.createTextNode(""));
+            } else {
+                div4.appendChild(document.createTextNode(usuario.Nombre));
+            }
+            if (usuario.IdSensor == null) {
+                div5.appendChild(document.createTextNode(""));
+            } else {
+                div5.appendChild(document.createTextNode(usuario.IdSensor));
+            }
+            ul.appendChild(li);
+            console.log(usuario);
+
+            // Relleno de informacion en la tarjeta INFORMACION al clicar un usuario-----------------------------------------
+            divContenedor.onclick = function () {
+
+                unUsuario = usuario;
+
+                if (hayAlgunElementoSeleccionado == true) {
+                    elementoSeleccionado.classList.remove("elementoNaranja");
+                }
+
+                divContenedor.classList.add("elementoNaranja");
+                elementoSeleccionado = divContenedor;
+
+                hayAlgunElementoSeleccionado = true;
+
+                var divTextoSensor = document.getElementById("TextoSensor");
+                divTextoSensor.innerHTML = "";
+                divTextoSensor.appendChild(document.createTextNode("Sensor: "));
+
+                var divIdSensor = document.getElementById("IdSensor");
+                divIdSensor.innerHTML = "";
+
+                var divTipoSensor = document.getElementById("TipoSensor");
+                divTipoSensor.innerHTML = "";
+
+                var divEstado = document.getElementById("Estado");
+                divEstado.innerHTML = "";
+
+                if (usuario.Sensor != null) {
+                    divTipoSensor.appendChild(document.createTextNode(usuario.Sensor.TipoSensor));
+                    divEstado.appendChild(document.createTextNode(usuario.Sensor.Estado));
+                    divIdSensor.appendChild(document.createTextNode(parseInt(usuario.IdSensor)));
+                } else {
+                    divTipoSensor.appendChild(document.createTextNode(""));
+                    divEstado.appendChild(document.createTextNode(""));
+                    divIdSensor.appendChild(document.createTextNode("No tiene sensor"));
+                }
+
+                var divTextoUsuario = document.getElementById("TextoUsuario");
                 divTextoUsuario.innerHTML = "";
                 divTextoUsuario.appendChild(document.createTextNode("Usuario: "));
 
                 var divTipoUsuario = document.getElementById("TipoUsuario");
                 divTipoUsuario.innerHTML = "";
-                divTipoUsuario.appendChild(document.createTextNode(sensor.Usuario.TipoUsuario));
+                divTipoUsuario.appendChild(document.createTextNode(usuario.TipoUsuario));
 
                 var divIdUsuario = document.getElementById("IdUsuario");
                 divIdUsuario.innerHTML = "";
-                divIdUsuario.appendChild(document.createTextNode(sensor.Usuario.IdUsuario));
+                divIdUsuario.appendChild(document.createTextNode(usuario.IdUsuario));
 
                 var divNombre = document.getElementById("Nombre");
                 divNombre.innerHTML = "";
-                divNombre.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+                divNombre.appendChild(document.createTextNode(usuario.Nombre));
 
                 var divCorreo = document.getElementById("Correo");
                 divCorreo.innerHTML = "";
-                divCorreo.appendChild(document.createTextNode(sensor.Usuario.Email));
+                divCorreo.appendChild(document.createTextNode(usuario.Email));
 
                 var divTelefono = document.getElementById("Telefono");
                 divTelefono.innerHTML = "";
-                divTelefono.appendChild(document.createTextNode(parseInt(sensor.Usuario.Telefono)));
+                divTelefono.appendChild(document.createTextNode(parseInt(usuario.Telefono)));
 
             };
-            // /Relleno de informacion en la tarjeta INFORMACION -----------------------------------------            
 
         }
 
-        // Mostrar numero de sensores totales y por estado
+        // Llamadas a rellenarTarjetasNumeroSensoresPorEstado para cada estado asi como escribir el Numero de Sensores
         async function rellenarTarjetasNumeroSensores() {
 
-            var numeroSensores = document.getElementById("tarjetaTotal");
-            numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
+            rellenarTarjetasNumeroSensoresPorEstado(1, primeraLlamadaA_rellenarTarjetasNumeroSensores);
+            rellenarTarjetasNumeroSensoresPorEstado(2, primeraLlamadaA_rellenarTarjetasNumeroSensores);
+            rellenarTarjetasNumeroSensoresPorEstado(3, primeraLlamadaA_rellenarTarjetasNumeroSensores);
 
-            rellenarTarjetasNumeroSensoresPorEstado(1);
-            rellenarTarjetasNumeroSensoresPorEstado(2);
-            rellenarTarjetasNumeroSensoresPorEstado(3);
+            // Si es la primera vez que se llama a esta funcion no se pueden borrar los numeros para volver a rellenarlos porque al cargarse la pagina estos numeros no estan todavia
+            if (primeraLlamadaA_rellenarTarjetasNumeroSensores == false) {
+                numeroSensores.innerHTML = "";
+                numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
+            } else {
+                numeroSensores.appendChild(document.createTextNode(parseInt(sensores.length)));
+                primeraLlamadaA_rellenarTarjetasNumeroSensores = false;
+            }
+
         }
 
-        // N: idEstado -->
+        // N: idEstado , bool: esLaPrimeraLlamada-->
         // rellenarTarjetasNumeroSensoresPorEstado
-        // N: numero de sensores con estado = idEstado
-        function rellenarTarjetasNumeroSensoresPorEstado(idestado) {
-
-            var sensoresActivos = document.getElementById("tarjetaActivos");
-            var sensoresInactivos = document.getElementById("tarjetaInactivos");
-            var sensoresEnStock = document.getElementById("tarjetaEnStock");
+        // El booleano se utiliza para borrar el texto que hay previamente si no es la primera vez que se llama a rellenarTarjetasNumeroSensores
+        function rellenarTarjetasNumeroSensoresPorEstado(idestado, esLaPrimeraLlamada) {
 
             var numeroSensoresSegunEstado = 0;
             var estadoJson = {
                 "idestado": idestado
             };
-            proxy.getNumSensoresSegunEstado(idestado, function(resp) {
+
+            if (primeraLlamadaA_rellenarTarjetasNumeroSensores == false) {
+                contenedorSensoresEnStock.innerHTML = innerHTMLDetarjetaExtra;
+            }
+
+            proxy.getNumSensoresSegunEstado(idestado, function (resp) {
                 numeroSensoresSegunEstado = resp;
 
                 if (idestado == 1) {
+                    if (esLaPrimeraLlamada == false) {
+                        sensoresEnStock.innerHTML = "";
+                    }
                     sensoresEnStock.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 1 corresponde a sensores en stock
                 }
                 if (idestado == 2) {
+                    if (esLaPrimeraLlamada == false) {
+                        sensoresActivos.innerHTML = "";
+                    }
                     sensoresActivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 2 corresponde a sensores activos
                 }
                 if (idestado == 3) {
+                    if (esLaPrimeraLlamada == false) {
+                        sensoresInactivos.innerHTML = "";
+                    }
                     sensoresInactivos.appendChild(document.createTextNode(parseInt(numeroSensoresSegunEstado))); // id 3 corresponde a sensores inactivos
+                }
+
+            });
+
+        }
+
+        function llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios() {
+            console.log("llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios");
+
+            innerHTMLDetarjetaExtra = tarjeta4.innerHTML;
+            tarjeta4.innerHTML = "";
+
+            usuarios = 0;
+
+            proxy.getTodosLosUsuariosYSusSensores(function (resp) {
+
+                usuarios = resp;
+
+                console.log("Numero de usuarios: " + resp.length);
+                console.log("Primer usuario " + sensores[0]);
+                console.log("Adios :) " + 1);
+
+                for (var i = 0; i < usuarios.length; i++) {
+                    crearUsuarioLista(i);
+                }
+
+                // Mostrar numero de usuarios
+                rellenarTarjetasNumeroUsuarios();
+
+            });
+
+        }
+
+        // Llamadas a rellenarTarjetasNumeroSensoresPorEstado para cada estado asi como escribir el Numero de Usuarios
+        async function rellenarTarjetasNumeroUsuarios() {
+            console.log("rellenarTarjetasNumeroUsuarios");
+
+            rellenarTarjetasNumeroUsuariosPorTipo("Normal");
+            rellenarTarjetasNumeroUsuariosPorTipo("Conductor");
+            // Esta tarjeta la borramos porque solo necesitamos 3 para mostrar los numeros de usuarios
+            //tarjetaEliminada.innerHTML = "";
+
+        }
+
+        // String: tipo -->
+        // rellenarTarjetasNumeroUsuariosPorTipo
+        async function rellenarTarjetasNumeroUsuariosPorTipo(tipo) {
+
+            var numeroUsuariosSegunTipo = 0;
+            var estadoJson = {
+                "tipo": tipo
+            };
+            proxy.getNumeroUsuariosTotalesPorTipo(tipo, function (resp) {
+                numeroUsuariosSegunTipo = resp;
+
+                if (tipo == "Normal") {
+                    usuariosNormales.innerHTML = "";
+                    usuariosNormales.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
+                    numeroTotalDeUsuarios = numeroTotalDeUsuarios + numeroUsuariosSegunTipo;
+                    console.log(tipo + " " + numeroUsuariosSegunTipo);
+                }
+                if (tipo == "Conductor") {
+                    usuariosConductores.innerHTML = "";
+                    usuariosConductores.appendChild(document.createTextNode(parseInt(numeroUsuariosSegunTipo)));
+                    numeroTotalDeUsuarios = numeroTotalDeUsuarios + numeroUsuariosSegunTipo;
+                    console.log(tipo + " " + numeroUsuariosSegunTipo);
+
+                    console.log("me cago en dios " + numeroTotalDeUsuarios);
+
+                    // Se rellena la tarjeta con el numero de usuarios totales despues de haber sumado los normales y los conductores
+                    numeroUsuarios.innerHTML = "";
+                    numeroUsuarios.appendChild(document.createTextNode(parseInt(numeroTotalDeUsuarios)));
                 }
 
             });
@@ -238,15 +623,13 @@
                 var a = document.createElement("a");
                 a.href = url;
                 a.click();
-            } else {
-                alert("Los cookies funcionan estimado: " + user);
             }
         }
 
         // Elimina las cookies de la pagina. Se le llama al clicar a Cerrar Sesion
         function eliminarCookies() {
             console.log("Leyenda");
-            document.cookie.split(";").forEach(function(c) {
+            document.cookie.split(";").forEach(function (c) {
                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
             });
 
@@ -290,108 +673,337 @@
         // Funcion que se llamara al clicar el boton del mas que añadira una relacion Usuario-Sensor cambiando una por otra
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
+
+            botonModal.classList.remove("invisible");
+            if (modoActual == 0) {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("AÑADIR"));
+            } else {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
+                botonModal.innerHTML = "";
+                botonModal.appendChild(document.createTextNode("AÑADIR"));
+            }
+
         }
 
         // Funcion que se llamara al clicar a la basura que elminiara una relacion Usuario-Sensor
         function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
+
+            if (hayAlgunElementoSeleccionado) {
+                botonModal.classList.remove("invisible");
+                if (modoActual == 0) {
+                    textoModal.innerHTML = "";
+                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
+                    botonModal.innerHTML = "";
+                    botonModal.appendChild(document.createTextNode("BORRAR"));
+                } else {
+                    textoModal.innerHTML = "";
+                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                    botonModal.innerHTML = "";
+                    botonModal.appendChild(document.createTextNode("BORRAR"));
+                }
+            } else {
+                textoModal.innerHTML = "";
+                textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para borrarlo"));
+                botonModal.innerHTML = "";
+                botonModal.classList.add("invisible");
+            }
+
         }
-        
+
+        function eliminarSensorOUsuario() {
+            if (modoActual == 0) {
+                console.log("Borrado sensor: " + unSensor.IdSensor);
+
+                elementoSeleccionado.innerHTML = "";
+                proxy.borrarSensorPorID(unSensor.IdSensor);
+            }
+        }
+
         //Esto es para poder asignarle un nombre al gas dependiendo de su ID
-        function queGasSoy(dato){
+        function queGasSoy(dato) {
             var gas;
-            if(dato == 2){
+            if (dato == 2) {
                 gas = "CO";
-            }else{
-                if(dato == 3){
+            } else {
+                if (dato == 3) {
                     gas = "NOX";
-                }else{
-                    if(dato==4){
-                        gas="SO2";
-                    }else{
-                        gas="Gas Irritante";
+                } else {
+                    if (dato == 4) {
+                        gas = "SO2";
+                    } else {
+                        gas = "Gas Irritante";
                     }
                 }
             }
             return gas;
         }
-        
+
         //Recibe las medidas y dibuja los marcadores
-        function recibirMedidasFecha(intervalo){
+        function recibirMedidasFecha(intervalo) {
             //Recojo los datos de la base de datos
-            proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
-           // console.log(datos);
-            console.log("DATOS DE MEDIDAS POR FECHA"+datos["medidas"].length);
-            var poluzone = [];
-                
-                 var infowindow = new google.maps.InfoWindow()
-                
-            for(let i = 0; i<datos["medidas"].length;i++){
-                
-                var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
-                var icon;
-                /*if(datos[i].IdTipoMedida == 2){
-                    icon = iconBase + 'purple-dot.png'
-                }*/
-                if(datos["medidas"][i].IdTipoMedida==1){
-                     icon = iconBase + 'green.png' 
-                }else{
-                    if(datos["medidas"][i].IdTipoMedida==2){
-                      icon = iconBase + 'yellow.png'
-                    }else{
-                        if(datos["medidas"][i].IdTipoMedida==3){
-                            icon = iconBase + 'red.png'
-                        }else{
-                            if(datos["medidas"][i].IdTipoMedida==4){
-                            icon = iconBase + 'purple.png'
-                            }else{
-                                icon = iconBase + 'lightblue.png'
+            proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
+                // console.log(datos);
+                console.log("DATOS DE MEDIDAS POR FECHA" + datos["medidas"].length);
+                var poluzone = [];
+
+                var infowindow = new google.maps.InfoWindow()
+
+                for (let i = 0; i < datos["medidas"].length; i++) {
+
+                    var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+                    var icon;
+                    /*if(datos[i].IdTipoMedida == 2){
+                        icon = iconBase + 'purple-dot.png'
+                    }*/
+                    if (datos["medidas"][i].IdTipoMedida == 1) {
+                        icon = iconBase + 'green.png'
+                    } else {
+                        if (datos["medidas"][i].IdTipoMedida == 2) {
+                            icon = iconBase + 'yellow.png'
+                        } else {
+                            if (datos["medidas"][i].IdTipoMedida == 3) {
+                                icon = iconBase + 'red.png'
+                            } else {
+                                if (datos["medidas"][i].IdTipoMedida == 4) {
+                                    icon = iconBase + 'purple.png'
+                                } else {
+                                    icon = iconBase + 'lightblue.png'
+                                }
                             }
                         }
                     }
-                }
-                var medida = new google.maps.Marker({
-			         position: {lat:datos["medidas"][i].Latitud,lng:datos["medidas"][i].Longitud},
-			         map: getMap(),
-			         title: 'Medidas',
-                     icon: {url:icon},
-                   });      
-                   
-                   var puntoCalor = {location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor};
-                
-                   poluzone.push(puntoCalor);
-                
-                 var contentString = '<div id="content">'+
-                  '<div id="siteNotice">'+
-                  '</div>'+
-                  '<h1 id="firstHeading" class="firstHeading">'+datos["medidas"][i].Valor.toString()+' ppb</h1>'+
-                  '<div id="bodyContent">'+
-                  '<p><b>'+queGasSoy(datos["medidas"][i].IdTipoMedida)+'</b></p>'+
-                  '<p></p>'+
-                  '</div>'+
-                  '</div>';
+                    var medida = new google.maps.Marker({
+                        position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+                        map: getMap(),
+                        title: 'Medidas',
+                        icon: { url: icon },
+                    });
 
-                   
+                    var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
 
-                 
-                 google.maps.event.addListener(medida,'click', (function(marker,content,infowindow){ 
-        return function() {
-           infowindow.setContent(content);
-           infowindow.open(getMap(),marker);
-        };
-    })(medida,contentString,infowindow)); 
-                
-                    
-             
-            }//for
+                    poluzone.push(puntoCalor);
+
+                    var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                        '<p></p>' +
+                        '</div>' +
+                        '</div>';
+
+
+                    google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                        return function () {
+                            infowindow.setContent(content);
+                            infowindow.open(getMap(), marker);
+                        };
+                    })(medida, contentString, infowindow));
+
+
+
+                }//for
                 var heatmap = new google.maps.visualization.HeatmapLayer({
-                data: poluzone,
-                maxIntensity: 1243,
-                radius: 60
+                    data: poluzone,
+                    maxIntensity: 1243,
+                    radius: 60
                 });
                 heatmap.setMap(getMap());
-        });
-    }
+            });
+        }
+
+        // Cambia la información de la página de sensores a usuarios
+        function cambioAUsuarios() {
+            console.log("Llamada a cambiarAUsuarios()");
+
+            if (modoActual == 0) { // Solo funciona cuando el modo previo al clic es el contrario
+
+                hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
+
+                numeroTotalDeUsuarios = 0;
+
+                // Pulso
+                pulse1.className = "pulse1";
+                pulse2.classList.remove("pulse2");
+
+                modoActual = 1;
+
+                var ul = document.getElementById("lista");
+                var li = document.getElementsByClassName("tarjetaLista");
+                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+
+                var br1 = document.createElement("br");
+                var br2 = document.createElement("br");
+                var br3 = document.createElement("br");
+
+                // Cambio en los botones            
+                botonUsuarios.style.color = '#F88E52';
+                botonSensores.style.color = 'white';
+
+                var i = 0;
+                while (i <= tamañoLista - 1) {
+                    console.log(i);
+                    ul.removeChild(li[0]);
+                    i++;
+                }
+
+                // Rellenado de la lista y de las tarjetas
+                llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios();
+
+                // Cambio del texto de las tarjetas
+                textoTarjeta1.innerHTML = "";
+                textoTarjeta2.innerHTML = "";
+                textoTarjeta3.innerHTML = "";
+
+                textoTarjeta1.appendChild(document.createTextNode("Número de"));
+                textoTarjeta1.appendChild(br1);
+                textoTarjeta1.appendChild(document.createTextNode("usuarios"));
+                textoTarjeta2.appendChild(document.createTextNode("Usuarios"));
+                textoTarjeta2.appendChild(br2);
+                textoTarjeta2.appendChild(document.createTextNode("normales"));
+                textoTarjeta3.appendChild(document.createTextNode("Usuarios"));
+                textoTarjeta3.appendChild(br3);
+                textoTarjeta3.appendChild(document.createTextNode("conductores"));
+
+                // Cambio texto SENSORES a USUARIOS
+                textoSENSORESyUSUARIOS.innerHTML = "";
+                textoSENSORESyUSUARIOS.appendChild(document.createTextNode("USUARIOS"));
+
+                // Cambio nombre columnas de la de la lista
+
+                textoColumna1.innerHTML = "";
+                textoColumna2.innerHTML = "";
+                textoColumna3.innerHTML = "";
+                textoColumna4.innerHTML = "";
+
+                textoColumna1.appendChild(document.createTextNode("Tipo"));
+                textoColumna2.appendChild(document.createTextNode("Id usuario"));
+                textoColumna3.appendChild(document.createTextNode("Nombre"));
+                textoColumna4.appendChild(document.createTextNode("Id sensor"));
+
+                // Cambiar iconos de las tarjetas
+                icono1.src = "../images/todosLosUsers.png";
+                icono2.src = "../images/userNormal.png";
+                icono3.src = "../images/userConductor.png";
+
+                // Vaciado de la tarjeta INFORMACION
+                tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+
+            }
+
+        }
+
+        function cambioASensores() {
+            console.log("Llamada a cambiarAUsuarios()");
+
+            if (modoActual == 1) { // Solo funciona cuando el modo previo al clic es el contrario
+
+                hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
+
+                // Pulso
+                pulse2.className = "pulse2";
+                pulse1.classList.remove("pulse1");
+
+                modoActual = 0;
+
+                var ul = document.getElementById("lista");
+                var li = document.getElementsByClassName("tarjetaLista");
+                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+
+                var br1 = document.createElement("br");
+                var br2 = document.createElement("br");
+                var br3 = document.createElement("br");
+
+                // Cambio en los botones
+                botonUsuarios.style.color = 'white';
+                botonSensores.style.color = '#F88E52';
+
+                var i = 0;
+                while (i <= tamañoLista - 1) {
+                    ul.removeChild(li[0]);
+                    i++;
+                }
+
+                // Rellenado de la lista y de las tarjetas
+                llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores();
+
+                // Cambio del texto de las tarjetas
+                textoTarjeta1.innerHTML = "";
+                textoTarjeta2.innerHTML = "";
+                textoTarjeta3.innerHTML = "";
+
+                textoTarjeta1.appendChild(document.createTextNode("Número de"));
+                textoTarjeta1.appendChild(br1);
+                textoTarjeta1.appendChild(document.createTextNode("sensores"));
+                textoTarjeta2.appendChild(document.createTextNode("Sensores"));
+                textoTarjeta2.appendChild(br2);
+                textoTarjeta2.appendChild(document.createTextNode("alquilados"));
+                textoTarjeta3.appendChild(document.createTextNode("Sensores"));
+                textoTarjeta3.appendChild(br3);
+                textoTarjeta3.appendChild(document.createTextNode("Averiados"));
+
+                //Cambio texto USUARIOS a SENSORES
+                textoSENSORESyUSUARIOS.innerHTML = "";
+                textoSENSORESyUSUARIOS.appendChild(document.createTextNode("SENSORES"));
+
+                // Cambio nombre columnas de la de la lista
+
+                textoColumna1.innerHTML = "";
+                textoColumna2.innerHTML = "";
+                textoColumna3.innerHTML = "";
+                textoColumna4.innerHTML = "";
+
+                textoColumna1.appendChild(document.createTextNode("Estado"));
+                textoColumna2.appendChild(document.createTextNode("Tipo"));
+                textoColumna3.appendChild(document.createTextNode("Id sensor"));
+                textoColumna4.appendChild(document.createTextNode("Usuario"));
+
+                // Cambiar iconos de las tarjetas
+                icono1.src = "../images/sensor1.png";
+                icono2.src = "../images/tick2.png";
+                icono3.src = "../images/cross2.png";
+
+                //Vaciado de la tarjeta INFORMACION
+                tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+
+            }
+
+
+        }
+
+    </script>
+
+    <!-- Barra de busqueda (barra-busqueda.js)-->
+    <script>
+        function buscador() {
+            // Declare variables
+            var input, filter, ul, li, a, i, txtValue, imgalt, filtro;
+            input = document.getElementById('barraSensores');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("lista");
+
+            li = ul.getElementsByTagName('li');
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                divContenedor = li[i].getElementsByTagName("div")[0];
+                imgalt = divContenedor.getElementsByTagName("div")[0].getElementsByTagName("img")[0].alt;
+                filtro = divContenedor.textContent + imgalt
+                txtValue = filtro;
+                console.log(txtValue)
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
 
     </script>
 
@@ -414,7 +1026,8 @@
 
     <!-- CSS de Bootstrap -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -427,29 +1040,81 @@
 <body id="page-top" onload="">
     <!-------------------------------------------------- CONTENEDOR ----------------------------------------------------------->
 
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="4" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title naranja" id="modalLabel">ATENCIÓN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="textoModal">
+                    Texto del modal
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-lg" id="botonModal"
+                        onclick="eliminarSensorOUsuario()" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="contenedor">
+
+        <!---- PULSOS ---->
+        <div class="contenedorPulsos">
+            <span class="" id="pulse1"></span>
+            <span class="" id="pulse2"></span>
+        </div>
 
         <!------------------------------------------------ NAVBAR -------------------------------------------------------->
 
-        <div class="navbar">
+        <div class="navbar navbarAdmin">
 
             <!-- Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink" id="darkNav">
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro navbar-shrink8" id="darkNav">
                 <div class="container">
-                    <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png" width="30" alt=""> Poluzone</a>
-                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <a class="navbar-brand js-scroll-trigger nunito" href="index.html"><img src="../images/earth.png"
+                            width="30" alt=""> Poluzone</a>
+                    <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
                         <i class="material-icons">
                             menu
                         </i>
                     </a>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav text-uppercase ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()" href="#contact">CERRAR SESIÓN</a>
+
+                        <ul class="navbar-nav text-uppercase w-100">
+
+                            <li class="align-self-center ml-5">
+                                <a class="modoSensores" id="modoSensores" onclick="cambioASensores()"
+                                    href="#contact">SENSORES</a>
                             </li>
+
+                            <li class="align-self-center ml-2">
+                                <a class="modoUsuarios" id="modoUsuarios" onclick="cambioAUsuarios()"
+                                    href="#contact">USUARIOS</a>
+                            </li>
+
+                            <ul class="ml-auto w-100">
+
+                                <li class="cerrarSesion nav-item ml-auto">
+                                    <a class="nav-link js-scroll-trigger" onclick="eliminarCookies()"
+                                        href="#contact">CERRAR SESIÓN</a>
+                                </li>
+
+                            </ul>
+
                         </ul>
+
                     </div>
+
                 </div>
+
             </nav>
 
 
@@ -471,17 +1136,17 @@
 
                         <div class="iconoTarjeta my-auto">
 
-                            <img src="../images/sensor1.png" class="icono">
+                            <img src="../images/sensor1.png" class="icono" id="icono1">
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta1" id="textoTarjeta1">
 
                             Número de<br>sensores
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaTotal">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta1">
 
 
 
@@ -500,17 +1165,17 @@
 
                         <div class="iconoTarjeta my-auto">
 
-                            <img src="../images/tick2.png" class="icono">
+                            <img src="../images/tick2.png" class="icono" id="icono2">
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta2" id="textoTarjeta2">
 
                             Sensores<br>alquilados
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaActivos">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta2">
 
 
 
@@ -528,17 +1193,17 @@
 
                         <div class="iconoTarjeta my-auto ">
 
-                            <img src="../images/cross2.png" class="icono">
+                            <img src="../images/cross2.png" class="icono" id="icono3">
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta3" id="textoTarjeta3">
 
                             Sensores<br>averiados
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaInactivos">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta3">
 
 
 
@@ -550,7 +1215,7 @@
 
                 <!----------------------------------- TARJETA 4 ----------------------------------------->
 
-                <div class="col-lg-3">
+                <div class="col-lg-3" id="tarjeta4">
 
                     <div class="tarjeta shadow bg-white rounded my-auto">
 
@@ -560,13 +1225,13 @@
 
                         </div>
 
-                        <div class="textoTarjeta my-auto font-weight-bold">
+                        <div class="textoTarjeta my-auto font-weight-bold textoTarjeta4" id="textoTarjeta4">
 
                             Sensores<br>en stock
 
                         </div>
 
-                        <div class="valorTarjeta my-auto font-weight-bold" id="tarjetaEnStock">
+                        <div class="valorTarjeta my-auto font-weight-bold" id="valorTarjeta4">
 
 
 
@@ -606,7 +1271,7 @@
 
                                 <div class="headerLista row">
 
-                                    <div class="textoSensores my-auto col-3">
+                                    <div class="textoSensores my-auto col-3" id="textoSensores">
 
                                         SENSORES
 
@@ -614,19 +1279,23 @@
 
                                     <div class="contenedorSearch col-7 my-auto">
 
-                                        <input class="cajaDeTexto form-control form-control-sm ml-3 w-75 text-light" type="text" placeholder="Buscar palabras clave..." aria-label="Search">
+                                        <input class="cajaDeTexto form-control form-control-sm ml-3 w-75 text-light"
+                                            id="barraSensores" type="text" placeholder="Buscar palabras clave..."
+                                            aria-label="Search" onkeyup="buscador()">
 
                                     </div>
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()">
 
-                                        <img src="../images/add.png" class="iconoAdd">
+                                        <img src="../images/add.png" class="iconoAdd" data-toggle="modal"
+                                            data-target="#modal">
 
                                     </div>
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonBorrar()">
 
-                                        <img src="../images/can.png" class="iconoCan">
+                                        <img src="../images/can.png" class="iconoCan" data-toggle="modal"
+                                            data-target="#modal">
 
 
                                     </div>
@@ -645,25 +1314,25 @@
 
                                     <div class="nombresLista row mr-0 ml-0 border-bottom">
 
-                                        <div class="columnasInfoSensor col-1 font-weight-bold">
+                                        <div class="columnasInfoSensor col-1 font-weight-bold" id="textoColumna1">
 
                                             Estado
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-3 font-weight-bold">
+                                        <div class="columnasInfoSensor col-3 font-weight-bold" id="textoColumna2">
 
                                             Tipo
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-3 font-weight-bold">
+                                        <div class="columnasInfoSensor col-3 font-weight-bold" id="textoColumna3">
 
                                             Id sensor
 
                                         </div>
 
-                                        <div class="columnasInfoSensor col-5 font-weight-bold">
+                                        <div class="columnasInfoSensor col-5 font-weight-bold" id="textoColumna4">
 
                                             Usuario
 
@@ -743,7 +1412,7 @@
 
                             </div>
 
-                            <div class="informacionUsuario col">
+                            <div class="informacionUsuario col" id="informacionUsuario">
 
                                 <div class="datosSensor row border-bottom" id="datosSensor">
 
@@ -860,7 +1529,7 @@
 
 
         <!------------------------------------------------ FOOTER -------------------------------------------------------->
-        <footer class="footer fixed-bottom">
+        <footer class="footer fixed-bottom footerAdmin">
 
             <section class="section_4 text-center fondoOscuro p-1">
                 <p class="mt-2 nunito blanco nunito">&copy; Copyright 2019 GTI UPV. Todos los Derechos
@@ -888,9 +1557,15 @@
     <script src="../js/agency.min.js"></script>
     <script src="../jquery-easing/jquery.easing.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 
 </body>

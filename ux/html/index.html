@@ -73,24 +73,6 @@
 
             }
 
-            //Esto es para poder asignarle un nombre al gas dependiendo de su ID
-            function queGasSoy(dato){
-                var gas;
-                if(dato == 2){
-                    gas = "CO";
-                }else{
-                    if(dato == 3){
-                        gas = "NOX";
-                    }else{
-                        if(dato==4){
-                            gas="SO2";
-                        }else{
-                            gas="Gas Irritante";
-                        }
-                    }
-                }
-                return gas;
-            }
 
             //Recibe las medidas y dibuja los marcadores
             function recibirMedidasFecha(intervalo){
@@ -266,11 +248,10 @@
                         </div>
                     </div>
                     <div class="col-sm-9">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            </div>
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary">Left</button>
+                            <button type="button" class="btn btn-secondary">Middle</button>
+                            <button type="button" class="btn btn-secondary">Right</button>
                         </div>
                     </div>
                 </div>
