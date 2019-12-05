@@ -8,8 +8,9 @@ Modificado: 3/12/19
 <html lang="es">
 
 <head>
-    <script type="text/javascript" src="../js/instascan.min.js"></script>
     <script type="text/javascript" src="../js/PROXY.js"></script>
+    <script type="text/javascript" src="../js/instascan.min.js"></script>
+    <script type="text/javascript" src="../js/QR-anyadir-sensor.js"></script>
 
     <script type="text/javascript" src="../js/barra-busqueda.js"></script>
     <!-- Scripts para API Google Maps -->
@@ -21,7 +22,7 @@ Modificado: 3/12/19
         type="text/javascript"></script>
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
-    <script>
+    <script type="text/javascript">
         // Declaracion de variables
         var proxy = new Proxy();
 
@@ -677,12 +678,7 @@ Modificado: 3/12/19
 
             // botonModal.classList.remove("invisible");
             if (modoActual == 0) {
-                console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
-                /*  textoModal.innerHTML = "";
-                  textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
-                  botonModal.innerHTML = "";
-                  botonModal.appendChild(document.createTextNode("AÑADIR")); */
-                botonModal.click = anyadirSensor();
+                crearEscanerQR();
             }
             // Para apartado Usuarios 
             else {
@@ -724,31 +720,6 @@ Modificado: 3/12/19
                 botonModal.onclick = eliminarSensorOUsuario();
             }
 
-        }
-
-
-        // Emilia Rosa van der Heide
-        // -> anyadirSensor -> ok
-        // para añadir un sensor en la bbdd con QR
-        function anyadirSensor() {
-            if (modoActual == 0) {
-                $("#modal").modal("hide");
-                console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
-                $("#modal-anyadir-sensor").modal();
-                let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-                scanner.addListener('scan', function (content) {
-                    console.log(content);
-                });
-                Instascan.Camera.getCameras().then(function (cameras) {
-                    if (cameras.length > 0) {
-                        scanner.start(cameras[0]);
-                    } else {
-                        console.error('No cameras found.');
-                    }
-                }).catch(function (e) {
-                    console.error(e);
-                });
-            }
         }
 
         function eliminarSensorOUsuario() {
@@ -1592,12 +1563,12 @@ Modificado: 3/12/19
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                    <video id="preview"></video>
-                    <button type="button" class="btn btn-primary">Escanear QR</button>
+                    <p>Escanea el QR del sensor para añadirlo a la base de datos.</p>
+                    <video id="preview" class="w-100"></video>
+                    <p id="qr-escaneado-p">QR escaneado: </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" onclick="anyadirSensor()">Añadir sensor</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
