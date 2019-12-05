@@ -43,26 +43,31 @@ Modificado: 3/12/19
         var modoActual = 0; // 0 si el modo actual es SENSORES y 1 si es USUARIOS
 
         // VARIABLES INTERFAZ
+
+        // Imagenes
         var icono1;
         var icono2;
         var icono3;
 
+        // Modal
         var botonModal;
         var textoModal;
 
+        // Tarjetas superiores
         var numeroSensores;
         var sensoresActivos;
         var sensoresInactivos;
         var sensoresEnStock;
         var contenedorSensoresEnStock;
-
-        var botonSensores;
-        var botonUsuarios;
-
         var textoTarjeta1;
         var textoTarjeta2;
         var textoTarjeta3;
 
+        // Modos
+        var botonSensores;
+        var botonUsuarios;
+
+        // Tarjeta SENSORES / USUARIOS
         var textoSENSORESyUSUARIOS;
 
         var botonAdd;
@@ -73,9 +78,11 @@ Modificado: 3/12/19
         var textoColumna3;
         var textoColumna4;
 
+        // Pulso
         var pulse1;
         var pulse2;
 
+        // Tarjeta INFORMACION
         var tarjetaINFORMACION;
 
         // Fin declaracion de variables
@@ -172,7 +179,7 @@ Modificado: 3/12/19
             imagen = document.createElement("img");
 
             sensor = sensores[i];
-            
+            console.log("Skeroo " + JSON.stringify(sensor.Usuario))
             // Creacion de los divs y texto de cada elemento -----------------------------------------
 
             li.className = "tarjetaLista shadow-sm mb-1 bg-white";
@@ -220,18 +227,18 @@ Modificado: 3/12/19
             div1.appendChild(imagen);
             div2.appendChild(document.createTextNode(sensor.TipoSensor));
             div4.appendChild(document.createTextNode(sensor.IdSensor));
-            if(sensor.Estado!="En stock"){ // Si esta en Stock no tendra ningun usuario asignado
+            if (sensor.Usuario != null) { // Si esta en Stock no tendra ningun usuario asignado
                 div5.appendChild(document.createTextNode(sensor.Usuario.Nombre));
-            } else{
+            } else {
                 div5.appendChild(document.createTextNode(""));
             }
-            
+
             ul.appendChild(li);
             console.log(sensor);
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
             divContenedor.onclick = function() {
-                
+
                 unSensor = sensor;
 
                 if (hayAlgunElementoSeleccionado == true) {
@@ -260,28 +267,49 @@ Modificado: 3/12/19
                 divEstado.appendChild(document.createTextNode(sensor.Estado));
 
                 var divTextoUsuario = document.getElementById("TextoUsuario");
-                divTextoUsuario.innerHTML = "";
-                divTextoUsuario.appendChild(document.createTextNode("Usuario: "));
-
                 var divTipoUsuario = document.getElementById("TipoUsuario");
-                divTipoUsuario.innerHTML = "";
-                divTipoUsuario.appendChild(document.createTextNode(sensor.Usuario.TipoUsuario));
-
                 var divIdUsuario = document.getElementById("IdUsuario");
-                divIdUsuario.innerHTML = "";
-                divIdUsuario.appendChild(document.createTextNode(sensor.Usuario.IdUsuario));
-
                 var divNombre = document.getElementById("Nombre");
-                divNombre.innerHTML = "";
-                divNombre.appendChild(document.createTextNode(sensor.Usuario.Nombre));
-
                 var divCorreo = document.getElementById("Correo");
-                divCorreo.innerHTML = "";
-                divCorreo.appendChild(document.createTextNode(sensor.Usuario.Email));
-
                 var divTelefono = document.getElementById("Telefono");
-                divTelefono.innerHTML = "";
-                divTelefono.appendChild(document.createTextNode(parseInt(sensor.Usuario.Telefono)));
+
+                if (sensor.Usuario != null) {
+                    divTextoUsuario.innerHTML = "";
+                    divTextoUsuario.appendChild(document.createTextNode("Usuario: "));
+
+                    divTipoUsuario.innerHTML = "";
+                    divTipoUsuario.appendChild(document.createTextNode(sensor.Usuario.TipoUsuario));
+
+                    divIdUsuario.innerHTML = "";
+                    divIdUsuario.appendChild(document.createTextNode(sensor.Usuario.IdUsuario));
+
+                    divNombre.innerHTML = "";
+                    divNombre.appendChild(document.createTextNode(sensor.Usuario.Nombre));
+
+                    divCorreo.innerHTML = "";
+                    divCorreo.appendChild(document.createTextNode(sensor.Usuario.Email));
+
+                    divTelefono.innerHTML = "";
+                    divTelefono.appendChild(document.createTextNode(parseInt(sensor.Usuario.Telefono)));
+                } else {
+                    divTextoUsuario.innerHTML = "";
+                    divTextoUsuario.appendChild(document.createTextNode("Usuario: "));
+
+                    divTipoUsuario.innerHTML = "";
+                    divTipoUsuario.appendChild(document.createTextNode(""));
+
+                    divIdUsuario.innerHTML = "";
+                    divIdUsuario.appendChild(document.createTextNode("El sensor está en Stock"));
+
+                    divNombre.innerHTML = "";
+                    divNombre.appendChild(document.createTextNode(""));
+
+                    divCorreo.innerHTML = "";
+                    divCorreo.appendChild(document.createTextNode(""));
+
+                    divTelefono.innerHTML = "";
+                    divTelefono.appendChild(document.createTextNode(""));
+                }
 
             };
 
@@ -368,8 +396,8 @@ Modificado: 3/12/19
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un usuario-----------------------------------------
             divContenedor.onclick = function() {
-                
-            unUsuario = usuario;                
+
+                unUsuario = usuario;
 
                 if (hayAlgunElementoSeleccionado == true) {
                     elementoSeleccionado.classList.remove("elementoNaranja");
@@ -686,9 +714,9 @@ Modificado: 3/12/19
 
         function eliminarSensorOUsuario() {
             if (modoActual == 0) {
-                console.log("Borrado sensor: "+unSensor.IdSensor);
-                
-                elementoSeleccionado.innerHTML="";
+                console.log("Borrado sensor: " + unSensor.IdSensor);
+
+                elementoSeleccionado.innerHTML = "";
                 proxy.borrarSensorPorID(unSensor.IdSensor);
             }
         }
