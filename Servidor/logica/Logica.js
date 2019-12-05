@@ -307,25 +307,26 @@ module.exports = class Logica {
                 (err, res) => {
                     (err ? rechazar(err) : resolver(res))
                 })
-        })
-    })
-} //()
+        });
+    } //()
 
 
-// .................................................................
-//     getMedidasPorFecha()
-// .................................................................
-getTodasLasMedidasPorFecha(intervalo) {
+    // .................................................................
+    //     getMedidasPorFecha()
+    // .................................................................
+    getTodasLasMedidasPorFecha(intervalo) {
         if (intervalo.desde == 0 && intervalo.hasta == 0) {
             var textoSQL = "SELECT * FROM Medidas"
         } else {
             var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
         }
         return new Promise((resolver, rechazar) => {
-                    this.laConexion.all(textoSQL,
-                        (err, res) => {
-                            (err ? rechazar(err) : resolver(res))
-                        } //()
+            this.laConexion.all(textoSQL,
+                (err, res) => {
+                    (err ? rechazar(err) : resolver(res))
+                })
+            });
+        } //()
 
                         //------------------------------------------------------------
                         // Josep Carreres Fluixà
@@ -333,19 +334,19 @@ getTodasLasMedidasPorFecha(intervalo) {
                         //------------------------------------------------------------
 
                         getNumeroUsuariosTotales() {
-                            var textoSQL = "SELECT * FROM Usuarios";
+                var textoSQL = "SELECT * FROM Usuarios";
 
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.all(textoSQL,
-                                    (err, res) => {
-                                        if (!err) {
-                                            resolver(res.length)
-                                        } else {
-                                            rechazar();
-                                        }
-                                    })
-                            })
-                        } //()
+                return new Promise((resolver, rechazar) => {
+                    this.laConexion.all(textoSQL,
+                        (err, res) => {
+                            if (!err) {
+                                resolver(res.length)
+                            } else {
+                                rechazar();
+                            }
+                        })
+                })
+            } //()
 
                         //------------------------------------------------------------
                         // Josep Carreres Fluixà
@@ -353,22 +354,22 @@ getTodasLasMedidasPorFecha(intervalo) {
                         //------------------------------------------------------------
 
                         getNumeroUsuariosTotalesPorTipo(tipoUsuario) {
-                            var textoSQL = "SELECT * FROM Usuarios where TipoUsuario = $TipoUsuario";
-                            var valoresParaSQL = {
-                                $TipoUsuario: tipoUsuario
-                            };
+                var textoSQL = "SELECT * FROM Usuarios where TipoUsuario = $TipoUsuario";
+                var valoresParaSQL = {
+                    $TipoUsuario: tipoUsuario
+                };
 
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.all(textoSQL, valoresParaSQL,
-                                    (err, res) => {
-                                        if (!err) {
-                                            resolver(res.length)
-                                        } else {
-                                            rechazar(err);
-                                        }
-                                    })
-                            })
-                        } //()
+                return new Promise((resolver, rechazar) => {
+                    this.laConexion.all(textoSQL, valoresParaSQL,
+                        (err, res) => {
+                            if (!err) {
+                                resolver(res.length)
+                            } else {
+                                rechazar(err);
+                            }
+                        })
+                })
+            } //()
 
                         // .................................................................
                         // Emilia Rosa van der Heide
@@ -376,22 +377,22 @@ getTodasLasMedidasPorFecha(intervalo) {
                         // recoge las medidas de un usuario concreto
                         // .................................................................
                         getMedidasDeEsteUsuarioPorFecha(intervalo, idUsuario) {
-                            console.log("logica: getMedidasDeEsteUsuarioPorFecha")
+                console.log("logica: getMedidasDeEsteUsuarioPorFecha")
                             var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario = $idUsuario AND Tiempo BETWEEN $desde AND $hasta ORDER BY IdMedida DESC";
-                            //console.log(textoSQL)
-                            var valoresParaSQL = {
-                                $idUsuario: idUsuario,
-                                $desde: intervalo.desde,
-                                $hasta: intervalo.hasta
-                            };
-                            //console.log(valoresParaSQL)
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.all(textoSQL, valoresParaSQL,
-                                    (err, res) => {
-                                        (err ? rechazar(err) : resolver(res))
-                                    })
-                            })
-                        } // getMedidasDeEsteUsuarioPorFecha()
+                //console.log(textoSQL)
+                var valoresParaSQL = {
+                    $idUsuario: idUsuario,
+                    $desde: intervalo.desde,
+                    $hasta: intervalo.hasta
+                };
+                //console.log(valoresParaSQL)
+                return new Promise((resolver, rechazar) => {
+                    this.laConexion.all(textoSQL, valoresParaSQL,
+                        (err, res) => {
+                            (err ? rechazar(err) : resolver(res))
+                        })
+                })
+            } // getMedidasDeEsteUsuarioPorFecha()
 
 
                         // .................................................................
@@ -400,22 +401,22 @@ getTodasLasMedidasPorFecha(intervalo) {
                         // obtiene la media de las medidas de la jornada
                         // .................................................................
                         async getMediaCalidadDelAireDeLaJornada(datos) {
-                            console.log("logica: getMediaCalidadDelAireDeLaJornada")
+                console.log("logica: getMediaCalidadDelAireDeLaJornada")
                             // Obtenemos todas las medidas
                             var medidas = await this.getMedidasDeEsteUsuarioPorFecha(datos.Intervalo, datos.IdUsuario)
                             //console.log(medidas)
 
                             // Hacemos el sumatorio de los valores
                             var sumatorio = 0;
-                            for (var i = 0; i < medidas.length; i++) {
-                                sumatorio = sumatorio + medidas[i].Valor;
-                            }
+                for(var i = 0; i<medidas.length; i++) {
+                sumatorio = sumatorio + medidas[i].Valor;
+            }
 
-                            // Calulamos la media
-                            var media = sumatorio / medidas.length;
+            // Calulamos la media
+            var media = sumatorio / medidas.length;
 
-                            return media;
-                        } // getMediaCalidadDelAireDeLaJornada()
+            return media;
+        } // getMediaCalidadDelAireDeLaJornada()
 
 
                         // .................................................................
@@ -424,17 +425,17 @@ getTodasLasMedidasPorFecha(intervalo) {
                         // devuelve los sensores según el estado
                         // .................................................................
                         getSensoresSegunEstado(idEstado) {
-                            var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
-                            var valoresParaSQL = {
-                                $idestado: idEstado
-                            };
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.all(textoSQL, valoresParaSQL,
-                                    (err, res) => {
-                                        (err ? rechazar(err) : resolver(res))
-                                    })
-                            })
-                        } //()
+            var textoSQL = "SELECT * FROM Sensor WHERE IdEstado = $idestado";
+            var valoresParaSQL = {
+                $idestado: idEstado
+            };
+            return new Promise((resolver, rechazar) => {
+                this.laConexion.all(textoSQL, valoresParaSQL,
+                    (err, res) => {
+                        (err ? rechazar(err) : resolver(res))
+                    })
+            })
+        } //()
 
 
                         // .................................................................
@@ -443,12 +444,12 @@ getTodasLasMedidasPorFecha(intervalo) {
                         // devuelve los sensores según el estado
                         // .................................................................
                         async getNumSensoresSegunEstado(idEstado) {
-                            var sensores = await this.getSensoresSegunEstado(idEstado);
-                            //console.log(sensores)
-                            return new Promise((resolver, rechazar) => {
-                                resolver(sensores.length)
-                            })
-                        } //()
+            var sensores = await this.getSensoresSegunEstado(idEstado);
+            //console.log(sensores)
+            return new Promise((resolver, rechazar) => {
+                resolver(sensores.length)
+            })
+        } //()
 
                         // .................................................................
                         // Josep Carreres Fluixà
@@ -456,21 +457,21 @@ getTodasLasMedidasPorFecha(intervalo) {
                         // inserta usuario
                         // .................................................................
                         insertarUsuario(datos) {
-                            var textoSQL = "insert into Usuarios values( $IdUsuario, $Email, $Password, $Nombre, $Telefono, $TipoUsuario)";
-                            var valoresParaSQL = {
-                                $IdUsuario: null,
-                                $Email: datos.Email,
-                                $Password: datos.Password,
-                                $Nombre: datos.Nombre,
-                                $Telefono: datos.Telefono,
-                                $TipoUsuario: datos.TipoUsuario
-                            };
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-                                    (err ? rechazar(err) : resolver(res))
-                                })
-                            })
-                        }
+            var textoSQL = "insert into Usuarios values( $IdUsuario, $Email, $Password, $Nombre, $Telefono, $TipoUsuario)";
+            var valoresParaSQL = {
+                $IdUsuario: null,
+                $Email: datos.Email,
+                $Password: datos.Password,
+                $Nombre: datos.Nombre,
+                $Telefono: datos.Telefono,
+                $TipoUsuario: datos.TipoUsuario
+            };
+            return new Promise((resolver, rechazar) => {
+                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+                    (err ? rechazar(err) : resolver(res))
+                })
+            })
+        }
 
                         // .................................................................
                         // Josep Carreres Fluixà
@@ -478,19 +479,19 @@ getTodasLasMedidasPorFecha(intervalo) {
                         // inserta sensor
                         // .................................................................
                         insertarSensor(sensor) {
-                            var textoSQL = "insert into Sensor values( $IdSensor, $IdTipoMedida, $IdEstado)";
-                            var valoresParaSQL = {
-                                $IdSensor: sensor.IdSensor,
-                                $IdTipoMedida: sensor.IdTipoMedida,
-                                $IdEstado: sensor.IdEstado,
-                            };
+            var textoSQL = "insert into Sensor values( $IdSensor, $IdTipoMedida, $IdEstado)";
+            var valoresParaSQL = {
+                $IdSensor: sensor.IdSensor,
+                $IdTipoMedida: sensor.IdTipoMedida,
+                $IdEstado: sensor.IdEstado,
+            };
 
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-                                    (err ? rechazar(err) : resolver(res))
-                                })
-                            })
-                        }
+            return new Promise((resolver, rechazar) => {
+                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+                    (err ? rechazar(err) : resolver(res))
+                })
+            })
+        }
 
 
                         // .................................................................
@@ -499,123 +500,123 @@ getTodasLasMedidasPorFecha(intervalo) {
                         // cambia el estado del nodo en la BBDD
                         // .................................................................
                         indicarActividadNodo(datos) {
-                            console.log("logica: indicarActividadNodo")
+            console.log("logica: indicarActividadNodo")
                             var textoSQL = "UPDATE Sensor SET IdEstado = $IdEstado WHERE IdSensor = $IdSensor";
-                            var estado;
-                            var stringestado = datos.estado;
-                            if (stringestado.localeCompare("Inactivo") == 0) estado = 3
+            var estado;
+            var stringestado = datos.estado;
+            if(stringestado.localeCompare("Inactivo") == 0) estado = 3
                             else if (stringestado.localeCompare("Activo") == 0) estado = 2
-                            else estado = 1
-                            var valoresParaSQL = {
-                                $IdSensor: datos.idSensor,
-                                $IdEstado: estado,
-                            };
-                            console.log(textoSQL)
-                            console.log(valoresParaSQL)
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-                                    (err ? rechazar(err) : resolver(res))
-                                })
-                            })
-                        }
+        else estado = 1
+        var valoresParaSQL = {
+            $IdSensor: datos.idSensor,
+            $IdEstado: estado,
+        };
+        console.log(textoSQL)
+        console.log(valoresParaSQL)
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+                (err ? rechazar(err) : resolver(res))
+            })
+        })
+    }
 
-                        // .................................................................
-                        // Josep Carreres Fluixà
-                        // idUsuario -> editarInformacionUsuario() ->
-                        // edita informacion de un usuario pasandole un json con los datos a cambiar y su ID
-                        // .................................................................
-                        editarInformacionUsuario(datos) {
-                            var textoSQL = "UPDATE Usuarios SET Email = $email , Password = $password , Telefono = $telefono WHERE IdUsuario = $idUsuario;";
-                            var valoresParaSQL = {
-                                $email: datos.Email,
-                                $password: datos.Password,
-                                $telefono: datos.Telefono,
-                                $idUsuario: datos.IdUsuario
-                            };
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-                                    (err ? rechazar(err) : resolver(res))
-                                })
-                            })
-                        }
-
-
-
-                        // .................................................................
-                        // tabla -> borrarFilasDe() ->
-                        //  Le pasas el nombre de la tabla y lo elimina en la BD
-                        // .................................................................
-                        borrarFilasDe(tabla) {
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(
-                                    "delete from " + tabla + ";",
-                                    (err) => (err ? rechazar(err) : resolver())
-                                )
-                            })
-                        }
-
-                        // .................................................................
-                        // Idsensor -> borrarSensorPorID() ->
-                        //  Le pasas el nombre del sensor y lo elimina en la BD
-                        // .................................................................
-                        async borrarSensorPorID(idSensor) {
-
-                            var textoSQL = "Delete from Sensor where IdSensor = $idSensor";
-                            var valoresParaSQL = {
-                                $idSensor: idSensor
-                            };
-                            var res = await this.getUsuarioPorIdSensor(idSensor);
-                            if (res != 0) {
-                                await this.desvincularUsuarioDeSensorPorIdUsuario(res[0].IdUsuario);
-                            }
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-                                    (err ? rechazar(err) : resolver())
-                                })
-                            })
-                        }
+    // .................................................................
+    // Josep Carreres Fluixà
+    // idUsuario -> editarInformacionUsuario() ->
+    // edita informacion de un usuario pasandole un json con los datos a cambiar y su ID
+    // .................................................................
+    editarInformacionUsuario(datos) {
+        var textoSQL = "UPDATE Usuarios SET Email = $email , Password = $password , Telefono = $telefono WHERE IdUsuario = $idUsuario;";
+        var valoresParaSQL = {
+            $email: datos.Email,
+            $password: datos.Password,
+            $telefono: datos.Telefono,
+            $idUsuario: datos.IdUsuario
+        };
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+                (err ? rechazar(err) : resolver(res))
+            })
+        })
+    }
 
 
 
-                        // .................................................................
-                        // idUsuario -> borrarUsuarioPorId() ->
-                        //  Le pasas el id y lo elimina en la BD
-                        // .................................................................
-                        borrarUsuarioPorId(idUsuario) {
-                            var textoSQL = "Delete from Usuarios where IdUsuario = $idUsuario";
-                            var valoresParaSQL = {
-                                $idUsuario: idUsuario
-                            };
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-                                    (err ? rechazar(err) : resolver())
-                                })
-                            })
-                        }
+    // .................................................................
+    // tabla -> borrarFilasDe() ->
+    //  Le pasas el nombre de la tabla y lo elimina en la BD
+    // .................................................................
+    borrarFilasDe(tabla) {
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(
+                "delete from " + tabla + ";",
+                (err) => (err ? rechazar(err) : resolver())
+            )
+        })
+    }
 
-                        // .................................................................
-                        // IDUsuario -> desvincularUsuarioDeSensorPorIdUsuario() ->
-                        //  Le pasas el nombre del sensor y lo elimina en la BD
-                        // .................................................................
-                        async desvincularUsuarioDeSensorPorIdUsuario(idUsuario) {
-                            var textoSQL = "Delete from UsuarioSensor where IdUsuario = $idUsuario";
-                            var valoresParaSQL = {
-                                $idUsuario: idUsuario
-                            };
+    // .................................................................
+    // Idsensor -> borrarSensorPorID() ->
+    //  Le pasas el nombre del sensor y lo elimina en la BD
+    // .................................................................
+    async borrarSensorPorID(idSensor) {
 
-                            var idSensor = await this.getSensorPorIdUsuario(idUsuario);
-                            //console.log(idSensor);
-                            var dato = {
-                                estado: "Inactivo",
-                                idSensor: idSensor[0].IdSensor,
-                            }
-                            await this.indicarActividadNodo(dato);
-                            return new Promise((resolver, rechazar) => {
-                                this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-                                    (err ? rechazar(err) : resolver())
-                                })
-                            })
-                        }
-                    } // class
+        var textoSQL = "Delete from Sensor where IdSensor = $idSensor";
+        var valoresParaSQL = {
+            $idSensor: idSensor
+        };
+        var res = await this.getUsuarioPorIdSensor(idSensor);
+        if (res != 0) {
+            await this.desvincularUsuarioDeSensorPorIdUsuario(res[0].IdUsuario);
+        }
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+                (err ? rechazar(err) : resolver())
+            })
+        })
+    }
+
+
+
+    // .................................................................
+    // idUsuario -> borrarUsuarioPorId() ->
+    //  Le pasas el id y lo elimina en la BD
+    // .................................................................
+    borrarUsuarioPorId(idUsuario) {
+        var textoSQL = "Delete from Usuarios where IdUsuario = $idUsuario";
+        var valoresParaSQL = {
+            $idUsuario: idUsuario
+        };
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+                (err ? rechazar(err) : resolver())
+            })
+        })
+    }
+
+    // .................................................................
+    // IDUsuario -> desvincularUsuarioDeSensorPorIdUsuario() ->
+    //  Le pasas el nombre del sensor y lo elimina en la BD
+    // .................................................................
+    async desvincularUsuarioDeSensorPorIdUsuario(idUsuario) {
+        var textoSQL = "Delete from UsuarioSensor where IdUsuario = $idUsuario";
+        var valoresParaSQL = {
+            $idUsuario: idUsuario
+        };
+
+        var idSensor = await this.getSensorPorIdUsuario(idUsuario);
+        //console.log(idSensor);
+        var dato = {
+            estado: "Inactivo",
+            idSensor: idSensor[0].IdSensor,
+        }
+        await this.indicarActividadNodo(dato);
+        return new Promise((resolver, rechazar) => {
+            this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+                (err ? rechazar(err) : resolver())
+            })
+        })
+    }
+} // class
                     // .....................................................................
                     // .....................................................................
