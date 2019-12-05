@@ -449,14 +449,14 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * - Matthew Conde Oltra -
   *
-  * /getMedidasDeEsteUsuarioPorFecha -> es una petición GET que llama a
+  * /getMedidasDeEsteUsuarioPorFecha -> es una petición POST que llama a
   * getMedidasDeEsteUsuarioPorFecha() de la Lógica la cual devuelve todas las
   * medidas del idUsuario pasado desde, hasta una fecha
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   servidorExpress.post('/getMedidasDeEsteUsuarioPorFecha',
     async function (peticion, respuesta) {
-      console.log(" * GET /getMedidasDeEsteUsuarioPorFecha ")
+      console.log(" * POST /getMedidasDeEsteUsuarioPorFecha ")
 
       console.log(peticion.body)
       var datos = JSON.parse(peticion.body)
@@ -474,6 +474,36 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(res)
   });
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * - Matthew Conde Oltra -
+  *
+  * /getEstacionesOficiales -> es una petición POST que llama a
+  * getEstacionesOficiales() de la Lógica la cual devuelve todas las
+  * estaciones de la Comunidad Valenciana
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+ servidorExpress.post('/getEstacionesOficiales',
+ async function (peticion, respuesta) {
+   console.log(" * POST /getEstacionesOficiales ")
+
+
+   // llamo a la función adecuada de la lógica
+   var res = await laLogica.getEstacionesOficiales();
+   //console.log(res);
+   var data = {
+     estaciones: res,
+     k: 'ok'
+   };
+   // si el array de resultados no tiene una casilla ...
+   if (res.length < 1) {
+     // 404: not found
+     respuesta.status(404).send("no encontré estaciones")
+     return
+   }
+   // todo ok
+   respuesta.status(200).send(data)
+});
 
   servidorExpress.get('/getNumeroUsuariosTotales',
     async function(peticion, respuesta) {
@@ -515,7 +545,13 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
         // llamo a la función adecuada de la lógica
         var res = await laLogica.getTodasLasMedidasPorFecha(dato);
 
-        console.log(res);
+        console.log(res[0]);
+        var data = {
+          medidas: res,
+          k: "ok"
+        }
+
+        console.log("La respuesta es: " + JSON.stringify(data));
 
         // si el array de resultados no tiene una casilla ...
         if (res.length < 0) {
@@ -524,7 +560,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
             return
         }
         // todo ok
-        respuesta.send(JSON.stringify(res))
+        respuesta.status(200).send(data)
     })
 
 
