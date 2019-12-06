@@ -2,6 +2,7 @@
 // Logica.js
 // .....................................................................
 const sqlite3 = require("sqlite3")
+const estacionOficial = require('./Estacion-oficial');
 
 // .....................................................................
 // .....................................................................
@@ -324,7 +325,7 @@ module.exports = class Logica {
         //console.log(estaciones.length)
         for (var i = 0; i < estaciones.length; i++) {
             var municipio = estaciones[i].Municipio
-            if (municipio.localeCompare("Gandia") == 0) estaciones[i].Medidas = data[0];
+            if (municipio.localeCompare("Gandia") == 0) estaciones[i].Medidas = data[data.length-1];
         }
 
         return estaciones;
@@ -652,5 +653,5 @@ module.exports = class Logica {
         })
     }
 } // class
-                    // .....................................................................
-                    // .....................................................................
+// .....................................................................
+// .....................................................................
