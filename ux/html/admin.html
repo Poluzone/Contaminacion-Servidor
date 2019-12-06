@@ -26,14 +26,16 @@ Modificado: 3/12/19
         //Para el plesk
         //var direccion = "https://localhost:8080";
         var sensores;
-        var unSensor
+        var unSensor // Sensor clicado
 
         var usuarios;
-        var unUsuario;
+        var unUsuario; // Usuario clicado
 
         var numeroTotalDeUsuarios;
 
         var primeraLlamadaA_rellenarTarjetasNumeroSensores = true; // Se utiliza para borrar previamente el texto con los numeros que hay en las tarjetas si no es la primera vez que se llama a rellenarTarjetasNumeroSensores, si esto no se hiciera no se visualizarian los numeros
+        
+        var ul;
 
         var hayAlgunElementoSeleccionado = false; // Para saber si hay algun elemento seleccionado y poder cambiar su color o borrarlo
 
@@ -154,6 +156,8 @@ Modificado: 3/12/19
             tarjeta4 = document.getElementById("tarjeta4");
 
             textoSENSORESyUSUARIOS = document.getElementById("textoSensores");
+            
+            ul = document.getElementById("lista");
 
             iconoAdd = document.getElementById("botonAdd");
 
@@ -248,7 +252,7 @@ Modificado: 3/12/19
 
             // Relleno de informacion en la tarjeta INFORMACION al clicar un sensor-----------------------------------------
             divContenedor.onclick = function() {
-                
+
                 iconoDesvincular.classList.add("invisible");
 
                 unSensor = sensor;
@@ -339,7 +343,6 @@ Modificado: 3/12/19
 
             var maxListaUsuarios = numeroTotalDeUsuarios;
             var usuario;
-            var ul = document.getElementById("lista");
             var li = document.createElement("li");
             var divContenedor;
             var div1 = document.createElement("div");
@@ -703,7 +706,7 @@ Modificado: 3/12/19
 
         }
 
-        // Funcion que se llamara al clicar a la basura que elminiara una relacion Usuario-Sensor
+        // Funcion que se llamara al clicar a la basura que elminiara un sensor
         function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
 
@@ -736,7 +739,7 @@ Modificado: 3/12/19
                     console.log("Desvinculado sensor: " + unSensor.Usuario.IdUsuario);
 
                     proxy.desvincularUsuarioDeSensorPorIdUsuario(unSensor.Usuario.IdUsuario);
-                    
+
                     location.reload();
 
                 } else {
@@ -750,6 +753,25 @@ Modificado: 3/12/19
                     // Hacer boton desvincular invisible
                     iconoDesvincular.classList.add("invisible");
                 }
+
+            }
+
+            if (modoActual == 1) {
+                console.log("Borrado usuario: " + unUsuario.IdUsuario);
+
+                elementoSeleccionado.innerHTML = "";
+                proxy.borrarUsuarioPorID(unUsuario.IdUsuario);
+                
+                numeroTotalDeUsuarios = 0;
+                
+                ul.innerHTML="";
+
+                llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios();
+
+                numeroSensores.innerHTML = "";
+                numeroSensores.appendChild(document.createTextNode(parseInt(numeroSensores)));
+                
+                tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
 
             }
         }

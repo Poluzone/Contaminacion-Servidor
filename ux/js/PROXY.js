@@ -307,7 +307,8 @@ class Proxy {
             });
     }
 
-    //-------------------------------
+    //-------------Ivan--------------
+    // N: id de un sensor -->
     // borrarSensorPorID()
     //-------------------------------
     async borrarSensorPorID(id, callback) {
@@ -332,8 +333,33 @@ class Proxy {
     }
     
     //-------------Ivan--------------
+    // N: id de un usuario -->
+    // borrarSensorPorID()
+    //-------------------------------
+    async borrarUsuarioPorID(id, callback) {
+
+        /*var idJson = {
+            id: id
+        };*/
+
+        fetch(url + "/borrarUsuarioPorID", {
+            method: 'POST', // or 'PUT'
+            body: id.toString(), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
+    }
+    
+    //-------------Ivan--------------
     // N: id de un sensor -->
-    // getNumeroUsuariosTotalesPorTipo()
+    // desvincularUsuarioDeSensorPorIdUsuario()
     //-------------------------------
     async desvincularUsuarioDeSensorPorIdUsuario(id){
         
