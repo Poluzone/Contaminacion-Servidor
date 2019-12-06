@@ -3,7 +3,6 @@
 // .....................................................................
 const sqlite3 = require("sqlite3")
 const estacionOficial = require('./Estacion-oficial');
-
 // .....................................................................
 // .....................................................................
 module.exports = class Logica {
@@ -41,7 +40,7 @@ module.exports = class Logica {
       $Longitud: medida.Longitud
     }
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -67,7 +66,7 @@ module.exports = class Logica {
     await this.indicarActividadNodo(dato);
 
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, async function(err) {
+      this.laConexion.run(textoSQL, valoresParaSQL, async function (err) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -121,22 +120,35 @@ module.exports = class Logica {
   // .................................................................
   // Emilia Rosa van der Heide
   // -> getTodosLosUsuariosYSusSensores() -> JSON con todos los usuarios y su sensor
+  // Recoge todos los usuarios y si tiene un sensor vinculado devuelve
+  // también el sensor (si no, Sensor = null)
   // .................................................................
   async getTodosLosUsuariosYSusSensores() {
     console.log("logica: getTodosLosUsuariosYSusSensores")
+
+    // Recogemos todos los usuarios
     var usuarios = await this.getTodosLosUsuarios();
     //console.log(usuarios)
+
+    // Cogemos los sensores vinculados a los usuarios
     for (var i = 0; i < usuarios.length; i++) {
       var usuario = usuarios[i]
 
       // Cogemos el Id para obtener el sensor correspondiente
       var idUser = usuario.IdUsuario;
+
+      // Cogemos el sensor correspondiente
       var sensor = await this.getSensorPorIdUsuario(idUser);
       //console.log(sensor)
+
+      // Asignamos el sensor
       if (sensor[0] != undefined) usuarios[i].Sensor = sensor[0];
+
+      // Si no existe, Sensor = null
       else usuarios[i].Sensor = null;
     }
     //console.log(sensores)
+    
     return new Promise((resolver, rechazar) => {
       resolver(usuarios)
     })
@@ -144,7 +156,7 @@ module.exports = class Logica {
 
   // .................................................................
   // Emilia Rosa van der Heide
-  // -> ensoresYSusUsuarios() ->
+  // -> getSensoresYSusUsuarios() ->
   // llama a getTodosLosSensores
   // y getUsuarioPorIdSensor
   // .................................................................
@@ -273,26 +285,33 @@ module.exports = class Logica {
   }
 
   // .................................................................
-  // -> getSensorPorIdUsuario(idUsuario) ->
+  // Emilia Rosa van der Heide
+  // -> getSensorPorIdUsuario(idUsuario) -> JSON: Sensor
   // Coge la info de un sensor a partir del id de su usuario
   // .................................................................
   async getSensorPorIdUsuario(idUsuario) {
-    var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor, Estados.Descripcion Estado FROM Sensor INNER JOIN UsuarioSensor ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
+    // Relaciona tabla Sensor con tabla TipoSensor y Estados para coger
+    // la Descripción de TipoSensor y Estados
+    var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor," +
+      "Estados.Descripcion Estado FROM Sensor INNER JOIN UsuarioSensor " +
+      " ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor " +
+      " ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados " +
+      " ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
     var valoresParaSQL = {
       $idUsuario: idUsuario
     };
     return new Promise((resolver, rechazar) => {
-        this.laConexion.all(textoSQL, valoresParaSQL,
-          (err, res) => {
-            (err ? rechazar(err) : resolver(res))
-          })
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
     })
   }
 
-  //------------------------------------------------------------
+  // .................................................................
   // Josep Carreres Fluixà
   // getUsuarioPorIdUsuario()
-  //------------------------------------------------------------
+  // .................................................................
 
   getUsuarioPorIdUsuario(idUsuario) {
     var textoSQL = "SELECT * FROM Usuarios WHERE IdUsuario = $idUsuario ";
@@ -307,10 +326,10 @@ module.exports = class Logica {
     })
   } //()
 
-  //------------------------------------------------------------
+  // .................................................................
   // Josep Carreres Fluixà
   // getNumeroUsuariosTotales()-->Entero
-  //------------------------------------------------------------
+  // .................................................................
 
   getNumeroUsuariosTotales() {
     var textoSQL = "SELECT * FROM Usuarios";
@@ -318,19 +337,19 @@ module.exports = class Logica {
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {
-          if(!err){
+          if (!err) {
             resolver(res.length)
-          }else {
+          } else {
             rechazar();
           }
         })
     })
   } //()
 
-  //------------------------------------------------------------
+  // .................................................................
   // Josep Carreres Fluixà
   // tipoUsuario-->getNumeroUsuariosTotalesPorTipo()--> Entero
-  //------------------------------------------------------------
+  // .................................................................
 
   getNumeroUsuariosTotalesPorTipo(tipoUsuario) {
     var textoSQL = "SELECT * FROM Usuarios where TipoUsuario = $TipoUsuario";
@@ -339,11 +358,11 @@ module.exports = class Logica {
     };
 
     return new Promise((resolver, rechazar) => {
-      this.laConexion.all(textoSQL,valoresParaSQL,
+      this.laConexion.all(textoSQL, valoresParaSQL,
         (err, res) => {
-          if(!err){
+          if (!err) {
             resolver(res.length)
-          }else {
+          } else {
             rechazar(err);
           }
         })
@@ -355,11 +374,11 @@ module.exports = class Logica {
   //     getMedidasPorFecha()
   // .................................................................
   getTodasLasMedidasPorFecha(intervalo) {
-      if(intervalo.desde == 0 && intervalo.hasta == 0){
-          var textoSQL = "SELECT * FROM Medidas"
-      } else {
-          var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
-      }
+    if (intervalo.desde == 0 && intervalo.hasta == 0) {
+      var textoSQL = "SELECT * FROM Medidas"
+    } else {
+      var textoSQL = "SELECT * FROM Medidas WHERE Tiempo BETWEEN " + intervalo.desde + " AND " + intervalo.hasta + " ORDER BY IdMedida DESC";
+    }
     return new Promise((resolver, rechazar) => {
       this.laConexion.all(textoSQL,
         (err, res) => {
@@ -464,7 +483,7 @@ module.exports = class Logica {
       $TipoUsuario: datos.TipoUsuario
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -484,7 +503,7 @@ module.exports = class Logica {
     };
 
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -511,7 +530,7 @@ module.exports = class Logica {
     console.log(textoSQL)
     console.log(valoresParaSQL)
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -526,12 +545,12 @@ module.exports = class Logica {
   async getMedidasEstacionOficialGandia() {
     console.log("logica: getMedidasEstacionOficialGandia")
     var data = await estacionOficial.getMedidasEstacion();
-    
+
     var estaciones = await this.getEstacionesOficiales()
     //console.log(estaciones.length)
     for (var i = 0; i < estaciones.length; i++) {
       var municipio = estaciones[i].Municipio
-      if(municipio.localeCompare("Gandia") == 0) estaciones[i].Medidas = data[0];
+      if (municipio.localeCompare("Gandia") == 0) estaciones[i].Medidas = data[0];
     }
 
     return estaciones;
@@ -566,7 +585,7 @@ module.exports = class Logica {
       $idUsuario: datos.IdUsuario
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -597,7 +616,7 @@ module.exports = class Logica {
       $idSensor: idSensor
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -613,7 +632,7 @@ module.exports = class Logica {
       $idUsuario: idUsuario
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -637,7 +656,7 @@ module.exports = class Logica {
     }
     await this.indicarActividadNodo(dato);
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver())
       })
     })

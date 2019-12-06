@@ -418,7 +418,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
         assert.equal(200, 200, "¿El código no es 200 (OK)");
 
         //console.log(respuesta.body);
-        console.log(json);
+        //console.log(json);
 
 
         hecho();
