@@ -626,11 +626,18 @@ module.exports = class Logica {
   // idUsuario -> borrarUsuarioPorId() ->
   //  Le pasas el id y lo elimina en la BD
   // .................................................................
-  borrarUsuarioPorId(idUsuario) {
+  async borrarUsuarioPorId(idUsuario) {
     var textoSQL = "Delete from Usuarios where IdUsuario = $idUsuario";
     var valoresParaSQL = {
       $idUsuario: idUsuario
     };
+
+    var sensor = await this.getSensorPorIdUsuario(idUsuario)
+    var dato = {
+      estado: "STOCK",
+      idSensor: sensor[0].IdSensor,
+    }
+    await this.indicarActividadNodo(dato);
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver())
