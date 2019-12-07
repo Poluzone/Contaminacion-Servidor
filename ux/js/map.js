@@ -17,7 +17,7 @@ function initMap() {
     var location = { lat: 38.996, lng: -0.166 };
     infowindow = new google.maps.InfoWindow()
     map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 14,
+        zoom: 13,
 
         //añade el estilo personalizado para que el mapa se vea bonito c:
         styles: [
@@ -120,13 +120,89 @@ function getMap() {
 //...........................................................
 function removeMarkers() {
 
+}
 
+//..........................................................
+// addLayer()
+// Agrega una capa 
+//..........................................................
+
+function addLayer(){
+    var a;
 }
 
 //...........................................................
-//
-//
-//
+// 
+// int, int-->function recibirCO()
+//...........................................................
+
+function recibirCO(intervalo){
+    proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
+        var poluzone = [];
+        //////////////////////////if(){}//if()
+        for(let i = 0; i < datos["medidas"].length; i++){
+            if(datos["medidas"][i].IdTipoMedida == 2){
+            var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+            var icon = iconBase + 'yellow.png';
+
+
+            var medida = new google.maps.Marker({
+                position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+                map: getMap(),
+                title: 'CO',
+                icon: { url: icon },
+            });
+
+            /*
+            var medida = new.google.maps.Marker({
+                position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud},
+                map: getMap(),
+                title: 'CO',
+                icon: { url: icon },
+            });*/
+
+            var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+            poluzone.push(puntoCalor);
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h4 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h4>' +
+                '<div id="bodyContent">' +
+                '<p><b> Tipo de gas: ' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                '<p></p>' +
+                '</div>' +
+                '</div>';
+
+            google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                return function () {
+                    infowindow.setContent(content);
+                    infowindow.open(getMap(), marker);
+                };
+            })(medida, contentString, infowindow));
+                }//if
+        }//for()
+        var heatmapCO = new google.maps.visualization.HeatmapLayer({
+            data: poluzone,
+            maxIntensity: 1243,
+            radius: 40
+        });
+        heatmapCO.setMap(getMap());
+    });
+}
+
+//...........................................................
+// removeLayer()
+//...........................................................
+function removeLayer(){
+    
+}//()
+
+
+//...........................................................
+//int,int-->recibirMedidasFecha(intervalo) 
+//dibuja en el mapa todas las medidas del intervalo (desde, hasta)
+//si son 0, desde y hasta, envía todas las medidas
 //...........................................................
 
 function recibirMedidasFecha(intervalo) {
@@ -134,7 +210,7 @@ function recibirMedidasFecha(intervalo) {
     getLasEstacionesOficiales();
     proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
         // console.log(datos);
-        console.log("DATOS DE MEDIDAS POR FECHA CARGADOS");
+        //console.log("DATOS DE MEDIDAS POR FECHA CARGADOS");
         var poluzone = [];
 
         //asigno un marcador dependiendo de la medida    
@@ -273,7 +349,7 @@ function getLasEstacionesOficiales() {
                     '</div>' +
                     '<h4 id="firstHeading" class="firstHeading">' + estacion.Municipio + '</h4>' +
                     '<div id="bodyContent">'
-                    ;
+                ;
                 google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
                     return function () {
                         infowindow.setContent(content);
