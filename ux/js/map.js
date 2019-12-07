@@ -107,28 +107,9 @@ function initMap() {
 //...........................................................
 // getMap() --> Mapa
 // Devuelve el mapa
-//
 //...........................................................
 function getMap() {
     return map;
-}
-
-//...........................................................
-// removeMarkers()
-// Quita todos los marcadores del mapa
-//
-//...........................................................
-function removeMarkers() {
-
-}
-
-//..........................................................
-// addLayer()
-// Agrega una capa 
-//..........................................................
-
-function addLayer(){
-    var a;
 }
 
 //...........................................................
@@ -142,45 +123,37 @@ function recibirCO(intervalo){
         //////////////////////////if(){}//if()
         for(let i = 0; i < datos["medidas"].length; i++){
             if(datos["medidas"][i].IdTipoMedida == 2){
-            var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
-            var icon = iconBase + 'yellow.png';
+                var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+                var icon = iconBase + 'yellow.png';
 
 
-            var medida = new google.maps.Marker({
-                position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
-                map: getMap(),
-                title: 'CO',
-                icon: { url: icon },
-            });
+                var medida = new google.maps.Marker({
+                    position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+                    map: getMap(),
+                    title: 'CO',
+                    icon: { url: icon },
+                });
 
-            /*
-            var medida = new.google.maps.Marker({
-                position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud},
-                map: getMap(),
-                title: 'CO',
-                icon: { url: icon },
-            });*/
+                var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
 
-            var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+                poluzone.push(puntoCalor);
+                var contentString = '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h4 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h4>' +
+                    '<div id="bodyContent">' +
+                    '<p><b> Tipo de gas: ' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                    '<p></p>' +
+                    '</div>' +
+                    '</div>';
 
-            poluzone.push(puntoCalor);
-            var contentString = '<div id="content">' +
-                '<div id="siteNotice">' +
-                '</div>' +
-                '<h4 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h4>' +
-                '<div id="bodyContent">' +
-                '<p><b> Tipo de gas: ' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
-                '<p></p>' +
-                '</div>' +
-                '</div>';
-
-            google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
-                return function () {
-                    infowindow.setContent(content);
-                    infowindow.open(getMap(), marker);
-                };
-            })(medida, contentString, infowindow));
-                }//if
+                google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                    return function () {
+                        infowindow.setContent(content);
+                        infowindow.open(getMap(), marker);
+                    };
+                })(medida, contentString, infowindow));
+            }//if
         }//for()
         var heatmapCO = new google.maps.visualization.HeatmapLayer({
             data: poluzone,
@@ -194,8 +167,8 @@ function recibirCO(intervalo){
 //...........................................................
 // removeLayer()
 //...........................................................
-function removeLayer(){
-    
+function removeCO(){
+    heatmapCO.setMap(null);
 }//()
 
 
@@ -361,3 +334,4 @@ function getLasEstacionesOficiales() {
 
     }) //proxy.getEstacionesOficiales
 } // getLasEstacionesOficiales()
+

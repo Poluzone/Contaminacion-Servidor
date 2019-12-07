@@ -16,7 +16,8 @@
         //var direccion = "https://juconol.upv.edu.es";
 
         //recibirMedidasFecha({ "desde": 0, "hasta": 0 });
-        recibirCO({"desde":0, "hasta":0});
+        //document.getElementById("co").onclick = recibirCO({"desde":0, "hasta":0});
+        
 
     </script>
 
@@ -114,8 +115,8 @@
                     </div>
                 </div>
                 <div class="col-sm-9">
-                    <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary btn_CO">CO</button>
+                    <div class="btn-group-toggle btn-group-lg" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btn_CO" id="co">CO</button>
                         <button type="button" class="btn btn-secondary btn_NOX">NOX</button>
                         <button type="button" class="btn btn-secondary btn_SO2">SO2</button>
                         <button type="button" class="btn btn-secondary btn_irritante">Gases irritantes</button>
