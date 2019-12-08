@@ -4,10 +4,10 @@
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
     <!-- Scripts para API Google Maps -->
+    <script type="text/javascript" src="../js/map.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization"
         type="text/javascript"></script>
-    <script type="text/javascript" src="../js/map.js"></script>
     <script>
         var proxy = new Proxy();
 
@@ -34,6 +34,8 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
 
     <!--  css de bootsrap  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -140,9 +142,9 @@
                                 <label class="form-check-label" for="inlineCheckboxSO2">SO2</label>
                             </div>
                             <div class="form-check form-check-inline" onclick="cambiarEstadoIrr()">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr" value="option3">
-                                    <label class="form-check-label" for="inlineCheckboxIrr">Gases irritantes</label>
-                                </div>
+                                <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr" value="option3">
+                                <label class="form-check-label" for="inlineCheckboxIrr">Gases irritantes</label>
+                            </div>
                             <button onclick="window.location.reload();"
                                 class="btn btn-primary nunito fondoNaranja blanco">Aplicar</button>
                             <script>
@@ -446,16 +448,16 @@
     <script src="https://code.jquery.com/jquery.js"></script>
 
     <!-- Todos los plugins JavaScript de Bootstrap (también puedes
-incluir archivos JavaScript individuales de los únicos
-plugins que utilices) -->
+    incluir archivos JavaScript individuales de los únicos
+    plugins que utilices) -->
     <script src="../js/bootstrap.min.js"></script>
+    
     <!-- Custom scripts for this template -->
     <script src="../js/agency.min.js"></script>
-    <script src="../jquery-easing/jquery.easing.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
