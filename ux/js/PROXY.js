@@ -1,5 +1,5 @@
-const url = "http://localhost:8080";
-//const url = "https://juconol.upv.edu.es";
+//const url = "http://localhost:8080";
+const url = "https://juconol.upv.edu.es";
 
 class Proxy {
     constructor() {
