@@ -224,6 +224,27 @@ function getGas(gas){
     })
 }//()
 
+//...........................................................
+//
+//
+//
+//...........................................................
+
+function getMarker(latitud, longitud, title, icon){
+    var medida = new google.maps.Marker({
+        position: { lat: latitud, lng: longitud },
+        map: getMap(),
+        title: 'Medidas',
+        icon: { url: icon },
+    });
+    return medida;
+}//()
+
+//...........................................................
+//
+//
+//...........................................................
+ 
 
 //...........................................................
 //int,int-->recibirMedidasFecha(intervalo) 
@@ -232,7 +253,7 @@ function getGas(gas){
 //...........................................................
 
 function recibirMedidasFecha(intervalo) {
-    //Recojo los datos de la base de datos
+    var title = "";
     getLasEstacionesOficiales();
     proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
         // console.log(datos);
@@ -245,12 +266,7 @@ function recibirMedidasFecha(intervalo) {
             var icon = getIcon(datos["medidas"][i].IdTipoMedida);
             //console.log("AAAAAAH"+icon);
             //dibuja los marcadores
-            var medida = new google.maps.Marker({
-                position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
-                map: getMap(),
-                title: 'Medidas',
-                icon: { url: icon },
-            });
+            var marcador = getMarker(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud, title, icon);
 
             var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
 
@@ -266,12 +282,12 @@ function recibirMedidasFecha(intervalo) {
                 '</div>' +
                 '</div>';
 
-            google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+            google.maps.event.addListener(marcador, 'click', (function (marker, content, infowindow) {
                 return function () {
                     infowindow.setContent(content);
                     infowindow.open(getMap(), marker);
                 };
-            })(medida, contentString, infowindow));
+            })(marcador, contentString, infowindow));
 
         }//for
         var heatmap = new google.maps.visualization.HeatmapLayer({
