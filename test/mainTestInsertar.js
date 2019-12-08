@@ -163,7 +163,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
             IdTipoMedida: 2,
             IdUsuario: 15,
             Valor: Valor + 10,
-            Tiempo: Date.now(),
+            Tiempo: Date.now() - j*800000000,
             Latitud: Latitud + i * 0.003 + j * 0.003,
             Longitud: Longitud - i * 0.003 + j * 0.003
           }
