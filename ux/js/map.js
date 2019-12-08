@@ -166,13 +166,64 @@ function recibirCO(intervalo){
 
 //...........................................................
 //
+// int -->getContaminacion() --> heatMap
 //
 //...........................................................
+
+function getContaminacion(tipoGas, poluzone){
+    var contaminacion;
+    
+    //modificar maxIntensity dependiendo del valor peligroso del gas!!
+    if (tipoGas == 1) {
+        contaminacion = new google.maps.visualization.HeatmapLayer({
+            data: poluzone,
+            maxIntensity: 1243,
+            radius: 60
+        });
+    } else {
+        if (tipoGas == 2) {
+            contaminacion = new google.maps.visualization.HeatmapLayer({
+                data: poluzone,
+                maxIntensity: 1243,
+                radius: 60
+            });
+        } else {
+            if (tipoGas == 3) {
+                contaminacion = new google.maps.visualization.HeatmapLayer({
+                    data: poluzone,
+                    maxIntensity: 1243,
+                    radius: 60
+                });
+            } else {
+                if (tipoGas == 4) {
+                    contaminacion = new google.maps.visualization.HeatmapLayer({
+                        data: poluzone,
+                        maxIntensity: 1243,
+                        radius: 60
+                    });
+                } else {
+                    contaminacion = new google.maps.visualization.HeatmapLayer({
+                        data: poluzone,
+                        maxIntensity: 1243,
+                        radius: 60
+                    });
+                }
+            }
+        }
+    }
+    return contaminacion;
+}
+
+/* var heatmap = new google.maps.visualization.HeatmapLayer({
+            data: poluzone,
+            maxIntensity: 1243,
+            radius: 60
+        });*/
 
 
 //...........................................................
 //
-//
+// int --> getIcon --> String
 //
 //...........................................................
 
@@ -203,7 +254,7 @@ function getIcon(tipoGas){
 
 //...........................................................
 //
-//
+// lat, lng, string, string --> getMarker() --> Marker
 //
 //...........................................................
 
@@ -217,11 +268,30 @@ function getMarker(latitud, longitud, title, icon){
     return medida;
 }//()
 
+
 //...........................................................
 //
+// int --> queGasSoy() --> String 
 //
 //...........................................................
- 
+function queGasSoy(dato) {
+    var gas;
+    if (dato == 2) {
+        gas = "CO";
+    } else {
+        if (dato == 3) {
+            gas = "NOX";
+        } else {
+            if (dato == 4) {
+                gas = "SO2";
+            } else {
+                gas = "Gas Irritante";
+            }
+        }
+    }
+    return gas;
+}//()
+
 
 //...........................................................
 //int,int-->recibirMedidasFecha(intervalo) 
@@ -268,34 +338,11 @@ function recibirMedidasFecha(intervalo) {
             })(marcador, contentString, infowindow));
 
         }//for
-        var heatmap = new google.maps.visualization.HeatmapLayer({
-            data: poluzone,
-            maxIntensity: 1243,
-            radius: 60
-        });
+        var heatmap = getContaminacion(datos["medidas"][i].IdTipoMedida,poluzone);
         heatmap.setMap(getMap());
     });
-}
-
-
-//Esto es para poder asignarle un nombre al gas dependiendo de su ID
-function queGasSoy(dato) {
-    var gas;
-    if (dato == 2) {
-        gas = "CO";
-    } else {
-        if (dato == 3) {
-            gas = "NOX";
-        } else {
-            if (dato == 4) {
-                gas = "SO2";
-            } else {
-                gas = "Gas Irritante";
-            }
-        }
-    }
-    return gas;
 }//()
+
 
 //..............................................................
 //
