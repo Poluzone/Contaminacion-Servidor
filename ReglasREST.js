@@ -19,8 +19,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   servidorExpress.get('/GETsoloMedidas',
     async function (peticion, respuesta) {
       console.log(" * GET /soloMedidas ")
-
-      // averiguo el dni
       var dato = peticion.params.dato
 
       //console.log(dato)
@@ -284,8 +282,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   /**
    * /insertarUsuario -> es una petición POST que llama a insertarUsuario() de la Lógica
    * la cual añade el usuario a la BBDD
-   *
-   *
    */
   servidorExpress.post('/insertarIdUsuarioConIdsensor',
     async function (peticion, respuesta) {
@@ -492,6 +488,36 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(JSON.stringify(res))
     })
+
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* - Emilia Rosa van der Heide -
+*
+* /getMedidasEstacionOficialGandia -> es una petición POST que llama a
+* getMedidasEstacionOficialGandia() de la Lógica la cual devuelve todas las
+* estaciones de la Comunidad Valenciana y las medidas de Gandia
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+  servidorExpress.post('/getMedidasEstacionOficialGandia',
+    async function (peticion, respuesta) {
+      console.log(" * POST /getMedidasEstacionOficialGandia ")
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getMedidasEstacionOficialGandia();
+      //console.log(res);
+      var data = {
+        estaciones: res,
+        ok: 'ok'
+      };
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré estaciones")
+        return
+      }
+      // todo ok
+      respuesta.status(200).send(data)
+    });
 
 
   servidorExpress.get('/getNumeroUsuariosTotalesPorTipo/:tipo',

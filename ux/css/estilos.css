@@ -1,10 +1,8 @@
 /*Author: Matthew Conde Oltra*/
 
 /* Clase para el tamaño del mapa */
-
-
 .map {
-    height: 475px;
+    height: 600px;
     width: 100%;
 }
 
@@ -471,6 +469,16 @@ header.masthead .intro-text .intro-heading {
 .tarjetasInfoSensores {
     justify-content: space-between;
     height: 100%;
+}
+
+.iconoDesvincular:hover{
+    cursor: pointer;
+    content: url(../images/desvincularNaranja.png);
+}
+
+.iconoDesvincular{
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 /* TARJETA TODOS LOS SENSORES Y TARJETA INFORMACION DE UN SENSOR */

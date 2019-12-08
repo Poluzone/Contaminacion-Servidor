@@ -14,7 +14,7 @@ class Proxy {
             posicion: posicion
         };
 
-        fetch(url + "/insertarMedida", {
+        fetch(URL + "/insertarMedida", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -35,7 +35,7 @@ class Proxy {
             Telefono: tel
         };
 
-        fetch(url + "/insertarUsuario", {
+        fetch(URL + "/insertarUsuario", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -92,15 +92,15 @@ class Proxy {
     async GETultimaMedidaPorUsuario(userId, callback) {
 
         fetch(url + "/GETultimaMedidaPorUsuario", {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(userId), // data can be `string` or {object}!
-                headers: {
-                    'User-Agent': 'jordi',
-                    'Content-Type': 'application/json'
-                }
-            }).then(function (response) {
-                return response.json();
-            })
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(userId), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        })
             .then(function (datos) {
                 if (datos != undefined) {
                     console.log("Tenemos la última medida");
@@ -117,16 +117,16 @@ class Proxy {
     async GETidUsuario(username, callback) {
 
         fetch(url + "/GETidUsuario", {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(username), // data
-                headers: {
-                    'User-Agent': 'jordi',
-                    'Content-Type': 'application/json'
-                }
-            }).then(function (response) {
-                console.log(response);
-                return response.json();
-            })
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(username), // data
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            console.log(response);
+            return response.json();
+        })
             .then(function (datos) {
                 if (datos != undefined) {
                     console.log("------------PROXY------------");
@@ -140,18 +140,17 @@ class Proxy {
 
     //------------Ivan---------------
     // getSensoresYSusUsuarios()
-    // --> json con todos los sensores
     //-------------------------------
     async getSensoresYSusUsuarios(callback) {
 
         console.log("Llamada a getSensoresYSusUsuarios");
 
         fetch(url + "/getSensoresYSusUsuarios", {
-                method: 'GET', // or 'PUT'
-            }).then(function (response) {
-                console.log("response ", response);
-                return response.json();
-            })
+            method: 'GET', // or 'PUT'
+        }).then(function (response) {
+            console.log("response ", response);
+            return response.json();
+        })
             .then(function (datos) {
                 if (datos != undefined) {
 
@@ -171,22 +170,21 @@ class Proxy {
     //-------------Ivan--------------
     // N: IdEstado -->
     // getNumSensoresSegunEstado()
-    // --> N: numero de sensores segun estado
     //-------------------------------
     async getNumSensoresSegunEstado(estado, callback) {
 
         console.log("Llamada a getNumSensoresSegunEstado con " + parseInt(estado));
 
         fetch(url + "/getNumSensoresSegunEstado/" + estado, {
-                method: 'GET', // or 'PUT'
-                headers: {
-                    'User-Agent': 'jordi',
-                    'Content-Type': 'application/json'
-                }
-            }).then(function (response) {
-                console.log("response ", response);
-                return response.json();
-            })
+            method: 'GET', // or 'PUT'
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            console.log("response ", response);
+            return response.json();
+        })
             .then(function (datos) {
 
                 callback(datos);
@@ -207,11 +205,11 @@ class Proxy {
         console.log("Llamada a getTodosLosUsuariosYSusSensores");
 
         fetch(url + "/getTodosLosUsuariosYSusSensores", {
-                method: 'GET', // or 'PUT'
-            }).then(function (response) {
-                console.log("response ", response);
-                return response.json();
-            })
+            method: 'GET', // or 'PUT'
+        }).then(function (response) {
+            console.log("response ", response);
+            return response.json();
+        })
             .then(function (datos) {
                 if (datos != undefined) {
 
@@ -237,11 +235,11 @@ class Proxy {
         console.log("Llamada a getNumeroUsuariosTotales");
 
         fetch(url + "/getNumeroUsuariosTotales", {
-                method: 'GET', // or 'PUT'
-            }).then(function (response) {
-                console.log("response ", response);
-                return response.json();
-            })
+            method: 'GET', // or 'PUT'
+        }).then(function (response) {
+            console.log("response ", response);
+            return response.json();
+        })
             .then(function (datos) {
                 callback(datos);
 
@@ -262,15 +260,15 @@ class Proxy {
         console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + estado);
 
         fetch(url + "/getNumeroUsuariosTotalesPorTipo/" + estado, {
-                method: 'GET', // or 'PUT'
-                headers: {
-                    'User-Agent': 'jordi',
-                    'Content-Type': 'application/json'
-                }
-            }).then(function (response) {
-                console.log("response ", response);
-                return response.json();
-            })
+            method: 'GET', // or 'PUT'
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            console.log("response ", response);
+            return response.json();
+        })
             .then(function (datos) {
 
                 callback(datos);
@@ -281,6 +279,78 @@ class Proxy {
             });
 
     }
+    
+    //-------------Ivan--------------
+    // N: id de un usuario -->
+    // borrarUsuarioPorID()
+    //-------------------------------
+    async borrarUsuarioPorID(id, callback) {
+
+        /*var idJson = {
+            id: id
+        };*/
+
+        fetch(url + "/borrarUsuarioPorID", {
+            method: 'POST', // or 'PUT'
+            body: id.toString(), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
+    }
+    
+    //-------------Ivan--------------
+    // N: id de un usuario -->
+    // borrarUsuarioPorID()
+    //-------------------------------
+    async borrarUsuarioPorID(id, callback) {
+
+        /*var idJson = {
+            id: id
+        };*/
+
+        fetch(url + "/borrarUsuarioPorID", {
+            method: 'POST', // or 'PUT'
+            body: id.toString(), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
+    }
+    
+    //-------------Ivan--------------
+    // N: id de un sensor -->
+    // desvincularUsuarioDeSensorPorIdUsuario()
+    //-------------------------------
+    async desvincularUsuarioDeSensorPorIdUsuario(id){
+        
+        fetch(url + "/desvincularUsuarioDeSensorPorIdUsuario", {
+            method: 'POST', // or 'PUT'
+            body: id.toString(), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
+        
+    }
 
     //-------------------------------
     // GetUltimasMedidasPorFecha()
@@ -288,15 +358,15 @@ class Proxy {
     async getTodasLasMedidasPorFecha(intervalo, callback) {
 
         fetch(url + "/GetTodasLasMedidasPorFecha", {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify(intervalo), // data can be `string` or {object}!
-                headers: {
-                    'User-Agent': 'jordi',
-                    'Content-Type': 'application/json'
-                }
-            }).then(function (response) {
-                return response.json();
-            })
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(intervalo), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        })
             .then(function (datos) {
                 if (datos != undefined) {
                     console.log("Tenemos las última medidas desde: " + intervalo.desde + " hasta " + intervalo.hasta);
@@ -357,6 +427,36 @@ class Proxy {
             console.log("error: " + e);
             return e;
         });
+    }
+
+
+    //-------------------------------
+    // Emilia Rosa van der Heide
+    // -> getEstacionesOficiales() -> JSON  
+    // con las estaciones y las medidas  
+    // de Gandia
+    //-------------------------------
+    async getEstacionesOficiales(callback) {
+        console.log("PROXY: getEstacionesOficiales")
+
+        fetch(url + "/getMedidasEstacionOficialGandia", {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            return response.json();
+        })
+            .then(function (datos) {
+                if (datos != undefined) {
+                    console.log(datos)
+                    console.log("Tenemos las última medidas de las estaciones");
+                } else {
+                    console.log("No existe o no has puesto bien los datos");
+                }
+                callback(datos);
+            });
     }
 
 }
