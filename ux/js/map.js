@@ -168,7 +168,60 @@ function recibirCO(intervalo){
 // removeLayer()
 //...........................................................
 function removeCO(){
+    var heatmapCO = new google.maps.visualization.HeatmapLayer();
     heatmapCO.setMap(null);
+
+}//()
+
+//...........................................................
+//
+//
+//
+//...........................................................
+
+
+function getIcon(tipoGas){
+    var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+    var icon;
+
+    if (tipoGas == 1) {
+        icon = iconBase + 'green.png'
+    } else {
+        if (tipoGas == 2) {
+            icon = iconBase + 'yellow.png'
+        } else {
+            if (tipoGas == 3) {
+                icon = iconBase + 'red.png'
+            } else {
+                if (tipoGas == 4) {
+                    icon = iconBase + 'purple.png'
+                } else {
+                    icon = iconBase + 'lightblue.png'
+                }
+            }
+        }
+    }
+    return icon;
+}//()
+
+
+//...........................................................
+//
+//
+//
+//...........................................................
+
+function getGas(gas){
+    var intervalo = {"desde": 0, "hasta": 0};
+    getLasEstacionesOficiales();
+    proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
+        var poluzone = [];
+
+        for(let i = 0; i < datos["medidas"].length; i++) {
+            var iconBase;
+        }
+
+    })
 }//()
 
 
@@ -189,28 +242,8 @@ function recibirMedidasFecha(intervalo) {
         //asigno un marcador dependiendo de la medida    
         for (let i = 0; i < datos["medidas"].length; i++) {
 
-            var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
-            var icon;
-            /*if(datos[i].IdTipoMedida == 2){
-                    icon = iconBase + 'purple-dot.png'
-                }*/
-            if (datos["medidas"][i].IdTipoMedida == 1) {
-                icon = iconBase + 'green.png'
-            } else {
-                if (datos["medidas"][i].IdTipoMedida == 2) {
-                    icon = iconBase + 'yellow.png'
-                } else {
-                    if (datos["medidas"][i].IdTipoMedida == 3) {
-                        icon = iconBase + 'red.png'
-                    } else {
-                        if (datos["medidas"][i].IdTipoMedida == 4) {
-                            icon = iconBase + 'purple.png'
-                        } else {
-                            icon = iconBase + 'lightblue.png'
-                        }
-                    }
-                }
-            }
+            var icon = getIcon(datos["medidas"][i].IdTipoMedida);
+            //console.log("AAAAAAH"+icon);
             //dibuja los marcadores
             var medida = new google.maps.Marker({
                 position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
@@ -268,7 +301,12 @@ function queGasSoy(dato) {
         }
     }
     return gas;
-}
+}//()
+
+//..............................................................
+//
+//
+//..............................................................
 
 function getLasEstacionesOficiales() {
     console.log("getLasEstacionesOficiales map.js");
