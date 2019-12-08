@@ -165,13 +165,10 @@ function recibirCO(intervalo){
 }
 
 //...........................................................
-// removeLayer()
+//
+//
 //...........................................................
-function removeCO(){
-    var heatmapCO = new google.maps.visualization.HeatmapLayer();
-    heatmapCO.setMap(null);
 
-}//()
 
 //...........................................................
 //
@@ -204,26 +201,6 @@ function getIcon(tipoGas){
     return icon;
 }//()
 
-
-//...........................................................
-//
-//
-//
-//...........................................................
-
-function getGas(gas){
-    var intervalo = {"desde": 0, "hasta": 0};
-    getLasEstacionesOficiales();
-    proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
-        var poluzone = [];
-
-        for(let i = 0; i < datos["medidas"].length; i++) {
-            var iconBase;
-        }
-
-    })
-}//()
-
 //...........................................................
 //
 //
@@ -253,6 +230,7 @@ function getMarker(latitud, longitud, title, icon){
 //...........................................................
 
 function recibirMedidasFecha(intervalo) {
+    var intervalo2 = {"desde": 0, "hasta": 0};
     var title = "";
     getLasEstacionesOficiales();
     proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
