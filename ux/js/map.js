@@ -101,7 +101,7 @@ function initMap() {
     console.log(window.localStorage.getItem('inlineCheckboxCO'))
     //asigno un marcador dependiendo de la medida    
     for (let i = 0; i < datos["medidas"].length; i++) {
-      var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+      var iconBase = 'https://maps.google.com/mapfiles/ms/icons/';
       var icon;
       /*if(datos[i].IdTipoMedida == 2){
       icon = iconBase + 'purple-dot.png'
