@@ -112,41 +112,47 @@
 
     <!------------------------------------------------ Sección Mapa -------------------------------------------------------->
 
-    <section class="page-section container-fluid" id="mapa">
+    <section class="page-section container-fluid pt-2" id="mapa">
         <div class="map" id="map">
         </div>
-        <div class="container-fluid leyenda_mapa mt-5" id="leyenda_mapa">
+        <div class="container-fluid leyenda_mapa mt-3" id="leyenda_mapa">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-3 p-0 pr-1">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                            </p>
+                            <img src="../images/leyenda.png" class="w-20 img-fluid">
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-9">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-check form-check-inline" onclick="cambiarEstadoCO()">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckboxCO" value="option1">
-                                <label class="form-check-label" for="inlineCheckboxCO">CO</label>
-                            </div>
-                            <div class="form-check form-check-inline" onclick="cambiarEstadoNOX()">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckboxNOX" value="option2">
-                                <label class="form-check-label" for="inlineCheckboxNOX">NOX</label>
-                            </div>
-                            <div class="form-check form-check-inline" onclick="cambiarEstadoSO2()">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckboxSO2" value="option3">
-                                <label class="form-check-label" for="inlineCheckboxSO2">SO2</label>
-                            </div>
-                            <div class="form-check form-check-inline" onclick="cambiarEstadoIrr()">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr" value="option3">
-                                <label class="form-check-label" for="inlineCheckboxIrr">Gases irritantes</label>
-                            </div>
+                <div class="col-sm-9 p-0 pl-1">
+                    <div class="card h-100">
+                        <div class="card-body text-center my-auto"><br>
+                            <h3>Seleccione el contaminante que quiera ver: <br><br>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoCO()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxCO"
+                                        value="option1">
+                                    <label class="form-check-label" for="inlineCheckboxCO">Monóxido de carbono</label>
+                                </div>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoNOX()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxNOX"
+                                        value="option2">
+                                    <label class="form-check-label" for="inlineCheckboxNOX">Óxidos de nitrógeno</label>
+                                </div>
+                                <br>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoSO2()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxSO2"
+                                        value="option3">
+                                    <label class="form-check-label" for="inlineCheckboxSO2">Dióxido de azufre</label>
+                                </div>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoIrr()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr"
+                                        value="option3">
+                                    <label class="form-check-label" for="inlineCheckboxIrr">Gases irritantes</label>
+                                </div>
+                            </h3>
+                            <br>
                             <button onclick="window.location.reload();"
-                                class="btn btn-primary nunito fondoNaranja blanco">Aplicar</button>
+                                class="btn btn-primary nunito fondoNaranja blanco mt-2">APLICAR</button>
                             <script>
                                 function cambiarEstadoCO() {
                                     if (document.getElementById('inlineCheckboxCO').checked) window.localStorage.setItem('inlineCheckboxCO', "true");
