@@ -1,0 +1,24 @@
+{
+    "//": "npm run test",
+    "name": "Contaminacion-Servidor",
+    "description": "2019",
+    "license": "LGPL-3.0",
+    "version": "0.0.1",
+    "repository": "no hay",
+    "scripts": {
+      "servidor": "node mainServidorREST.js",
+      "test": "node ./node_modules/mocha/bin/mocha"
+    },
+    "dependencies": {
+      "bcrypt": "^3.0.6",
+      "canvas": "^2.6.0",
+      "express": "*",
+      "request": "*",
+      "sqlite3": "^4.1.0"
+    },
+    "devDependencies": {
+      "jsdom": "^15.2.1",
+      "mocha": "*"
+    }
+  }
+  

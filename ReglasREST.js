@@ -464,8 +464,9 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
 
       // llamo a la función adecuada de la lógica
-      var res = await laLogica.getEstacionesOficiales();
-      //console.log(res);
+      //var res = await laLogica.getEstacionesOficiales();
+      var res = await laLogica.getMedidasEstacionOficialGandia();
+      console.log(res);
       var data = {
         estaciones: res,
         k: 'ok'
