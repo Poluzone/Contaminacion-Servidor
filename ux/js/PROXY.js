@@ -1,5 +1,5 @@
-const url = "http://localhost:8080";
-//const url = "https://juconol.upv.edu.es";
+//const url = "http://localhost:8080";
+const url = "https://juconol.upv.edu.es";
 
 class Proxy {
     constructor() {
@@ -54,7 +54,7 @@ class Proxy {
     async ComprobacionLogin(data) {
         console.log("Realizando ComprobacionLogin");
 
-        fetch(URL + "/ComprobarLogin", {
+        fetch(url + "/ComprobarLogin", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -70,11 +70,18 @@ class Proxy {
         }).then(function (datos) {
             console.log("hola2");
             if (datos.status == true) {
-                setCookie("username", datos.Usuario[0].Email);
-                console.log("Iniciar sesion correcto y se han creado los cookies");
-                checkCookie();
+                if (datos.Usuario[0].TipoUsuario == "Admin") {
+                    setCookie("username", datos.Usuario[0].Email);
+                    console.log("Iniciar sesion correcto y se han creado los cookies");
+                    checkCookie();
+                } else {
+                    console.log("El usuario que intenta iniciar sesión no es Admin");
+                    elUsuarioNoEsAdmin();
+                }
+
             } else {
                 console.log("No existe o no has puesto bien los datos");
+                usuarioOContraseñaIncorrectos();
             }
         });
     }

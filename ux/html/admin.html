@@ -26,7 +26,7 @@ Modificado: 3/12/19
         //Para el local
         //var direccion = "http://localhost:8080";
         //Para el plesk
-        var direccion = "https://localhost:8080";
+        var direccion = "https://juconol.upv.edu.es";
         var sensores;
         var unSensor // Sensor clicado
 
@@ -747,7 +747,7 @@ Modificado: 3/12/19
 
                     proxy.desvincularUsuarioDeSensorPorIdUsuario(unSensor.Usuario.IdUsuario);
 
-                    location.reload();
+                    //location.reload();
 
                 } else {
                     console.log("Borrado sensor: " + unSensor.IdSensor);
@@ -1371,11 +1371,7 @@ Modificado: 3/12/19
 
                                     <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()" id="botonAdd">
 
-<<<<<<< HEAD
                                         <img src="../images/add.png" class="iconoAdd" data-target="#modal">
-=======
-                                        <img src="../images/add.png" class="iconoAdd" alt="Añadir" data-toggle="modal" data-target="#modal">
->>>>>>> Pagina-Admin-Plesk
 
                                     </div>
 

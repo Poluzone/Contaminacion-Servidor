@@ -22,7 +22,6 @@ Modificado: 3/12/19
             //var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + ";path=/";
         }
-
         function getCookie(cname) {
             console.log("Yee");
             var name = cname + "=";
@@ -38,7 +37,6 @@ Modificado: 3/12/19
             }
             return "";
         }
-
         function checkCookie() {
             var user = getCookie("username");
             var url = direccion+"/ux/html/admin.html";
@@ -49,21 +47,16 @@ Modificado: 3/12/19
                 a.click();
             }
         }
-
         function ComprobarUsuario() {
-
             var email = document.getElementById('email').value;
             var pass = document.getElementById('pass').value;
-
             var data = {
                 Email: email,
                 Password: pass
             };
-
             console.log("Llamada a comprobacion del login del Proxy")
             
             proxy.ComprobacionLogin(data);
-
         }
         
         function usuarioOContraseñaIncorrectos(){
@@ -83,7 +76,6 @@ Modificado: 3/12/19
             textoIncorrecto.className = "textoIncorrecto";
             document.getElementById("textoIncorrecto").innerHTML = "El usuario introducido no es un Administrador";
         }
-
     </script>
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
