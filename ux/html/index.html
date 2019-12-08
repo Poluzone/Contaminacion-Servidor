@@ -131,36 +131,54 @@
                                 <input class="form-check-input" type="checkbox" id="inlineCheckboxCO" value="option1">
                                 <label class="form-check-label" for="inlineCheckboxCO">CO</label>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                <label class="form-check-label" for="inlineCheckbox2">NOX</label>
+                            <div class="form-check form-check-inline" onclick="cambiarEstadoNOX()">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckboxNOX" value="option2">
+                                <label class="form-check-label" for="inlineCheckboxNOX">NOX</label>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                                <label class="form-check-label" for="inlineCheckbox3">SO2</label>
+                            <div class="form-check form-check-inline" onclick="cambiarEstadoSO2()">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckboxSO2" value="option3">
+                                <label class="form-check-label" for="inlineCheckboxSO2">SO2</label>
                             </div>
+                            <div class="form-check form-check-inline" onclick="cambiarEstadoIrr()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr" value="option3">
+                                    <label class="form-check-label" for="inlineCheckboxIrr">Gases irritantes</label>
+                                </div>
                             <button onclick="window.location.reload();"
                                 class="btn btn-primary nunito fondoNaranja blanco">Aplicar</button>
                             <script>
                                 function cambiarEstadoCO() {
-                                    if (document.getElementById('inlineCheckboxCO').checked) {
-                                        console.log("checked")
-                                        window.localStorage.setItem('inlineCheckboxCO', "true");
-                                    }
-                                    else {
-                                        console.log("un")
-                                        window.localStorage.setItem('inlineCheckboxCO', "false");
-                                    }
+                                    if (document.getElementById('inlineCheckboxCO').checked) window.localStorage.setItem('inlineCheckboxCO', "true");
+                                    else window.localStorage.setItem('inlineCheckboxCO', "false");
+                                }
+                                function cambiarEstadoNOX() {
+                                    if (document.getElementById('inlineCheckboxNOX').checked) window.localStorage.setItem('inlineCheckboxNOX', "true");
+                                    else window.localStorage.setItem('inlineCheckboxNOX', "false");
+                                }
+                                function cambiarEstadoSO2() {
+                                    if (document.getElementById('inlineCheckboxSO2').checked) window.localStorage.setItem('inlineCheckboxSO2', "true");
+                                    else window.localStorage.setItem('inlineCheckboxSO2', "false");
+                                }
+                                function cambiarEstadoIrr() {
+                                    if (document.getElementById('inlineCheckboxIrr').checked) window.localStorage.setItem('inlineCheckboxIrr', "true");
+                                    else window.localStorage.setItem('inlineCheckboxIrr', "false");
                                 }
                             </script>
                             <script>
-                                var estado = window.localStorage.getItem('inlineCheckboxCO')
-                                if (estado == "true") {
-                                    document.getElementById('inlineCheckboxCO').checked = true;
-                                }
-                                else {
-                                    document.getElementById('inlineCheckboxCO').checked = false;
-                                }
+                                var estadoCO = window.localStorage.getItem('inlineCheckboxCO')
+                                if (estadoCO == "true") document.getElementById('inlineCheckboxCO').checked = true;
+                                else document.getElementById('inlineCheckboxCO').checked = false;
+
+                                var estadoNOX = window.localStorage.getItem('inlineCheckboxNOX')
+                                if (estadoNOX == "true") document.getElementById('inlineCheckboxNOX').checked = true;
+                                else document.getElementById('inlineCheckboxNOX').checked = false;
+
+                                var estadoSO2 = window.localStorage.getItem('inlineCheckboxSO2')
+                                if (estadoSO2 == "true") document.getElementById('inlineCheckboxSO2').checked = true;
+                                else document.getElementById('inlineCheckboxSO2').checked = false;
+
+                                var estadoIrr = window.localStorage.getItem('inlineCheckboxIrr')
+                                if (estadoIrr == "true") document.getElementById('inlineCheckboxIrr').checked = true;
+                                else document.getElementById('inlineCheckboxIrr').checked = false;
                             </script>
                         </div>
                     </div>

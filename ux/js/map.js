@@ -23,8 +23,8 @@ function initMap() {
         elementType: 'geometry',
         stylers: [{ color: '#263c3f' }]
       },
-    
-    +  {
+
+      +  {
         featureType: 'poi.park',
         elementType: 'labels.text.fill',
         stylers: [{ color: '#6b9a76' }]
@@ -88,12 +88,13 @@ function initMap() {
     center: location
   });
 
-  intervalo = {desde: 0, hasta: 0};
+  intervalo = { desde: 0, hasta: 0 };
   //Recojo los datos de la base de datos
   proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
     // console.log(datos);
     console.log("DATOS DE MEDIDAS POR FECHA");
     var poluzone = [];
+    console.log(window.localStorage.getItem('inlineCheckboxCO'))
 
     var infowindow = new google.maps.InfoWindow()
 
@@ -121,34 +122,135 @@ function initMap() {
           }
         }
       }
-      //dibuja los marcadores
-      var medida = new google.maps.Marker({
-        position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
-        map: getMap(),
-        title: 'Medidas',
-        icon: { url: icon },
-      });
 
-      var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
 
-      poluzone.push(puntoCalor);
+      // --------------------- CO ---------------------------------
+      if (window.localStorage.getItem('inlineCheckboxCO') == "true" && datos["medidas"][i].IdTipoMedida == 2) {
+        //dibuja los marcadores
+        var medida = new google.maps.Marker({
+          position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+          map: getMap(),
+          title: 'Medidas',
+          icon: { url: icon },
+        });
 
-      var contentString = '<div id="content">' +
-        '<div id="siteNotice">' +
-        '</div>' +
-        '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
-        '<div id="bodyContent">' +
-        '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
-        '<p></p>' +
-        '</div>' +
-        '</div>';
+        var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
 
-      google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
-        return function () {
-          infowindow.setContent(content);
-          infowindow.open(getMap(), marker);
-        };
-      })(medida, contentString, infowindow));
+        poluzone.push(puntoCalor);
+
+        var contentString = '<div id="content">' +
+          '<div id="siteNotice">' +
+          '</div>' +
+          '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+          '<div id="bodyContent">' +
+          '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+          '<p></p>' +
+          '</div>' +
+          '</div>';
+
+        google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+          return function () {
+            infowindow.setContent(content);
+            infowindow.open(getMap(), marker);
+          };
+        })(medida, contentString, infowindow));
+      }
+
+      // --------------------- NOX ---------------------------------
+      if (window.localStorage.getItem('inlineCheckboxNOX') == "true" && datos["medidas"][i].IdTipoMedida == 3) {
+        //dibuja los marcadores
+        var medida = new google.maps.Marker({
+          position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+          map: getMap(),
+          title: 'Medidas',
+          icon: { url: icon },
+        });
+
+        var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+        poluzone.push(puntoCalor);
+
+        var contentString = '<div id="content">' +
+          '<div id="siteNotice">' +
+          '</div>' +
+          '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+          '<div id="bodyContent">' +
+          '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+          '<p></p>' +
+          '</div>' +
+          '</div>';
+
+        google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+          return function () {
+            infowindow.setContent(content);
+            infowindow.open(getMap(), marker);
+          };
+        })(medida, contentString, infowindow));
+      }
+
+      // --------------------- SO2 ---------------------------------
+      if (window.localStorage.getItem('inlineCheckboxSO2') == "true" && datos["medidas"][i].IdTipoMedida == 4) {
+        //dibuja los marcadores
+        var medida = new google.maps.Marker({
+          position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+          map: getMap(),
+          title: 'Medidas',
+          icon: { url: icon },
+        });
+
+        var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+        poluzone.push(puntoCalor);
+
+        var contentString = '<div id="content">' +
+          '<div id="siteNotice">' +
+          '</div>' +
+          '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+          '<div id="bodyContent">' +
+          '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+          '<p></p>' +
+          '</div>' +
+          '</div>';
+
+        google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+          return function () {
+            infowindow.setContent(content);
+            infowindow.open(getMap(), marker);
+          };
+        })(medida, contentString, infowindow));
+      }
+
+      // --------------------- Gases irr ---------------------------------
+      if (window.localStorage.getItem('inlineCheckboxIrr') == "true" && datos["medidas"][i].IdTipoMedida == 5) {
+        //dibuja los marcadores
+        var medida = new google.maps.Marker({
+          position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+          map: getMap(),
+          title: 'Medidas',
+          icon: { url: icon },
+        });
+
+        var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+        poluzone.push(puntoCalor);
+
+        var contentString = '<div id="content">' +
+          '<div id="siteNotice">' +
+          '</div>' +
+          '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+          '<div id="bodyContent">' +
+          '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+          '<p></p>' +
+          '</div>' +
+          '</div>';
+
+        google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+          return function () {
+            infowindow.setContent(content);
+            infowindow.open(getMap(), marker);
+          };
+        })(medida, contentString, infowindow));
+      }
 
     }//for
     var heatmap = new google.maps.visualization.HeatmapLayer({
