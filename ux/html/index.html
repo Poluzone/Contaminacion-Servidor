@@ -1,543 +1,474 @@
 <!DOCTYPE html>
 <html lang="es">
 
-    <head>
-        <script type="text/javascript" src="../js/PROXY.js"></script>
-        <!-- Scripts para API Google Maps -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization"
-                type="text/javascript"></script>
-        <script type="text/javascript" src="../js/map.js"></script>
-        <script>
-            var proxy = new Proxy();
-            //Para el local
-            //var direccion = "http://localhost:8080";
-            //Para el plesk
-            var direccion = "https://juconol.upv.edu.es";
-            function setCookie(cname, cvalue) {
-                //var d = new Date();
-                // d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-                //var expires = "expires=" + d.toUTCString();
-                document.cookie = cname + "=" + cvalue + ";" + ";path=/";
-            }
+<head>
+    <script type="text/javascript" src="../js/PROXY.js"></script>
+    <!-- Scripts para API Google Maps -->
+    <script type="text/javascript" src="../js/map.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization"
+        type="text/javascript"></script>
+    <script>
+        var proxy = new Proxy();
 
-            function getCookie(cname) {
-                var name = cname + "=";
-                var ca = document.cookie.split(';');
-                for (var i = 0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') {
-                        c = c.substring(1);
-                    }
-                    if (c.indexOf(name) == 0) {
-                        return c.substring(name.length, c.length);
-                    }
-                }
-                return "";
-            }
-
-            function checkCookie() {
-                var user = getCookie("username");
-                var url = direccion+"/ux/html/principal.html";
-                if (user != "") {
-                    alert("Los cookies funcionan estimado: " + user);
-                    var a = document.createElement("a");
-                    a.href = url;
-                    a.click();
-                }
-            }
-
-
-            function insertarUsuario() {
-
-                var email = document.getElementById('emailR').value;
-                var pass = document.getElementById('passR').value;
-                var pass2 = document.getElementById('RpassR').value;
-                var tel = document.getElementById('telR').value;
-
-                if (pass == pass2) {
-                    proxy.insertarUsuario(email, pass, tel);
+        //Esto es para poder asignarle un nombre al gas dependiendo de su ID
+        function queGasSoy(dato) {
+            var gas;
+            if (dato == 2) {
+                gas = "CO";
+            } else {
+                if (dato == 3) {
+                    gas = "NOX";
                 } else {
-                    console.log("error");
+                    if (dato == 4) {
+                        gas = "SO2";
+                    } else {
+                        gas = "Gas Irritante";
+                    }
                 }
-
             }
+            return gas;
+        }            
+    </script>
 
-            function ComprobarUsuario() {
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
 
-                var email = document.getElementById('email').value;
-                var pass = document.getElementById('pass').value;
-
-                var data = {
-                    Email: email,
-                    Password: pass
-                };
-
-                proxy.ComprobacionLogin(data);
-
-            }
+    <!--  css de bootsrap  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
 
-            //Recibe las medidas y dibuja los marcadores
-            function recibirMedidasFecha(intervalo){
-                //Recojo los datos de la base de datos
-                proxy.getTodasLasMedidasPorFecha(intervalo, function(datos){
-                    // console.log(datos);
-                    console.log("DATOS DE MEDIDAS POR FECHA");
-                    var poluzone = [];
-
-                    var infowindow = new google.maps.InfoWindow()
-                    //asigno un marcador dependiendo de la medida    
-                    for(let i = 0; i<datos["medidas"].length;i++){
-
-                        var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
-                        var icon;
-                        /*if(datos[i].IdTipoMedida == 2){
-                    icon = iconBase + 'purple-dot.png'
-                }*/
-                        if(datos["medidas"][i].IdTipoMedida==1){
-                            icon = iconBase + 'green.png' 
-                        }else{
-                            if(datos["medidas"][i].IdTipoMedida==2){
-                                icon = iconBase + 'yellow.png'
-                            }else{
-                                if(datos["medidas"][i].IdTipoMedida==3){
-                                    icon = iconBase + 'red.png'
-                                }else{
-                                    if(datos["medidas"][i].IdTipoMedida==4){
-                                        icon = iconBase + 'purple.png'
-                                    }else{
-                                        icon = iconBase + 'lightblue.png'
-                                    }
-                                }
-                            }
-                        }
-                        //dibuja los marcadores
-                        var medida = new google.maps.Marker({
-                            position: {lat:datos["medidas"][i].Latitud,lng:datos["medidas"][i].Longitud},
-                            map: getMap(),
-                            title: 'Medidas',
-                            icon: {url:icon},
-                        });      
-
-                        var puntoCalor = {location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor};
-
-                        poluzone.push(puntoCalor);
-
-                        var contentString = '<div id="content">'+
-                            '<div id="siteNotice">'+
-                            '</div>'+
-                            '<h1 id="firstHeading" class="firstHeading">'+datos["medidas"][i].Valor.toString()+' ppb</h1>'+
-                            '<div id="bodyContent">'+
-                            '<p><b>'+queGasSoy(datos["medidas"][i].IdTipoMedida)+'</b></p>'+
-                            '<p></p>'+
-                            '</div>'+
-                            '</div>';
+    <!-- iconos Material Design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Poluzone | Home</title>
 
+    <!-- CSS de Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
 
-                        google.maps.event.addListener(medida,'click', (function(marker,content,infowindow){ 
-                            return function() {
-                                infowindow.setContent(content);
-                                infowindow.open(getMap(),marker);
-                            };
-                        })(medida,contentString,infowindow)); 
+<body id="page-top">
 
-
-
-                    }//for
-                    var heatmap = new google.maps.visualization.HeatmapLayer({
-                        data: poluzone,
-                        maxIntensity: 1243,
-                        radius: 60
-                    });
-                    heatmap.setMap(getMap());
-                });
-            }
-            recibirMedidasFecha({"desde":0, "hasta": 0});
-
-        </script>
-
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
-
-        <!--  css de bootsrap  -->
-        <link rel="stylesheet" href="../css/estilos.css">
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-
-
-        <!-- iconos Material Design -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Poluzone | Home</title>
-
-        <!-- CSS de Bootstrap -->
-        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
-        <!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-    </head>
-
-    <body id="page-top">
-
-        <!------------------------------------------------ NAVBAR -------------------------------------------------------->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png" width="30"
-                                                                                       alt=""> Poluzone</a>
-                <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse"
-                   data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                   aria-label="Toggle navigation">
-                    <i class="material-icons">
-                        menu
-                    </i>
-                </a>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#mapa">Mapa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#app">App</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#mision">Nuestra misión</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#about">Acerca de nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact" data-toggle="modal" data-target="#contacto">Contacto</a>
-                        </li>
-                    </ul>
-                </div>
+    <!------------------------------------------------ NAVBAR -------------------------------------------------------->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top fondoOscuro" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger nunito" href="#page-top"><img src="../images/earth.png" width="30"
+                    alt=""> Poluzone</a>
+            <a class="navbar-toggler navbar-toggler-right nunito" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="material-icons">
+                    menu
+                </i>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#map">Mapa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#app">App</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#mision">Nuestra misión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#about">Acerca de nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact" data-toggle="modal" data-target="#contacto">Contacto</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <!-- Header -->
-        <header class="masthead">
-            <div class="container">
-                <div class="intro-text">
-                    <div class="intro-heading">Poluzone</div>
-                    <div class="intro-lead-in">Poluzone realiza el mapeo de la
-                        contaminación de tu ciudad para ayudar a todos los ciudadanos</div>
-                    <a class="btn-xl btn btn-primary text-uppercase js-scroll-trigger font-weight-bold" href="#mapa">VER
-                        MAPA</a>
-                </div>
+    <!-- Header -->
+    <header class="masthead">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-heading">Poluzone</div>
+                <div class="intro-lead-in">Poluzone realiza el mapeo de la
+                    contaminación de tu ciudad para ayudar a todos los ciudadanos</div>
+                <a class="btn-xl btn btn-primary text-uppercase js-scroll-trigger font-weight-bold" href="#mapa">VER
+                    MAPA</a>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <!------------------------------------------------ Sección Mapa -------------------------------------------------------->
+    <!------------------------------------------------ Sección Mapa -------------------------------------------------------->
 
-        <section class="page-section container-fluid" id="mapa">
-            <div class="map" id="map">
-            </div>
-            <div class="container-fluid leyenda_mapa mt-5" id="leyenda_mapa">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary">Left</button>
-                            <button type="button" class="btn btn-secondary">Middle</button>
-                            <button type="button" class="btn btn-secondary">Right</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!------------------------------------------------ / Sección Mapa -------------------------------------------------------->
-
-        <!------------------------------------------------ Sección App -------------------------------------------------------->
-
-        <section class="page-section" id="app">
-            <div class="container download-app rounded shadow">
-                <div class="row p-1">
-                    <div class="col-lg-5 my-auto p-3 text-center">
-                        <img src="../images/poluzone mockup.png" class="w-75">
-                    </div>
-                    <div class="download-app__content col-lg-5 my-auto text-center text-lg-left">
-                        <img src="../images/ic_launcher_round.png" width="70" alt="" class="my-4 d-none d-lg-inline">
-                        <h2>Descarga Poluzone</h2>
-                        <h5>¡Gracias a nuestra aplicación android puedes tener acceso a toda la información que
-                            necesitas
-                            en tu teléfono móvil!</h5>
-                        <a href="https://play.google.com/store" target="_blank">
-                            <img src="../images/google-play-badge.png" width="200" class="my-4"></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!------------------------------------------------ / Sección App -------------------------------------------------------->
-
-        <!------------------------------------------------ Sección Mision -------------------------------------------------------->
-
-        <section class="page-section" id="mision">
-            <div class="fondoOscuro blanco">
-                <div class="text-center container mt-5">
-                    <div class="pt-4 pb-2 p-lg-5">
-                        <h1 class="nunito mb-lg-5 text-uppercase">Nuestra Misión</h1>
-                        <div class="row mb-lg-5 mb-3">
-                            <img class="col-lg-6 d-none d-lg-inline" src="../images/imagen_BLExD.jpg" width="20">
-                            <div class="px-4 col-lg-6 my-lg-auto mt-2">
-                                <p class="text-justify">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut
-                                    labore
-                                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                    laboris
-                                    nisi
-                                    ut
-                                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                    velit
-                                    esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                    sunt
-                                    in
-                                    culpa qui officia deserunt mollit anim id est laborum.
-                                </p>
-                                <a class="btn btn-primary text-uppercase font-weight-bold mt-3" href="#contact"
-                                   data-toggle="modal" data-target="#contacto">+ INFORMACIÓN</a>
-                            </div>
-                        </div>
-                        <div class="row mt-3 mt-lg-0">
-                            <div class="col-md-6 text-center text-lg-right my-auto">
-                                <img src="../images/ayuntamiento.png" width="190" class="m-3">
-                            </div>
-                            <div class="col-md-6 text-center text-lg-left my-auto">
-                                <img src="../images/upv.png" width="200" class="m-3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!------------------------------------------------ / Sección Mision -------------------------------------------------------->
-
-        <!------------------------------------------------ Sección Acerca de nosotros -------------------------------------------------------->
-
-        <section class="page-section d-flex flex-column text-center mt-7 container" id="about">
-            <h1 class="mb-5 text-uppercase">Nuestro Equipo</h1>
+    <section class="page-section container-fluid pt-7" id="mapa">
+        <div class="map" id="map">
+        </div>
+        <div class="container-fluid leyenda_mapa mt-3" id="leyenda_mapa">
             <div class="row">
-                <div class="col">
-                    <img src="../images/team-matt.jpeg" width="120" alt="" class="redonda">
-                    <h5 class="mt-3">Matt</h5>
-                    <p class="text-muted">Diseñador Principal</p>
-                </div>
-                <div class="col">
-                    <img src="../images/team-diego.jpg" width="120" alt="" class="redonda">
-                    <h5 class="mt-3">Diego</h5>
-                    <p class="text-muted">Desarrollador Web</p>
-                </div>
-                <div class="col">
-                    <img src="../images/team-rosa.jpeg" width="120" alt="" class="redonda">
-                    <h5 class="mt-3">Rosa</h5>
-                    <p class="text-muted">Scrum Master</p>
-                </div>
-                <div class="col">
-                    <img src="../images/team-ivan.jpeg" width="120" alt="" class="redonda">
-                    <h5 class="mt-3">Iván</h5>
-                    <p class="text-muted">Desarrollador App</p>
-                </div>
-                <div class="col">
-                    <img src="../images/miniXus.PNG" width="120" alt="" class="redonda">
-                    <h5 class="mt-3">Josep</h5>
-                    <p class="text-muted">Desarrollador Back End</p>
-                </div>
-            </div>
-            <div class="container mt-5">
-                <h5>Somos un grupo de jóvenes emprendedores que trabajamos con metodología ágil (scrum). Lorem ipsum
-                    dolor sit amet, consectetur adipiscing elit. Morbi nec eros ac orci tristique pellentesque. Aliquam
-                    dignissim sit amet mauris et ullamcorper. Duis eu nisl sit amet turpis porta faucibus ullamcorper
-                    sit amet magna.
-                </h5>
-            </div>
-
-        </section>
-
-        <!------------------------------------------------ / Sección Acerca de nosotros -------------------------------------------------------->
-
-
-
-
-        <!------------------------------------------------ FOOTER -------------------------------------------------------->
-        <footer class="footer">
-
-            <section class="section_4 text-center fondoOscuro p-1">
-                <p class="mt-2 nunito blanco nunito">&copy; Copyright 2019 GTI UPV. Todos los Derechos
-                    Reservados
-                </p>
-            </section>
-        </footer>
-
-        <!------------------------------------------------ /FOOTER -------------------------------------------------------->
-
-        <!-- Modal para contacto -->
-        <div class="modal fade" id="contacto">
-            <div class="modal-dialog modal-md modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header fondoOscuro bordeOscuro">
-                        <h4 class="modal-title nunito blanco sizeTitlePopUp">Contacta con nosotros</h4>
-                        <button type="button" class="close text-light bordeOscuro" data-dismiss="modal">&times;</button>
+                <div class="col-sm-3 p-0 pr-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="../images/leyenda.png" class="w-20 img-fluid">
+                        </div>
                     </div>
-                    <div class="modal-body d-flex justify-content-center">
-                        <form class="form-horizontal w-100">
-                            <input id="textR" type="text" class="form-control nunito" name="textR" placeholder="Nombre">
+                </div>
+                <div class="col-sm-9 p-0 pl-1">
+                    <div class="card h-100">
+                        <div class="card-body text-center my-auto"><br>
+                            <h3>Seleccione el contaminante que quiera ver: <br><br>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoCO()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxCO"
+                                        value="option1">
+                                    <label class="form-check-label" for="inlineCheckboxCO">Monóxido de carbono</label>
+                                </div>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoNOX()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxNOX"
+                                        value="option2">
+                                    <label class="form-check-label" for="inlineCheckboxNOX">Óxidos de nitrógeno</label>
+                                </div>
+                                <br>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoSO2()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxSO2"
+                                        value="option3">
+                                    <label class="form-check-label" for="inlineCheckboxSO2">Dióxido de azufre</label>
+                                </div>
+                                <div class="form-check form-check-inline" onclick="cambiarEstadoIrr()">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr"
+                                        value="option3">
+                                    <label class="form-check-label" for="inlineCheckboxIrr">Gases irritantes</label>
+                                </div>
+                            </h3>
                             <br>
-                            <div class="input-group">
-                                <input id="emailR" type="text" class="form-control nunito sizeM" name="emailR"
-                                       placeholder="Email">
-                            </div><br>
-                            <div class="input-group">
-                                <input id="telR" type="text" class="form-control nunito sizeM" name="telR"
-                                       placeholder="Número de teléfono">
-                            </div><br>
-                            <div class="input-group">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"
-                                          placeholder="Mensaje"></textarea>
-                            </div><br>
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button onclick="insertarUsuario()"
-                                class="btn btn-primary nunito fondoNaranja blanco">ENVIAR</button>
-                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <button onclick="window.location.reload();"
+                                class="btn btn-primary nunito fondoNaranja blanco mt-2">APLICAR</button>
+                            <script>
+                                function cambiarEstadoCO() {
+                                    if (document.getElementById('inlineCheckboxCO').checked) window.localStorage.setItem('inlineCheckboxCO', "true");
+                                    else window.localStorage.setItem('inlineCheckboxCO', "false");
+                                }
+                                function cambiarEstadoNOX() {
+                                    if (document.getElementById('inlineCheckboxNOX').checked) window.localStorage.setItem('inlineCheckboxNOX', "true");
+                                    else window.localStorage.setItem('inlineCheckboxNOX', "false");
+                                }
+                                function cambiarEstadoSO2() {
+                                    if (document.getElementById('inlineCheckboxSO2').checked) window.localStorage.setItem('inlineCheckboxSO2', "true");
+                                    else window.localStorage.setItem('inlineCheckboxSO2', "false");
+                                }
+                                function cambiarEstadoIrr() {
+                                    if (document.getElementById('inlineCheckboxIrr').checked) window.localStorage.setItem('inlineCheckboxIrr', "true");
+                                    else window.localStorage.setItem('inlineCheckboxIrr', "false");
+                                }
+                            </script>
+                            <script>
+                                var estadoCO = window.localStorage.getItem('inlineCheckboxCO')
+                                if (estadoCO == "true") document.getElementById('inlineCheckboxCO').checked = true;
+                                else document.getElementById('inlineCheckboxCO').checked = false;
 
-        <!-- POP UPS -->
-        <!-- Modal para login -->
-        <div class="modal fade" id="login">
-            <div class="modal-dialog modal-sm modal-dialog-centered">
-                <div class="modal-content">
-                    <!-- Cabeza del modal, contiene el titulo del modal en este caso Iniciar Sesión -->
-                    <div class="modal-header fondoOscuro">
-                        <h4 class="modal-title nunito blanco sizeTitlePopUp">Iniciar Sesión</h4>
-                        <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
-                    </div>
-                    <!-- Cuerpo del modal, contiene el formulario del modal para Iniciar Sesión comprobando el usuario y su contraseña y el enlace para registrarse -->
-                    <div class="modal-body">
-                        <form class="form-horizontal">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="material-icons">email</i></span>
-                                <input id="email" type="text" class="form-control nunito sizeS" name="email"
-                                       placeholder="Email">
-                            </div><br>
+                                var estadoNOX = window.localStorage.getItem('inlineCheckboxNOX')
+                                if (estadoNOX == "true") document.getElementById('inlineCheckboxNOX').checked = true;
+                                else document.getElementById('inlineCheckboxNOX').checked = false;
 
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="material-icons">https</i></span>
-                                <input id="pass" type="password" class="form-control nunito sizeS" name="password"
-                                       placeholder="Password">
-                            </div><br>
-                        </form>
-                        <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" data-toggle="modal"
-                                                                                           data-target="#recoverPass" class="naranja"> Recuperar
-                            </a>
-                        </p>
-                        <!--<p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" data-toggle="modal" data-target="#signIn" class="close naranja" data-dismiss="modal"> Registrarse </a></p>-->
-                        <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->
-                    </div>
-                    <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button onclick="ComprobarUsuario()"
-                                class="btn btn-primary nunito fondoNaranja bordeNaranja">Entrar</button>
-                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                var estadoSO2 = window.localStorage.getItem('inlineCheckboxSO2')
+                                if (estadoSO2 == "true") document.getElementById('inlineCheckboxSO2').checked = true;
+                                else document.getElementById('inlineCheckboxSO2').checked = false;
+
+                                var estadoIrr = window.localStorage.getItem('inlineCheckboxIrr')
+                                if (estadoIrr == "true") document.getElementById('inlineCheckboxIrr').checked = true;
+                                else document.getElementById('inlineCheckboxIrr').checked = false;
+                            </script>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Modal para registrarse -->
-        <div class="modal fade" id="signIn">
-            <div class="modal-dialog modal-sm modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header fondoOscuro bordeOscuro">
-                        <h4 class="modal-title nunito blanco sizeTitlePopUp">Registrarse</h4>
-                        <button type="button" class="close text-light bordeOscuro" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body d-flex justify-content-center">
-                        <form class="form-horizontal">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="material-icons">email</i></span>
-                                <input id="emailR" type="text" class="form-control nunito sizeS" name="emailR"
-                                       placeholder="Email">
-                            </div><br>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="material-icons">https</i></span>
-                                <input id="passR" type="password" class="form-control nunito sizeS" name="passR"
-                                       placeholder="Contraseña">
-                            </div><br>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="material-icons">https</i></span>
-                                <input id="RpassR" type="password" class="form-control nunito sizeS" name="RpassR"
-                                       placeholder="Repetir contraseña">
-                            </div><br>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="material-icons">phone</i></span>
-                                <input id="telR" type="text" class="form-control nunito sizeS" name="telR"
-                                       placeholder="Telefono">
-                            </div><br>
-                            <div class="input-group">
-                                <label class="sizeXS centrado"><input id="condiciones" type="checkbox" name="condiciones"
-                                                                      style="margin: 6px;"> Acepto los Términos de uso
-                                    y
-                                    confirmo
-                                    que he leído y comprendido la Política de privacidad.
-                                    <a href="https://juconol.upv.edu.es/ux/pdf/terminos.pdf">Politicas de
-                                        privacidad</a></label>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button onclick="insertarUsuario()"
-                                class="btn btn-primary nunito fondoNaranja blanco">Registrarse</button>
-                        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+    <!------------------------------------------------ / Sección Mapa -------------------------------------------------------->
 
+    <!------------------------------------------------ Sección App -------------------------------------------------------->
+
+    <section class="page-section" id="app">
+        <div class="container download-app rounded shadow">
+            <div class="row p-1">
+                <div class="col-lg-5 my-auto p-3 text-center">
+                    <img src="../images/poluzone mockup.png" class="w-75">
+                </div>
+                <div class="download-app__content col-lg-5 my-auto text-center text-lg-left">
+                    <img src="../images/ic_launcher_round.png" width="70" alt="" class="my-4 d-none d-lg-inline">
+                    <h2>Descarga Poluzone</h2>
+                    <h5>¡Gracias a nuestra aplicación android puedes tener acceso a toda la información que
+                        necesitas
+                        en tu teléfono móvil!</h5>
+                    <a href="https://play.google.com/store" target="_blank">
+                        <img src="../images/google-play-badge.png" width="200" class="my-4"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!------------------------------------------------ / Sección App -------------------------------------------------------->
+
+    <!------------------------------------------------ Sección Mision -------------------------------------------------------->
+
+    <section class="page-section" id="mision">
+        <div class="fondoOscuro blanco">
+            <div class="text-center container mt-5">
+                <div class="pt-4 pb-2 p-lg-5">
+                    <h1 class="nunito mb-lg-5 text-uppercase">Nuestra Misión</h1>
+                    <div class="row mb-lg-5 mb-3">
+                        <img class="col-lg-6 d-none d-lg-inline" src="../images/imagen_BLExD.jpg" width="20">
+                        <div class="px-4 col-lg-6 my-lg-auto mt-2">
+                            <p class="text-justify">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore
+                                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                laboris
+                                nisi
+                                ut
+                                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                velit
+                                esse
+                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                                sunt
+                                in
+                                culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                            <a class="btn btn-primary text-uppercase font-weight-bold mt-3" href="#contact"
+                                data-toggle="modal" data-target="#contacto">+ INFORMACIÓN</a>
+                        </div>
+                    </div>
+                    <div class="row mt-3 mt-lg-0">
+                        <div class="col-md-6 text-center text-lg-right my-auto">
+                            <img src="../images/ayuntamiento.png" width="190" class="m-3">
+                        </div>
+                        <div class="col-md-6 text-center text-lg-left my-auto">
+                            <img src="../images/upv.png" width="200" class="m-3">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!------------------------------------------------ / Sección Mision -------------------------------------------------------->
+
+    <!------------------------------------------------ Sección Acerca de nosotros -------------------------------------------------------->
+
+    <section class="page-section d-flex flex-column text-center mt-7 container" id="about">
+        <h1 class="mb-5 text-uppercase">Nuestro Equipo</h1>
+        <div class="row">
+            <div class="col">
+                <img src="../images/team-matt.jpeg" width="120" alt="" class="redonda">
+                <h5 class="mt-3">Matt</h5>
+                <p class="text-muted">Diseñador Principal</p>
+            </div>
+            <div class="col">
+                <img src="../images/team-diego.jpg" width="120" alt="" class="redonda">
+                <h5 class="mt-3">Diego</h5>
+                <p class="text-muted">Desarrollador Web</p>
+            </div>
+            <div class="col">
+                <img src="../images/team-rosa.jpeg" width="120" alt="" class="redonda">
+                <h5 class="mt-3">Rosa</h5>
+                <p class="text-muted">Scrum Master</p>
+            </div>
+            <div class="col">
+                <img src="../images/team-ivan.jpeg" width="120" alt="" class="redonda">
+                <h5 class="mt-3">Iván</h5>
+                <p class="text-muted">Desarrollador App</p>
+            </div>
+            <div class="col">
+                <img src="../images/miniXus.PNG" width="120" alt="" class="redonda">
+                <h5 class="mt-3">Josep</h5>
+                <p class="text-muted">Desarrollador Back End</p>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <h5>Somos un grupo de jóvenes emprendedores que trabajamos con metodología ágil (scrum). Lorem ipsum
+                dolor sit amet, consectetur adipiscing elit. Morbi nec eros ac orci tristique pellentesque. Aliquam
+                dignissim sit amet mauris et ullamcorper. Duis eu nisl sit amet turpis porta faucibus ullamcorper
+                sit amet magna.
+            </h5>
+        </div>
+
+    </section>
+
+    <!------------------------------------------------ / Sección Acerca de nosotros -------------------------------------------------------->
 
 
-        <!-- Librería jQuery requerida por los plugins de JavaScript -->
-        <script src="https://code.jquery.com/jquery.js"></script>
 
-        <!-- Todos los plugins JavaScript de Bootstrap (también puedes
-incluir archivos JavaScript individuales de los únicos
-plugins que utilices) -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- Custom scripts for this template -->
-        <script src="../js/agency.min.js"></script>
-        <script src="../jquery-easing/jquery.easing.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-                crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-                crossorigin="anonymous"></script>
-    </body>
 
+    <!------------------------------------------------ FOOTER -------------------------------------------------------->
+    <footer class="footer">
+
+        <section class="section_4 text-center fondoOscuro p-1">
+            <p class="mt-2 nunito blanco nunito">&copy; Copyright 2019 GTI UPV. Todos los Derechos
+                Reservados
+            </p>
+        </section>
+    </footer>
+
+    <!------------------------------------------------ /FOOTER -------------------------------------------------------->
+
+    <!-- Modal para contacto -->
+    <div class="modal fade" id="contacto">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header fondoOscuro bordeOscuro">
+                    <h4 class="modal-title nunito blanco sizeTitlePopUp">Contacta con nosotros</h4>
+                    <button type="button" class="close text-light bordeOscuro" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <form class="form-horizontal w-100">
+                        <input id="textR" type="text" class="form-control nunito" name="textR" placeholder="Nombre">
+                        <br>
+                        <div class="input-group">
+                            <input type="text" class="form-control nunito sizeM" name="emailR" placeholder="Email">
+                        </div><br>
+                        <div class="input-group">
+                            <input type="text" class="form-control nunito sizeM" name="telR"
+                                placeholder="Número de teléfono">
+                        </div><br>
+                        <div class="input-group">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"
+                                placeholder="Mensaje"></textarea>
+                        </div><br>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button onclick="insertarUsuario()"
+                        class="btn btn-primary nunito fondoNaranja blanco">ENVIAR</button>
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POP UPS -->
+    <!-- Modal para login -->
+    <div class="modal fade" id="login">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Cabeza del modal, contiene el titulo del modal en este caso Iniciar Sesión -->
+                <div class="modal-header fondoOscuro">
+                    <h4 class="modal-title nunito blanco sizeTitlePopUp">Iniciar Sesión</h4>
+                    <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Cuerpo del modal, contiene el formulario del modal para Iniciar Sesión comprobando el usuario y su contraseña y el enlace para registrarse -->
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">email</i></span>
+                            <input id="email" type="text" class="form-control nunito sizeS" name="email"
+                                placeholder="Email">
+                        </div><br>
+
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">https</i></span>
+                            <input id="pass" type="password" class="form-control nunito sizeS" name="password"
+                                placeholder="Password">
+                        </div><br>
+                    </form>
+                    <p class="nunito grisAzulado sizeS">¿Has olvidado tu contraseña?<a href="" data-toggle="modal"
+                            data-target="#recoverPass" class="naranja"> Recuperar
+                        </a>
+                    </p>
+                    <!--<p class="nunito grisAzulado sizeS">¿No tienes cuenta?<a href="" data-toggle="modal" data-target="#signIn" class="close naranja" data-dismiss="modal"> Registrarse </a></p>-->
+                    <!-- <button type="button" class="btn-link nunito sizeS">Registrate</button> -->
+                </div>
+                <!-- Cuerpo del modal, contiene las acciones para Iniciar Sesión -->
+                <div class="modal-footer d-flex justify-content-center">
+                    <button onclick="ComprobarUsuario()"
+                        class="btn btn-primary nunito fondoNaranja bordeNaranja">Entrar</button>
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para registrarse -->
+    <div class="modal fade" id="signIn">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header fondoOscuro bordeOscuro">
+                    <h4 class="modal-title nunito blanco sizeTitlePopUp">Registrarse</h4>
+                    <button type="button" class="close text-light bordeOscuro" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <form class="form-horizontal">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">email</i></span>
+                            <input id="emailR" type="text" class="form-control nunito sizeS" name="emailR"
+                                placeholder="Email">
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">https</i></span>
+                            <input id="passR" type="password" class="form-control nunito sizeS" name="passR"
+                                placeholder="Contraseña">
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">https</i></span>
+                            <input id="RpassR" type="password" class="form-control nunito sizeS" name="RpassR"
+                                placeholder="Repetir contraseña">
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">phone</i></span>
+                            <input id="telR" type="text" class="form-control nunito sizeS" name="telR"
+                                placeholder="Telefono">
+                        </div><br>
+                        <div class="input-group">
+                            <label class="sizeXS centrado"><input id="condiciones" type="checkbox" name="condiciones"
+                                    style="margin: 6px;"> Acepto los Términos de uso
+                                y
+                                confirmo
+                                que he leído y comprendido la Política de privacidad.
+                                <a href="http://localhost:8080/ux/pdf/terminos.pdf">Politicas de
+                                    privacidad</a></label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button onclick="insertarUsuario()"
+                        class="btn btn-primary nunito fondoNaranja blanco">Registrarse</button>
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Librería jQuery requerida por los plugins de JavaScript -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+    <!-- Todos los plugins JavaScript de Bootstrap (también puedes
+    incluir archivos JavaScript individuales de los únicos
+    plugins que utilices) -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="../js/agency.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
 
 </html>
