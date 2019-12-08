@@ -331,4 +331,32 @@ class Proxy {
         });
     }
 
+    //-------------------------------
+    // Emilia Rosa van der Heide
+    // estado, medida -> insertarSensor() ->
+    //-------------------------------
+    async insertarSensor(QR) {
+        console.log("PROXY: insertarSensor")
+
+        var datosSensor = {
+            IdSensor: 100,
+            IdTipoMedida: 5,
+            IdEstado: 1
+        }
+
+        fetch(url + "/insertarSensor", {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(datosSensor), // data can be `string` or {object}!
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
+    }
+
 }

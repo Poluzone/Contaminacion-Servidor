@@ -9,6 +9,8 @@ Modificado: 3/12/19
 
 <head>
     <script type="text/javascript" src="../js/PROXY.js"></script>
+    <script type="text/javascript" src="../js/instascan.min.js"></script>
+    <script type="text/javascript" src="../js/QR-anyadir-sensor.js"></script>
 
     <script type="text/javascript" src="../js/barra-busqueda.js"></script>
     <!-- Scripts para API Google Maps -->
@@ -20,11 +22,11 @@ Modificado: 3/12/19
         type="text/javascript"></script>
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
 
-    <script>
+    <script type="text/javascript">
         // Declaracion de variables
         var proxy = new Proxy();
         //Para el local
-        //var direccion = "https://localhost:8080";
+        //var direccion = "http://localhost:8080";
         //Para el plesk
         var direccion = "https://juconol.upv.edu.es";
         var sensores;
@@ -43,7 +45,7 @@ Modificado: 3/12/19
 
         var innerHTMLDetarjetaExtra; // Para guardar el contenido de la tarjeta4 antes de borrarla al cambiar al modo usuarios
 
-        var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
+        var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo o borramos sensor/usuario. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
 
         var modoActual = 0; // 0 si el modo actual es SENSORES y 1 si es USUARIOS
 
@@ -75,7 +77,8 @@ Modificado: 3/12/19
         // Tarjeta SENSORES / USUARIOS
         var textoSENSORESyUSUARIOS;
 
-        var botonAdd;
+        var iconoAdd;
+        var iconoAddInnerHTML;
         var botonBorrar;
 
         var textoColumna1;
@@ -153,6 +156,8 @@ Modificado: 3/12/19
             tarjeta4 = document.getElementById("tarjeta4");
 
             textoSENSORESyUSUARIOS = document.getElementById("textoSensores");
+            
+            iconoAdd = document.getElementById("botonAdd");
 
             textoColumna1 = document.getElementById("textoColumna1");
             textoColumna2 = document.getElementById("textoColumna2");
@@ -214,17 +219,17 @@ Modificado: 3/12/19
 
             if (sensor.Estado == "En Stock") {
                 //console.log("nani " + sensor.Estado);
-                iconoEstado = "box3";
+                iconoEstado = "box2";
                 iconoAlt = "En Stock"
             }
             if (sensor.Estado == "Alquilado") {
                 //console.log("nani " + sensor.Estado);
-                iconoEstado = "tick3";
+                iconoEstado = "tick2";
                 iconoAlt = "Alquilado"
             }
             if (sensor.Estado == "Averiado") {
                 //console.log("nani " + sensor.Estado);
-                iconoEstado = "cross3";
+                iconoEstado = "cross2";
                 iconoAlt = "Averiado"
             }
 
@@ -305,7 +310,7 @@ Modificado: 3/12/19
                     divTipoUsuario.appendChild(document.createTextNode(""));
 
                     divIdUsuario.innerHTML = "";
-                    divIdUsuario.appendChild(document.createTextNode("El sensor está en Stock"));
+                    divIdUsuario.appendChild(document.createTextNode("El sensor está en el inventario"));
 
                     divNombre.innerHTML = "";
                     divNombre.appendChild(document.createTextNode(""));
@@ -375,7 +380,7 @@ Modificado: 3/12/19
                 iconoTipo = "userConductor";
                 iconoAlt = "Conductor";
             }
-            if (usuario.TipoUsuario == "Admin") { // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
+            if (usuario.TipoUsuario != "Normal" && usuario.TipoUsuario != "Conductor") { // Descarta los Admins ya que no los estamos teniendo en cuenta, Se puede pedir que se retoque el metodo de la logica
                 return;
             }
 
@@ -584,7 +589,7 @@ Modificado: 3/12/19
                     numeroTotalDeUsuarios = numeroTotalDeUsuarios + numeroUsuariosSegunTipo;
                     console.log(tipo + " " + numeroUsuariosSegunTipo);
 
-                    console.log("me cago en dios " + numeroTotalDeUsuarios);
+                    console.log("Numero total de usuarios " + numeroTotalDeUsuarios);
 
                     // Se rellena la tarjeta con el numero de usuarios totales despues de haber sumado los normales y los conductores
                     numeroUsuarios.innerHTML = "";
@@ -677,13 +682,14 @@ Modificado: 3/12/19
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
 
-            botonModal.classList.remove("invisible");
+            // botonModal.classList.remove("invisible");
             if (modoActual == 0) {
-                textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un SENSOR a la BASE DE DATOS."));
-                botonModal.innerHTML = "";
-                botonModal.appendChild(document.createTextNode("AÑADIR"));
-            } else {
+                crearEscanerQR();
+            }
+            // Para apartado Usuarios 
+            else {
+                $("#modal").modal();
+                botonModal.classList.remove("invisible");
                 textoModal.innerHTML = "";
                 textoModal.appendChild(document.createTextNode("Estás a punto de AÑADIR un USUARIO a la BASE DE DATOS."));
                 botonModal.innerHTML = "";
@@ -699,11 +705,14 @@ Modificado: 3/12/19
             if (hayAlgunElementoSeleccionado) {
                 botonModal.classList.remove("invisible");
                 if (modoActual == 0) {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
                     botonModal.appendChild(document.createTextNode("BORRAR"));
+                    botonModal.onclick = eliminarSensorOUsuario();
                 } else {
+                    $("#modal").modal();
                     textoModal.innerHTML = "";
                     textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
                     botonModal.innerHTML = "";
@@ -714,6 +723,7 @@ Modificado: 3/12/19
                 textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para borrarlo"));
                 botonModal.innerHTML = "";
                 botonModal.classList.add("invisible");
+                botonModal.onclick = eliminarSensorOUsuario();
             }
 
         }
@@ -724,6 +734,8 @@ Modificado: 3/12/19
 
                 elementoSeleccionado.innerHTML = "";
                 proxy.borrarSensorPorID(unSensor.IdSensor);
+                
+                tarjetaINFORMACION.innerHTML=innerHTMLTarjetaINFORMACION;
             }
         }
 
@@ -877,6 +889,10 @@ Modificado: 3/12/19
                 // Cambio texto SENSORES a USUARIOS
                 textoSENSORESyUSUARIOS.innerHTML = "";
                 textoSENSORESyUSUARIOS.appendChild(document.createTextNode("USUARIOS"));
+                
+                // Eliminado boton Add
+                iconoAddInnerHTML = iconoAdd.innerHTML;
+                iconoAdd.innerHTML = "";
 
                 // Cambio nombre columnas de la de la lista
 
@@ -954,6 +970,9 @@ Modificado: 3/12/19
                 //Cambio texto USUARIOS a SENSORES
                 textoSENSORESyUSUARIOS.innerHTML = "";
                 textoSENSORESyUSUARIOS.appendChild(document.createTextNode("SENSORES"));
+                
+                // Añadir boton Add
+                iconoAdd.innerHTML = iconoAddInnerHTML;
 
                 // Cambio nombre columnas de la de la lista
 
@@ -1288,10 +1307,9 @@ Modificado: 3/12/19
 
                                     </div>
 
-                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()">
+                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()" id="botonAdd">
 
-                                        <img src="../images/add.png" class="iconoAdd" data-toggle="modal"
-                                            data-target="#modal">
+                                        <img src="../images/add.png" class="iconoAdd" data-target="#modal">
 
                                     </div>
 
@@ -1548,6 +1566,29 @@ Modificado: 3/12/19
 
     <!-------------------------------------------------- /CONTENEDOR ----------------------------------------------------------->
 
+
+    <!-- Modal añadir sensor-->
+    <div class="modal fade" id="modal-anyadir-sensor" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Añadir sensor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Escanea el QR del sensor para añadirlo a la base de datos.</p>
+                    <video id="preview" class="w-100"></video>
+                    <p id="qr-escaneado-p">QR escaneado: </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="anyadirSensor()">Añadir sensor</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Librería jQuery requerida por los plugins de JavaScript -->
     <script src="https://code.jquery.com/jquery.js"></script>
