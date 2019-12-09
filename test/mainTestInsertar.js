@@ -358,7 +358,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     async function () {
 
       var res = await laLogica.getNumeroUsuariosTotales();
-      assert.equal(res, 13, "¿no hay un resulado?")
+      assert.equal(res, 14, "¿no hay un resulado?")
 
     }
 

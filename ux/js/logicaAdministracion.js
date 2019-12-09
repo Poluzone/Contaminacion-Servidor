@@ -6,8 +6,8 @@
 //
 //---------------------------------------------------------------------
 
-const URL = "https://juconol.upv.edu.es";
-
+//const URL = "https://juconol.upv.edu.es";
+const URL = "http://localhost:8080";
 class logicaAdministracion {
 
     constructor() {

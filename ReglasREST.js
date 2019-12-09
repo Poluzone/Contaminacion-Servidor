@@ -309,7 +309,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
       laLogica.insertarSensor(datos);
 
-      respuesta.send("OK");
+      respuesta.status(200).send("OK");
     }); // post / insertarPersona
 
   servidorExpress.post('/borrarSensorPorID',
@@ -321,7 +321,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
       laLogica.borrarSensorPorID(id);
 
-      respuesta.send("OK");
+      respuesta.status(200).send("OK");
     }); // post / insertarPersona
 
   servidorExpress.post('/borrarUsuarioPorId',
