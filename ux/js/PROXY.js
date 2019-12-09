@@ -19,7 +19,7 @@ class Proxy {
             posicion: posicion
         };
 
-        fetch(URL + "/insertarMedida", {
+        fetch(url + "/insertarMedida", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -40,7 +40,7 @@ class Proxy {
             Telefono: tel
         };
 
-        fetch(URL + "/insertarUsuario", {
+        fetch(url + "/insertarUsuario", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
