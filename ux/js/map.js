@@ -256,7 +256,7 @@ function initMap() {
     }//for
     var heatmap = new google.maps.visualization.HeatmapLayer({
       data: poluzone,
-      maxIntensity: 1243,
+      maxIntensity: 163,
       radius: 60
     });
 
