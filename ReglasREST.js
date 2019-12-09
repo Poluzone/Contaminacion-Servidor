@@ -436,6 +436,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       var res = await laLogica.getMedidasDeEsteUsuarioPorFecha(datos.Intervalo, datos.IdUsuario);
       //console.log(res);
 
+      var respuesta = {
+        medidas: res,
+        resultado: "ok"
+      }
+
       // si el array de resultados no tiene una casilla ...
       if (res.length < 1) {
         // 404: not found
@@ -443,7 +448,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return
       }
       // todo ok
-      respuesta.status(200).send(res)
+      respuesta.status(200).send(respuesta)
     });
 
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
