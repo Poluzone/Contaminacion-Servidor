@@ -259,6 +259,13 @@ function initMap() {
       maxIntensity: 1243,
       radius: 60
     });
+
+    var legend = document.getElementById('leyenda_mapa');
+    getMap().controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+
+    var filtro = document.getElementById('filtro_mapa');
+    getMap().controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(filtro);
+
     heatmap.setMap(getMap());
   });
 }
