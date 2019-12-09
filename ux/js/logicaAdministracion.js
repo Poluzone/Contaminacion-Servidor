@@ -6,8 +6,8 @@
 //
 //---------------------------------------------------------------------
 
-//const ip_puerto = "http://localhost:8080";
-const ip_puerto = "https://juconol.upv.edu.es";
+const ip_puerto = "http://localhost:8080";
+//const ip_puerto = "https://juconol.upv.edu.es";
 
 class logicaAdministracion {
 

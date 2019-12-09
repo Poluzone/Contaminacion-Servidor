@@ -5,7 +5,7 @@ var QRescaneado;
 function crearEscanerQR() {
     if (modoActual == 0) {
         $("#modal").modal("hide");
-        console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
+        //console.log("aaaaaaaaaaaaaa" + $('#modal').is(':visible'))
         $("#modal-anyadir-sensor").modal();
         let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
         scanner.addListener('scan', function (content) {
@@ -33,5 +33,6 @@ function anyadirSensor() {
     console.log(QRescaneado)
    // if (QRescaneado.includes("poluzone")) {
         proxy.insertarSensor(QRescaneado)
+        location.reload()
     //}
 }
