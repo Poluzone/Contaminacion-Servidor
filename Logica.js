@@ -286,7 +286,7 @@ module.exports = class Logica {
   }
 
   // .................................................................
-  // -> getSensorPorIdUsuario(idUsuario) ->
+  // -> getSensorPorIdUsuario(idUsuario) -> JSON Sensor
   // Coge la info de un sensor a partir del id de su usuario
   // .................................................................
   async getSensorPorIdUsuario(idUsuario) {
