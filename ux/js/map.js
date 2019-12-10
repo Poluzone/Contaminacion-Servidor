@@ -1,3 +1,50 @@
+//...........................................................
+// Mapa.js
+// Contiene: 
+// La Clase Mapa
+// Los Estilos del Mapa
+// Métodos para controlar el Mapa
+// Autor: Diego Aguirre
+//...........................................................
+
+
+//...........................................................
+//
+// Clase Mapa
+// 
+// Encargada de crear objetos mapa. Los cuales dibujaran
+//en el HTML los datos.
+//...........................................................
+
+
+class Mapa {
+    
+    var mapa;
+    var posicion;
+    var elementoHTML;
+    
+  constructor(posicion, ajustes, elementoHTML) {
+    this.puntoCentral = posicion;
+    this.mapa = new google.maps.Map(elementoHtml, {
+        zoom: ajustes.zoom,
+        zoomControl: false
+    });
+      
+      this.centrarEn(this.puntoCentral);
+      
+      this.capasMediciones = new Array();
+      
+      this.marcadores = new Array();
+      
+  }//constructor
+}//Clase Mapa
+
+
+
+
+
+
+
 var map;
 var infowindow;
 
