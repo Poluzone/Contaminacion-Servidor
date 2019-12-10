@@ -9,7 +9,6 @@
 
 
 //...........................................................
-//
 // Clase Mapa
 // 
 // Encargada de crear objetos mapa. Los cuales dibujaran
@@ -20,21 +19,24 @@
 class Mapa {
     
     var mapa;
-    var posicion;
-    var elementoHTML;
+    var position;
+    var elementHTML;
+    var focus;
+    var layers;
+    var markers;
     
-  constructor(posicion, ajustes, elementoHTML) {
-    this.puntoCentral = posicion;
-    this.mapa = new google.maps.Map(elementoHtml, {
+  constructor(position, ajustes, elementHTML) {
+    this.position = position;
+    this.mapa = new google.maps.Map(elementoHTML, {
         zoom: ajustes.zoom,
         zoomControl: false
     });
       
-      this.centrarEn(this.puntoCentral);
+      this.focus(this.position);
       
-      this.capasMediciones = new Array();
+      this.layers = new Array();
       
-      this.marcadores = new Array();
+      this.markers = new Array();
       
   }//constructor
 }//Clase Mapa
