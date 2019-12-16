@@ -56,7 +56,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
       var res = await laLogica.getTodosLosSensores()
 
-      assert.equal(res.length, 2, "¿no hay un resulado?")
+      assert.equal(res.length, 4, "¿no hay un resulado?")
 
     }) //it
 
@@ -214,7 +214,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       }
       var resu = await laLogica.insertarSensor(sensor);
       var res = await laLogica.getNumSensoresSegunEstado(2);
-      assert.equal(res, 1, "¿no hay un resulado?")
+      assert.equal(res, 3, "¿no hay un resulado?")
 
     }
 
@@ -336,8 +336,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
       await laLogica.borrarSensorPorID(99);
       var res = await laLogica.getSensoresSegunEstado(3);
-
-      assert.equal(res.length, 0, "¿no hay un resulado?")
+      assert.equal(res.length, 1, "¿no hay un resulado?")
 
     }
 
@@ -346,9 +345,10 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
   it("probar borrarUsuarioPorId",
     async function () {
 
-      await laLogica.borrarUsuarioPorId(28);
+      await laLogica.borrarUsuarioPorId(29);
       var res = await laLogica.GetUsuarioPorEmail("test1@gti.com");
-      assert.equal(res, null, "¿no hay un resulado?")
+      console.log(res)
+      assert.equal(res[0], null, "¿no hay un resulado?")
 
     }
 
@@ -358,7 +358,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     async function () {
 
       var res = await laLogica.getNumeroUsuariosTotales();
-      assert.equal(res, 14, "¿no hay un resulado?")
+      assert.equal(res, 13, "¿no hay un resulado?")
 
     }
 

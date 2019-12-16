@@ -120,7 +120,7 @@ module.exports = class Logica {
 
   // .................................................................
   // Emilia Rosa van der Heide
-  // -> getTodosLosUsuariosYSusSensores() -> JSON con todos los usuarios y su sensor
+  // -> getTodosLosUsuariosYSusSensores() -> [JSON con todos los usuarios y su sensor]
   // Recoge todos los usuarios y si tiene un sensor vinculado devuelve
   // también el sensor (si no, Sensor = null)
   // .................................................................
@@ -767,11 +767,13 @@ async borrarUsuarioPorId(idUsuario) {
   };
 
   var sensor = await this.getSensorPorIdUsuario(idUsuario)
-  var dato = {
-    estado: "STOCK",
-    idSensor: sensor[0].IdSensor,
+  if (sensor[0] != undefined) {
+    var dato = {
+      estado: "STOCK",
+      idSensor: sensor[0].IdSensor,
+    }
+    await this.indicarActividadNodo(dato);
   }
-  await this.indicarActividadNodo(dato);
   return new Promise((resolver, rechazar) => {
     this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
       (err ? rechazar(err) : resolver())
