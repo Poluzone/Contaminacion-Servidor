@@ -1,0 +1,51 @@
+COMENTARIO INICIAL DE CADA FICHERO
+<!---------------------------------------------------------------------------------------
+Nombre del fichero.html
+
+Coorporacion
+
+Autores: 
+
+Descripcion:
+
+Fecha: (creacion)
+
+© Copyright:
+---------------------------------------------------------------------------------------->
+
+COMENTARIO DE CADA FUNCION EN HTML
+<!---------------------------------------------------------------------------------------
+Parametros de entrada -->
+nombreDeLaFuncion()
+--> Parametros de salida
+
+Posible descripcion
+
+Autor
+---------------------------------------------------------------------------------------->
+
+COMENTARIO INICIAL DE CADA FICHERO
+/****************************************************************************************
+Nombre del fichero.html
+
+Coorporacion
+
+Autores: 
+
+Descripcion:
+
+Fecha: (creacion)
+
+© Copyright:
+****************************************************************************************/
+
+COMENTARIO DE CADA FUNCION EN ANDROID STUDIO
+/****************************************************************************************
+Parametros de entrada -->
+nombreDeLaFuncion()
+--> Parametros de salida
+
+Posible descripcion
+
+Autor
+****************************************************************************************/
