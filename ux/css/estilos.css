@@ -675,8 +675,12 @@ header.masthead .intro-text .intro-heading {
 
 /* MAPA */
 
+.contenedorCalendario{
+display:inline-block;
+}
+
 .columnaMapa {
-    height: 100%;
+    height: 92%;
 }
 
 .contenedorMapa {
