@@ -52,7 +52,7 @@ Modificado: 3/12/19
         var innerHTMLTarjetaINFORMACION; // Para vaciarlo cuando cambiemos de modo o borramos sensor/usuario. Se rellena en llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores porque se llama al principio
 
         var modoActual = 0; // 0 si el modo actual es SENSORES y 1 si es USUARIOS
-        
+
         // Fecha actual
         var hoy00;
         var hoy24;
@@ -139,8 +139,10 @@ Modificado: 3/12/19
             // Puntos del mapa de hoy
             var date = new Date();
             var diaHoyMilisegundos = date.getTime();
-            hoy00 = diaHoyMilisegundos-(diaHoyMilisegundos%86400000); // Un dia tiene 86400000 milisegundos
-            hoy24 = hoy00+(86400000-100000); // Mismo dia a las 23:59:59
+            hoy00 = diaHoyMilisegundos - (diaHoyMilisegundos % 86400000); // Un dia tiene 86400000 milisegundos
+            hoy24 = hoy00 + (86400000 - 100000); // Mismo dia a las 23:59:59
+            var date = new Date();
+            var fecha = document.getElementById("datepicker").value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
 
             recibirMedidasFecha({
                 "desde": hoy00,
@@ -990,8 +992,8 @@ Modificado: 3/12/19
                 tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
 
                 // Limpiar calendario
-                var fecha = document.getElementById("datepicker").value = null;
-
+                var date = new Date();
+                var fecha = document.getElementById("datepicker").value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
             }
 
         }
@@ -1075,7 +1077,8 @@ Modificado: 3/12/19
                 tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
 
                 // Limpiar calendario
-                var fecha = document.getElementById("datepicker").value = null;
+                var date = new Date();
+                var fecha = document.getElementById("datepicker").value = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
 
             }
 
