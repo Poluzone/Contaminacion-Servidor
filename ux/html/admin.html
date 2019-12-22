@@ -19,7 +19,7 @@ Modificado: 3/12/19
     <!-- Scripts para API Google Maps -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwukBpX9SUI57LEeMhlQ-BlDfC2LeS2K8&callback=initMap&libraries=visualization" type="text/javascript"></script>
     <script type="text/javascript" src="../js/mapAdmin.js"></script>
-    
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
@@ -98,6 +98,10 @@ Modificado: 3/12/19
         var tarjetaINFORMACION;
         var iconoDesvincular;
         var iconoDesvincularInnerHTML;
+
+        // Mapa 
+        var arrayMarcadores = [];
+        var heatmap;
 
         // Fin declaracion de variables
 
@@ -852,6 +856,8 @@ Modificado: 3/12/19
                         },
                     });
 
+                    arrayMarcadores.push(medida);
+
                     var puntoCalor = {
                         location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud),
                         weight: datos["medidas"][i].Valor
@@ -880,7 +886,7 @@ Modificado: 3/12/19
 
 
                 } //for
-                var heatmap = new google.maps.visualization.HeatmapLayer({
+                heatmap = new google.maps.visualization.HeatmapLayer({
                     data: poluzone,
                     maxIntensity: 163,
                     radius: 60
@@ -892,8 +898,10 @@ Modificado: 3/12/19
         // Cambia la información de la página de sensores a usuarios
         function cambioAUsuarios() {
             console.log("Llamada a cambiarAUsuarios()");
-
+            
             if (modoActual == 0) { // Solo funciona cuando el modo previo al clic es el contrario
+                
+                reiniciarMarcadores();
 
                 hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
 
@@ -972,6 +980,9 @@ Modificado: 3/12/19
 
                 // Vaciado de la tarjeta INFORMACION
                 tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+                
+                // Limpiar calendario
+                var fecha = document.getElementById("datepicker").value = null;
 
             }
 
@@ -979,9 +990,11 @@ Modificado: 3/12/19
 
         function cambioASensores() {
             console.log("Llamada a cambiarAUsuarios()");
-
+            
             if (modoActual == 1) { // Solo funciona cuando el modo previo al clic es el contrario
 
+                borrarMarcadores();
+                
                 hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
 
                 // Pulso
@@ -1050,11 +1063,13 @@ Modificado: 3/12/19
                 icono2.src = "../images/tick2.png";
                 icono3.src = "../images/cross2.png";
 
-                //Vaciado de la tarjeta INFORMACION
+                // Vaciado de la tarjeta INFORMACION
                 tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+                
+                // Limpiar calendario
+                var fecha = document.getElementById("datepicker").value = null;
 
             }
-
 
         }
 
@@ -1074,6 +1089,73 @@ Modificado: 3/12/19
             }
 
         }
+
+        /****************************************************************************************
+        convertirFechaAJson()
+        --> {int,int}
+
+        Es llamada cuando se elige un dia en el calendario y convierte el texto en un json con 
+        desde y hasta, el cual manda a recibirMedidasFecha() para cambiar los puntos del mapa
+
+        Iván
+        ****************************************************************************************/
+        function convertirFechaAJson() {
+            var fecha = document.getElementById("datepicker").value;
+
+            var fechaDesde = new Date(fecha + " 00:00:00");
+            var fechaHasta = new Date(fecha + " 23:59:59");
+            var millisegundosDesde = fechaDesde.getTime();
+            var millisegundosHasta = fechaHasta.getTime();
+
+            borrarMarcadores();
+
+            recibirMedidasFecha({
+                "desde": millisegundosDesde,
+                "hasta": millisegundosHasta
+            });
+        }
+
+        /****************************************************************************************
+        borrarMarcadores()
+
+        Elimina los marcadores y los puntos de calor cuando se va a modificar el mapa para que
+        muestre las medidas de una fecha concreta
+
+        Iván
+        ****************************************************************************************/
+        function borrarMarcadores() {
+            for (var i = 0; i < arrayMarcadores.length; i++) {
+                arrayMarcadores[i].setMap(null);
+            };
+
+            arrayMarcadores = [];
+            heatmap.setMap(null);
+            heatmap = [];
+        }
+
+        /****************************************************************************************
+        reiniciarMarcadores()
+
+        Elimina los marcadores y los puntos de calor cuando se va a modificar el mapa para que
+        muestre las medidas de una fecha concreta
+
+        Iván
+        ****************************************************************************************/
+        function reiniciarMarcadores() {
+            for (var i = 0; i < arrayMarcadores.length; i++) {
+                arrayMarcadores[i].setMap(null);
+            };
+
+            arrayMarcadores = [];
+            heatmap.setMap(null);
+            heatmap = [];
+            
+            recibirMedidasFecha({
+                "desde": 0,
+                "hasta": 0
+            });
+        }
+
     </script>
 
     <!-- Barra de busqueda (barra-busqueda.js)-->
@@ -1101,6 +1183,7 @@ Modificado: 3/12/19
                 }
             }
         }
+
     </script>
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito" />
@@ -1425,8 +1508,7 @@ Modificado: 3/12/19
 
                                     <!------------------------------------- LISTA --------------------------------------->
 
-
-                                    <ul class="lista" id="lista">
+                                    <ul class="lista rounded-bottom" id="lista">
 
                                         <!----------------------- ELEMENTO DE LA LISTA ------------------------->
 
@@ -1595,28 +1677,23 @@ Modificado: 3/12/19
                 <!----------------------------------- MAPA ----------------------------------------->
 
                 <div class="columnaMapa col">
+                    <div class="tarjetaCalendario shadow bg-white rounded mb-1 p-1 mx-auto">
+                        <div class="contenedorCalendario row mx-auto">
+                            <p class="my-auto mr-2">Fecha:</p>
+                            <input id="datepicker" width="200" onchange="convertirFechaAJson()" />
+                            <script>
+                                $('#datepicker').datepicker();
 
-                    <div class="contenedorCalendario shadow bg-white rounded mb-1 p-1 mx-auto">
-                        
-                        <input id="datepicker" width="276"/>
-                        <script>
-                            $('#datepicker').datepicker();
-                        </script>
-
-                    </div>
-                    
-                    <div class="contenedorMapa shadow bg-white rounded">
-
-                        <div class="mapAdmin" id="mapAdmin">
-
+                            </script>
                         </div>
-
                     </div>
-
+                    <div class="contenedorMapa shadow bg-white rounded">
+                        <div class="mapAdmin" id="mapAdmin">
+                        </div>
+                    </div>
                 </div>
 
                 <!----------------------------------- /MAPA ----------------------------------------->
-
 
             </div>
 
@@ -1686,4 +1763,6 @@ Modificado: 3/12/19
 
 </body>
 
-<!----------------------------------------------------- /BODY -----------------------------------------------------------></html>
+<!----------------------------------------------------- /BODY ----------------------------------------------------------->
+
+</html>
