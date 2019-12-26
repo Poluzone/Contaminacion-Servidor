@@ -404,7 +404,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
    *************************************************************************/
 
   it("POST /getEstacionesOficiales ", function (hecho) {
-    
+
     request.post(
       {
         url: IP_PUERTO + "/getEstacionesOficiales",
@@ -471,6 +471,22 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     request.get(
       {
         url: IP_PUERTO + "/getTodosLosUsuariosYSusSensores",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+      },
+      function (err, respuesta, carga) {
+        var json = JSON.parse(carga);
+        assert.equal(err, null, "¿ha habido un error?");
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)");
+        hecho();
+      } // callback()
+    ) // .get
+  }) // it
+
+  // Emilia Rosa van der Heide
+  it("Get /getTodosErroresDeSensoresSinRevision ", function (hecho) {
+    request.get(
+      {
+        url: IP_PUERTO + "/getTodosErroresDeSensoresSinRevision",
         headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
       },
       function (err, respuesta, carga) {

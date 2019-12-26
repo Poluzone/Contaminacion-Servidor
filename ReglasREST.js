@@ -577,7 +577,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   * getTodosLosUsuariosYSusSensores() de la Lógica la cual recoge los datos
   * de todos los usuarios
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-  servidorExpress.get('/getTodosLosUsuariosYSusSensores/',
+  servidorExpress.get('/getTodosLosUsuariosYSusSensores',
     async function (peticion, respuesta) {
       console.log("* GET /getTodosLosUsuariosYSusSensores")
 
@@ -595,6 +595,30 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.send(JSON.stringify(res))
     })
+
+
+      /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+      * Josep Carreres Fluixà
+      * /getTodosLosUsuariosYSusSensores -> es una petición GET que llama a
+      * getTodosLosUsuariosYSusSensores() de la Lógica la cual recoge los datos
+      * de todos los usuarios
+      * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+      servidorExpress.get('/getTodosErroresDeSensoresSinRevision',
+        async function (peticion, respuesta) {
+          console.log("* GET /getTodosErroresDeSensoresSinRevision")
+
+          // llamo a la función adecuada de la lógica
+          var res = await laLogica.getTodosErroresDeSensoresSinRevision();
+
+          // si el array de resultados no tiene una casilla ...
+          if (res.length < 0) {
+            // 404: not found
+            respuesta.status(404).send("no encontré errores: " + dato)
+            return
+          }
+          // todo ok
+          respuesta.send(JSON.stringify(res))
+        })
 
 
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

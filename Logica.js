@@ -247,6 +247,24 @@ module.exports = class Logica {
         })
     })
   }
+  // .................................................................
+  // -> getTodosLosSensores() ->
+  // Coge la info de todos los sensores
+  // .................................................................
+  async getTodosErroresDeSensoresSinRevision(){
+    var textoSQL = "select * from ErrorSensor where Revisado = $estado ";
+    var valoresParaSQL = {
+      $estado: "false"
+    };
+    console.log("logica: getTodosErroresDeSensoresSinRevision")
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  }
+
 
   // .................................................................
   // Josep Carreres Fluixà
