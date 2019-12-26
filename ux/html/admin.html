@@ -53,6 +53,8 @@ Modificado: 3/12/19
 
         var modoActual = 0; // 0 si el modo actual es SENSORES y 1 si es USUARIOS
 
+        var mostrandoErrores = false; // False si no esta seleccionado el boton que muestra los nodos que dan lecturas erroneas, true si SI
+
         // Fecha actual
         var hoy00;
         var hoy24;
@@ -85,8 +87,11 @@ Modificado: 3/12/19
         // Tarjeta SENSORES / USUARIOS
         var textoSENSORESyUSUARIOS;
 
+        var botonError;
+        var iconoError;
         var iconoAdd;
         var iconoAddInnerHTML;
+        var iconoCanInnerHTML;
         var botonBorrar;
 
         var textoColumna1;
@@ -179,7 +184,10 @@ Modificado: 3/12/19
 
             ul = document.getElementById("lista");
 
+            botonError = document.getElementById("botonError");
+            iconoError = document.getElementById("iconoError");
             iconoAdd = document.getElementById("botonAdd");
+            iconoCan = document.getElementById("botonCan");
 
             textoColumna1 = document.getElementById("textoColumna1");
             textoColumna2 = document.getElementById("textoColumna2");
@@ -707,6 +715,62 @@ Modificado: 3/12/19
 
         }
 
+        /****************************************************************************************
+        clicBotonError()
+
+        Limpiara la lista de sensores y la llenara con los que hayan dado lecturas erroneas tras
+        comprobar cuales son dichos nodos
+
+        Iván
+        ****************************************************************************************/
+        function clicBotonError() {
+            if (mostrandoErrores == false) {
+                mostrandoErrores = true;
+
+                iconoError.classList.add("iconoErrorSeleccionado");
+                // Eliminado boton Add y Can
+                iconoAddInnerHTML = iconoAdd.innerHTML;
+                iconoAdd.innerHTML = "";
+                iconoCanInnerHTML = iconoCan.innerHTML;
+                iconoCan.innerHTML = "";
+
+                // Borrado de elementos de la lista
+                var ul = document.getElementById("lista");
+                var li = document.getElementsByClassName("tarjetaLista");
+                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+                var i = 0;
+                while (i <= tamañoLista - 1) {
+                    console.log(i);
+                    ul.removeChild(li[0]);
+                    i++;
+                }
+
+                // Vaciado de la tarjeta INFORMACION
+                tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+            } else {
+                mostrandoErrores = false;
+
+                iconoError.classList.remove("iconoErrorSeleccionado");
+                // Aparece boton Add
+                iconoAdd.innerHTML = iconoAddInnerHTML;
+                iconoCan.innerHTML = iconoCanInnerHTML;
+
+                //Rellenado de tarjeta con todos los sensores
+                proxy.getSensoresYSusUsuarios(function(resp) {
+                    sensores = resp;
+
+                    console.log("Numero de sensores: " + resp.length);
+                    console.log("Primer sensor " + sensores[0]);
+                    console.log("Adios " + 1);
+
+                    for (var i = 0; i < sensores.length; i++) {
+                        crearSensorLista(i);
+                    }
+                });
+            }
+
+        }
+
         // Funcion que se llamara al clicar el boton del mas que añadira una relacion Usuario-Sensor cambiando una por otra
         function clicBotonAdd() {
             console.log("Esto añadirá un sensor enlazado a un usuario");
@@ -915,7 +979,10 @@ Modificado: 3/12/19
 
                 hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
 
-                // Hacer invisible el boton desvincular
+                // Hacer invisible el boton errores y el de desvincular
+                iconoError.classList.remove("iconoErrorSeleccionado");
+                botonError.classList.add("invisible");
+                mostrandoErrores = false;
                 iconoDesvincular.classList.add("invisible");
 
                 numeroTotalDeUsuarios = 0;
@@ -972,7 +1039,6 @@ Modificado: 3/12/19
                 iconoAdd.innerHTML = "";
 
                 // Cambio nombre columnas de la de la lista
-
                 textoColumna1.innerHTML = "";
                 textoColumna2.innerHTML = "";
                 textoColumna3.innerHTML = "";
@@ -1006,6 +1072,9 @@ Modificado: 3/12/19
                 borrarMarcadores();
 
                 hayAlgunElementoSeleccionado = false; // Para indicar que no hay ningun elemento seleccionado
+
+                // Hacer visible boton error
+                botonError.classList.remove("invisible");
 
                 // Pulso
                 pulse2.className = "pulse2";
@@ -1244,7 +1313,7 @@ Modificado: 3/12/19
                     Texto del modal
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary btn-lg" id="botonModal" onclick="clicBotonModal()" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
@@ -1460,19 +1529,25 @@ Modificado: 3/12/19
 
                                     </div>
 
-                                    <div class="contenedorSearch col-7 my-auto">
+                                    <div class="contenedorSearch col-6 my-auto">
 
                                         <input class="cajaDeTexto form-control form-control-sm ml-3 w-75 text-light" id="barraSensores" type="text" placeholder="Buscar palabras clave..." aria-label="Search" onkeyup="buscador()">
 
                                     </div>
 
-                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()" id="botonAdd">
+                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonError()" id="botonError">
 
-                                        <img src="../images/add.png" class="iconoAdd" alt="Añadir" data-toggle="modal" data-target="#modal">
+                                        <img src="../images/warning.png" class="iconoError" id="iconoError" alt="Lecturas Erróneas">
 
                                     </div>
 
-                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonBorrar()">
+                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonAdd()" id="botonAdd">
+
+                                        <img src="../images/add.png" class="iconoAdd" alt="Añadir">
+
+                                    </div>
+
+                                    <div class="contenedorIconosEditar col-1 my-auto" onclick="clicBotonBorrar()" id="botonCan">
 
                                         <img src="../images/can.png" class="iconoCan" alt="Borrar" data-toggle="modal" data-target="#modal">
 

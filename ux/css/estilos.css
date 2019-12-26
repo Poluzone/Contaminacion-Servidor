@@ -361,7 +361,7 @@ header.masthead .intro-text .intro-heading {
 }
 
 .modoSensores:hover {
-    color: #F5E0D3;
+    color: #F5E0D3 !important;
 
     text-decoration: none;
 }
@@ -371,7 +371,7 @@ header.masthead .intro-text .intro-heading {
 }
 
 .modoUsuarios:hover {
-    color: #F5E0D3;
+    color: #F5E0D3 !important;
 
     text-decoration: none;
 }
@@ -507,6 +507,26 @@ header.masthead .intro-text .intro-heading {
     margin: 0% !important;
 }
 
+.iconoError {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoError:hover {
+    cursor: pointer;
+    content: url(../images/warningHover.png);
+}
+
+.iconoErrorSeleccionado{
+    content: url(../images/warningHover.png);
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoErrorSeleccionado:hover {
+    cursor: pointer;
+}
+
 .iconoAdd {
     width: 1.5rem;
     height: 1.5rem;
@@ -623,7 +643,9 @@ header.masthead .intro-text .intro-heading {
     box-shadow: none !important;
 }
 
-.contenedorSearch {}
+.contenedorSearch {
+    padding-left: 0px !important;
+}
 
 .contenedorIconosEditar {
     padding-top: 0% !important;
