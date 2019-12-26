@@ -144,6 +144,23 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
     ) // .post
   })
 
+  it("probar POST /MarcarErrorComoRevisadoPorIdError", function (hecho) {
+
+    request.post(
+      {
+        url: IP_PUERTO + "/MarcarErrorComoRevisadoPorIdError",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(2)
+      },
+      function (err, respuesta, carga) {
+        assert.equal(err, null, "¿ha habido un error?")
+        assert.equal(respuesta.statusCode, 200, "¿El código no es 200 (OK)")
+        assert.equal(carga, "OK", "¿La carga no es OK")
+        hecho()
+      } // callback
+    ) // .post
+  })
+
   it("probar POST /desvincularUsuarioDeSensorPorIdUsuario", function (hecho) {
 
 

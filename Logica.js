@@ -533,6 +533,46 @@ module.exports = class Logica {
 
   // .................................................................
   // Josep Carreres Fluixà
+  // datos -> insertarErrorSensor () ->
+  // inserta un error de sensor
+  // .................................................................
+  insertarErrorSensor(datos) {
+    var textoSQL = "insert into ErrorSensor values( $IdError, $IdSensor, $Revisado, $Fecha)";
+    var valoresParaSQL = {
+      $IdError: null,
+      $IdSensor: datos.IdSensor,
+      $Revisado: datos.Revisado,
+      $Fecha: datos.Fecha
+
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+        (err ? rechazar(err) : resolver(res))
+      })
+    })
+  }
+
+
+    // .................................................................
+    // Josep Carreres Fluixà
+    // idUsuario -> MarcarErrorComoRevisadoPorIdError() ->
+    // marca como revisado el error por ID
+    // .................................................................
+    MarcarErrorComoRevisadoPorIdError(idError) {
+      var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado  WHERE IdError = $idError;";
+      var valoresParaSQL = {
+        $revisado: "true",
+        $idError: idError
+      };
+      return new Promise((resolver, rechazar) => {
+        this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+          (err ? rechazar(err) : resolver(res))
+        })
+      })
+    }
+
+  // .................................................................
+  // Josep Carreres Fluixà
   // sensor -> insertarSensor() ->
   // inserta sensor
   // .................................................................

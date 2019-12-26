@@ -49,6 +49,46 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }) //it
 
+    it("probar insertarErrorSensor",
+      async function() {
+        var datos = {
+          IdSensor: "3",
+          Revisado: "false",
+          Fecha:Date.now()
+        }
+
+        try {
+          await laLogica.insertarErrorSensor(datos)
+        } catch (err) {
+          error = err
+        }
+
+        var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+
+        assert.equal(res.length, 1, "¿no hay un resulado?")
+
+
+
+      }) //it
+
+      it("probar MarcarErrorComoRevisadoPorIdError",
+        async function() {
+
+
+          try {
+            await laLogica.MarcarErrorComoRevisadoPorIdError(1)
+          } catch (err) {
+            error = err
+          }
+
+          var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+
+          assert.equal(res[0].IdError, 1, "¿no hay un resulado?")
+
+
+
+        }) //it
+
 
   it("probar getTodosLosSensores()",
     async function() {
