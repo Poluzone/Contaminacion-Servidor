@@ -629,11 +629,12 @@ insertarUsuario(datos) {
 // inserta sensor
 // .................................................................
 insertarSensor(sensor) {
-  var textoSQL = "insert into Sensor values( $IdSensor, $IdTipoMedida, $IdEstado)";
+  var textoSQL = "insert into Sensor values( $IdSensor, $IdTipoMedida, $IdEstado, $FactorCalibracion)";
   var valoresParaSQL = {
     $IdSensor: sensor.IdSensor,
     $IdTipoMedida: sensor.IdTipoMedida,
     $IdEstado: sensor.IdEstado,
+    $FactorCalibracion: sensor.FactorCalibracion
   };
 
   return new Promise((resolver, rechazar) => {
@@ -720,6 +721,44 @@ editarInformacionUsuario(datos) {
   };
   return new Promise((resolver, rechazar) => {
     this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      (err ? rechazar(err) : resolver(res))
+    })
+  })
+}
+
+// .................................................................
+// Emilia Rosa van der Heide
+// medida: R -> calibrarMedida() -> medida: R
+// recibe una medida, lo calibra según el factor de calibración
+// del sensor
+// .................................................................
+calibrarMedida(medidaOriginal) {
+  var textoSQL = "UPDATE Usuarios SET Email = $email , Password = $password , Telefono = $telefono WHERE IdUsuario = $idUsuario;";
+  var valoresParaSQL = {
+    $email: datos.Email,
+    $password: datos.Password,
+    $telefono: datos.Telefono,
+    $idUsuario: datos.IdUsuario
+  };
+  return new Promise((resolver, rechazar) => {
+    this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      (err ? rechazar(err) : resolver(res))
+    })
+  })
+}
+
+// .................................................................
+// Emilia Rosa van der Heide
+// idSensor: N -> getFactorDeCalibracion() -> factor: R
+// recibe el id de un sensor y saca su factor de calibración de la BBDD
+// .................................................................
+getFactorDeCalibracion(idSensor) {
+  var textoSQL = "SELECT FactorCalibracion FROM Sensor WHERE IdSensor = $idSensor";
+  var valoresParaSQL = {
+    $idSensor: idSensor
+  };
+  return new Promise((resolver, rechazar) => {
+    this.laConexion.all(textoSQL, valoresParaSQL, function (err, res) {
       (err ? rechazar(err) : resolver(res))
     })
   })

@@ -163,7 +163,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
             IdTipoMedida: 2,
             IdUsuario: 15,
             Valor: Valor + 10,
-            Tiempo: Date.now() - j*800000000,
+            Tiempo: Date.now() - j * 800000000,
             Latitud: Latitud + i * 0.003 + j * 0.003,
             Longitud: Longitud - i * 0.003 + j * 0.003
           }
@@ -206,19 +206,25 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
   it("probar insertarSensor",
     async function () {
-
       var sensor = {
         IdSensor: 99,
         IdTipoMedida: 2,
         IdEstado: 1,
+        FactorCalibracion: 1.2
       }
       var resu = await laLogica.insertarSensor(sensor);
       var res = await laLogica.getNumSensoresSegunEstado(2);
       assert.equal(res, 3, "¿no hay un resulado?")
-
     }
-
   ) //probar insertarSensor()
+
+  // Emilia Rosa van der Heide
+  it("probar getFactorDeCalibracion",
+    async function () {
+      var res = await laLogica.getFactorDeCalibracion(99);
+      console.log(res[0].FactorCalibracion)
+      assert.equal(res[0].FactorCalibracion, 1.2, "No coincide el factor de calibracion")
+    }) //probar getFactorDeCalibracion()
 
   // Emilia Rosa van der Heide
   it("probar getMedidasDeEsteUsuarioPorFecha",
@@ -279,8 +285,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
       // llamar a getestado del sensor 1 para ver q ponga 3
       //assert.notEqual(res.length, 0, "no están las medidas")
-
-
     }
   )
 
@@ -303,66 +307,48 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
   it("probar vincularSensorConUsuario",
     async function () {
-
       var datos = {
         IdSensor: 99,
         IdUsuario: 6
       }
-
       await laLogica.vincularSensorConUsuario(datos);
 
       var res = await laLogica.getUsuarioPorIdSensor(99);
       assert.equal(res.length, 1, "¿no hay un resulado?")
-
     }
-
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar vincularSensorConUsuario()
 
   it("probar desvincularUsuarioDeSensorPorIdUsuario",
     async function () {
-
       await laLogica.desvincularUsuarioDeSensorPorIdUsuario(6);
       var res = await laLogica.getUsuarioPorIdSensor(99);
       assert.equal(res, 0, "¿no hay un resulado?")
-
-
-
     }
-
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar desvincularUsuarioDeSensorPorIdUsuario()
 
   it("probar borrarSensorPorID",
     async function () {
-
       await laLogica.borrarSensorPorID(99);
       var res = await laLogica.getSensoresSegunEstado(3);
       assert.equal(res.length, 1, "¿no hay un resulado?")
-
     }
-
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar borrarSensorPorID()
 
   it("probar borrarUsuarioPorId",
     async function () {
-
       await laLogica.borrarUsuarioPorId(29);
       var res = await laLogica.GetUsuarioPorEmail("test1@gti.com");
       console.log(res)
       assert.equal(res[0], null, "¿no hay un resulado?")
-
     }
-
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar borrarUsuarioPorId()
 
   it("probar getNumeroUsuariosTotales",
     async function () {
-
       var res = await laLogica.getNumeroUsuariosTotales();
       assert.equal(res, 13, "¿no hay un resulado?")
-
     }
-
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar getNumeroUsuariosTotales()
 
   it("probar editarInformacionUsuarioPorId",
     async function () {
@@ -380,7 +366,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
     }
 
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar editarInformacionUsuarioPorId()
 
 
   it("probar getNumeroUsuariosTotalesPorTipo",
@@ -391,6 +377,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
     }
 
-  ) //probar getTodasLasMedidasPorFecha()
+  ) //probar getNumeroUsuariosTotalesPorTipo()
 
 }) // describe
