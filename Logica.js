@@ -29,13 +29,16 @@ module.exports = class Logica {
   // inserta Medida
   // .................................................................
   async insertarMedida(medida) {
+    console.log("logica: insertarMedida")
+    var medidaCalibrada = await this.calibrarMedida(medida)
+    console.log("aaaaaaaaaa" + medidaCalibrada)
     var textoSQL =
       'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
     var valoresParaSQL = {
       $IdMedida: null,
       $IdTipoMedida: medida.IdTipoMedida,
       $IdUsuario: medida.IdUsuario,
-      $Valor: medida.Valor,
+      $Valor: medidaCalibrada,
       $Tiempo: medida.Tiempo,
       $Latitud: medida.Latitud,
       $Longitud: medida.Longitud
@@ -728,23 +731,26 @@ editarInformacionUsuario(datos) {
 
 // .................................................................
 // Emilia Rosa van der Heide
-// medida: R -> calibrarMedida() -> medida: R
+// medida: JSON -> calibrarMedida() -> medida: R
 // recibe una medida, lo calibra según el factor de calibración
 // del sensor
 // .................................................................
-calibrarMedida(medidaOriginal) {
-  var textoSQL = "UPDATE Usuarios SET Email = $email , Password = $password , Telefono = $telefono WHERE IdUsuario = $idUsuario;";
-  var valoresParaSQL = {
-    $email: datos.Email,
-    $password: datos.Password,
-    $telefono: datos.Telefono,
-    $idUsuario: datos.IdUsuario
-  };
-  return new Promise((resolver, rechazar) => {
-    this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-      (err ? rechazar(err) : resolver(res))
-    })
-  })
+async calibrarMedida(medida) {
+  console.log("logica: calibrarMedida")
+  // Cogemos el valor original
+  var medidaOriginal = medida.Valor;
+
+  // Cogemos el IdSensor de la medida
+  var idSensorObj = await this.getSensorPorIdUsuario(medida.IdUsuario);
+  var idSensor = idSensorObj[0].IdSensor
+
+  // Cogemos el factor de calibracion de este sensor
+  var factorArray = await this.getFactorDeCalibracion(idSensor);
+  var factor = factorArray[0].FactorCalibracion;
+
+  // Calculamos la nueva medida
+  var medidaCalibrada = medidaOriginal * factor;
+  return medidaCalibrada;
 }
 
 // .................................................................
@@ -753,6 +759,7 @@ calibrarMedida(medidaOriginal) {
 // recibe el id de un sensor y saca su factor de calibración de la BBDD
 // .................................................................
 getFactorDeCalibracion(idSensor) {
+  console.log("logica: getFactorDeCalibracion")
   var textoSQL = "SELECT FactorCalibracion FROM Sensor WHERE IdSensor = $idSensor";
   var valoresParaSQL = {
     $idSensor: idSensor

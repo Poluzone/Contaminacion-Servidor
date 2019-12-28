@@ -121,12 +121,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
   it("probar GetUsuarioPorEmail",
     async function () {
-
-
       var res = await laLogica.GetUsuarioPorEmail("prueba1@hotmail.com")
-
-
-
       assert.equal(res[0].Telefono, "22132", "¿no es 1234A?")
       assert.equal(res[0].Password, "prueba1", "¿no es 1234A?")
 
@@ -149,7 +144,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
     })
 
-  it("probar insertarMedida",
+ /* it("probar insertarMedida",
     async function () {
       await laLogica.borrarFilasDeTodasLasTablas();
       var IdTipoMedida = 2
@@ -174,7 +169,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
-    })
+    }) */
 
   it("probar GetLaUltimaMedidaPorUsuario",
     async function () {
@@ -222,7 +217,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
   it("probar getFactorDeCalibracion",
     async function () {
       var res = await laLogica.getFactorDeCalibracion(99);
-      console.log(res[0].FactorCalibracion)
       assert.equal(res[0].FactorCalibracion, 1.2, "No coincide el factor de calibracion")
     }) //probar getFactorDeCalibracion()
 
