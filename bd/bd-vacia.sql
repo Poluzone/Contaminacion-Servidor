@@ -17,12 +17,13 @@ CREATE TABLE IF NOT EXISTS "Estados" (
 	"Descripcion"	TEXT,
 	PRIMARY KEY("IdEstado")
 );
-CREATE TABLE IF NOT EXISTS "Sensor" (
+CREATE TABLE "Sensor" (
 	"IdSensor"	INTEGER NOT NULL,
 	"IdTipoMedida"	INTEGER NOT NULL,
 	"IdEstado"	INTEGER NOT NULL,
-	FOREIGN KEY("IdEstado") REFERENCES "Estados"("IdEstado"),
+	"FactorCalibracion"	REAL NOT NULL,
 	FOREIGN KEY("IdTipoMedida") REFERENCES "TipoSensor"("IdTipoMedida"),
+	FOREIGN KEY("IdEstado") REFERENCES "Estados"("IdEstado"),
 	PRIMARY KEY("IdSensor")
 );
 CREATE TABLE IF NOT EXISTS "Usuarios" (
