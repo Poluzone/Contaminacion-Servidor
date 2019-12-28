@@ -31,7 +31,6 @@ module.exports = class Logica {
   async insertarMedida(medida) {
     console.log("logica: insertarMedida")
     var medidaCalibrada = await this.calibrarMedida(medida)
-    console.log("aaaaaaaaaa" + medidaCalibrada)
     var textoSQL =
       'insert into Medidas values( $IdMedida, $IdTipoMedida , $IdUsuario, $Valor , $Tiempo , $Latitud , $Longitud);'
     var valoresParaSQL = {
