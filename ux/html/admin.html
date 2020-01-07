@@ -747,6 +747,17 @@ Modificado: 3/12/19
 
                 // Vaciado de la tarjeta INFORMACION
                 tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+                
+                // Funciones del PROXY que listan los sensores que han emitido varias lecturas erronas
+                proxy.getTodosErroresDeSensoresSinRevision(function(resp){
+                    sensores = resp;
+                    console.log("adios "+resp.length);
+                    for (var i = 0; i < resp.length; i++) {
+                        crearSensorLista(i);
+                    }
+                });
+                
+                
             } else {
                 mostrandoErrores = false;
 
