@@ -8,6 +8,17 @@ Fecha: septiembre 2019
 ****************************************************************************************/
 const path = require('path');
 const saltRounds = 10;
+const multer = require("multer");
+
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './ux/images/poluzone')
+  },
+  filename: (req, file, cb) => {
+    cb(null, 'img' + '-' + Date.now() + path.extname(file.originalname));
+  }
+})
+const upload = multer({ storage: storage })
 
 module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   // .......................................................
@@ -674,7 +685,20 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /insertarImagen -> es una petición POST que guarda la foto en 
+  * ux/images/poluzone
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  servidorExpress.post('/insertarImagen', upload.single('file'),
+    async function (peticion, respuesta) {
+      console.log("* POST /subirImagen")
+      // console.log(util.inspect(peticion.body, false, null, true /* enable colors */))
+      console.log(`Carpeta donde se ha guardado la foto: ${peticion.hostname}/${peticion.file.path}`);
 
+      return respuesta.send(peticion.file)
+
+  }) // post / subirImagen
 
 
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
