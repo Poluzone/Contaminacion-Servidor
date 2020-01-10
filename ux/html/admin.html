@@ -93,6 +93,8 @@ Modificado: 3/12/19
 
         // Tarjeta SENSORES / USUARIOS
         var textoSENSORESyUSUARIOS;
+        
+        var alturaElementoLista;
 
         var botonError;
         var iconoError;
@@ -100,6 +102,8 @@ Modificado: 3/12/19
         var iconoAddInnerHTML;
         var iconoCanInnerHTML;
         var botonBorrar;
+        
+        var contenedorHeight;
 
         var textoColumna1;
         var textoColumna2;
@@ -228,6 +232,7 @@ Modificado: 3/12/19
             var div4 = document.createElement("div");
             var div5 = document.createElement("div");
             var imagen = document.createElement("img");
+            
 
             sensor = sensores[i];
             console.log("Skeroo " + JSON.stringify(sensor.Usuario))
@@ -239,7 +244,7 @@ Modificado: 3/12/19
             divContenedor.className = "elementoLista row mr-0 ml-0";
             li.appendChild(divContenedor);
 
-            div1.className = "columnasInfoSensor col-1";
+            div1.className = "columnasInfoSensor col-1 my-auto";
             divContenedor.appendChild(div1);
             imagen.className = "iconoDeCadaElemento";
 
@@ -275,11 +280,15 @@ Modificado: 3/12/19
                 }
                 imagen.src = "../images/" + iconoEstado + ".png";
                 imagen.alt = iconoAlt;
+                div1.appendChild(imagen);
             } else {
-                div1.appendChild(document.createTextNode(sensor.Fecha));
+                divContenedor.style.height = alturaElementoLista;
+                var date = new Date(sensor.Fecha);
+                var fecha = date.toLocaleDateString();
+                div1.appendChild(document.createTextNode(fecha));
+                console.log("fecha "+alturaElementoLista);
             }
 
-            div1.appendChild(imagen);
             div2.appendChild(document.createTextNode(sensor.TipoSensor));
             div4.appendChild(document.createTextNode(sensor.IdSensor));
             if (sensor.Usuario != null) { // Si esta en Stock no tendra ningun usuario asignado
@@ -374,7 +383,7 @@ Modificado: 3/12/19
                 }
 
             };
-
+            alturaElementoLista=divContenedor.offsetHeight+"px";
         }
 
         // Funcion que crea un numero de elementos en la lista equivalente al numero total de sensores en la base de datos
@@ -756,10 +765,10 @@ Modificado: 3/12/19
                 limpiarLista();
 
                 // Cambiar texto de textoColumna1 a Fecha
-                innerHTMLtextoColumna1 = textoColumna1.innerHTML;
+                innerHTMLtextoColumna1 = textoColumna1.innerHTML;                
                 textoColumna1.innerHTML = "";
                 textoColumna1.appendChild(document.createTextNode("Fecha"));
-
+                
                 // Vaciado de la tarjeta INFORMACION
                 tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
 
