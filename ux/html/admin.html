@@ -43,6 +43,10 @@ Modificado: 3/12/19
 
         var ul;
 
+        var li;
+
+        var tamañoLista;
+
         var hayAlgunElementoSeleccionado = false; // Para saber si hay algun elemento seleccionado y poder cambiar su color o borrarlo
 
         var elementoSeleccionado; // Se utiliza para cambiar el color del elemento seleccionado
@@ -98,6 +102,8 @@ Modificado: 3/12/19
         var textoColumna2;
         var textoColumna3;
         var textoColumna4;
+
+        var innerHTMLtextoColumna1;
 
         // Pulso
         var pulse1;
@@ -211,14 +217,14 @@ Modificado: 3/12/19
 
             var maxListaSensores = sensores.length;
             var sensor;
-            var ul = document.getElementById("lista");
-            var li = document.createElement("li");
+            document.getElementById("lista");
+            li = document.createElement("li");
             var divContenedor;
             var div1 = document.createElement("div");
             var div2 = document.createElement("div");
             var div4 = document.createElement("div");
             var div5 = document.createElement("div");
-            imagen = document.createElement("img");
+            var imagen = document.createElement("img");
 
             sensor = sensores[i];
             console.log("Skeroo " + JSON.stringify(sensor.Usuario))
@@ -248,24 +254,28 @@ Modificado: 3/12/19
 
             //console.log("que " + sensor.Estado);
 
-            if (sensor.Estado == "En Stock") {
-                //console.log("nani " + sensor.Estado);
-                iconoEstado = "box2";
-                iconoAlt = "En Stock"
-            }
-            if (sensor.Estado == "Alquilado") {
-                //console.log("nani " + sensor.Estado);
-                iconoEstado = "tick2";
-                iconoAlt = "Alquilado"
-            }
-            if (sensor.Estado == "Averiado") {
-                //console.log("nani " + sensor.Estado);
-                iconoEstado = "cross2";
-                iconoAlt = "Averiado"
+            if (!mostrandoErrores) {
+                if (sensor.Estado == "En Stock") {
+                    //console.log("nani " + sensor.Estado);
+                    iconoEstado = "box2";
+                    iconoAlt = "En Stock"
+                }
+                if (sensor.Estado == "Alquilado") {
+                    //console.log("nani " + sensor.Estado);
+                    iconoEstado = "tick2";
+                    iconoAlt = "Alquilado"
+                }
+                if (sensor.Estado == "Averiado") {
+                    //console.log("nani " + sensor.Estado);
+                    iconoEstado = "cross2";
+                    iconoAlt = "Averiado"
+                }
+                imagen.src = "../images/" + iconoEstado + ".png";
+                imagen.alt = iconoAlt;
+            } else {
+                //div1.appendChild(document.createTextNode(sensor.Fecha));
             }
 
-            imagen.src = "../images/" + iconoEstado + ".png";
-            imagen.alt = iconoAlt;
             div1.appendChild(imagen);
             div2.appendChild(document.createTextNode(sensor.TipoSensor));
             div4.appendChild(document.createTextNode(sensor.IdSensor));
@@ -371,7 +381,7 @@ Modificado: 3/12/19
 
             var maxListaUsuarios = numeroTotalDeUsuarios;
             var usuario;
-            var li = document.createElement("li");
+            li = document.createElement("li");
             var divContenedor;
             var div1 = document.createElement("div");
             var div2 = document.createElement("div");
@@ -735,29 +745,31 @@ Modificado: 3/12/19
                 iconoCan.innerHTML = "";
 
                 // Borrado de elementos de la lista
-                var ul = document.getElementById("lista");
-                var li = document.getElementsByClassName("tarjetaLista");
-                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
-                var i = 0;
-                while (i <= tamañoLista - 1) {
-                    console.log(i);
-                    ul.removeChild(li[0]);
-                    i++;
-                }
+                ul = document.getElementById("lista");
+                li = document.getElementsByClassName("tarjetaLista");
+                tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+
+                // Limpiar lista de sensores/usuarios
+                limpiarLista();
+
+                // Cambiar texto de textoColumna1 a Fecha
+                innerHTMLtextoColumna1 = textoColumna1.innerHTML;
+                textoColumna1.innerHTML = "";
+                textoColumna1.appendChild(document.createTextNode("Fecha"));
 
                 // Vaciado de la tarjeta INFORMACION
                 tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
-                
+
                 // Funciones del PROXY que listan los sensores que han emitido varias lecturas erronas
-                proxy.getTodosErroresDeSensoresSinRevision(function(resp){
+                proxy.getTodosErroresDeSensoresSinRevision(function(resp) {
                     sensores = resp;
-                    console.log("adios "+resp.length);
+                    console.log("adios " + resp.length);
                     for (var i = 0; i < resp.length; i++) {
                         crearSensorLista(i);
                     }
                 });
-                
-                
+
+
             } else {
                 mostrandoErrores = false;
 
@@ -765,6 +777,15 @@ Modificado: 3/12/19
                 // Aparece boton Add
                 iconoAdd.innerHTML = iconoAddInnerHTML;
                 iconoCan.innerHTML = iconoCanInnerHTML;
+
+                // Limpiar lista de sensores/usuarios
+                limpiarLista();
+
+                // Cambiar texto de textoColumna1 a Fecha
+                textoColumna1.innerHTML = innerHTMLtextoColumna1;
+
+                // Vaciado de la tarjeta INFORMACION
+                tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
 
                 //Rellenado de tarjeta con todos los sensores
                 proxy.getSensoresYSusUsuarios(function(resp) {
@@ -982,7 +1003,7 @@ Modificado: 3/12/19
 
         // Cambia la información de la página de sensores a usuarios
         function cambioAUsuarios() {
-            console.log("Llamada a cambiarAUsuarios()");
+            console.log("Llamada a cambioAUsuarios()");
 
             if (modoActual == 0) { // Solo funciona cuando el modo previo al clic es el contrario
 
@@ -1004,9 +1025,9 @@ Modificado: 3/12/19
 
                 modoActual = 1;
 
-                var ul = document.getElementById("lista");
-                var li = document.getElementsByClassName("tarjetaLista");
-                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+                ul = document.getElementById("lista");
+                li = document.getElementsByClassName("tarjetaLista");
+                tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
 
                 var br1 = document.createElement("br");
                 var br2 = document.createElement("br");
@@ -1016,12 +1037,8 @@ Modificado: 3/12/19
                 botonUsuarios.style.color = '#F88E52';
                 botonSensores.style.color = 'white';
 
-                var i = 0;
-                while (i <= tamañoLista - 1) {
-                    console.log(i);
-                    ul.removeChild(li[0]);
-                    i++;
-                }
+                // Limpiar lista con sensores/usuarios
+                limpiarLista();
 
                 // Rellenado de la lista y de las tarjetas
                 llamadaAgetUsuariosYSusSensoresYARellenarTarjetasNumeroUsuarios();
@@ -1076,7 +1093,7 @@ Modificado: 3/12/19
         }
 
         function cambioASensores() {
-            console.log("Llamada a cambiarAUsuarios()");
+            console.log("Llamada a cambioASensores()");
 
             if (modoActual == 1) { // Solo funciona cuando el modo previo al clic es el contrario
 
@@ -1093,9 +1110,9 @@ Modificado: 3/12/19
 
                 modoActual = 0;
 
-                var ul = document.getElementById("lista");
-                var li = document.getElementsByClassName("tarjetaLista");
-                var tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+                ul = document.getElementById("lista");
+                li = document.getElementsByClassName("tarjetaLista");
+                tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
 
                 var br1 = document.createElement("br");
                 var br2 = document.createElement("br");
@@ -1105,11 +1122,8 @@ Modificado: 3/12/19
                 botonUsuarios.style.color = 'white';
                 botonSensores.style.color = '#F88E52';
 
-                var i = 0;
-                while (i <= tamañoLista - 1) {
-                    ul.removeChild(li[0]);
-                    i++;
-                }
+                //Limpiar lista de sensores/usuarios
+                limpiarLista();
 
                 // Rellenado de la lista y de las tarjetas
                 llamadaAgetSensoresYSusUsuariosYARellenarTarjetasNumeroSensores();
@@ -1162,6 +1176,25 @@ Modificado: 3/12/19
 
             }
 
+        }
+
+        /****************************************************************************************
+        limpiarLista()
+
+        Limpia la lista de sensores/usuarios eliminando todos los elementos dentro de ella
+
+        Iván
+        ****************************************************************************************/
+        function limpiarLista() {
+            ul = document.getElementById("lista");
+            li = document.getElementsByClassName("tarjetaLista");
+            tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+            var i = 0;
+            while (i <= tamañoLista - 1) {
+                console.log(i);
+                ul.removeChild(li[0]);
+                i++;
+            }
         }
 
         function clicBotonDesvincular() {
