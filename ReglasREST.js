@@ -610,7 +610,7 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
       console.log("* GET /getTodosErroresDeSensoresSinRevision")
 
       // llamo a la función adecuada de la lógica
-      var res = await laLogica.getTodosErroresDeSensoresSinRevision();
+      var res = await laLogica.getErroresConSenoresYUsuarios();
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 0) {
