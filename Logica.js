@@ -248,9 +248,10 @@ module.exports = class Logica {
     })
   }
   // .................................................................
-  // -> getTodosLosSensores() ->
-  // Coge la info de todos los sensores
+  // -> getTodosErroresDeSensoresSinRevision() ->
+  // Coge los errores que no han sido revisados
   // .................................................................
+
   async getTodosErroresDeSensoresSinRevision(){
     var textoSQL = "select * from ErrorSensor where Revisado = $estado ";
     var valoresParaSQL = {
@@ -265,6 +266,26 @@ module.exports = class Logica {
     })
   }
 
+  // .................................................................
+  // -> getTodosErroresDeSensoresSinRevision() ->
+  // Coge los errores que no han sido revisados
+  // .................................................................
+
+  async getErroresConSenoresYUsuarios(){
+
+    var error = await this.getTodosErroresDeSensoresSinRevision();
+    for (var i = 0; i < error.length; i++) {
+
+      var usuario = await this.getUsuarioPorIdSensor(error[i].IdSensor);
+      error[i].Usuario = usuario[0];
+      var sensor = await this.getSensorPorIdUsuario(usuario[0].IdUsuario);
+      error[i].Sensor = sensor[0];
+      error[i].TipoSensor = sensor[0].TipoSensor;
+    }
+    return new Promise((resolver, rechazar) => {
+      resolver(error)
+    })
+  }
 
   // .................................................................
   // Josep Carreres Fluixà
@@ -610,8 +631,8 @@ module.exports = class Logica {
       $IdSensor: datos.idSensor,
       $IdEstado: estado,
     };
-    console.log(textoSQL)
-    console.log(valoresParaSQL)
+    //console.log(textoSQL)
+  //  console.log(valoresParaSQL)
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
         (err ? rechazar(err) : resolver(res))
