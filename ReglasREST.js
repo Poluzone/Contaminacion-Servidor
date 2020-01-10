@@ -9,6 +9,8 @@ Fecha: septiembre 2019
 const path = require('path');
 const saltRounds = 10;
 const multer = require("multer");
+const util = require('util')
+const fs = require('fs')
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -690,13 +692,21 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   * /insertarImagen -> es una petición POST que guarda la foto en 
   * ux/images/poluzone
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-  servidorExpress.post('/insertarImagen', upload.single('file'),
-    async function (peticion, respuesta) {
-      console.log("* POST /subirImagen")
-      // console.log(util.inspect(peticion.body, false, null, true /* enable colors */))
-      console.log(`Carpeta donde se ha guardado la foto: ${peticion.hostname}/${peticion.file.path}`);
+  servidorExpress.post('/insertarImagen', async function (peticion, respuesta) {
 
-      return respuesta.send(peticion.file)
+    console.log(" * POST /insertarImagen ")
+    var datos = JSON.parse(peticion.body)
+    let image = datos["imagen"];
+
+    // luego extraes la cabecera del data url
+    var base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
+
+    // grabas la imagen el disco
+    fs.writeFile('./ux/images/poluzone/img' + '-' + Date.now() + '.jpg', base64Data, 'base64', function (err) {
+      console.log(err);
+    });
+
+    return respuesta.sendStatus(200);
 
   }) // post / subirImagen
 
