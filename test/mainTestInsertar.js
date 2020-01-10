@@ -52,7 +52,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     it("probar insertarErrorSensor",
       async function() {
         var datos = {
-          IdSensor: "3",
+          IdSensor: "1",
           Revisado: "false",
           Fecha:Date.now()
         }
@@ -103,9 +103,10 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     it("probar getTodosErroresDeSensoresSinRevision()",
       async function() {
 
-        var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+        //var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+        var res2 = await laLogica.getErroresConSenoresYUsuarios()
 
-        assert.equal(res.length, 0, "¿no hay un resulado?")
+        assert.equal(res2.length, 0, "¿no hay un resulado?")
 
       }) //it
 

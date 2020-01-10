@@ -1,6 +1,6 @@
-<!-- 
+<!--
 admin.html
-Creado por Iván Romero Ruiz 
+Creado por Iván Romero Ruiz
 Modificado: 3/12/19
 -->
 
@@ -117,7 +117,7 @@ Modificado: 3/12/19
         var iconoDesvincular;
         var iconoDesvincularInnerHTML;
 
-        // Mapa 
+        // Mapa
         var arrayMarcadores = [];
         var heatmap;
 
@@ -276,7 +276,7 @@ Modificado: 3/12/19
                 imagen.src = "../images/" + iconoEstado + ".png";
                 imagen.alt = iconoAlt;
             } else {
-                //div1.appendChild(document.createTextNode(sensor.Fecha));
+                div1.appendChild(document.createTextNode(sensor.Fecha));
             }
 
             div1.appendChild(imagen);
@@ -814,7 +814,7 @@ Modificado: 3/12/19
             if (modoActual == 0) {
                 crearEscanerQR();
             }
-            // Para apartado Usuarios 
+            // Para apartado Usuarios
             else {
                 $("#modal").modal();
                 botonModal.classList.remove("invisible");
@@ -1036,7 +1036,7 @@ Modificado: 3/12/19
                 var br2 = document.createElement("br");
                 var br3 = document.createElement("br");
 
-                // Cambio en los botones            
+                // Cambio en los botones
                 botonUsuarios.style.color = '#F88E52';
                 botonSensores.style.color = 'white';
 
@@ -1221,7 +1221,7 @@ Modificado: 3/12/19
         convertirFechaAJson()
         --> {int,int}
 
-        Es llamada cuando se elige un dia en el calendario y convierte el texto en un json con 
+        Es llamada cuando se elige un dia en el calendario y convierte el texto en un json con
         desde y hasta, el cual manda a recibirMedidasFecha() para cambiar los puntos del mapa
 
         Iván
