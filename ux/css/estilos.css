@@ -12,8 +12,7 @@
 }
 
 /* Clase para la Leyenda del mapa */
-.gradient {
-}
+.gradient {}
 
 /* Clase para los tipos de fuentes */
 
@@ -213,8 +212,8 @@ header.masthead .intro-text .intro-heading {
 
 /*Para el navbar*/
 
-.navbarAdmin{
-/*si*/
+.navbarAdmin {
+    /*si*/
 }
 
 #mainNav {
@@ -382,7 +381,7 @@ header.masthead .intro-text .intro-heading {
     height: 100%;
 
     position: relative;
-    z-index:2;
+    z-index: 2;
 }
 
 /* CUERPO */
@@ -393,7 +392,7 @@ header.masthead .intro-text .intro-heading {
     height: 85%;
 
     position: relative;
-    z-index:2;
+    z-index: 2;
 }
 
 /* TARJETAS INFORMACION GENERAL */
@@ -471,12 +470,12 @@ header.masthead .intro-text .intro-heading {
     height: 100%;
 }
 
-.iconoDesvincular:hover{
+.iconoDesvincular:hover {
     cursor: pointer;
     content: url(../images/desvincularNaranja.png);
 }
 
-.iconoDesvincular{
+.iconoDesvincular {
     width: 1.5rem;
     height: 1.5rem;
 }
@@ -517,7 +516,7 @@ header.masthead .intro-text .intro-heading {
     content: url(../images/warningHover.png);
 }
 
-.iconoErrorSeleccionado{
+.iconoErrorSeleccionado {
     content: url(../images/warningHover.png);
     width: 1.5rem;
     height: 1.5rem;
@@ -552,8 +551,8 @@ header.masthead .intro-text .intro-heading {
     overflow: hidden;
 }
 
-.nombresLista{
-    height: 12%;    
+.nombresLista {
+    height: 12%;
 }
 
 .nombresLista:hover {
@@ -570,7 +569,7 @@ header.masthead .intro-text .intro-heading {
     margin-bottom: 0% !important;
 
     overflow: auto;
-    
+
     background: #C9CFD8;
 }
 
@@ -587,11 +586,11 @@ header.masthead .intro-text .intro-heading {
 
 }
 
-.elementoNaranja{
+.elementoNaranja {
     background-color: #F88E52;
 }
 
-.elementoNaranja:hover{
+.elementoNaranja:hover {
     background-color: #F7A171 !important;
 }
 
@@ -697,8 +696,21 @@ header.masthead .intro-text .intro-heading {
 
 /* MAPA */
 
-.tarjetaCalendario{
-display:inline-block;
+.tarjetaCalendario {
+    display: inline-block;
+}
+
+.tarjetaBotonPDF {
+    display: inline-block;
+}
+
+.tarjetaBotonPDF:hover{
+    cursor: pointer;
+}
+
+.iconoPDF{
+    width: 1.7rem;
+    height: 1.7rem;
 }
 
 .columnaMapa {
@@ -747,13 +759,13 @@ display:inline-block;
 
 /* Animacion fondo */
 
-.contenedorPulsos{
+.contenedorPulsos {
     height: 2px;
 }
 
 .pulse1 {
     position: relative;
-    z-index:2;
+    z-index: 2;
     margin-left: 35%;
     display: block;
     width: 2px;
@@ -767,7 +779,7 @@ display:inline-block;
 
 .pulse2 {
     position: relative;
-    z-index:2;
+    z-index: 2;
     margin-left: 28%;
     display: block;
     width: 2px;
@@ -810,10 +822,8 @@ display:inline-block;
     }
 }
 
-.invisible{
+.invisible {
     visibility: hidden;
 }
 
-.footerAdmin {
-
-}
+.footerAdmin {}
