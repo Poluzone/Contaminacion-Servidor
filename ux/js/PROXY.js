@@ -467,9 +467,9 @@ class Proxy {
     /****************************************************************************************
 
     getTodosErroresDeSensoresSinRevision()
-    --> Parametros de salida
+    --> lista<json(sensor, usuario)>
 
-    Posible descripcion
+    De
 
     Ivan
     ****************************************************************************************/
@@ -490,5 +490,28 @@ class Proxy {
                 callback(datos);
             });
     }
+    
+    /****************************************************************************************
 
+    MarcarErrorComoRevisadoPorIdError()
+
+    Marca como vistos los sensores que han cometido lecturas erróneas para que no aparezcan 
+    en lista cuando el usuario quiera dejar de verlos
+
+    Ivan
+    ****************************************************************************************/
+    async MarcarErrorComoRevisadoPorIdError(){
+        fetch(url + "/MarcarErrorComoRevisadoPorIdError", {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'User-Agent': 'jordi',
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+        }).catch(e => {
+            console.log("error: " + e);
+            return e;
+        });
+    }
 }

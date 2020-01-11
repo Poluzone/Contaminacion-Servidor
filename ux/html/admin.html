@@ -339,7 +339,9 @@ Modificado: 3/12/19
 
                 var divEstado = document.getElementById("Estado");
                 divEstado.innerHTML = "";
-                divEstado.appendChild(document.createTextNode(sensor.Estado));
+                if (!mostrandoErrores) {
+                    divEstado.appendChild(document.createTextNode(sensor.Estado));
+                }
 
                 var divTextoUsuario = document.getElementById("TextoUsuario");
                 var divTipoUsuario = document.getElementById("TipoUsuario");
@@ -757,8 +759,6 @@ Modificado: 3/12/19
                 // Eliminado boton Add y Can
                 iconoAddInnerHTML = iconoAdd.innerHTML;
                 iconoAdd.innerHTML = "";
-                iconoCanInnerHTML = iconoCan.innerHTML;
-                iconoCan.innerHTML = "";
 
                 // Borrado de elementos de la lista
                 ul = document.getElementById("lista");
@@ -792,7 +792,6 @@ Modificado: 3/12/19
                 iconoError.classList.remove("iconoErrorSeleccionado");
                 // Aparece boton Add
                 iconoAdd.innerHTML = iconoAddInnerHTML;
-                iconoCan.innerHTML = iconoCanInnerHTML;
 
                 // Limpiar lista de sensores/usuarios
                 limpiarLista();
@@ -843,52 +842,64 @@ Modificado: 3/12/19
         function clicBotonBorrar() {
             console.log("Esto eliminará un sensor");
 
-            if (hayAlgunElementoSeleccionado) {
-                botonModal.classList.remove("invisible");
-                if (modoActual == 0) {
-                    $("#modal").modal();
-                    textoModal.innerHTML = "";
-                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
-                    botonModal.innerHTML = "";
-                    botonModal.appendChild(document.createTextNode("BORRAR"));
-                    botonModal.onclick = eliminarSensorOUsuario();
-                } else {
-                    $("#modal").modal();
-                    textoModal.innerHTML = "";
-                    textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
-                    botonModal.innerHTML = "";
-                    botonModal.appendChild(document.createTextNode("BORRAR"));
-                }
-            } else {
+            if (mostrandoErrores == true) {
+                $("#modal").modal();
                 textoModal.innerHTML = "";
-                textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para borrarlo"));
+                textoModal.appendChild(document.createTextNode("Vas a BORRAR los SENSORES de la lista de SENSORES ERRÓNEOS."));
                 botonModal.innerHTML = "";
-                botonModal.classList.add("invisible");
-                botonModal.onclick = eliminarSensorOUsuario();
+                botonModal.appendChild(document.createTextNode("BORRAR"));
+            } else {
+                if (hayAlgunElementoSeleccionado) {
+                    botonModal.classList.remove("invisible");
+                    if (modoActual == 0) {
+                        $("#modal").modal();
+                        textoModal.innerHTML = "";
+                        textoModal.appendChild(document.createTextNode("Vas a BORRAR un SENSOR de la BASE DE DATOS."));
+                        botonModal.innerHTML = "";
+                        botonModal.appendChild(document.createTextNode("BORRAR"));
+                    } else {
+                        $("#modal").modal();
+                        textoModal.innerHTML = "";
+                        textoModal.appendChild(document.createTextNode("Vas a BORRAR un USUARIO de la BASE DE DATOS."));
+                        botonModal.innerHTML = "";
+                        botonModal.appendChild(document.createTextNode("BORRAR"));
+                    }
+                } else {
+                    textoModal.innerHTML = "";
+                    textoModal.appendChild(document.createTextNode("Tienes que seleccionar un elemento para borrarlo"));
+                    botonModal.innerHTML = "";
+                    botonModal.classList.add("invisible");
+                }
             }
 
         }
 
         function clicBotonModal() {
 
-            if (modoActual == 0) { // Borrar sensor o desvincular
-                if (botonModal.textContent == "DESVINCULAR") {
-                    console.log("Desvinculado sensor: " + unSensor.Usuario.IdUsuario);
+            if (mostrandoErrores) {
+                console.log("Marcando sensores como vistos");
+                proxy.MarcarErrorComoRevisadoPorIdError();
+                limpiarLista();
+            } else {
+                if (modoActual == 0) { // Borrar sensor o desvincular
+                    if (botonModal.textContent == "DESVINCULAR") {
+                        console.log("Desvinculado sensor: " + unSensor.Usuario.IdUsuario);
 
-                    proxy.desvincularUsuarioDeSensorPorIdUsuario(unSensor.Usuario.IdUsuario);
+                        proxy.desvincularUsuarioDeSensorPorIdUsuario(unSensor.Usuario.IdUsuario);
 
-                    location.reload();
+                        location.reload();
 
-                } else {
-                    console.log("Borrado sensor: " + unSensor.IdSensor);
+                    } else {
+                        console.log("Borrado sensor: " + unSensor.IdSensor);
 
-                    elementoSeleccionado.innerHTML = "";
-                    proxy.borrarSensorPorID(unSensor.IdSensor);
+                        elementoSeleccionado.innerHTML = "";
+                        proxy.borrarSensorPorID(unSensor.IdSensor);
 
-                    tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
+                        tarjetaINFORMACION.innerHTML = innerHTMLTarjetaINFORMACION;
 
-                    // Hacer boton desvincular invisible
-                    iconoDesvincular.classList.add("invisible");
+                        // Hacer boton desvincular invisible
+                        iconoDesvincular.classList.add("invisible");
+                    }
                 }
 
             }
@@ -1333,11 +1344,11 @@ Modificado: 3/12/19
         Iván
         ****************************************************************************************/
         function botonPDFlicado() {
-            
+
             // Convertir a imagen el mapa
             //var contenedorMapa = document.getElementsByClassName("gm-style");
             var nombrePDF = document.getElementById("datepicker").value;
-            console.log("esaes "+nombrePDF);
+            console.log("esaes " + nombrePDF);
             html2canvas($(".gm-style"), {
                 useCORS: true,
                 onrendered: function(canvas) {
@@ -1345,7 +1356,7 @@ Modificado: 3/12/19
 
                     // Convert and download as image 
                     var dataUrl = canvas.toDataURL('image/png');
-                    downloadURI("data:" + dataUrl, nombrePDF+".png"); 
+                    downloadURI("data:" + dataUrl, nombrePDF + ".png");
                     //var doc = new jsPDF('landscape');
                     //doc.addImage(myImage, 'JPEG', 10, 40, 180, 180);
                     //doc.save('mapa.pdf');
