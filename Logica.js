@@ -292,36 +292,105 @@ module.exports = class Logica {
   // Saca la mediana de las 24h anteriores
   // .................................................................
 
-  async calcularMedianaDeLas24hAnteriores() {
-    var intervalo = {
-      desde: Date.now() - 86400000,
-      hasta: Date.now()
-    }
+  async calcularMedianaPorIntervaloDeTiempo(intervalo) {
 
     var medidas = await this.getTodasLasMedidasPorFecha(intervalo);
     var valores;
-    for (var i = 0; i < medidas.length; i++) {  valores[i] = medidas[i].Valor;  }
+    for (var i = 0; i < medidas.length; i++) {
+      valores[i] = medidas[i].Valor;
+    }
 
-      valores.sort(function(a, b) {
-        return a - b;
-      });
+    valores.sort(function(a, b) {
+      return a - b;
+    });
 
-      var medianaT;
+    var medianaT;
 
-      if(valores.length%2 == 0){
+    if (valores.length % 2 == 0) {
 
-          var mediana1 = valores[(valores.length/2) - 1];
-          var mediana2 =valores[valores.length/2];
+      var mediana1 = valores[(valores.length / 2) - 1];
+      var mediana2 = valores[valores.length / 2];
 
-          medianaT = (mediana1 + mediana2)/2;
-      }else{
+      medianaT = (mediana1 + mediana2) / 2;
+    } else {
 
-        medianaT =valores[(valores.length/2) -0.5];
-      }
+      medianaT = valores[(valores.length / 2) - 0.5];
+    }
 
     return new Promise((resolver, rechazar) => {
       resolver(medianaT)
     })
+
+  }
+
+  // .................................................................
+  // -> getTodosErroresDeSensoresSinRevision() ->
+  // Coge los errores que no han sido revisados
+  // .................................................................
+
+  getUsuariosConSensor() {
+    var textoSQL = "select * from UsuarioSensor";
+
+    console.log("logica: getUsuariosConSensor")
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  }
+
+  // .................................................................
+  // -> comprobarSiHayErrorDeMedicionEnSensor->
+  // Comprobar y saber si un error esta midiendo erronamente
+  // .................................................................
+
+  async comprobarSiHayErroresDeMedicionEnSensor() {
+
+    var intervalo = {
+      desde: Date.now() - 86400000, //86400000 24h en milisegundos
+      hasta: Date.now()
+    }
+
+    var mediana = await this.calcularMedianaPorIntervaloDeTiempo(intervalo);
+    var usuarios = await this.getUsuariosConSensor();
+
+    for (var i = 0; i < 6; i++) {
+      var inc1 = 0;
+      var inc2 = 14400000;
+
+      for (var u = 0; u < usuarios.length; u++) {
+
+        var medidas = await this.getMedidasDeEsteUsuarioPorFecha({
+          desde: Date.now() - 86400000 + inc,
+          hasta: Date.now() - 86400000 + inc2
+        }, usuarios[u].IdUsuario);
+
+        var cont = 0;
+        for (var j = 0; j < medidas.length; j++) {
+          if(medidas[j].Valor > mediana+10  ||  medidas[j].Valor < mediana-10 ) {cont++;}
+        }
+
+        if(medidas.length*(cont/medidas.length) >= 20){
+
+          var error = {
+            $IdError: null,
+            $IdSensor: usuarios[u].IdSensor,
+            $Revisado: "false",
+            $Fecha: Date.now()
+
+          };
+
+            this.insertarErrorSensor(error);
+        }
+
+      }
+
+      inc = inc + 14400000; //14400000 4h en milisegundos
+      inc2 = inc2 + 14400000;
+
+    }
+
   }
 
   // .................................................................
