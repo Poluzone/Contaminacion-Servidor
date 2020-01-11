@@ -111,7 +111,7 @@ class Mapa {
 
         this.focus(this.position);
 
-        this.getMedidas();
+        this.pruebaMétodo()
 
         this.layers = new Array();
 
@@ -142,7 +142,8 @@ class Mapa {
     //...................................................
 
     addLayer(layer){
-        this.layers.push(layer)
+        this.layers.push(layer);
+        this.mapa.setMap(layer);
     }//()
     //...................................................
     // removeLayer()
@@ -156,18 +157,18 @@ class Mapa {
             }//if
         }//for
     }//()
-    
-    
-    pruebaMétodo(){
-        
-    }
-    
-    
-    
-    
-    
-    
-    
+
+    //...................................................
+    //
+    //...................................................
+    addMarker(position){
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Hello World!'
+        });
+    }//()
+
 
 }//Clase Mapa
 
