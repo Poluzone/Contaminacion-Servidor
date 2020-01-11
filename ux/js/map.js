@@ -28,88 +28,90 @@ class Mapa {
             zoom: ajustes.zoom,
             zoomControl: false,
             styles: [
-            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-            {
-              featureType: 'administrative.locality',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
-            },
-            {
-              featureType: 'poi',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
-            },
-            {
-              featureType: 'poi.park',
-              elementType: 'geometry',
-              stylers: [{color: '#263c3f'}]
-            },
-            {
-              featureType: 'poi.park',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#6b9a76'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry',
-              stylers: [{color: '#38414e'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#212a37'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#9ca5b3'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'geometry',
-              stylers: [{color: '#746855'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#1f2835'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#f3d19c'}]
-            },
-            {
-              featureType: 'transit',
-              elementType: 'geometry',
-              stylers: [{color: '#2f3948'}]
-            },
-            {
-              featureType: 'transit.station',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'geometry',
-              stylers: [{color: '#17263c'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#515c6d'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#17263c'}]
-            }
-          ]
+                {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+                {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+                {
+                    featureType: 'administrative.locality',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#d59563'}]
+                },
+                {
+                    featureType: 'poi',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#d59563'}]
+                },
+                {
+                    featureType: 'poi.park',
+                    elementType: 'geometry',
+                    stylers: [{color: '#263c3f'}]
+                },
+                {
+                    featureType: 'poi.park',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#6b9a76'}]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'geometry',
+                    stylers: [{color: '#38414e'}]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'geometry.stroke',
+                    stylers: [{color: '#212a37'}]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#9ca5b3'}]
+                },
+                {
+                    featureType: 'road.highway',
+                    elementType: 'geometry',
+                    stylers: [{color: '#746855'}]
+                },
+                {
+                    featureType: 'road.highway',
+                    elementType: 'geometry.stroke',
+                    stylers: [{color: '#1f2835'}]
+                },
+                {
+                    featureType: 'road.highway',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#f3d19c'}]
+                },
+                {
+                    featureType: 'transit',
+                    elementType: 'geometry',
+                    stylers: [{color: '#2f3948'}]
+                },
+                {
+                    featureType: 'transit.station',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#d59563'}]
+                },
+                {
+                    featureType: 'water',
+                    elementType: 'geometry',
+                    stylers: [{color: '#17263c'}]
+                },
+                {
+                    featureType: 'water',
+                    elementType: 'labels.text.fill',
+                    stylers: [{color: '#515c6d'}]
+                },
+                {
+                    featureType: 'water',
+                    elementType: 'labels.text.stroke',
+                    stylers: [{color: '#17263c'}]
+                }
+            ]
         });
 
         this.focus(this.position);
+        
+        this.getMedidas();
 
         this.layers = new Array();
 
@@ -121,21 +123,188 @@ class Mapa {
     // coords: lat, lng --->focus
     // posiciona el mapa en el lugar de interés, en este caso Gandía Grao
     //..................................................
-    
+
     focus(coords) {
 
         var latLng = new google.maps.LatLng(coords.lat, coords.lng);
         this.mapa.setCenter(latLng);
     }
-    
+
     //...................................................
-    // poluzone()
+    // getMedidas()
     //
     //...................................................
-    
-    poluzone(){
-        
-       
+
+    getMedidas(){
+        intervalo = { desde: 0, hasta: 0 }
+        proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
+            // console.log(datos);
+            console.log("DATOS DE MEDIDAS POR FECHA");
+            var poluzone = [];
+            console.log(window.localStorage.getItem('inlineCheckboxCO'))
+            //asigno un marcador dependiendo de la medida    
+            for (let i = 0; i < datos["medidas"].length; i++) {
+                var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
+                var icon;
+                /*if(datos[i].IdTipoMedida == 2){
+      icon = iconBase + 'purple-dot.png'
+      }*/
+                if (datos["medidas"][i].IdTipoMedida == 1) {
+                    icon = iconBase + 'green.png'
+                } else {
+                    if (datos["medidas"][i].IdTipoMedida == 2) {
+                        icon = iconBase + 'yellow.png'
+                    } else {
+                        if (datos["medidas"][i].IdTipoMedida == 3) {
+                            icon = iconBase + 'red.png'
+                        } else {
+                            if (datos["medidas"][i].IdTipoMedida == 4) {
+                                icon = iconBase + 'purple.png'
+                            } else {
+                                icon = iconBase + 'lightblue.png'
+                            }
+                        }
+                    }
+                }
+
+
+                // --------------------- CO ---------------------------------
+                if (window.localStorage.getItem('inlineCheckboxCO') == "true" && datos["medidas"][i].IdTipoMedida == 2) {
+                    //dibuja los marcadores
+                    var medida = new google.maps.Marker({
+                        position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+                        map: getMap(),
+                        title: 'Medidas',
+                        icon: { url: icon },
+                    });
+
+                    var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+                    poluzone.push(puntoCalor);
+
+                    var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                        '<p></p>' +
+                        '</div>' +
+                        '</div>';
+
+                    google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                        return function () {
+                            infowindow.setContent(content);
+                            infowindow.open(getMap(), marker);
+                        };
+                    })(medida, contentString, infowindow));
+                }
+
+                // --------------------- NOX ---------------------------------
+                if (window.localStorage.getItem('inlineCheckboxNOX') == "true" && datos["medidas"][i].IdTipoMedida == 3) {
+                    //dibuja los marcadores
+                    var medida = new google.maps.Marker({
+                        position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+                        map: getMap(),
+                        title: 'Medidas',
+                        icon: { url: icon },
+                    });
+
+                    var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+                    poluzone.push(puntoCalor);
+
+                    var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                        '<p></p>' +
+                        '</div>' +
+                        '</div>';
+
+                    google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                        return function () {
+                            infowindow.setContent(content);
+                            infowindow.open(getMap(), marker);
+                        };
+                    })(medida, contentString, infowindow));
+                }
+
+                // --------------------- SO2 ---------------------------------
+                if (window.localStorage.getItem('inlineCheckboxSO2') == "true" && datos["medidas"][i].IdTipoMedida == 4) {
+                    //dibuja los marcadores
+                    var medida = new google.maps.Marker({
+                        position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+                        map: getMap(),
+                        title: 'Medidas',
+                        icon: { url: icon },
+                    });
+
+                    var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+                    poluzone.push(puntoCalor);
+
+                    var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                        '<p></p>' +
+                        '</div>' +
+                        '</div>';
+
+                    google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                        return function () {
+                            infowindow.setContent(content);
+                            infowindow.open(getMap(), marker);
+                        };
+                    })(medida, contentString, infowindow));
+                }
+
+                // --------------------- Gases irr ---------------------------------
+                if (window.localStorage.getItem('inlineCheckboxIrr') == "true" && datos["medidas"][i].IdTipoMedida == 5) {
+                    //dibuja los marcadores
+                    var medida = new google.maps.Marker({
+                        position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
+                        map: getMap(),
+                        title: 'Medidas',
+                        icon: { url: icon },
+                    });
+
+                    var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+
+                    poluzone.push(puntoCalor);
+
+                    var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                        '<p></p>' +
+                        '</div>' +
+                        '</div>';
+
+                    google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+                        return function () {
+                            infowindow.setContent(content);
+                            infowindow.open(getMap(), marker);
+                        };
+                    })(medida, contentString, infowindow));
+                }
+
+            }//for
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: poluzone,
+                maxIntensity: 165,
+                radius: 60,
+                opacity: 0.3 // Número entre 0 y 1
+            });
+            heatmap.setMap(getMap());
+        });
     }
 
 }//Clase Mapa
