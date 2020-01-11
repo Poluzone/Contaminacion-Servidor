@@ -18,6 +18,10 @@
 
 class Mapa {
 
+    //.........................................
+    //Constructor
+    //Introduzco los parámetros para crear el objeto Mapa
+    //.........................................
     constructor(position, ajustes, elementHTML) {
         this.position = position;
         this.mapa = new google.maps.Map(elementHTML, {
@@ -113,12 +117,26 @@ class Mapa {
 
     }//
 
+    //..................................................
+    // coords: lat, lng --->focus
+    // posiciona el mapa en el lugar de interés, en este caso Gandía Grao
+    //..................................................
+    
     focus(coords) {
 
         var latLng = new google.maps.LatLng(coords.lat, coords.lng);
         this.mapa.setCenter(latLng);
     }
-
+    
+    //...................................................
+    // poluzone()
+    //
+    //...................................................
+    
+    poluzone(){
+        
+       
+    }
 
 }//Clase Mapa
 
