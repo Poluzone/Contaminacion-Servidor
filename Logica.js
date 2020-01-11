@@ -40,7 +40,7 @@ module.exports = class Logica {
       $Longitud: medida.Longitud
     }
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -66,7 +66,7 @@ module.exports = class Logica {
     await this.indicarActividadNodo(dato);
 
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, async function (err) {
+      this.laConexion.run(textoSQL, valoresParaSQL, async function(err) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -252,7 +252,7 @@ module.exports = class Logica {
   // Coge los errores que no han sido revisados
   // .................................................................
 
-  async getTodosErroresDeSensoresSinRevision(){
+  async getTodosErroresDeSensoresSinRevision() {
     var textoSQL = "select * from ErrorSensor where Revisado = $estado ";
     var valoresParaSQL = {
       $estado: "false"
@@ -271,7 +271,7 @@ module.exports = class Logica {
   // Coge los errores que no han sido revisados
   // .................................................................
 
-  async getErroresConSenoresYUsuarios(){
+  async getErroresConSenoresYUsuarios() {
 
     var error = await this.getTodosErroresDeSensoresSinRevision();
     for (var i = 0; i < error.length; i++) {
@@ -284,6 +284,43 @@ module.exports = class Logica {
     }
     return new Promise((resolver, rechazar) => {
       resolver(error)
+    })
+  }
+
+  // .................................................................
+  // -> calcularMedianaDeLas24hAnteriores->
+  // Saca la mediana de las 24h anteriores
+  // .................................................................
+
+  async calcularMedianaDeLas24hAnteriores() {
+    var intervalo = {
+      desde: Date.now() - 86400000,
+      hasta: Date.now()
+    }
+
+    var medidas = await this.getTodasLasMedidasPorFecha(intervalo);
+    var valores;
+    for (var i = 0; i < medidas.length; i++) {  valores[i] = medidas[i].Valor;  }
+
+      valores.sort(function(a, b) {
+        return a - b;
+      });
+
+      var medianaT;
+
+      if(valores.length%2 == 0){
+
+          var mediana1 = valores[(valores.length/2) - 1];
+          var mediana2 =valores[valores.length/2];
+
+          medianaT = (mediana1 + mediana2)/2;
+      }else{
+
+        medianaT =valores[(valores.length/2) -0.5];
+      }
+
+    return new Promise((resolver, rechazar) => {
+      resolver(medianaT)
     })
   }
 
@@ -546,7 +583,7 @@ module.exports = class Logica {
       $TipoUsuario: datos.TipoUsuario
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -567,30 +604,30 @@ module.exports = class Logica {
 
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
   }
 
 
-    // .................................................................
-    // Josep Carreres Fluixà
-    // idUsuario -> MarcarErrorComoRevisadoPorIdError() ->
-    // marca como revisado el error por ID
-    // .................................................................
-    MarcarErrorComoRevisadoPorIdError(idError) {
-      var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado  WHERE IdError = $idError;";
-      var valoresParaSQL = {
-        $revisado: "true",
-        $idError: idError
-      };
-      return new Promise((resolver, rechazar) => {
-        this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
-          (err ? rechazar(err) : resolver(res))
-        })
+  // .................................................................
+  // Josep Carreres Fluixà
+  // idUsuario -> MarcarErrorComoRevisadoPorIdError() ->
+  // marca como revisado el error por ID
+  // .................................................................
+  MarcarErrorComoRevisadoPorIdError(idError) {
+    var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado  WHERE IdError = $idError;";
+    var valoresParaSQL = {
+      $revisado: "true",
+      $idError: idError
+    };
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+        (err ? rechazar(err) : resolver(res))
       })
-    }
+    })
+  }
 
   // .................................................................
   // Josep Carreres Fluixà
@@ -607,7 +644,7 @@ module.exports = class Logica {
     };
 
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -632,9 +669,9 @@ module.exports = class Logica {
       $IdEstado: estado,
     };
     //console.log(textoSQL)
-  //  console.log(valoresParaSQL)
+    //  console.log(valoresParaSQL)
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -654,7 +691,7 @@ module.exports = class Logica {
       $idUsuario: datos.IdUsuario
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver(res))
       })
     })
@@ -690,7 +727,7 @@ module.exports = class Logica {
       await this.desvincularUsuarioDeSensorPorIdUsuario(res[0].IdUsuario);
     }
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -708,7 +745,7 @@ module.exports = class Logica {
       $idUsuario: idUsuario
     };
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver())
       })
     })
@@ -732,7 +769,7 @@ module.exports = class Logica {
     }
     await this.indicarActividadNodo(dato);
     return new Promise((resolver, rechazar) => {
-      this.laConexion.run(textoSQL, valoresParaSQL, function (err, res) {
+      this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
         (err ? rechazar(err) : resolver())
       })
     })

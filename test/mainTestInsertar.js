@@ -248,7 +248,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
         'desde': 0,
         'hasta': 0
       });
-      console.log(res);
+      //console.log(res);
       assert.equal(res.length, 100, "¿no hay un resulado?")
 
     }
@@ -338,7 +338,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
  async function() {
    var res = await laLogica.getTodosLosUsuariosYSusSensores();
 
-   console.log(res)
+   //console.log(res)
    // llamar a getestado del sensor 1 para ver q ponga 3
    assert.notEqual(res.length, 0, "no existen usuarios")
  }
