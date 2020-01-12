@@ -113,9 +113,9 @@ class Mapa {
 
         //this.pruebaMetodo()
 
-        this.layers = new Array();
+        this.layers = [];
 
-        this.markers = new Array();
+        this.markers = [];
 
     }//CONSTRUCTOR
 
@@ -209,7 +209,7 @@ class Mapa {
     //......................................................
 
     addMeasure(gasName, measure){
-        this.layers[gasName].layer.data.push({
+        this.layers[gasName].push({
             location: new google.maps.LatLng(measure.latitud, measure.longitud),
             weight: measure.valoreMedido
         });
