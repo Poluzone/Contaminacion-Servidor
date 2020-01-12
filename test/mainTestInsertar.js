@@ -49,41 +49,70 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }) //it
 
-    it("probar insertarErrorSensor",
-      async function() {
-        var datos = {
-          IdSensor: "1",
-          Revisado: "false",
-          Fecha:Date.now()
-        }
+  it("probar insertarErrorSensor",
+    async function() {
+      var datos = {
+        IdSensor: "1",
+        Revisado: "false",
+        Fecha: Date.now()
+      }
 
-        try {
-          await laLogica.insertarErrorSensor(datos)
-        } catch (err) {
-          error = err
-        }
+      try {
+        await laLogica.insertarErrorSensor(datos)
+      } catch (err) {
+        error = err
+      }
 
-        var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+      var res = await laLogica.getTodosErroresDeSensoresSinRevision()
 
-        assert.equal(res.length, 1, "¿no hay un resulado?")
+      assert.equal(res.length, 1, "¿no hay un resulado?")
 
 
 
-      }) //it
+    }) //it
 
-      it("probar marcarTodosLosErroresComoRevisados",
+  it("probar marcarTodosLosErroresComoRevisados",
+    async function() {
+
+
+
+      await laLogica.marcarTodosLosErroresComoRevisados();
+
+
+      var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+
+      assert.equal(res[0].Revisado, true, "¿no hay un resulado?")
+
+
+
+    }) //it
+
+  it("probar getUltimasNMedicionesPorUsuario",
+    async function() {
+
+      var datos = {
+        idUsuario: "15",
+        num: 20
+
+      }
+
+      var res = await laLogica.getUltimasNMedicionesPorUsuario(datos);
+
+
+      assert.equal(res[0].Revisado, true, "¿no hay un resulado?")
+
+
+
+    }) //it
+
+
+      it("probar comprobarSiHayErroresDeMedicionEnSensor",
         async function() {
 
+          await laLogica.comprobarSiHayErroresDeMedicionEnSensor();
 
 
-            await laLogica.marcarTodosLosErroresComoRevisados();
-
-
-          var res = await laLogica.getTodosErroresDeSensoresSinRevision()
-
-          assert.equal(res[0].Revisado, true, "¿no hay un resulado?")
-
-
+          assert.equal("hola","hola", "¿no hay un resulado?")
 
         }) //it
 
@@ -98,15 +127,15 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }) //it
 
-    it("probar getTodosErroresDeSensoresSinRevision()",
-      async function() {
+  it("probar getTodosErroresDeSensoresSinRevision()",
+    async function() {
 
-        //var res = await laLogica.getTodosErroresDeSensoresSinRevision()
-        var res2 = await laLogica.getErroresConSenoresYUsuarios()
+      //var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+      var res2 = await laLogica.getErroresConSenoresYUsuarios()
 
-        assert.equal(res2.length, 0, "¿no hay un resulado?")
+      assert.equal(res2.length, 0, "¿no hay un resulado?")
 
-      }) //it
+    }) //it
 
   it("probar getUsuarioPorIdSensor()",
     async function() {
@@ -135,26 +164,26 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     }) //it
 
-    it("probar getTipoSensor()",
+  it("probar getTipoSensor()",
     async function() {
       var res = await laLogica.getTipoSensor(2);
       assert.equal(res[0].Descripcion, "CO", "no coge la descripción correctamente")
     }) //it
 
-    it("probar getEstado()",
+  it("probar getEstado()",
     async function() {
       var res = await laLogica.getEstado(1);
       assert.equal(res[0].Descripcion, "En Stock", "no coge la descripción correctamente")
     }) //it
 
 
-    it("probar getSensoresSegunEstado()",
+  it("probar getSensoresSegunEstado()",
     async function() {
       var res = await laLogica.getSensoresSegunEstado(2);
       assert.equal(res[0].IdSensor, "2", "no coge los sensores correctamente")
     }) //it
 
-    it("probar getNumSensoresSegunEstado()",
+  it("probar getNumSensoresSegunEstado()",
     async function() {
       var datos = {
         estado: "Stock",
@@ -196,30 +225,30 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
     })
 
-    it("probar insertarMedida",
-      async function() {
-            await laLogica.borrarFilasDeTodasLasTablas();
-        var IdTipoMedida = 2
-        var IdUsuario= 15
-        var Valor= 243
-        var Latitud = 38.95;
-        var Longitud = -0.17;
-        for(let j = 0; j<10;j++){
-        for(let i = 0; i<10; i++){
-        var medida = {
-          IdTipoMedida: 2,
-          IdUsuario: 15,
-          Valor: Valor+10,
-          Tiempo: Date.now(),
-          Latitud: Latitud+i*0.003+j*0.003,
-          Longitud: Longitud-i*0.003+j*0.003
-            }
-            Valor+=10;
-         await laLogica.insertarMedida(medida);
-            }
+  it("probar insertarMedida",
+    async function() {
+      await laLogica.borrarFilasDeTodasLasTablas();
+      var IdTipoMedida = 2
+      var IdUsuario = 15
+      var Valor = 243
+      var Latitud = 38.95;
+      var Longitud = -0.17;
+      for (let j = 0; j < 10; j++) {
+        for (let i = 0; i < 10; i++) {
+          var medida = {
+            IdTipoMedida: 2,
+            IdUsuario: 15,
+            Valor: Valor + 10,
+            Tiempo: Date.now(),
+            Latitud: Latitud + i * 0.003 + j * 0.003,
+            Longitud: Longitud - i * 0.003 + j * 0.003
+          }
+          Valor += 10;
+          await laLogica.insertarMedida(medida);
         }
-        var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
-        assert.equal(res.length, 1, "¿no hay un resulado?")
+      }
+      var res = await laLogica.getLaUltimaMedidaPorUsuario(15);
+      assert.equal(res.length, 1, "¿no hay un resulado?")
 
     })
 
@@ -269,15 +298,16 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
   ) //probar insertarSensor()
 
-    // Emilia Rosa van der Heide
-    it("probar getMedidasDeEsteUsuarioPorFecha",
+  // Emilia Rosa van der Heide
+  it("probar getMedidasDeEsteUsuarioPorFecha",
     async function() {
-       var dato = {
-         Intervalo: {
+      var dato = {
+        Intervalo: {
           desde: 0,
           hasta: Date.now()
         },
-        IdUsuario: 15};
+        IdUsuario: 15
+      };
       var res = await laLogica.getMedidasDeEsteUsuarioPorFecha(dato.Intervalo, dato.IdUsuario);
       assert.notEqual(res.length, 0, "¿no hay resultado?")
     }
@@ -285,26 +315,27 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
   // Emilia Rosa van der Heide
   it("probar getMediaCalidadDelAireDeLaJornada",
-  async function() {
-    var datos = {
-      Intervalo: {
-        desde: 0,
-        hasta: Date.now()
-      },
-      IdUsuario: 15};
-    var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
+    async function() {
+      var datos = {
+        Intervalo: {
+          desde: 0,
+          hasta: Date.now()
+        },
+        IdUsuario: 15
+      };
+      var res = await laLogica.getMediaCalidadDelAireDeLaJornada(datos);
 
-    // 748 -> en el test insertarMedida empieza por 253 y crea 100 medidas de 10 en 10 (max valor 1243)
-    // por tanto la media debería ser: (253+1243)/2 = 748
-    assert.equal(res, 748, "no calcula bien la media")
-  }) //probar getMediaCalidadDelAireDeLaJornada()
+      // 748 -> en el test insertarMedida empieza por 253 y crea 100 medidas de 10 en 10 (max valor 1243)
+      // por tanto la media debería ser: (253+1243)/2 = 748
+      assert.equal(res, 748, "no calcula bien la media")
+    }) //probar getMediaCalidadDelAireDeLaJornada()
 
   // Emilia Rosa van der Heide
   it("probar getMedidasEstacionOficialGandia",
-  async function() {
-    var res = await laLogica.getMedidasEstacionOficialGandia();
-    assert.notEqual(res.length, 0, "no calcula bien la media")
-  }) //probar getMediaCalidadDelAireDeLaJornada()
+    async function() {
+      var res = await laLogica.getMedidasEstacionOficialGandia();
+      assert.notEqual(res.length, 0, "no calcula bien la media")
+    }) //probar getMediaCalidadDelAireDeLaJornada()
 
 
   // Emilia Rosa van der Heide
@@ -315,8 +346,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     }
   )
 
-    // Emilia Rosa van der Heide
-    it("probar indicarActividadNodo",
+  // Emilia Rosa van der Heide
+  it("probar indicarActividadNodo",
     async function() {
       var datos = {
         estado: "Inactivo",
@@ -331,24 +362,24 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
     }
   )
 
- // Emilia Rosa van der Heide
- it("probar getTodosLosUsuariosYSusSensores",
- async function() {
-   var res = await laLogica.getTodosLosUsuariosYSusSensores();
+  // Emilia Rosa van der Heide
+  it("probar getTodosLosUsuariosYSusSensores",
+    async function() {
+      var res = await laLogica.getTodosLosUsuariosYSusSensores();
 
-   //console.log(res)
-   // llamar a getestado del sensor 1 para ver q ponga 3
-   assert.notEqual(res.length, 0, "no existen usuarios")
- }
-)
+      //console.log(res)
+      // llamar a getestado del sensor 1 para ver q ponga 3
+      assert.notEqual(res.length, 0, "no existen usuarios")
+    }
+  )
 
- // Emilia Rosa van der Heide
- it("probar getSensorPorIdUsuario",
- async function() {
-   var res = await laLogica.getSensorPorIdUsuario(15);
-   assert.notEqual(res.length, 0, "no tiene sensor")
- }
-)
+  // Emilia Rosa van der Heide
+  it("probar getSensorPorIdUsuario",
+    async function() {
+      var res = await laLogica.getSensorPorIdUsuario(15);
+      assert.notEqual(res.length, 0, "no tiene sensor")
+    }
+  )
 
 
 
@@ -429,21 +460,21 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       await laLogica.editarInformacionUsuario(datos);
       var res = await laLogica.getUsuarioPorIdUsuario(14);
-      assert.equal(res[0].Email , "test2", "¿no hay un resulado?")
+      assert.equal(res[0].Email, "test2", "¿no hay un resulado?")
 
     }
 
   ) //probar getTodasLasMedidasPorFecha()
 
 
-    it("probar getNumeroUsuariosTotalesPorTipo",
-      async function() {
+  it("probar getNumeroUsuariosTotalesPorTipo",
+    async function() {
 
-        var res = await laLogica.getNumeroUsuariosTotalesPorTipo("normal");
-        assert.equal(res, 7, "¿no hay un resulado?")
+      var res = await laLogica.getNumeroUsuariosTotalesPorTipo("normal");
+      assert.equal(res, 7, "¿no hay un resulado?")
 
-      }
+    }
 
-    ) //probar getTodasLasMedidasPorFecha()
+  ) //probar getTodasLasMedidasPorFecha()
 
 }) // describe
