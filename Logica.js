@@ -509,6 +509,174 @@ module.exports = class Logica {
   }
 
 
+  // .................................................................
+// -> calcularMedianaDeLas24hAnteriores->
+// Saca la mediana de las 24h anteriores
+// .................................................................
+
+async calcularMedianaPorIntervaloDeTiempo(intervalo) {
+
+  var medidas = await this.getTodasLasMedidasPorFecha(intervalo);
+  var valores = [];
+  for (var i = 0; i < medidas.length; i++) { valores[i] = medidas[i].Valor; }
+
+  valores.sort(function(a, b) {
+    return a - b;
+  });
+
+  var medianaT;
+
+  if (valores.length % 2 == 0) {
+
+    var mediana1 = valores[(valores.length / 2) - 1];
+    var mediana2 = valores[valores.length / 2];
+
+    medianaT = (mediana1 + mediana2) / 2;
+  } else {
+
+    medianaT = valores[(valores.length / 2) - 0.5];
+  }
+
+  return new Promise((resolver, rechazar) => {
+    resolver(medianaT)
+  })
+
+}
+
+// .................................................................
+// -> getTodosErroresDeSensoresSinRevision() ->
+// Coge los errores que no han sido revisados
+// .................................................................
+
+getUsuariosConSensor() {
+  var textoSQL = "select * from UsuarioSensor";
+
+  console.log("logica: getUsuariosConSensor")
+  return new Promise((resolver, rechazar) => {
+    this.laConexion.all(textoSQL,
+      (err, res) => {
+        (err ? rechazar(err) : resolver(res))
+      })
+  })
+}
+
+// .................................................................
+// -> comprobarSiHayErrorDeMedicionEnSensor->
+// Comprobar y saber si un error esta midiendo erronamente
+// .................................................................
+
+async comprobarSiHayErroresDeMedicionEnSensor() {
+
+  var intervalo = {
+    desde: Date.now() - 86400000, // 86400000 24h en milisegundos
+    hasta: Date.now()
+  }
+
+  var mediana = await this.calcularMedianaPorIntervaloDeTiempo(intervalo);
+  console.log(mediana);
+  var usuarios = await this.getUsuariosConSensor();
+
+  for (var i = 0; i < 6; i++) {
+    var inc1 = 0;
+    var inc2 = 14400000;
+    var cont = 0;
+
+    console.log(usuarios.length);
+
+    for (var u = 0; u < usuarios.length; u++) {
+
+      var medidas = await this.getMedidasDeEsteUsuarioPorFecha({
+        desde: Date.now() - 86400000 + inc1,
+        hasta: Date.now() - 86400000 + inc2
+      }, usuarios[u].IdUsuario);
+
+
+      for (var j = 0; j < medidas.length; j++) {
+        if(medidas[j].Valor > mediana+20  ||  medidas[j].Valor < mediana-20 ) {cont++;}
+      }
+
+      if((cont*100)/medidas.length >= 30){
+
+        var error = {
+          IdError: null,
+          IdSensor: usuarios[u].IdSensor,
+          Revisado: "false",
+          Fecha: Date.now()
+
+        };
+          this.insertarErrorSensor(error);
+
+      }
+
+    }
+
+    cont = 0;
+    inc1 = inc1 + 14400000; //14400000 4h en milisegundos
+    inc2 = inc2 + 14400000;
+
+  }
+
+}
+
+// .................................................................
+// -> getTodosErroresDeSensoresSinRevision() ->
+// Coge los errores que no han sido revisados
+// .................................................................
+
+async getTodosErroresDeSensoresSinRevision() {
+  var textoSQL = "select * from ErrorSensor where Revisado = $estado ";
+  var valoresParaSQL = {
+    $estado: "false"
+  };
+  console.log("logica: getTodosErroresDeSensoresSinRevision")
+  return new Promise((resolver, rechazar) => {
+    this.laConexion.all(textoSQL, valoresParaSQL,
+      (err, res) => {
+        (err ? rechazar(err) : resolver(res))
+      })
+  })
+}
+
+// .................................................................
+// -> getTodosErroresDeSensoresSinRevision() ->
+// Coge los errores que no han sido revisados
+// .................................................................
+
+async getErroresConSenoresYUsuarios() {
+
+  var error = await this.getTodosErroresDeSensoresSinRevision();
+  for (var i = 0; i < error.length; i++) {
+
+    var usuario = await this.getUsuarioPorIdSensor(error[i].IdSensor);
+    error[i].Usuario = usuario[0];
+    var sensor = await this.getSensorPorIdUsuario(usuario[0].IdUsuario);
+    error[i].Sensor = sensor[0];
+    error[i].TipoSensor = sensor[0].TipoSensor;
+  }
+  return new Promise((resolver, rechazar) => {
+    resolver(error)
+  })
+}
+
+// .................................................................
+// Josep Carreres Fluixà
+// idUsuario -> marcarErrorComoRevisadoPorIdError() ->
+// marca como revisado el error por ID
+// .................................................................
+marcarTodosLosErroresComoRevisados() {
+  var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado";
+  var valoresParaSQL = {
+    $revisado: "true"
+  };
+  return new Promise((resolver, rechazar) => {
+    this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {
+      (err ? rechazar(err) : resolver(res))
+    })
+  })
+}
+
+
+
   /****************************************************************************************
   IdUsuario: N -->
   getSensorPorIdUsuario()
