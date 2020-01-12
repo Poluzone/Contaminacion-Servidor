@@ -277,32 +277,7 @@ class Proxy {
             });
 
     }
- // NO SE SI ESTO VA AQUI ----------------------------------------------------------------------------------   
-    //-------------Ivan--------------
-    // N: id de un usuario -->
-    // borrarUsuarioPorID()
-    //-------------------------------
-    async borrarUsuarioPorID(id, callback) {
 
-        /*var idJson = {
-            id: id
-        };*/
-
-        fetch(URL + "/borrarUsuarioPorID", {
-            method: 'POST', // or 'PUT'
-            body: id.toString(), // data can be `string` or {object}!
-            headers: {
-                'User-Agent': 'jordi',
-                'Content-Type': 'application/json'
-            }
-        }).then((res) => {
-            console.log(res)
-        }).catch(e => {
-            console.log("error: " + e);
-            return e;
-        });
-    }
-    
     //-------------Ivan--------------
     // N: id de un usuario -->
     // borrarUsuarioPorID()
@@ -349,7 +324,6 @@ class Proxy {
         });
         
     }
- // HASTA AQUI ----------------------------------------------------------------------------------   
 
     //-------------------------------
     // GetUltimasMedidasPorFecha()
