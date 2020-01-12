@@ -137,9 +137,9 @@ class Mapa {
     // void -> refreshMap() --> void
     // función que refresca el mapa para evitar problemas con el redibujado de puntos o capas
     //..................................................
-    /*refreshMap(){
+    refreshMap(){
         google.maps.event.trigger(this.mapa, 'resize');
-    }//()*/
+    }//()
     //.......................................................
 
     //...................................................
@@ -212,12 +212,9 @@ getMap(){
 // string, measure --> addMeasure()
 // agrega una medida y guarda tanto su ubicación como su valor
 //......................................................
-
 addMeasure(gasName, measure){
-    this.layers.push({
-        location: new google.maps.LatLng(measure.latitud, measure.longitud),
-        weight: measure.valoreMedido
-    });
+    this.layers[gasName].layer.data.push({location: new google.maps.LatLng(measure.latitud, measure.longitud),
+        weight: measure.measure});
 }//()
 //.......................................................
 
@@ -226,17 +223,16 @@ addMeasure(gasName, measure){
 // introduzco un objeto information y crea una layer a parte de mostrarla
 //......................................................
 addLayer(information){
-    var layer = new google.maps.visualization.HeatmapLayer({
+    const layer = new google.maps.visualization.HeatmapLayer({
         //data: information.poluzone,
         maxIntensity: information.maxIntensidad,
         radius: information.radio,
         opacity: information.opacidad //número del 0 al 1
-
     });
 
     this.layers[information.name] = {
         layer,
-        name: information.name
+        nombre: information.name
     };
     this.showLayer(information.name);
 }//()
@@ -249,10 +245,18 @@ addLayer(information){
 showLayer(gasName) {
     if (this.layers[gasName]) {
         this.layers[gasName].layer.setMap(this.mapa);
-        //this.refreshMap();
+        this.refreshMap();
     }//if
 }//()
 //.......................................................
+    
+//......................................................
+//......................................................
+/*getLayer(gasName){
+    for(let i = 0; this.layers.length; i++){
+ 
+    }
+}*/
 
 
 //......................................................
@@ -262,7 +266,7 @@ showLayer(gasName) {
 hideLayer(gasName){
     if (this.layer[gasName]) {
         //al poner null en setMap la capa se oculta, lo saqué de la documentación de Google Maps API
-        this.layer[gasName].layer.setMap(null);
+        this.layer[gasName].setMap(null);
         //this.refreshMap();
 
     }//if
@@ -334,8 +338,8 @@ function initMap(){
             //console.log(i);
             medidaCO.setMap(map.getMap());
 
-            //var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
-            //var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});
+            var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
+            var heatMapCO = map.addLayer({name:'CO',maxIntesity: 165, radius: 60, opacity: 0.3});
 
             var infoCO = '<div id="content">' +
                 '<div id="siteNotice">' +
@@ -347,7 +351,6 @@ function initMap(){
                 '</div>' +
                 '</div>';
             map.addMarkerInfo(infoWindow, medidaCO, infoCO);
-
         }//for
     });//proxy
 }//initMap
