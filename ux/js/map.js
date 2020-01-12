@@ -181,101 +181,106 @@ class Mapa {
     // marker, string --> addMarkerInfo() -->
     // añade información a la infoWindow del marcador
     //......................................................
-    addMarkerInfo(marker, info) {
+    addMarkerInfo(infowindow, marker, info) {
 
-        const infoWindow = new google.maps.InfoWindow({
+        /*const infowindow = new google.maps.InfoWindow({
             content: info
-        });
+        });*/
 
-        google.maps.event.addListener(marker, 'click', () => {
+        /*google.maps.event.addListener(marker, 'click', () => {
             infoWindow.open(this.mapa, marker);
-        });
-
+        });*/
+        google.maps.event.addListener(marker, 'click', (function (marker, info, infowindow) {
+            return function () {
+                infowindow.setContent(info);
+                infowindow.open(this.mapa, marker);
+            };
+        })(marker, info, infowindow));
     }//()
-    //.......................................................
+//.......................................................
 
-    //......................................................
-    // --> getMap() -->
-    // devuelve el mapa
-    //......................................................
-    getMap(){
-        return this.mapa;
-    }//()
-    //.......................................................
+//......................................................
+// --> getMap() -->
+// devuelve el mapa
+//......................................................
+getMap(){
+    return this.mapa;
+}//()
+//.......................................................
 
-    //......................................................
-    // string, measure --> addMeasure()
-    // agrega una medida y guarda tanto su ubicación como su valor
-    //......................................................
+//......................................................
+// string, measure --> addMeasure()
+// agrega una medida y guarda tanto su ubicación como su valor
+//......................................................
 
-    addMeasure(gasName, measure){
-        this.layers.push({
-            location: new google.maps.LatLng(measure.latitud, measure.longitud),
-            weight: measure.valoreMedido
-        });
-    }//()
-    //.......................................................
+addMeasure(gasName, measure){
+    this.layers.push({
+        location: new google.maps.LatLng(measure.latitud, measure.longitud),
+        weight: measure.valoreMedido
+    });
+}//()
+//.......................................................
 
-    //......................................................
-    // information --> addLayer()
-    // introduzco un objeto information y crea una layer a parte de mostrarla
-    //......................................................
-    addLayer(information){
-        var layer = new google.maps.visualization.HeatmapLayer({
-            //data: information.poluzone,
-            maxIntensity: information.maxIntensidad,
-            radius: information.radio,
-            opacity: information.opacidad //número del 0 al 1
+//......................................................
+// information --> addLayer()
+// introduzco un objeto information y crea una layer a parte de mostrarla
+//......................................................
+addLayer(information){
+    var layer = new google.maps.visualization.HeatmapLayer({
+        //data: information.poluzone,
+        maxIntensity: information.maxIntensidad,
+        radius: information.radio,
+        opacity: information.opacidad //número del 0 al 1
 
-        });
+    });
 
-        this.layers[information.name] = {
-            layer,
-            name: information.name
-        };
-        this.showLayer(information.name);
-    }//()
-    //.......................................................
+    this.layers[information.name] = {
+        layer,
+        name: information.name
+    };
+    this.showLayer(information.name);
+}//()
+//.......................................................
 
-    //......................................................
-    // string --> showLayer()
-    // introduzco el nombre del gas y muestro su capa
-    //......................................................
-    showLayer(gasName) {
-        if (this.layers[gasName]) {
-            this.layers[gasName].layer.setMap(this.mapa);
-            //this.refreshMap();
+//......................................................
+// string --> showLayer()
+// introduzco el nombre del gas y muestro su capa
+//......................................................
+showLayer(gasName) {
+    if (this.layers[gasName]) {
+        this.layers[gasName].layer.setMap(this.mapa);
+        //this.refreshMap();
+    }//if
+}//()
+//.......................................................
+
+
+//......................................................
+// string --> hideLayer() 
+// introduzco el nombre del gas y oculto su capa
+//......................................................
+hideLayer(gasName){
+    if (this.layer[gasName]) {
+        //al poner null en setMap la capa se oculta, lo saqué de la documentación de Google Maps API
+        this.layer[gasName].layer.setMap(null);
+        //this.refreshMap();
+
+    }//if
+}//()
+//.......................................................
+
+//......................................................
+// hideAllLayers()
+// oculto todas las capas
+//......................................................
+hideAllLayers(){
+    for (const i in this.layers) {
+        if (this.layers.hasOwnProperty(i)) {
+            this.hideLayer(this.layers[i].name);
         }//if
-    }//()
-    //.......................................................
-
-
-    //......................................................
-    // string --> hideLayer() 
-    // introduzco el nombre del gas y oculto su capa
-    //......................................................
-    hideLayer(gasName){
-        if (this.layer[gasName]) {
-            //al poner null en setMap la capa se oculta, lo saqué de la documentación de Google Maps API
-            this.layer[gasName].layer.setMap(null);
-            //this.refreshMap();
-
-        }//if
-    }//()
-    //.......................................................
-
-    //......................................................
-    // hideAllLayers()
-    // oculto todas las capas
-    //......................................................
-    hideAllLayers(){
-        for (const i in this.layers) {
-            if (this.layers.hasOwnProperty(i)) {
-                this.hideLayer(this.layers[i].name);
-            }//if
-        }//for
-    }//()
-    //.......................................................
+    }//for
+}//()
+//.......................................................
 
 }//Clase Mapa
 
@@ -285,6 +290,7 @@ function initMap(){
     var intervalo = { desde: 0, hasta: 0 };
     //infowindow = new google.maps.InfoWindow();
     var map = new Mapa({ lat: 38.996, lng: -0.166 },{zoom:14},document.getElementById("map"));
+    infoWindow = new google.maps.InfoWindow;
 
     //prueba para comprobar que el método addMarker funciona
 
@@ -328,31 +334,23 @@ function initMap(){
             //console.log(i);
             medidaCO.setMap(map.getMap());
 
-            var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
+            //var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
             //var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});
 
             var infoCO = '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
-                    '<div id="bodyContent">' +
-                    '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
-                    '<p></p>' +
-                    '</div>' +
-                    '</div>';
-                map.addMarkerInfo(medidaCO, infoCO);
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+                '<div id="bodyContent">' +
+                '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                '<p></p>' +
+                '</div>' +
+                '</div>';
+            map.addMarkerInfo(infoWindow, medidaCO, infoCO);
 
         }//for
     });//proxy
 }//initMap
-
-
-
-
-var infowindow;
-
-
-
 
 //Esto es para poder asignarle un nombre al gas dependiendo de su ID
 function queGasSoy(dato) {
