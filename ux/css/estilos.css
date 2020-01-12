@@ -657,3 +657,17 @@ header.masthead .intro-text .intro-heading {
 
 
 .footer {}
+
+/*.carousel-control-next,
+.carousel-control-prev {
+    filter: invert(100%);
+}
+
+.carousel-indicators li {
+    filter: invert(100%);
+}*/
+
+.carousel-inner{
+    width:100%;
+    height: 225px !important;
+}
