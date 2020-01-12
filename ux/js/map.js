@@ -117,7 +117,9 @@ class Mapa {
 
         this.markers = new Array();
 
-    }//
+    }//CONSTRUCTOR
+
+    //.......................................................
 
     //..................................................
     // coords: lat, lng --->focus
@@ -129,14 +131,17 @@ class Mapa {
         var latLng = new google.maps.LatLng(coords.lat, coords.lng);
         this.mapa.setCenter(latLng);
     }//()
+    //.......................................................
 
     //..................................................
     // void -> refreshMap() --> void
-    // función que refresca el mapa para evitar problemas con el redibujado de punto, esta función no es mía, si no de Carlos Tortosa
+    // función que refresca el mapa para evitar problemas con el redibujado de puntos o capas
     //..................................................
     refreshMap(){
         google.maps.event.trigger(this.mapa, 'resize');
-    }
+    }//()
+    //.......................................................
+
     //...................................................
     // name, position, iconoUrl --> addMarker() --> marker
     // agrega un marcador al string de marcadores y al mapa, 
@@ -158,6 +163,7 @@ class Mapa {
         this.markers[name] = marker;
         return marker;
     }//()
+    //.......................................................
 
     //......................................................
     // name --> removeMarker() -->
@@ -169,6 +175,7 @@ class Mapa {
             this.markers[name].setMap(null);
         }
     }
+    //.......................................................
 
     //......................................................
     // --> getMap() -->
@@ -176,7 +183,81 @@ class Mapa {
     //......................................................
     getMap(){
         return this.mapa;
-    }
+    }//()
+    //.......................................................
+
+    //......................................................
+    // name, measure --> addMeasure
+    // agrega una medida y guarda tanto su ubicación como su valor
+    //......................................................
+
+    addMeasure(gasName, measure){
+        this.layers[gasName].layer.data.push({
+            location: new google.maps.LatLng(measure.latitud, measure.longitud),
+            weight: measure.valoreMedido
+        });
+    }//()
+    //.......................................................
+
+    //......................................................
+    // information --> addLayer()
+    // introduzco un objeto information y crea una layer a parte de mostrarla
+    //......................................................
+    addLayer(information){
+        const layer = new google.maps.visualization.HeatmapLayer({
+            dissipating: information.disipado,
+            radius: information.radio,
+            maxIntensity: informacion.maxIntensidad;
+        });
+
+        this.layers[information.name] = {
+            layer,
+            name: information.name
+        };
+        this.showLayer(information.name);
+    }//()
+    //.......................................................
+
+    //......................................................
+    // gasName --> showLayer()
+    // introduzco el nombre del gas y muestro su capa
+    //......................................................
+    showLayer(gasName) {
+        if (this.layers[gasName]) {
+            this.layers[gasName].layer.setMap(this.mapa);
+            this.refreshMap();
+        }//if
+    }//()
+    //.......................................................
+
+
+    //......................................................
+    // gasName --> hideLayer() 
+    // introduzco el nombre del gas y oculto su capa
+    //......................................................
+    hideLayer(gasName){
+        if (this.layer[gasName]) {
+            //al poner null en setMap la capa se oculta, lo saqué de la documentación de Google Maps API
+            this.layer[gasName].layer.setMap(null);
+            this.refreshMap();
+
+        }//if
+    }//()
+    //.......................................................
+
+    //......................................................
+    // hideAllLayers()
+    // oculto todas las capas
+    //......................................................
+    hideAllLayers(){
+        for (const i in this.layers) {
+            if (this.layers.hasOwnProperty(i)) {
+                this.hideLayer(this.layers[i].name);
+            }//if
+        }//for
+    }//()
+    //.......................................................
+
 }//Clase Mapa
 
 
