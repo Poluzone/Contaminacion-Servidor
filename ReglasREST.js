@@ -571,6 +571,49 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     })
 
 
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Josep Carreres Fluixà
+     * /getTodosLosUsuariosYSusSensores -> es una petición GET que llama a
+     * getTodosLosUsuariosYSusSensores() de la Lógica la cual recoge los datos
+     * de todos los usuarios
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    servidorExpress.get('/getTodosErroresDeSensoresSinRevision',
+      async function(peticion, respuesta) {
+        console.log("* GET /getTodosErroresDeSensoresSinRevision")
+
+        // llamo a la función adecuada de la lógica
+        var res = await laLogica.getErroresConSenoresYUsuarios();
+
+        // si el array de resultados no tiene una casilla ...
+        if (res.length < 0) {
+          // 404: not found
+          respuesta.status(404).send("no encontré errores: " + dato)
+          return
+        }
+        // todo ok
+        respuesta.send(JSON.stringify(res))
+      })
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * Josep Carreres Fluixà
+     * /marcarErroresComoRevisados -> es una petición POST que llama a
+     * marcarErroresComoRevisados() de la Lógica la cual edita el estado del nodo
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    servidorExpress.post('/marcarErroresComoRevisados',
+      async function(peticion, respuesta) {
+        console.log("* POST /marcarErroresComoRevisados")
+
+        var idError = JSON.parse(peticion.body);
+
+        // llamo a la función adecuada de la lógica
+        await laLogica.marcarErroresComoRevisados(idError);
+
+        respuesta.send("OK");
+      })
+
+
+
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * - Emilia Rosa van der Heide -
   *
