@@ -53,7 +53,7 @@ Modificado: 3/12/19
 
         var li;
 
-        var tamañoLista;
+        var tamanyoLista;
 
         var hayAlgunElementoSeleccionado = false; // Para saber si hay algun elemento seleccionado y poder cambiar su color o borrarlo
 
@@ -762,7 +762,7 @@ Modificado: 3/12/19
                 // Borrado de elementos de la lista
                 ul = document.getElementById("lista");
                 li = document.getElementsByClassName("tarjetaLista");
-                tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+                tamanyoLista = ul.getElementsByClassName("tarjetaLista").length;
 
                 // Limpiar lista de sensores/usuarios
                 limpiarLista();
@@ -1053,7 +1053,7 @@ Modificado: 3/12/19
 
                 ul = document.getElementById("lista");
                 li = document.getElementsByClassName("tarjetaLista");
-                tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+                tamanyoLista = ul.getElementsByClassName("tarjetaLista").length;
 
                 var br1 = document.createElement("br");
                 var br2 = document.createElement("br");
@@ -1138,7 +1138,7 @@ Modificado: 3/12/19
 
                 ul = document.getElementById("lista");
                 li = document.getElementsByClassName("tarjetaLista");
-                tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+                tamanyoLista = ul.getElementsByClassName("tarjetaLista").length;
 
                 var br1 = document.createElement("br");
                 var br2 = document.createElement("br");
@@ -1214,9 +1214,9 @@ Modificado: 3/12/19
         function limpiarLista() {
             ul = document.getElementById("lista");
             li = document.getElementsByClassName("tarjetaLista");
-            tamañoLista = ul.getElementsByClassName("tarjetaLista").length;
+            tamanyoLista = ul.getElementsByClassName("tarjetaLista").length;
             var i = 0;
-            while (i <= tamañoLista - 1) {
+            while (i <= tamanyoLista - 1) {
                 console.log(i);
                 ul.removeChild(li[0]);
                 i++;
