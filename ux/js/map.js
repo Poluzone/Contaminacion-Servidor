@@ -223,9 +223,9 @@ class Mapa {
     addLayer(information){
         var layer = new google.maps.visualization.HeatmapLayer({
             //data: information.poluzone,
-            maxIntensity: information.maxIntensidad,
-            radius: information.radio,
-            opacity: information.opacidad //número del 0 al 1
+            maxIntensity: information.maxIntesity,
+            radius: information.radius,
+            opacity: information.opacity //número del 0 al 1
 
         });
 
@@ -326,28 +326,29 @@ function initMap(){
             //var marker = map.addMarker('prueba', { lat: 38.996, lng: -0.166 },"../images/pin-estacion.png");
             //marker.setMap(map.getMap());
             //dibuja los marcadores
-            var medidaCO = map.addMarker('Medidas', { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud }, icon);
-            console.log(icon)
-            //console.log("AQUÍ LLEGO");
-            //console.log(i);
-            medidaCO.setMap(map.getMap());
-            
-            var puntoCalorCO = map.addMeasure('CO', {latitud: datos["medidas"][i].Latitud,longitud: datos["medidas"][i].Longitud,weight: datos["medidas"][i].Valor});
+            if (window.localStorage.getItem('inlineCheckboxCO') == "true" && datos["medidas"][i].IdTipoMedida == 2) {
+                /*var medidaCO = map.addMarker('Medidas', { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud }, icon);
+                console.log(icon)*/
+                //console.log("AQUÍ LLEGO");
+                //console.log(i);
+                //medidaCO.setMap(map.getMap());
+
+                var puntoCalorCO = map.addMeasure('CO', {latitud: datos["medidas"][i].Latitud,longitud: datos["medidas"][i].Longitud,weight: datos["medidas"][i].Valor});
 
 
-            var infoCO = '<div id="content">' +
-                '<div id="siteNotice">' +
-                '</div>' +
-                '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
-                '<div id="bodyContent">' +
-                '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
-                '<p></p>' +
-                '</div>' +
-                '</div>';
-            map.addMarkerInfo(infoWindow, medidaCO, infoCO);
+                /*var infoCO = '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
+                    '<div id="bodyContent">' +
+                    '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
+                    '<p></p>' +
+                    '</div>' +
+                    '</div>';
+                map.addMarkerInfo(infoWindow, medidaCO, infoCO);*/
 
+            }//if
         }//for
-
     });//proxy
 
     var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3, name:'CO'});
@@ -372,7 +373,7 @@ function queGasSoy(dato) {
     return gas;
 }
 
-/*function getLasEstacionesOficiales() {
+function getLasEstacionesOficiales() {
     console.log("getLasEstacionesOficiales map.js");
     proxy.getEstacionesOficiales(function (datos) {
         console.log("Datos de las estaciones han sido recibidos")
@@ -435,4 +436,4 @@ function queGasSoy(dato) {
         }
 
     }) //proxy.getEstacionesOficiales
-} // getLasEstacionesOficiales()*/
+} // getLasEstacionesOficiales()
