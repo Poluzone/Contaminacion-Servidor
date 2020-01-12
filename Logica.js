@@ -685,7 +685,7 @@ module.exports = class Logica {
   // idUsuario -> marcarErrorComoRevisadoPorIdError() ->
   // marca como revisado el error por ID
   // .................................................................
-  marcarErrorComoRevisadoPorIdError(idError) {
+  marcarErroresComoRevisados(idError) {
     var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado  WHERE IdError = $idError;";
     var valoresParaSQL = {
       $revisado: "true",

@@ -624,17 +624,17 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
 
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    * Josep Carreres Fluixà
-   * /indicarActividadNodo -> es una petición POST que llama a
-   * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
+   * /marcarErroresComoRevisados -> es una petición POST que llama a
+   * marcarErroresComoRevisados() de la Lógica la cual edita el estado del nodo
    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-  servidorExpress.post('/marcarErrorComoRevisadoPorIdError',
+  servidorExpress.post('/marcarErroresComoRevisados',
     async function(peticion, respuesta) {
-      console.log("* POST /marcarErrorComoRevisadoPorIdError")
+      console.log("* POST /marcarErroresComoRevisados")
 
       var idError = JSON.parse(peticion.body);
 
       // llamo a la función adecuada de la lógica
-      await laLogica.marcarErrorComoRevisadoPorIdError(idError);
+      await laLogica.marcarErroresComoRevisados(idError);
 
       respuesta.send("OK");
     })
