@@ -223,18 +223,6 @@ addMeasure(gasName, measure){
 // introduzco un objeto information y crea una layer a parte de mostrarla
 //......................................................
 addLayer(information){
-    const layer = new google.maps.visualization.HeatmapLayer({
-        //data: information.poluzone,
-        maxIntensity: information.maxIntensidad,
-        radius: information.radio,
-        opacity: information.opacidad //número del 0 al 1
-    });
-
-    this.layers[information.name] = {
-        layer,
-        nombre: information.name
-    };
-    this.showLayer(information.name);
 }//()
 //.......................................................
 
@@ -243,20 +231,8 @@ addLayer(information){
 // introduzco el nombre del gas y muestro su capa
 //......................................................
 showLayer(gasName) {
-    if (this.layers[gasName]) {
-        this.layers[gasName].layer.setMap(this.mapa);
-        this.refreshMap();
-    }//if
 }//()
-//.......................................................
-    
 //......................................................
-//......................................................
-/*getLayer(gasName){
-    for(let i = 0; this.layers.length; i++){
- 
-    }
-}*/
 
 
 //......................................................
@@ -264,14 +240,8 @@ showLayer(gasName) {
 // introduzco el nombre del gas y oculto su capa
 //......................................................
 hideLayer(gasName){
-    if (this.layer[gasName]) {
-        //al poner null en setMap la capa se oculta, lo saqué de la documentación de Google Maps API
-        this.layer[gasName].setMap(null);
-        //this.refreshMap();
-
-    }//if
 }//()
-//.......................................................
+//......................................................
 
 //......................................................
 // hideAllLayers()
