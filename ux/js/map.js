@@ -260,7 +260,6 @@ function initMap() {
       radius: 60,
       opacity: 0.3
     });
-
     var legend = document.getElementById('leyenda_mapa');
     getMap().controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 

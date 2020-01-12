@@ -13,7 +13,7 @@ const estacionOficial = require('./Estacion-oficial');
 module.exports = class Logica {
   /****************************************************************************************
   nombreBD: Texto -->
-  constructor () 
+  constructor ()
   -->
   Josep Carreres Fluixà
   ****************************************************************************************/
@@ -140,7 +140,8 @@ module.exports = class Logica {
   -->
   getTodosLosUsuariosYSusSensores()
   --> [JSON con todos los usuarios y su sensor]
-  Recoge todos los usuarios y si tiene un sensor vinculado devuelve también el sensor 
+
+  Recoge todos los usuarios y si tiene un sensor vinculado devuelve también el sensor
   (si no, Sensor = null)
   Emilia Rosa van der Heide
   ****************************************************************************************/
@@ -468,6 +469,31 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
+  desde: N, hasta: N, IdUsuario: N -->
+  getUltimas20MedicionesPorUsuario()
+  --> Medidas
+
+  Josep Carreres Fluixà
+  ****************************************************************************************/
+  getUltimasNMedicionesPorUsuario(datos) {
+    console.log("logica: getMedidasDeEsteUsuarioPorFecha")
+    var textoSQL = "select * from Medidas where IdUsuario = $idUsuario order by IdMedida desc limit $num ;" ;
+    //console.log(textoSQL)
+    var valoresParaSQL = {
+      $idUsuario: datos.idUsuario,
+      $num : datos.num
+    };
+    //console.log(valoresParaSQL)
+    return new Promise((resolver, rechazar) => {
+      this.laConexion.all(textoSQL, valoresParaSQL,
+        (err, res) => {
+          (err ? rechazar(err) : resolver(res))
+        })
+    })
+  }
+
+
+  /****************************************************************************************
   IdUsuario: N -->
   getSensorPorIdUsuario()
   --> JSON: Sensor
@@ -669,7 +695,8 @@ module.exports = class Logica {
   /****************************************************************************************
   datos -->
   insertarUsuario()
-  --> 
+  -->
+
   Inserta usuario
   Josep Carreres Fluixà
   ****************************************************************************************/
@@ -693,7 +720,8 @@ module.exports = class Logica {
   /****************************************************************************************
   sensor -->
   insertarSensor()
-  --> 
+  -->
+
   Inserta sensor
   Josep Carreres Fluixà
   ****************************************************************************************/
@@ -717,7 +745,8 @@ module.exports = class Logica {
   /****************************************************************************************
   actividad:texto, idsensor: N -->
   indicarActividadNodo()
-  --> 
+  -->
+
   Cambia el estado del nodo en la BBDD
   Emilia Rosa van der Heide
   ****************************************************************************************/
