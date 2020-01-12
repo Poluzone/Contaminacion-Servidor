@@ -111,7 +111,7 @@ class Mapa {
 
         this.focus(this.position);
 
-        this.pruebaMétodo()
+        //this.pruebaMetodo()
 
         this.layers = new Array();
 
@@ -129,66 +129,72 @@ class Mapa {
         var latLng = new google.maps.LatLng(coords.lat, coords.lng);
         this.mapa.setCenter(latLng);
     }//()
+
     //..................................................
-    //
+    // void -> refreshMap() --> void
+    // función que refresca el mapa para evitar problemas con el redibujado de punto, esta función no es mía, si no de Carlos Tortosa
     //..................................................
-    getMap() {
-        return this.mapa;
-    }//()
+    refreshMap(){
+        google.maps.event.trigger(this.mapa, 'resize');
+    }
+    //...................................................
+    // name, position, iconoUrl --> addMarker() --> marker
+    // agrega un marcador al string de marcadores y al mapa, 
+    // devuelve el marcador en caso de ser necesario para otra tarea
+    //...................................................
+    addMarker(name, position, iconoUrl){
 
-    //...................................................
-    // addLayer()
-    //
-    //...................................................
+        var icono ={
+            url: iconoUrl,
+            scaleSize: new google.maps.Size(40, 40)
+        }
 
-    addLayer(layer){
-        this.layers.push(layer);
-        this.mapa.setMap(layer);
-    }//()
-    //...................................................
-    // removeLayer()
-    //
-    //...................................................
-
-    removeLayer(layer){
-        for(let i = 0; this.layer.length - 1; i++){
-            if(this.layers[i] == layer){
-                this.layers[i].remove;
-            }//if
-        }//for
-    }//()
-
-    //...................................................
-    //
-    //...................................................
-    addMarker(position){
         var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: 'Hello World!'
+            position: position,
+            map: this.map,
+            icono: icono
         });
+
+        this.markers[name] = marker;
+        return marker;
     }//()
+
+    //......................................................
+    // name --> removeMarker() -->
+    // recibe un string con el nombre del marcador y lo elimina
+    // para eliminarlo le paso un null a la función setMap de la API
+    //......................................................
+    removeMarker(name){
+        if(this.markers[name]){
+            this.markers[name].setMap(null);
+        }
+    }
+
+    //
+    getMap(){
+        return this.mapa;
+    }
 
 
 }//Clase Mapa
 
-var map; 
 
 
 function initMap(){
-    map = new Mapa({ lat: 38.996, lng: -0.166 },{zoom:14},document.getElementById("map"));
-}
+    var map = new Mapa({ lat: 38.996, lng: -0.166 },{zoom:14},document.getElementById("map"));
+    var marker = map.addMarker('prueba', { lat: 38.996, lng: -0.166 },"../images/pin-estacion.png");
+    marker.setMap(map.getMap());
+    }
 
 
 
-var map;
+
+
 var infowindow;
 
 
 
-function getMap() {
-    return map;
-}
+
 //Esto es para poder asignarle un nombre al gas dependiendo de su ID
 function queGasSoy(dato) {
     var gas;
@@ -208,7 +214,7 @@ function queGasSoy(dato) {
     return gas;
 }
 
-function getLasEstacionesOficiales() {
+/*function getLasEstacionesOficiales() {
     console.log("getLasEstacionesOficiales map.js");
     proxy.getEstacionesOficiales(function (datos) {
         console.log("Datos de las estaciones han sido recibidos")
@@ -271,4 +277,4 @@ function getLasEstacionesOficiales() {
         }
 
     }) //proxy.getEstacionesOficiales
-} // getLasEstacionesOficiales()
+} // getLasEstacionesOficiales()*/
