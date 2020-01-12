@@ -283,7 +283,7 @@ class Mapa {
 
 function initMap(){
     var intervalo = { desde: 0, hasta: 0 };
-    infowindow = new google.maps.InfoWindow();
+    //infowindow = new google.maps.InfoWindow();
     var map = new Mapa({ lat: 38.996, lng: -0.166 },{zoom:14},document.getElementById("map"));
 
     //prueba para comprobar que el método addMarker funciona
@@ -320,15 +320,17 @@ function initMap(){
 
 
             // --------------------- CO ---------------------------------
-            if (window.localStorage.getItem('inlineCheckboxCO') == "true" && datos["medidas"][i].IdTipoMedida == 2) {
+           
                 //dibuja los marcadores
                 var medidaCO = map.addMarker('Medidas', { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud }, {url: icon});
+                console.log("AQUÍ LLEGO");
+                medidaCO.set(map.getMap());
 
-                var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
+                /*var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
 
-                var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});
+                var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});*/
 
-                var infoCO = '<div id="content">' +
+               /* var infoCO = '<div id="content">' +
                     '<div id="siteNotice">' +
                     '</div>' +
                     '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
@@ -337,8 +339,8 @@ function initMap(){
                     '<p></p>' +
                     '</div>' +
                     '</div>';
-                map.addMarkerInfo(medidaCO, infoCO);
-            }//if
+                map.addMarkerInfo(medidaCO, infoCO);*/
+        
         }//for
     });//proxy
 }//initMap
