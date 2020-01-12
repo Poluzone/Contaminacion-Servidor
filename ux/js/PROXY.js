@@ -467,7 +467,7 @@ class Proxy {
     /****************************************************************************************
 
     getTodosErroresDeSensoresSinRevision()
-    --> lista<json(sensor, usuario)>
+    --> lista<sensor, usuario, error>
 
     De
 
@@ -491,15 +491,7 @@ class Proxy {
             });
     }
     
-    /****************************************************************************************
-
-    marcarErrorComoRevisadoPorIdError()
-
-    Marca como vistos los sensores que han cometido lecturas erróneas para que no aparezcan 
-    en lista cuando el usuario quiera dejar de verlos
-
-    Ivan
-    ****************************************************************************************/
+    88
     async marcarErrorComoRevisadoPorIdError(){
         fetch(url + "/marcarErrorComoRevisadoPorIdError", {
             method: 'POST', // or 'PUT'
