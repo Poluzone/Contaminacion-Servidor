@@ -99,8 +99,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
               var res = await laLogica.getUltimasNMedicionesPorUsuario(datos);
 
 
-            console.log(res);
-
             assert.equal(res[0].Revisado, true, "¿no hay un resulado?")
 
 

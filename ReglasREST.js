@@ -498,6 +498,37 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(data)
     });
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    * -Josep Carreres Fluixà -
+    *
+    *
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    servidorExpress.post('/getUltimasNMedicionesPorUsuario',
+      async function (peticion, respuesta) {
+        console.log(" * POST /getUltimasNMedicionesPorUsuario ")
+
+        console.log(peticion.body)
+        var datos = JSON.parse(peticion.body)
+
+        // llamo a la función adecuada de la lógica
+        var res = await laLogica.getUltimasNMedicionesPorUsuario(datos);
+        //console.log(res);
+        var data = {
+          medidas: res,
+          funciona: "ok"
+        }
+
+        // si el array de resultados no tiene una casilla ...
+        if (res.length < 1) {
+          // 404: not found
+          respuesta.status(404).send("no encontré medidas: " + res)
+          return
+        }
+        // todo ok
+        respuesta.status(200).send(data)
+      });
+
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * - Matthew Conde Oltra -
   *
@@ -689,7 +720,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * Emilia Rosa van der Heide
-  * /insertarImagen -> es una petición POST que guarda la foto en 
+  * /insertarImagen -> es una petición POST que guarda la foto en
   * ux/images/poluzone
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
   servidorExpress.post('/insertarImagen', async function (peticion, respuesta) {
