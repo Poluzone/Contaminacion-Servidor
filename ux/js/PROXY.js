@@ -4,7 +4,7 @@
 //
 
 //const url = "http://localhost:8080";
-const url = "https://juconol.upv.edu.es";
+const URL = "https://juconol.upv.edu.es";
 
 class Proxy {
     constructor() {
@@ -19,7 +19,7 @@ class Proxy {
             posicion: posicion
         };
 
-        fetch(url + "/insertarMedida", {
+        fetch(URL + "/insertarMedida", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -40,7 +40,7 @@ class Proxy {
             Telefono: tel
         };
 
-        fetch(url + "/insertarUsuario", {
+        fetch(URL + "/insertarUsuario", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -59,7 +59,7 @@ class Proxy {
     async ComprobacionLogin(data) {
         console.log("Realizando ComprobacionLogin");
 
-        fetch(url + "/ComprobarLogin", {
+        fetch(URL + "/ComprobarLogin", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {
@@ -75,18 +75,11 @@ class Proxy {
         }).then(function (datos) {
             console.log("hola2");
             if (datos.status == true) {
-                if (datos.Usuario[0].TipoUsuario == "Admin") {
-                    setCookie("username", datos.Usuario[0].Email);
-                    console.log("Iniciar sesion correcto y se han creado los cookies");
-                    checkCookie();
-                } else {
-                    console.log("El usuario que intenta iniciar sesión no es Admin");
-                    elUsuarioNoEsAdmin();
-                }
-
+                setCookie("username", datos.Usuario[0].Email);
+                console.log("Iniciar sesion correcto y se han creado los cookies");
+                checkCookie();
             } else {
                 console.log("No existe o no has puesto bien los datos");
-                usuarioOContraseñaIncorrectos();
             }
         });
     }
@@ -284,7 +277,7 @@ class Proxy {
             });
 
     }
-    
+ // NO SE SI ESTO VA AQUI ----------------------------------------------------------------------------------   
     //-------------Ivan--------------
     // N: id de un usuario -->
     // borrarUsuarioPorID()
@@ -356,6 +349,7 @@ class Proxy {
         });
         
     }
+ // HASTA AQUI ----------------------------------------------------------------------------------   
 
     //-------------------------------
     // GetUltimasMedidasPorFecha()

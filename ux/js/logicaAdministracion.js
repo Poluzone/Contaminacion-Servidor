@@ -6,9 +6,8 @@
 //
 //---------------------------------------------------------------------
 
-//const ip_puerto = "http://localhost:8080";
-const ip_puerto = "https://juconol.upv.edu.es";
-
+//const URL = "https://juconol.upv.edu.es";
+const URL = "http://localhost:8080";
 class logicaAdministracion {
 
     constructor() {
@@ -21,7 +20,7 @@ class logicaAdministracion {
 
         console.log("Llamada a getSensoresYSusUsuarios");
 
-        fetch(IP_PUERTO + "/getSensoresYSusUsuarios", {
+        fetch(URL + "/getSensoresYSusUsuarios", {
                 method: 'GET', // or 'PUT'
                 headers: {
                     'User-Agent': 'jordi',

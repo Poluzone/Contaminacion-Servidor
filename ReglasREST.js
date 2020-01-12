@@ -1,8 +1,26 @@
-// .....................................................................
-// ReglasREST.js
-// .....................................................................
+/****************************************************************************************
+ReglasREST.js
+GTI 3º, 2019-2020, Equipo 3
+Autor: Josep Carreres, Emilia Rosa van der Heide
+Descripcion: Reglas REST del servidor
+Fecha: septiembre 2019
+© Copyright:
+****************************************************************************************/
 const path = require('path');
 const saltRounds = 10;
+const multer = require("multer");
+const util = require('util')
+const fs = require('fs')
+
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './ux/images/poluzone')
+  },
+  filename: (req, file, cb) => {
+    cb(null, 'img' + '-' + Date.now() + path.extname(file.originalname));
+  }
+})
+const upload = multer({ storage: storage })
 
 module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   // .......................................................
@@ -305,21 +323,19 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
       laLogica.insertarSensor(datos);
 
-      respuesta.send("OK");
+      respuesta.status(200).send("OK");
     }); // post / insertarPersona
 
   servidorExpress.post('/borrarSensorPorID',
     function (peticion, respuesta) {
-
-      var id = JSON.parse(peticion.body);
-
-      console.log(" * POST /borrarSensorPorID " + id);
+      console.log(" * POST /borrarSensorPorID")
+      var id = JSON.parse(peticion.body)
 
       // supuesto procesamiento
 
       laLogica.borrarSensorPorID(id);
 
-      respuesta.send("OK");
+      respuesta.status(200).send("OK");
     }); // post / insertarPersona
 
   servidorExpress.post('/borrarUsuarioPorId',
@@ -387,6 +403,33 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
+
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /getMedidasEstacionOficialGandia/ -> es una petición GET que llama a
+  * getMedidasEstacionOficialGandia() de la Lógica
+  * la cual recoge los datos las medidas oficiales de gandia en este
+  * momento
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  servidorExpress.get('/getMedidasEstacionOficialGandia',
+    async function (peticion, respuesta) {
+      console.log(" * GET /getMedidasEstacionOficialGandia ")
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getMedidasEstacionOficialGandia();
+
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré medidas: " + dato)
+        return
+      }
+      // todo ok
+      respuesta.status(200).send(JSON.stringify(res))
+    })
+
+
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   * Emilia Rosa van der Heide
   * /getMediaCalidadDelAireDeLaJornada -> es una petición GET que llama a
@@ -436,19 +479,19 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       var res = await laLogica.getMedidasDeEsteUsuarioPorFecha(datos.Intervalo, datos.IdUsuario);
       //console.log(res);
 
-      var respuesta = {
+      var data = {
         medidas: res,
-        resultado: "ok"
+        funciona: "ok"
       }
 
       // si el array de resultados no tiene una casilla ...
       if (res.length < 1) {
         // 404: not found
-        respuesta.status(404).send("no encontré medidas: " + dato)
+        respuesta.status(404).send("no encontré medidas: " + res)
         return
       }
       // todo ok
-      respuesta.status(200).send(respuesta)
+      respuesta.status(200).send(data)
     });
 
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -463,11 +506,9 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     async function (peticion, respuesta) {
       console.log(" * POST /getEstacionesOficiales ")
 
-
       // llamo a la función adecuada de la lógica
-      //var res = await laLogica.getEstacionesOficiales();
-      var res = await laLogica.getMedidasEstacionOficialGandia();
-      console.log(res);
+      var res = await laLogica.getEstacionesOficiales();
+      //console.log(res);
       var data = {
         estaciones: res,
         k: 'ok'
@@ -496,12 +537,12 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
 
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-* - Emilia Rosa van der Heide -
-*
-* /getMedidasEstacionOficialGandia -> es una petición POST que llama a
-* getMedidasEstacionOficialGandia() de la Lógica la cual devuelve todas las
-* estaciones de la Comunidad Valenciana y las medidas de Gandia
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  * - Emilia Rosa van der Heide -
+  *
+  * /getMedidasEstacionOficialGandia -> es una petición POST que llama a
+  * getMedidasEstacionOficialGandia() de la Lógica la cual devuelve todas las
+  * estaciones de la Comunidad Valenciana y las medidas de Gandia
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
   servidorExpress.post('/getMedidasEstacionOficialGandia',
     async function (peticion, respuesta) {
@@ -523,6 +564,21 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(data)
     });
+
+
+
+  servidorExpress.get('/getNumeroUsuariosTotales',
+    async function (peticion, respuesta) {
+      console.log(" * GET /getNumeroUsuariosTotales ")
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getNumeroUsuariosTotales();
+
+      // si el array de resultados no tiene una casilla ..
+      // todo ok
+      respuesta.status(200).send(JSON.stringify(res))
+    })
+
 
 
   servidorExpress.get('/getNumeroUsuariosTotalesPorTipo/:tipo',
@@ -552,7 +608,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // llamo a la función adecuada de la lógica
       var res = await laLogica.getTodasLasMedidasPorFecha(dato);
 
-      console.log(res[0]);
+      //console.log(res[0]);
       var data = {
         medidas: res,
         k: "ok"
@@ -575,7 +631,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   * Emilia Rosa van der Heide
   * /getTodosLosUsuariosYSusSensores -> es una petición GET que llama a
   * getTodosLosUsuariosYSusSensores() de la Lógica la cual recoge los datos
-  * de todos los usuarios
+  * de todos los usuarios y los sensores vinculados
   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
   servidorExpress.get('/getTodosLosUsuariosYSusSensores/',
     async function (peticion, respuesta) {
@@ -584,8 +640,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // llamo a la función adecuada de la lógica
       var res = await laLogica.getTodosLosUsuariosYSusSensores();
 
-      //console.log(res);
-
       // si el array de resultados no tiene una casilla ...
       if (res.length < 0) {
         // 404: not found
@@ -593,7 +647,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         return
       }
       // todo ok
-      respuesta.send(JSON.stringify(res))
+      respuesta.status(200).send(JSON.stringify(res))
     })
 
 
@@ -614,27 +668,65 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /indicarActividadNodo -> es una petición POST que llama a
+  * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  servidorExpress.get('/getMedidasEstacionOficialGandia/',
+    async function (peticion, respuesta) {
+      console.log("* POST /getMedidasEstacionOficialGandia")
+
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getMedidasEstacionOficialGandia();
+      respuesta.send(JSON.stringify(res))
+    })
+
+  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  * Emilia Rosa van der Heide
+  * /insertarImagen -> es una petición POST que guarda la foto en 
+  * ux/images/poluzone
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  servidorExpress.post('/insertarImagen', async function (peticion, respuesta) {
+
+    console.log(" * POST /insertarImagen ")
+    var datos = JSON.parse(peticion.body)
+    let image = datos["imagen"];
+
+    // luego extraes la cabecera del data url
+    var base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
+
+    // grabas la imagen el disco
+    fs.writeFile('./ux/images/poluzone/img' + '-' + Date.now() + '.jpg', base64Data, 'base64', function (err) {
+      console.log(err);
+    });
+
+    return respuesta.sendStatus(200);
+
+  }) // post / subirImagen
+
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
-    console.log(" HTML:" + peticion.params.archivo);
+    //console.log(" HTML:" + peticion.params.archivo);
     var dir = path.resolve("./ux/html");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+    respuesta.sendFile(dir + "/" + peticion.params.archivo);
   });
 
   servidorExpress.get('/ux/js/:archivo', function (peticion, respuesta) {
-    console.log(" JS:" + peticion.params.archivo);
+    //console.log(" JS:" + peticion.params.archivo);
     var dir = path.resolve("./ux/js");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+    respuesta.sendFile(dir + "/" + peticion.params.archivo);
   });
   servidorExpress.get('/ux/css/:archivo', function (peticion, respuesta) {
-    console.log(" CSS:" + peticion.params.archivo);
+    //console.log(" CSS:" + peticion.params.archivo);
     var dir = path.resolve("./ux/css");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+    respuesta.sendFile(dir + "/" + peticion.params.archivo);
   });
 
   servidorExpress.get('/ux/images/:archivo', function (peticion, respuesta) {
-    console.log(" IMAGES:" + peticion.params.archivo);
+    //console.log(" IMAGES:" + peticion.params.archivo);
     var dir = path.resolve("./ux/images");
-    respuesta.sendfile(dir + "/" + peticion.params.archivo);
+    respuesta.sendFile(dir + "/" + peticion.params.archivo);
   });
 
 

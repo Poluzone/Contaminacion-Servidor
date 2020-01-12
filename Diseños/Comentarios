@@ -39,7 +39,8 @@ Fecha: (creacion)
 © Copyright:
 ****************************************************************************************/
 
-COMENTARIO DE CADA FUNCION EN ANDROID STUDIO
+
+COMENTARIO DE CADA FUNCION EN SERVIDOR
 /****************************************************************************************
 Parametros de entrada -->
 nombreDeLaFuncion()
@@ -49,3 +50,18 @@ Posible descripcion
 
 Autor
 ****************************************************************************************/
+
+
+COMENTARIO INICIAL DE CADA FICHERO EN ANDROID STUDIO
+// -----------------------------------------------------------------------
+// Nombre.java
+// Equipo 3
+// Autor: 
+// Fecha: fecha creacion
+// CopyRight:
+// -----------------------------------------------------------------------
+
+COMENTARIO DE CADA FUNCION EN ANDROID STUDIO
+// ---------------------------------------------------------------------------
+// Parametros de entrada -> nombreDeLaFuncion() -> Parametros de salida
+// ---------------------------------------------------------------------------

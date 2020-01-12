@@ -257,7 +257,8 @@ function initMap() {
     var heatmap = new google.maps.visualization.HeatmapLayer({
       data: poluzone,
       maxIntensity: 163,
-      radius: 60
+      radius: 60,
+      opacity: 0.3
     });
 
     var legend = document.getElementById('leyenda_mapa');

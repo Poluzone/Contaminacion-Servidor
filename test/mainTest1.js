@@ -381,7 +381,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
         body: JSON.stringify(dato)
       },
       function (err, respuesta, carga) {
-        var json = JSON.parse(carga);
+        //var json = JSON.parse(carga);
         //console.log("EL json "+respuesta);
         //assert.equal(err, null, "¿ha habido un error?");
         assert.equal(200, 200, "¿El código no es 200 (OK)");
@@ -418,7 +418,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
         assert.equal(200, 200, "¿El código no es 200 (OK)");
 
         //console.log(respuesta.body);
-        console.log(json);
+        //console.log(json);
 
 
         hecho();

@@ -1,9 +1,11 @@
-// .....................................................................
-// Estacion-oficial.js
-// Recoge los datos de gandia de la estacion oficial
-// Hecho por Joan Cipria Moreno Teodoro
-// Adaptado por Emilia Rosa van der Heide
-// .....................................................................
+/****************************************************************************************
+Estacion-oficial.js
+GTI 3º, 2019-2020, Equipo 3
+Autor: Joan Cipria Moreno Teodoro, adaptado por Emilia Rosa van der Heide
+Descripcion: Recoge los datos de gandia de la estacion oficial
+Fecha: septiembre 2019
+© Copyright:
+****************************************************************************************/
 // Importar JSDOM
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
