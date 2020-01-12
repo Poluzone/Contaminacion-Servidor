@@ -204,7 +204,7 @@ class Mapa {
     //.......................................................
 
     //......................................................
-    // string, measure --> addMeasure
+    // string, measure --> addMeasure()
     // agrega una medida y guarda tanto su ubicación como su valor
     //......................................................
 
@@ -222,9 +222,11 @@ class Mapa {
     //......................................................
     addLayer(information){
         const layer = new google.maps.visualization.HeatmapLayer({
-            dissipating: information.disipado,
+            //data: information.poluzone,
+            maxIntensity: informacion.maxIntensidad,
             radius: information.radio,
-            maxIntensity: informacion.maxIntensidad;
+            opacity: information.opacidad //número del 0 al 1
+
         });
 
         this.layers[information.name] = {
@@ -283,8 +285,11 @@ function initMap(){
     var intervalo = { desde: 0, hasta: 0 };
     infowindow = new google.maps.InfoWindow();
     var map = new Mapa({ lat: 38.996, lng: -0.166 },{zoom:14},document.getElementById("map"));
-    var marker = map.addMarker('prueba', { lat: 38.996, lng: -0.166 },"../images/pin-estacion.png");
-    marker.setMap(map.getMap());
+
+    //prueba para comprobar que el método addMarker funciona
+    /*var marker = map.addMarker('prueba', { lat: 38.996, lng: -0.166 },"../images/pin-estacion.png");
+    marker.setMap(map.getMap());*/
+
     //Recojo los datos de la base de datos
     proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
         // console.log(datos);
@@ -295,9 +300,6 @@ function initMap(){
         for (let i = 0; i < datos["medidas"].length; i++) {
             var iconBase = 'http://maps.google.com/mapfiles/ms/icons/';
             var icon;
-            /*if(datos[i].IdTipoMedida == 2){
-      icon = iconBase + 'purple-dot.png'
-      }*/
             if (datos["medidas"][i].IdTipoMedida == 1) {
                 icon = iconBase + 'green.png'
             } else {
@@ -320,18 +322,13 @@ function initMap(){
             // --------------------- CO ---------------------------------
             if (window.localStorage.getItem('inlineCheckboxCO') == "true" && datos["medidas"][i].IdTipoMedida == 2) {
                 //dibuja los marcadores
-                var medida = new google.maps.Marker({
-                    position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
-                    map: getMap(),
-                    title: 'Medidas',
-                    icon: { url: icon },
-                });
+                var medidaCO = map.addMarker('Medidas', { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud }, {url: icon});
 
-                var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
+                var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
 
-                poluzone.push(puntoCalor);
+                var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});
 
-                var contentString = '<div id="content">' +
+                var infoCO = '<div id="content">' +
                     '<div id="siteNotice">' +
                     '</div>' +
                     '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
@@ -340,122 +337,14 @@ function initMap(){
                     '<p></p>' +
                     '</div>' +
                     '</div>';
+                map.addMarkerInfo(medidaCO, infoCO);
 
-                google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
-                    return function () {
-                        infowindow.setContent(content);
-                        infowindow.open(getMap(), marker);
-                    };
-                })(medida, contentString, infowindow));
-            }
-
-            // --------------------- NOX ---------------------------------
-            if (window.localStorage.getItem('inlineCheckboxNOX') == "true" && datos["medidas"][i].IdTipoMedida == 3) {
-                //dibuja los marcadores
-                var medida = new google.maps.Marker({
-                    position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
-                    map: getMap(),
-                    title: 'Medidas',
-                    icon: { url: icon },
-                });
-
-                var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
 
                 poluzone.push(puntoCalor);
-
-                var contentString = '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
-                    '<div id="bodyContent">' +
-                    '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
-                    '<p></p>' +
-                    '</div>' +
-                    '</div>';
-
-                google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
-                    return function () {
-                        infowindow.setContent(content);
-                        infowindow.open(getMap(), marker);
-                    };
-                })(medida, contentString, infowindow));
             }
-
-            // --------------------- SO2 ---------------------------------
-            if (window.localStorage.getItem('inlineCheckboxSO2') == "true" && datos["medidas"][i].IdTipoMedida == 4) {
-                //dibuja los marcadores
-                var medida = new google.maps.Marker({
-                    position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
-                    map: getMap(),
-                    title: 'Medidas',
-                    icon: { url: icon },
-                });
-
-                var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
-
-                poluzone.push(puntoCalor);
-
-                var contentString = '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
-                    '<div id="bodyContent">' +
-                    '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
-                    '<p></p>' +
-                    '</div>' +
-                    '</div>';
-
-                google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
-                    return function () {
-                        infowindow.setContent(content);
-                        infowindow.open(getMap(), marker);
-                    };
-                })(medida, contentString, infowindow));
-            }
-
-            // --------------------- Gases irr ---------------------------------
-            if (window.localStorage.getItem('inlineCheckboxIrr') == "true" && datos["medidas"][i].IdTipoMedida == 5) {
-                //dibuja los marcadores
-                var medida = new google.maps.Marker({
-                    position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
-                    map: getMap(),
-                    title: 'Medidas',
-                    icon: { url: icon },
-                });
-
-                var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
-
-                poluzone.push(puntoCalor);
-
-                var contentString = '<div id="content">' +
-                    '<div id="siteNotice">' +
-                    '</div>' +
-                    '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
-                    '<div id="bodyContent">' +
-                    '<p><b>' + queGasSoy(datos["medidas"][i].IdTipoMedida) + '</b></p>' +
-                    '<p></p>' +
-                    '</div>' +
-                    '</div>';
-
-                google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
-                    return function () {
-                        infowindow.setContent(content);
-                        infowindow.open(getMap(), marker);
-                    };
-                })(medida, contentString, infowindow));
-            }
-
-        }//for
-        var heatmap = new google.maps.visualization.HeatmapLayer({
-            data: poluzone,
-            maxIntensity: 165,
-            radius: 60,
-            opacity: 0.3 // Número entre 0 y 1
-        });
-        heatmap.setMap(getMap());
+        }
     });
-}
-
+}//initMap
 
 
 
