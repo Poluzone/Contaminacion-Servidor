@@ -604,8 +604,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       async function(peticion, respuesta) {
         console.log("* POST /marcarErroresComoRevisados")
 
-        var idError = JSON.parse(peticion.body);
-
         // llamo a la función adecuada de la lógica
         await laLogica.marcarErroresComoRevisados();
 
