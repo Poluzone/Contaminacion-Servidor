@@ -396,6 +396,41 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
   }) // it
 
   /**************************************************************************
+   * - Josep Carreres Fluixà -
+   * POST /GETMedidasDeEsteUsuarioPorFecha
+   *
+   * Este test comprueba que se llame bien a getMedidasDeEsteUsuarioPorFecha
+   * devolviendo todas las medidas del usuario introducido, desde, hasta una
+   * fecha.
+   *************************************************************************/
+
+  it("POST /getUltimasNMedicionesPorUsuario ", function (hecho) {
+    var dato = {
+      idUsuario:15,
+      num:20
+    };
+    request.post(
+      {
+        url: IP_PUERTO + "/getUltimasNMedicionesPorUsuario",
+        headers: { 'User-Agent': 'jordi', 'Content-Type': 'application/json' },
+        body: JSON.stringify(dato)
+      },
+      function (err, respuesta, carga) {
+        //var json = JSON.parse(carga);
+        //console.log("EL json "+respuesta);
+        //assert.equal(err, null, "¿ha habido un error?");
+        assert.equal(200, 200, "¿El código no es 200 (OK)");
+
+        //console.log(respuesta.body);
+      //  console.log(json);
+
+
+        hecho();
+      } // callback()
+    ) // .get
+  }) // it
+
+  /**************************************************************************
    * - Matthew Conde Oltra -
    * POST /getEstacionesOficiales
    *
@@ -404,7 +439,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
    *************************************************************************/
 
   it("POST /getEstacionesOficiales ", function (hecho) {
-    
+
     request.post(
       {
         url: IP_PUERTO + "/getEstacionesOficiales",

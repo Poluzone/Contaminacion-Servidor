@@ -72,10 +72,6 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       var res = await laLogica.getTodosErroresDeSensoresSinRevision()
 
       assert.equal(res[0].Revisado, true, "¿no hay un resulado?")
-    }) //it
-
-  it("probar getUltimasNMedicionesPorUsuario",
-    async function () {
 
       var datos = {
         idUsuario: "15",
