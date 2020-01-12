@@ -260,6 +260,12 @@ function initMap() {
       radius: 60,
       opacity: 0.3 // Número entre 0 y 1
     });
+    var legend = document.getElementById('leyenda_mapa');
+    getMap().controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+
+    var filtro = document.getElementById('filtro_mapa');
+    getMap().controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(filtro);
+
     heatmap.setMap(getMap());
   });
 }
