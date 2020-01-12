@@ -182,14 +182,6 @@ class Mapa {
     // añade información a la infoWindow del marcador
     //......................................................
     addMarkerInfo(infowindow, marker, info) {
-
-        /*const infowindow = new google.maps.InfoWindow({
-            content: info
-        });*/
-
-        /*google.maps.event.addListener(marker, 'click', () => {
-            infoWindow.open(this.mapa, marker);
-        });*/
         google.maps.event.addListener(marker, 'click', (function (marker, info, infowindow) {
             return function () {
                 infowindow.setContent(info);
@@ -212,10 +204,7 @@ getMap(){
 // string, measure --> addMeasure()
 // agrega una medida y guarda tanto su ubicación como su valor
 //......................................................
-addMeasure(gasName, measure){
-    this.layers[gasName].layer.data.push({location: new google.maps.LatLng(measure.latitud, measure.longitud),
-        weight: measure.measure});
-}//()
+addMeasure(gasName, measure){}//()
 //.......................................................
 
 //......................................................
@@ -223,6 +212,7 @@ addMeasure(gasName, measure){
 // introduzco un objeto information y crea una layer a parte de mostrarla
 //......................................................
 addLayer(information){
+    
 }//()
 //.......................................................
 
