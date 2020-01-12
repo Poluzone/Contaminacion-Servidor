@@ -170,7 +170,10 @@ class Mapa {
         }
     }
 
-    //
+    //......................................................
+    // --> getMap() -->
+    // devuelve el mapa
+    //......................................................
     getMap(){
         return this.mapa;
     }
@@ -184,7 +187,7 @@ function initMap(){
     var map = new Mapa({ lat: 38.996, lng: -0.166 },{zoom:14},document.getElementById("map"));
     var marker = map.addMarker('prueba', { lat: 38.996, lng: -0.166 },"../images/pin-estacion.png");
     marker.setMap(map.getMap());
-    }
+}
 
 
 
