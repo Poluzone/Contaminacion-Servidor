@@ -209,7 +209,7 @@ class Mapa {
     //......................................................
 
     addMeasure(gasName, measure){
-        this.layers[gasName].push({
+        this.layers.push({
             location: new google.maps.LatLng(measure.latitud, measure.longitud),
             weight: measure.valoreMedido
         });
@@ -221,9 +221,9 @@ class Mapa {
     // introduzco un objeto information y crea una layer a parte de mostrarla
     //......................................................
     addLayer(information){
-        const layer = new google.maps.visualization.HeatmapLayer({
+        var layer = new google.maps.visualization.HeatmapLayer({
             //data: information.poluzone,
-            maxIntensity: informacion.maxIntensidad,
+            maxIntensity: information.maxIntensidad,
             radius: information.radio,
             opacity: information.opacidad //número del 0 al 1
 
@@ -338,12 +338,9 @@ function initMap(){
                     '</div>' +
                     '</div>';
                 map.addMarkerInfo(medidaCO, infoCO);
-
-
-                poluzone.push(puntoCalor);
-            }
-        }
-    });
+            }//if
+        }//for
+    });//proxy
 }//initMap
 
 
