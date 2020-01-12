@@ -137,9 +137,9 @@ class Mapa {
     // void -> refreshMap() --> void
     // función que refresca el mapa para evitar problemas con el redibujado de puntos o capas
     //..................................................
-    refreshMap(){
+    /*refreshMap(){
         google.maps.event.trigger(this.mapa, 'resize');
-    }//()
+    }//()*/
     //.......................................................
 
     //...................................................
@@ -244,7 +244,7 @@ class Mapa {
     showLayer(gasName) {
         if (this.layers[gasName]) {
             this.layers[gasName].layer.setMap(this.mapa);
-            this.refreshMap();
+            //this.refreshMap();
         }//if
     }//()
     //.......................................................
@@ -258,7 +258,7 @@ class Mapa {
         if (this.layer[gasName]) {
             //al poner null en setMap la capa se oculta, lo saqué de la documentación de Google Maps API
             this.layer[gasName].layer.setMap(null);
-            this.refreshMap();
+            //this.refreshMap();
 
         }//if
     }//()
@@ -328,11 +328,10 @@ function initMap(){
             //console.log(i);
             medidaCO.setMap(map.getMap());
 
-            /*var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
+            var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
+            //var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});
 
-                var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});*/
-
-            /* var infoCO = '<div id="content">' +
+            var infoCO = '<div id="content">' +
                     '<div id="siteNotice">' +
                     '</div>' +
                     '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
@@ -341,7 +340,7 @@ function initMap(){
                     '<p></p>' +
                     '</div>' +
                     '</div>';
-                map.addMarkerInfo(medidaCO, infoCO);*/
+                map.addMarkerInfo(medidaCO, infoCO);
 
         }//for
     });//proxy
