@@ -178,6 +178,23 @@ class Mapa {
     //.......................................................
 
     //......................................................
+    // marker, string --> addMarkerInfo() -->
+    // añade información a la infoWindow del marcador
+    //......................................................
+    addMarkerInfo(marker, info) {
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: info
+        });
+
+        google.maps.event.addListener(marker, 'click', () => {
+            infoWindow.open(this.mapa, marker);
+        });
+
+    }//()
+    //.......................................................
+
+    //......................................................
     // --> getMap() -->
     // devuelve el mapa
     //......................................................
@@ -187,7 +204,7 @@ class Mapa {
     //.......................................................
 
     //......................................................
-    // name, measure --> addMeasure
+    // string, measure --> addMeasure
     // agrega una medida y guarda tanto su ubicación como su valor
     //......................................................
 
@@ -219,7 +236,7 @@ class Mapa {
     //.......................................................
 
     //......................................................
-    // gasName --> showLayer()
+    // string --> showLayer()
     // introduzco el nombre del gas y muestro su capa
     //......................................................
     showLayer(gasName) {
@@ -232,7 +249,7 @@ class Mapa {
 
 
     //......................................................
-    // gasName --> hideLayer() 
+    // string --> hideLayer() 
     // introduzco el nombre del gas y oculto su capa
     //......................................................
     hideLayer(gasName){
