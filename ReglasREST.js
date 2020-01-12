@@ -607,7 +607,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
         var idError = JSON.parse(peticion.body);
 
         // llamo a la función adecuada de la lógica
-        await laLogica.marcarErroresComoRevisados(idError);
+        await laLogica.marcarErroresComoRevisados();
 
         respuesta.send("OK");
       })

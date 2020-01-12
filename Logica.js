@@ -664,10 +664,10 @@ module.exports = class Logica {
 
   // .................................................................
   // Josep Carreres Fluixà
-  // idUsuario -> marcarErrorComoRevisadoPorIdError() ->
+  // idUsuario -> marcarErroresComoRevisados() ->
   // marca como revisado el error por ID
   // .................................................................
-  marcarTodosLosErroresComoRevisados() {
+  marcarErroresComoRevisados() {
     var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado";
     var valoresParaSQL = {
       $revisado: "true"
