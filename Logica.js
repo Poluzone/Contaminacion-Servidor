@@ -686,11 +686,10 @@ module.exports = class Logica {
   // idUsuario -> marcarErrorComoRevisadoPorIdError() ->
   // marca como revisado el error por ID
   // .................................................................
-  marcarErroresComoRevisados(idError) {
-    var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado  WHERE IdError = $idError;";
+  marcarTodosLosErroresComoRevisados() {
+    var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado";
     var valoresParaSQL = {
-      $revisado: "true",
-      $idError: idError
+      $revisado: "true"
     };
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(textoSQL, valoresParaSQL, function(err, res) {

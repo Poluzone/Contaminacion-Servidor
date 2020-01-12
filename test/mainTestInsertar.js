@@ -71,19 +71,17 @@ describe("Test 1 : Recuerda arrancar el servidor", function() {
 
       }) //it
 
-      it("probar MarcarErrorComoRevisadoPorIdError",
+      it("probar marcarTodosLosErroresComoRevisados",
         async function() {
 
 
-          try {
-            await laLogica.MarcarErrorComoRevisadoPorIdError(1)
-          } catch (err) {
-            error = err
-          }
+
+            await laLogica.marcarTodosLosErroresComoRevisados();
+
 
           var res = await laLogica.getTodosErroresDeSensoresSinRevision()
 
-          assert.equal(res[0].IdError, 1, "¿no hay un resulado?")
+          assert.equal(res[0].Revisado, true, "¿no hay un resulado?")
 
 
 
