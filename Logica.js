@@ -1,3 +1,4 @@
+
 // .....................................................................
 // Logica.js
 // .....................................................................
@@ -368,7 +369,7 @@ module.exports = class Logica {
 
         var cont = 0;
         for (var j = 0; j < medidas.length; j++) {
-          if(medidas[j].Valor > mediana+10  ||  medidas[j].Valor < mediana-10 ) {cont++;}
+          if(medidas[j].Valor > mediana+20  ||  medidas[j].Valor < mediana-20 ) {cont++;}
         }
 
         if(medidas.length*(cont/medidas.length) >= 20){
