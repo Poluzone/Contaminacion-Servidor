@@ -493,15 +493,15 @@ class Proxy {
     
     /****************************************************************************************
 
-    MarcarErrorComoRevisadoPorIdError()
+    marcarErrorComoRevisadoPorIdError()
 
     Marca como vistos los sensores que han cometido lecturas erróneas para que no aparezcan 
     en lista cuando el usuario quiera dejar de verlos
 
     Ivan
     ****************************************************************************************/
-    async MarcarErrorComoRevisadoPorIdError(){
-        fetch(url + "/MarcarErrorComoRevisadoPorIdError", {
+    async marcarErrorComoRevisadoPorIdError(){
+        fetch(url + "/marcarErrorComoRevisadoPorIdError", {
             method: 'POST', // or 'PUT'
             headers: {
                 'User-Agent': 'jordi',

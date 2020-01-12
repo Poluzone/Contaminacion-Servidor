@@ -627,14 +627,14 @@ module.exports.cargar = function(servidorExpress, laLogica, bcrypt) {
    * /indicarActividadNodo -> es una petición POST que llama a
    * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-  servidorExpress.post('/MarcarErrorComoRevisadoPorIdError',
+  servidorExpress.post('/marcarErrorComoRevisadoPorIdError',
     async function(peticion, respuesta) {
-      console.log("* POST /MarcarErrorComoRevisadoPorIdError")
+      console.log("* POST /marcarErrorComoRevisadoPorIdError")
 
       var idError = JSON.parse(peticion.body);
 
       // llamo a la función adecuada de la lógica
-      await laLogica.MarcarErrorComoRevisadoPorIdError(idError);
+      await laLogica.marcarErrorComoRevisadoPorIdError(idError);
 
       respuesta.send("OK");
     })
