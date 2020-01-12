@@ -157,7 +157,7 @@ class Mapa {
         var marker = new google.maps.Marker({
             position: position,
             map: this.map,
-            icono: icono
+            icon: icono
         });
 
         this.markers[name] = marker;
@@ -287,14 +287,13 @@ function initMap(){
     var map = new Mapa({ lat: 38.996, lng: -0.166 },{zoom:14},document.getElementById("map"));
 
     //prueba para comprobar que el método addMarker funciona
-    /*var marker = map.addMarker('prueba', { lat: 38.996, lng: -0.166 },"../images/pin-estacion.png");
-    marker.setMap(map.getMap());*/
+
 
     //Recojo los datos de la base de datos
     proxy.getTodasLasMedidasPorFecha(intervalo, function (datos) {
         // console.log(datos);
         console.log("DATOS DE MEDIDAS POR FECHA");
-        var poluzone = [];
+        //var poluzone = [];
         console.log(window.localStorage.getItem('inlineCheckboxCO'))
         //asigno un marcador dependiendo de la medida    
         for (let i = 0; i < datos["medidas"].length; i++) {
@@ -320,17 +319,20 @@ function initMap(){
 
 
             // --------------------- CO ---------------------------------
-           
-                //dibuja los marcadores
-                var medidaCO = map.addMarker('Medidas', { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud }, {url: icon});
-                console.log("AQUÍ LLEGO");
-                medidaCO.set(map.getMap());
+            //var marker = map.addMarker('prueba', { lat: 38.996, lng: -0.166 },"../images/pin-estacion.png");
+            //marker.setMap(map.getMap());
+            //dibuja los marcadores
+            var medidaCO = map.addMarker('Medidas', { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud }, icon);
+            console.log(icon)
+            //console.log("AQUÍ LLEGO");
+            //console.log(i);
+            medidaCO.setMap(map.getMap());
 
-                /*var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
+            /*var puntoCalorCO = map.addMeasure('CO', datos["medidas"][i].Valor);
 
                 var heatMapCO = map.addLayer({maxIntesity: 165, radius: 60, opacity: 0.3});*/
 
-               /* var infoCO = '<div id="content">' +
+            /* var infoCO = '<div id="content">' +
                     '<div id="siteNotice">' +
                     '</div>' +
                     '<h1 id="firstHeading" class="firstHeading">' + datos["medidas"][i].Valor.toString() + ' ppb</h1>' +
@@ -340,7 +342,7 @@ function initMap(){
                     '</div>' +
                     '</div>';
                 map.addMarkerInfo(medidaCO, infoCO);*/
-        
+
         }//for
     });//proxy
 }//initMap
