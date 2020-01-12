@@ -89,7 +89,7 @@ class Proxy {
      */
     async GETultimaMedidaPorUsuario(userId, callback) {
 
-        fetch(url + "/GETultimaMedidaPorUsuario", {
+        fetch(URL + "/GETultimaMedidaPorUsuario", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(userId), // data can be `string` or {object}!
             headers: {
@@ -114,7 +114,7 @@ class Proxy {
      */
     async GETidUsuario(username, callback) {
 
-        fetch(url + "/GETidUsuario", {
+        fetch(URL + "/GETidUsuario", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(username), // data
             headers: {
@@ -143,7 +143,7 @@ class Proxy {
 
         console.log("Llamada a getSensoresYSusUsuarios");
 
-        fetch(url + "/getSensoresYSusUsuarios", {
+        fetch(URL + "/getSensoresYSusUsuarios", {
             method: 'GET', // or 'PUT'
         }).then(function (response) {
             console.log("response ", response);
@@ -173,7 +173,7 @@ class Proxy {
 
         console.log("Llamada a getNumSensoresSegunEstado con " + parseInt(estado));
 
-        fetch(url + "/getNumSensoresSegunEstado/" + estado, {
+        fetch(URL + "/getNumSensoresSegunEstado/" + estado, {
             method: 'GET', // or 'PUT'
             headers: {
                 'User-Agent': 'jordi',
@@ -202,7 +202,7 @@ class Proxy {
 
         console.log("Llamada a getTodosLosUsuariosYSusSensores");
 
-        fetch(url + "/getTodosLosUsuariosYSusSensores", {
+        fetch(URL + "/getTodosLosUsuariosYSusSensores", {
             method: 'GET', // or 'PUT'
         }).then(function (response) {
             console.log("response ", response);
@@ -232,7 +232,7 @@ class Proxy {
 
         console.log("Llamada a getNumeroUsuariosTotales");
 
-        fetch(url + "/getNumeroUsuariosTotales", {
+        fetch(URL + "/getNumeroUsuariosTotales", {
             method: 'GET', // or 'PUT'
         }).then(function (response) {
             console.log("response ", response);
@@ -257,7 +257,7 @@ class Proxy {
 
         console.log("Llamada a getNumeroUsuariosTotalesPorTipo con " + estado);
 
-        fetch(url + "/getNumeroUsuariosTotalesPorTipo/" + estado, {
+        fetch(URL + "/getNumeroUsuariosTotalesPorTipo/" + estado, {
             method: 'GET', // or 'PUT'
             headers: {
                 'User-Agent': 'jordi',
@@ -288,7 +288,7 @@ class Proxy {
             id: id
         };*/
 
-        fetch(url + "/borrarUsuarioPorID", {
+        fetch(URL + "/borrarUsuarioPorID", {
             method: 'POST', // or 'PUT'
             body: id.toString(), // data can be `string` or {object}!
             headers: {
@@ -313,7 +313,7 @@ class Proxy {
             id: id
         };*/
 
-        fetch(url + "/borrarUsuarioPorID", {
+        fetch(URL + "/borrarUsuarioPorID", {
             method: 'POST', // or 'PUT'
             body: id.toString(), // data can be `string` or {object}!
             headers: {
@@ -334,7 +334,7 @@ class Proxy {
     //-------------------------------
     async desvincularUsuarioDeSensorPorIdUsuario(id){
         
-        fetch(url + "/desvincularUsuarioDeSensorPorIdUsuario", {
+        fetch(URL + "/desvincularUsuarioDeSensorPorIdUsuario", {
             method: 'POST', // or 'PUT'
             body: id.toString(), // data can be `string` or {object}!
             headers: {
@@ -356,7 +356,7 @@ class Proxy {
     //-------------------------------
     async getTodasLasMedidasPorFecha(intervalo, callback) {
 
-        fetch(url + "/GetTodasLasMedidasPorFecha", {
+        fetch(URL + "/GetTodasLasMedidasPorFecha", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(intervalo), // data can be `string` or {object}!
             headers: {
@@ -385,7 +385,7 @@ class Proxy {
             id: id
         };*/
 
-        fetch(url + "/borrarSensorPorID", {
+        fetch(URL + "/borrarSensorPorID", {
             method: 'POST', // or 'PUT'
             body: id.toString(), // data can be `string` or {object}!
             headers: {
@@ -413,7 +413,7 @@ class Proxy {
             IdEstado: 1
         }
 
-        fetch(url + "/insertarSensor", {
+        fetch(URL + "/insertarSensor", {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(datosSensor), // data can be `string` or {object}!
             headers: {
@@ -438,7 +438,7 @@ class Proxy {
     async getEstacionesOficiales(callback) {
         console.log("PROXY: getEstacionesOficiales")
 
-        fetch(url + "/getMedidasEstacionOficialGandia", {
+        fetch(URL + "/getMedidasEstacionOficialGandia", {
             method: 'POST', // or 'PUT'
             headers: {
                 'User-Agent': 'jordi',

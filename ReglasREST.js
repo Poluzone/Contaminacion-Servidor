@@ -8,19 +8,8 @@ Fecha: septiembre 2019
 ****************************************************************************************/
 const path = require('path');
 const saltRounds = 10;
-const multer = require("multer");
 const util = require('util')
 const fs = require('fs')
-
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './ux/images/poluzone')
-  },
-  filename: (req, file, cb) => {
-    cb(null, 'img' + '-' + Date.now() + path.extname(file.originalname));
-  }
-})
-const upload = multer({ storage: storage })
 
 module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   // .......................................................
