@@ -23,22 +23,23 @@ let storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
-  // .......................................................
-  // GET /prueba
-  // .......................................................
+  /****************************************************************************************
+  GET /prueba
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/prueba', function (peticion, respuesta) {
     console.log(" * GET /prueba ")
     respuesta.send("¡Funciona!")
   }) // get /prueba
-  // .......................................................
-  // GET /persona/<dni>
-  // .......................................................
 
+  /****************************************************************************************
+  GET /GETsoloMedidas
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/GETsoloMedidas',
     async function (peticion, respuesta) {
       console.log(" * GET /soloMedidas ")
 
-      // averiguo el dni
       var dato = peticion.params.dato
 
       console.log(dato)
@@ -60,13 +61,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
-  /**
-   * /GETidUsuario
-   *
-   * Recoge el id que corresponda al usuario loggeado
-   *
-   * - Matthew Conde Oltra -
-   */
+  /****************************************************************************************
+  POST /GETidUsuario
+  Recoge el id que corresponda al usuario loggeado
+  Matthew Conde Oltra
+  ****************************************************************************************/
   servidorExpress.post('/GETidUsuario',
     async function (peticion, respuesta) {
       // averiguo el dni
@@ -95,11 +94,12 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
     })
 
-  /**
-   * /GETultimaMedidaPorUsuario
-   *
-   * Recoge la última médida del usuario que se le diga -> devuelve un JSON con el dato, la fecha y la posición
-   */
+
+  /****************************************************************************************
+  POST /GETultimaMedidaPorUsuario
+  Recoge la última médida del usuario que se le diga -> devuelve un JSON con el dato, la fecha y la posición
+  Matthew Conde Oltra
+  ****************************************************************************************/
   servidorExpress.post('/GETultimaMedidaPorUsuario',
     async function (peticion, respuesta) {
       console.log(" * POST /ultimaMedidaPorUsuario ")
@@ -126,12 +126,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.send(JSON.stringify(res))
     })
-  /**
-   * /GetUsuarioPorEmail/:email -> es una petición GET que llama a getUsuarioPorEmail() de la Lógica
-   * la cual recoge los datos del Usuario de la BBDD
-   *
-   */
 
+  /****************************************************************************************
+  GET /GetUsuarioPorEmail/:email
+  Es una petición GET que llama a getUsuarioPorEmail() de la Lógica la cual recoge los datos del Usuario de la BBDD
+  ****************************************************************************************/
   servidorExpress.get('/GetUsuarioPorEmail/:email',
     async function (peticion, respuesta) {
       console.log(" * GET /UsuarioPorEmail ")
@@ -156,12 +155,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
-  /**
-   * /GetUsuarioPorEmail -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
-   * la cual recoge los datos del Usuario de la BBDD
-   *
-   */
 
+  /****************************************************************************************
+  POST /GetUsuarioPorEmail
+  Es una petición GET que llama a getUsuarioPorEmail() de la Lógica la cual recoge los datos del Usuario de la BBDD
+  ****************************************************************************************/
   servidorExpress.post('/GetUsuarioPorEmail',
     async function (peticion, respuesta) {
       console.log(" * POST /UsuarioPorEmail ")
@@ -195,6 +193,10 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     })
 
 
+  /****************************************************************************************
+  GET /getNumSensoresSegunEstado/:idestado
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.get('/getNumSensoresSegunEstado/:idestado',
     async function (peticion, respuesta) {
       console.log(" * GET /getNumSensoresSegunEstado/:idestado")
@@ -208,12 +210,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
-  /**
-   * /ComprobarLogin -> es una petición POST que llama a getUsuarioPorEmail() de la Lógica
-   * la cual devuelve el objeto USUARIO con el que compara la Password
-   *
-   */
-
+  /****************************************************************************************
+  POST /ComprobarLogin/:idestado
+  Es una petición POST que llama a getUsuarioPorEmail() de la Lógica la cual devuelve el objeto USUARIO con el que compara la Password
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/ComprobarLogin',
     async function (peticion, respuesta) {
       console.log(" * POST /ComprobarLogin ")
@@ -245,11 +246,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
     })
 
-  /**
-   * /insertarMedida -> es una petición POST que llama a insertarMedida() de la Lógica
-   * la cual añade la medida del sensor a la BBDD
-   *
-   */
+  /****************************************************************************************
+  POST /insertarMedida
+  Es una petición POST que llama a insertarMedida() de la Lógica la cual añade la medida del sensor a la BBDD
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/insertarMedida',
     async function (peticion, respuesta) {
       console.log(" * POST /insertarMedida")
@@ -262,12 +263,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send("OK");
     }) // post / insertarPersona
 
-  /**
-   * /insertarUsuario -> es una petición POST que llama a insertarUsuario() de la Lógica
-   * la cual añade el usuario a la BBDD
-   *
-   *
-   */
+  /****************************************************************************************
+  POST /insertarUsuario
+  Es una petición POST que llama a insertarUsuario() de la Lógica la cual añade el usuario a la BBDD
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/insertarUsuario',
     async function (peticion, respuesta) {
       console.log(" * POST /insertarUsuario")
@@ -299,12 +299,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       })
     }); // post / insertarPersona
 
-  /**
-   * /insertarUsuario -> es una petición POST que llama a insertarUsuario() de la Lógica
-   * la cual añade el usuario a la BBDD
-   *
-   *
-   */
+
+  /****************************************************************************************
+  POST /insertarIdUsuarioConIdsensor
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/insertarIdUsuarioConIdsensor',
     async function (peticion, respuesta) {
       console.log(" * POST /insertarIdUsuarioConIdsensor")
@@ -318,6 +317,10 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     }); // post / insertarPersona
 
 
+  /****************************************************************************************
+  POST /insertarSensor
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/insertarSensor',
     async function (peticion, respuesta) {
       console.log(" * POST /insertarSensor")
@@ -330,6 +333,12 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send("OK");
     }); // post / insertarPersona
 
+
+
+  /****************************************************************************************
+  POST /borrarSensorPorID
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/borrarSensorPorID',
     function (peticion, respuesta) {
       console.log(" * POST /borrarSensorPorID")
@@ -342,6 +351,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send("OK");
     }); // post / insertarPersona
 
+
+  /****************************************************************************************
+  POST /borrarUsuarioPorId
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/borrarUsuarioPorId',
     function (peticion, respuesta) {
 
@@ -356,6 +370,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send("OK");
     }); // post / insertarPersona
 
+
+  /****************************************************************************************
+  POST /desvincularUsuarioDeSensorPorIdUsuario
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.post('/desvincularUsuarioDeSensorPorIdUsuario',
     function (peticion, respuesta) {
 
@@ -370,6 +389,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send("OK");
     }); // post / insertarPersona
 
+
+  /****************************************************************************************
+  POST /editarInformacionUsuario
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/editarInformacionUsuario',
     function (peticion, respuesta) {
 
@@ -385,11 +409,11 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     }); // post / insertarPersona
 
 
-  /*
-   * /getSensoresYSusUsuarios/ -> es una petición GET que llama a getSensoresYSusUsuarios() de la Lógica
-   * la cual recoge los datos de los sensores de la BBDD
-   */
-
+  /****************************************************************************************
+  GET /getSensoresYSusUsuarios
+  Es una petición GET que llama a getSensoresYSusUsuarios() de la Lógica la cual recoge los datos de los sensores de la BBDD
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.get('/getSensoresYSusUsuarios',
     async function (peticion, respuesta) {
       console.log(" * GET /getSensoresYSusUsuarios ")
@@ -409,13 +433,13 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
 
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /getMedidasEstacionOficialGandia/ -> es una petición GET que llama a
-  * getMedidasEstacionOficialGandia() de la Lógica
-  * la cual recoge los datos las medidas oficiales de gandia en este
-  * momento
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+  /****************************************************************************************
+  GET /getMedidasEstacionOficialGandia
+  Es una petición GET que llama a getMedidasEstacionOficialGandia() de la Lógica la cual 
+  recoge los datos las medidas oficiales de gandia en este momento
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.get('/getMedidasEstacionOficialGandia',
     async function (peticion, respuesta) {
       console.log(" * GET /getMedidasEstacionOficialGandia ")
@@ -434,14 +458,13 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     })
 
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /getMediaCalidadDelAireDeLaJornada -> es una petición GET que llama a
-  * getMediaCalidadDelAireDeLaJornada() de la Lógica la cual recoge los datos
-  * de todas las medidas de un usuario según un intervalo de la BBDD y
-  * calcula su media
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+  /****************************************************************************************
+  POST /getMediaCalidadDelAireDeLaJornada
+  Es una petición GET que llama a getMediaCalidadDelAireDeLaJornada() de la Lógica la cual 
+  recoge los datos de todas las medidas de un usuario según un intervalo de la BBDD y
+  calcula su media
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.post('/getMediaCalidadDelAireDeLaJornada',
     async function (peticion, respuesta) {
       console.log(" * GET /getMediaCalidadDelAireDeLaJornada ")
@@ -464,14 +487,13 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(resJson)
     })
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * - Matthew Conde Oltra -
-  *
-  * /getMedidasDeEsteUsuarioPorFecha -> es una petición POST que llama a
-  * getMedidasDeEsteUsuarioPorFecha() de la Lógica la cual devuelve todas las
-  * medidas del idUsuario pasado desde, hasta una fecha
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+  /****************************************************************************************
+  POST /getMedidasDeEsteUsuarioPorFecha
+  Es una petición POST que llama a getMedidasDeEsteUsuarioPorFecha() de la Lógica la cual 
+  devuelve todas las medidas del idUsuario pasado desde, hasta una fecha
+  Matthew Conde Oltra
+  ****************************************************************************************/
   servidorExpress.post('/getMedidasDeEsteUsuarioPorFecha',
     async function (peticion, respuesta) {
       console.log(" * POST /getMedidasDeEsteUsuarioPorFecha ")
@@ -498,45 +520,42 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(data)
     });
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    * -Josep Carreres Fluixà -
-    *
-    *
-    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /****************************************************************************************
+  POST /getUltimasNMedicionesPorUsuario
+  Josep Carreres Fluixà
+  ****************************************************************************************/
+  servidorExpress.post('/getUltimasNMedicionesPorUsuario',
+    async function (peticion, respuesta) {
+      console.log(" * POST /getUltimasNMedicionesPorUsuario ")
 
-    servidorExpress.post('/getUltimasNMedicionesPorUsuario',
-      async function (peticion, respuesta) {
-        console.log(" * POST /getUltimasNMedicionesPorUsuario ")
+      console.log(peticion.body)
+      var datos = JSON.parse(peticion.body)
 
-        console.log(peticion.body)
-        var datos = JSON.parse(peticion.body)
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getUltimasNMedicionesPorUsuario(datos);
+      //console.log(res);
+      var data = {
+        medidas: res,
+        funciona: "ok"
+      }
 
-        // llamo a la función adecuada de la lógica
-        var res = await laLogica.getUltimasNMedicionesPorUsuario(datos);
-        //console.log(res);
-        var data = {
-          medidas: res,
-          funciona: "ok"
-        }
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 1) {
+        // 404: not found
+        respuesta.status(404).send("no encontré medidas: " + res)
+        return
+      }
+      // todo ok
+      respuesta.status(200).send(data)
+    });
 
-        // si el array de resultados no tiene una casilla ...
-        if (res.length < 1) {
-          // 404: not found
-          respuesta.status(404).send("no encontré medidas: " + res)
-          return
-        }
-        // todo ok
-        respuesta.status(200).send(data)
-      });
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * - Matthew Conde Oltra -
-  *
-  * /getEstacionesOficiales -> es una petición POST que llama a
-  * getEstacionesOficiales() de la Lógica la cual devuelve todas las
-  * estaciones de la Comunidad Valenciana
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+  /****************************************************************************************
+  POST /getEstacionesOficiales
+  Es una petición POST que llama a getEstacionesOficiales() de la Lógica la cual devuelve 
+  todas las estaciones de la Comunidad Valenciana
+  Matthew Conde Oltra
+  ****************************************************************************************/
   servidorExpress.post('/getEstacionesOficiales',
     async function (peticion, respuesta) {
       console.log(" * POST /getEstacionesOficiales ")
@@ -558,6 +577,10 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(data)
     });
 
+  /****************************************************************************************
+  GET /getNumeroUsuariosTotales
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.get('/getNumeroUsuariosTotales',
     async function (peticion, respuesta) {
       console.log(" * GET /getNumeroUsuariosTotales ")
@@ -571,57 +594,54 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     })
 
 
+  /****************************************************************************************
+  GET /getTodosLosUsuariosYSusSensores
+  Es una petición GET que llama a getTodosLosUsuariosYSusSensores() de la Lógica la 
+  cual recoge los datos de todos los usuarios
+  Josep Carreres Fluixà
+  ****************************************************************************************/
+  servidorExpress.get('/getTodosErroresDeSensoresSinRevision',
+    async function (peticion, respuesta) {
+      console.log("* GET /getTodosErroresDeSensoresSinRevision")
 
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Josep Carreres Fluixà
-     * /getTodosLosUsuariosYSusSensores -> es una petición GET que llama a
-     * getTodosLosUsuariosYSusSensores() de la Lógica la cual recoge los datos
-     * de todos los usuarios
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    servidorExpress.get('/getTodosErroresDeSensoresSinRevision',
-      async function(peticion, respuesta) {
-        console.log("* GET /getTodosErroresDeSensoresSinRevision")
+      // llamo a la función adecuada de la lógica
+      var res = await laLogica.getErroresConSenoresYUsuarios();
 
-        // llamo a la función adecuada de la lógica
-        var res = await laLogica.getErroresConSenoresYUsuarios();
-
-        // si el array de resultados no tiene una casilla ...
-        if (res.length < 0) {
-          // 404: not found
-          respuesta.status(404).send("no encontré errores: " + dato)
-          return
-        }
-        // todo ok
-        respuesta.send(JSON.stringify(res))
-      })
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     * Josep Carreres Fluixà
-     * /marcarErroresComoRevisados -> es una petición POST que llama a
-     * marcarErroresComoRevisados() de la Lógica la cual edita el estado del nodo
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    servidorExpress.post('/marcarErroresComoRevisados',
-      async function(peticion, respuesta) {
-        console.log("* POST /marcarErroresComoRevisados")
-
-        var idError = JSON.parse(peticion.body);
-
-        // llamo a la función adecuada de la lógica
-        await laLogica.marcarErroresComoRevisados();
-
-        respuesta.send("OK");
-      })
+      // si el array de resultados no tiene una casilla ...
+      if (res.length < 0) {
+        // 404: not found
+        respuesta.status(404).send("no encontré errores: " + dato)
+        return
+      }
+      // todo ok
+      respuesta.send(JSON.stringify(res))
+    })
 
 
+  /****************************************************************************************
+  POST /marcarErroresComoRevisados
+  Es una petición POST que llama a marcarErroresComoRevisados() de la Lógica la cual edita 
+  el estado del nodo
+  Josep Carreres Fluixà
+  ****************************************************************************************/
+  servidorExpress.post('/marcarErroresComoRevisados',
+    async function (peticion, respuesta) {
+      console.log("* POST /marcarErroresComoRevisados")
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * - Emilia Rosa van der Heide -
-  *
-  * /getMedidasEstacionOficialGandia -> es una petición POST que llama a
-  * getMedidasEstacionOficialGandia() de la Lógica la cual devuelve todas las
-  * estaciones de la Comunidad Valenciana y las medidas de Gandia
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+      var idError = JSON.parse(peticion.body);
 
+      // llamo a la función adecuada de la lógica
+      await laLogica.marcarErroresComoRevisados();
+
+      respuesta.send("OK");
+    })
+
+  /****************************************************************************************
+  POST /getMedidasEstacionOficialGandia
+  Es una petición POST que llama a getMedidasEstacionOficialGandia() de la Lógica la cual 
+  devuelve todas las estaciones de la Comunidad Valenciana y las medidas de Gandia
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.post('/getMedidasEstacionOficialGandia',
     async function (peticion, respuesta) {
       console.log(" * POST /getMedidasEstacionOficialGandia ")
@@ -645,6 +665,10 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
 
 
+  /****************************************************************************************
+  GET /getNumeroUsuariosTotales
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/getNumeroUsuariosTotales',
     async function (peticion, respuesta) {
       console.log(" * GET /getNumeroUsuariosTotales ")
@@ -659,6 +683,10 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
 
 
+  /****************************************************************************************
+  GET /getNumeroUsuariosTotalesPorTipo/:tipo
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/getNumeroUsuariosTotalesPorTipo/:tipo',
     async function (peticion, respuesta) {
 
@@ -668,12 +696,13 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
-  // .......................................................
-  // getTodasLasMedidasPorFecha
-  //
-  // Recoge dos fechas, fecha desde y fecha hasta
-  // devuelve todas las medidas entre estas dos medidas de tiempo
-  // .......................................................
+
+  /****************************************************************************************
+  POST /getTodasLasMedidasPorFecha
+  Recoge dos fechas, fecha desde y fecha hasta devuelve todas las medidas entre estas 
+  dos medidas de tiempo
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.post('/GetTodasLasMedidasPorFecha/',
     async function (peticion, respuesta) {
       console.log("* POST /TodasLasMedidasPorFecha")
@@ -705,12 +734,12 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     })
 
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /getTodosLosUsuariosYSusSensores -> es una petición GET que llama a
-  * getTodosLosUsuariosYSusSensores() de la Lógica la cual recoge los datos
-  * de todos los usuarios y los sensores vinculados
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /****************************************************************************************
+  GET /getTodosLosUsuariosYSusSensores
+  Es una petición GET que llama a getTodosLosUsuariosYSusSensores() de la Lógica la cual 
+  recoge los datos de todos los usuarios y los sensores vinculados
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.get('/getTodosLosUsuariosYSusSensores/',
     async function (peticion, respuesta) {
       console.log("* GET /getTodosLosUsuariosYSusSensores")
@@ -729,11 +758,12 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     })
 
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /indicarActividadNodo -> es una petición POST que llama a
-  * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /****************************************************************************************
+  POST /indicarActividadNodo
+  Es una petición POST que llama a indicarActividadNodo() de la Lógica la cual edita 
+  el estado del nodo
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.post('/indicarActividadNodo/',
     async function (peticion, respuesta) {
       console.log("* POST /indicarActividadNodo")
@@ -747,11 +777,12 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     })
 
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /indicarActividadNodo -> es una petición POST que llama a
-  * indicarActividadNodo() de la Lógica la cual edita el estado del nodo
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  /****************************************************************************************
+  GET /getMedidasEstacionOficialGandia
+  Es una petición POST que llama a indicarActividadNodo() de la Lógica la cual edita 
+  el estado del nodo
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.get('/getMedidasEstacionOficialGandia/',
     async function (peticion, respuesta) {
       console.log("* POST /getMedidasEstacionOficialGandia")
@@ -761,11 +792,12 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
-  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  * Emilia Rosa van der Heide
-  * /insertarImagen -> es una petición POST que guarda la foto en
-  * ux/images/poluzone
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+  
+  /****************************************************************************************
+  POST /insertarImagen
+  Es una petición POST que guarda la foto en ux/images/poluzone
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   servidorExpress.post('/insertarImagen', async function (peticion, respuesta) {
 
     console.log(" * POST /insertarImagen ")
@@ -785,23 +817,41 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   }) // post / subirImagen
 
 
+
+  /****************************************************************************************
+  GET /ux/html/:archivo
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/ux/html/:archivo', function (peticion, respuesta) {
     //console.log(" HTML:" + peticion.params.archivo);
     var dir = path.resolve("./ux/html");
     respuesta.sendFile(dir + "/" + peticion.params.archivo);
   });
 
+  /****************************************************************************************
+  GET /ux/js/:archivo
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/ux/js/:archivo', function (peticion, respuesta) {
     //console.log(" JS:" + peticion.params.archivo);
     var dir = path.resolve("./ux/js");
     respuesta.sendFile(dir + "/" + peticion.params.archivo);
   });
+
+  /****************************************************************************************
+  GET /ux/css/:archivo
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/ux/css/:archivo', function (peticion, respuesta) {
     //console.log(" CSS:" + peticion.params.archivo);
     var dir = path.resolve("./ux/css");
     respuesta.sendFile(dir + "/" + peticion.params.archivo);
   });
 
+  /****************************************************************************************
+  GET /ux/images/:archivo
+  Josep Carreres Fluixa
+  ****************************************************************************************/
   servidorExpress.get('/ux/images/:archivo', function (peticion, respuesta) {
     //console.log(" IMAGES:" + peticion.params.archivo);
     var dir = path.resolve("./ux/images");
@@ -811,5 +861,5 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
 
 } // cargar()
-// .....................................................................
-// .....................................................................
+/****************************************************************************************
+****************************************************************************************/
