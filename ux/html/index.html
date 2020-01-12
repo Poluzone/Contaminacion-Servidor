@@ -121,87 +121,86 @@
                 <img src="../images/loader.gif" class="center w-50 mx-auto">
             </div>
         </div>
-        <div class="container-fluid leyenda_mapa mt-3" id="leyenda_mapa">
-            <div class="row">
-                <div class="col-sm-3 p-0 pr-1">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="../images/leyenda.png" class="w-20 img-fluid">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-9 p-0 pl-1">
-                    <div class="card h-100">
-                        <div class="card-body text-center my-auto"><br>
-                            <h3>Seleccione el contaminante que quiera ver: <br><br>
-                                <div class="form-check form-check-inline" onclick="cambiarEstadoCO()">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxCO"
-                                        value="option1">
-                                    <label class="form-check-label" for="inlineCheckboxCO">Monóxido de
-                                        carbono</label>
-                                </div>
-                                <div class="form-check form-check-inline" onclick="cambiarEstadoNOX()">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxNOX"
-                                        value="option2">
-                                    <label class="form-check-label" for="inlineCheckboxNOX">Óxidos de
-                                        nitrógeno</label>
-                                </div>
-                                <br>
-                                <div class="form-check form-check-inline" onclick="cambiarEstadoSO2()">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxSO2"
-                                        value="option3">
-                                    <label class="form-check-label" for="inlineCheckboxSO2">Dióxido de
-                                        azufre</label>
-                                </div>
-                                <div class="form-check form-check-inline" onclick="cambiarEstadoIrr()">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr"
-                                        value="option3">
-                                    <label class="form-check-label" for="inlineCheckboxIrr">Gases irritantes</label>
-                                </div>
-                            </h3>
-                            <br>
-                            <button onclick="window.location.reload();"
-                                class="btn btn-primary nunito fondoNaranja blanco mt-2">APLICAR</button>
-                            <script>
-                                function cambiarEstadoCO() {
-                                    if (document.getElementById('inlineCheckboxCO').checked) window.localStorage.setItem('inlineCheckboxCO', "true");
-                                    else window.localStorage.setItem('inlineCheckboxCO', "false");
-                                }
-                                function cambiarEstadoNOX() {
-                                    if (document.getElementById('inlineCheckboxNOX').checked) window.localStorage.setItem('inlineCheckboxNOX', "true");
-                                    else window.localStorage.setItem('inlineCheckboxNOX', "false");
-                                }
-                                function cambiarEstadoSO2() {
-                                    if (document.getElementById('inlineCheckboxSO2').checked) window.localStorage.setItem('inlineCheckboxSO2', "true");
-                                    else window.localStorage.setItem('inlineCheckboxSO2', "false");
-                                }
-                                function cambiarEstadoIrr() {
-                                    if (document.getElementById('inlineCheckboxIrr').checked) window.localStorage.setItem('inlineCheckboxIrr', "true");
-                                    else window.localStorage.setItem('inlineCheckboxIrr', "false");
-                                }
-                            </script>
-                            <script>
-                                var estadoCO = window.localStorage.getItem('inlineCheckboxCO')
-                                if (estadoCO == "true") document.getElementById('inlineCheckboxCO').checked = true;
-                                else document.getElementById('inlineCheckboxCO').checked = false;
 
-                                var estadoNOX = window.localStorage.getItem('inlineCheckboxNOX')
-                                if (estadoNOX == "true") document.getElementById('inlineCheckboxNOX').checked = true;
-                                else document.getElementById('inlineCheckboxNOX').checked = false;
-
-                                var estadoSO2 = window.localStorage.getItem('inlineCheckboxSO2')
-                                if (estadoSO2 == "true") document.getElementById('inlineCheckboxSO2').checked = true;
-                                else document.getElementById('inlineCheckboxSO2').checked = false;
-
-                                var estadoIrr = window.localStorage.getItem('inlineCheckboxIrr')
-                                if (estadoIrr == "true") document.getElementById('inlineCheckboxIrr').checked = true;
-                                else document.getElementById('inlineCheckboxIrr').checked = false;
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="leyenda_mapa" class="p-2 m-2 bg-white text-center">
+            <img src="../images/leyenda.png" class="rounded" id="legend">
         </div>
+        <style>
+            .checkbox-lg .custom-control-label::before,
+            .checkbox-lg .custom-control-label::after {
+                top: .8rem;
+                width: 1.55rem;
+                height: 1.55rem;
+            }
+        </style>
+        <div id="filtro_mapa" class="p-2 m-2 bg-white">
+            <div class="form-check form-check-inline checkbox-lg" onclick="cambiarEstadoCO()">
+                <input class="form-check-input" type="checkbox" id="inlineCheckboxCO" value="option1">
+                <label class="form-check-label" for="inlineCheckboxCO">
+                    <h5>Monóxido de carbono</h5>
+                </label>
+            </div>
+            <br>
+            <div class="form-check form-check-inline checkbox-lg" onclick="cambiarEstadoNOX()">
+                <input class="form-check-input" type="checkbox" id="inlineCheckboxNOX" value="option2">
+                <label class="form-check-label" for="inlineCheckboxNOX">
+                    <h5>Óxidos de nitrógeno</h5>
+                </label>
+            </div>
+            <br>
+            <div class="form-check form-check-inline checkbox-lg" onclick="cambiarEstadoSO2()">
+                <input class="form-check-input" type="checkbox" id="inlineCheckboxSO2" value="option3">
+                <label class="form-check-label" for="inlineCheckboxSO2">
+                    <h5>Dióxido de azufre</h5>
+                </label>
+            </div>
+            <br>
+            <div class="form-check form-check-inline checkbox-lg" onclick="cambiarEstadoIrr()">
+                <input class="form-check-input" type="checkbox" id="inlineCheckboxIrr" value="option3">
+                <label class="form-check-label" for="inlineCheckboxIrr">
+                    <h5>Gases irritantes</h5>
+                </label>
+            </div>
+            <br>
+            <button onclick="window.location.reload();"
+                class="btn btn-primary nunito fondoNaranja blanco mt-2">APLICAR</button>
+            <br>
+        </div>
+        <script>
+            function cambiarEstadoCO() {
+                if (document.getElementById('inlineCheckboxCO').checked) window.localStorage.setItem('inlineCheckboxCO', "true");
+                else window.localStorage.setItem('inlineCheckboxCO', "false");
+            }
+            function cambiarEstadoNOX() {
+                if (document.getElementById('inlineCheckboxNOX').checked) window.localStorage.setItem('inlineCheckboxNOX', "true");
+                else window.localStorage.setItem('inlineCheckboxNOX', "false");
+            }
+            function cambiarEstadoSO2() {
+                if (document.getElementById('inlineCheckboxSO2').checked) window.localStorage.setItem('inlineCheckboxSO2', "true");
+                else window.localStorage.setItem('inlineCheckboxSO2', "false");
+            }
+            function cambiarEstadoIrr() {
+                if (document.getElementById('inlineCheckboxIrr').checked) window.localStorage.setItem('inlineCheckboxIrr', "true");
+                else window.localStorage.setItem('inlineCheckboxIrr', "false");
+            }
+        </script>
+        <script>
+            var estadoCO = window.localStorage.getItem('inlineCheckboxCO')
+            if (estadoCO == "true") document.getElementById('inlineCheckboxCO').checked = true;
+            else document.getElementById('inlineCheckboxCO').checked = false;
+
+            var estadoNOX = window.localStorage.getItem('inlineCheckboxNOX')
+            if (estadoNOX == "true") document.getElementById('inlineCheckboxNOX').checked = true;
+            else document.getElementById('inlineCheckboxNOX').checked = false;
+
+            var estadoSO2 = window.localStorage.getItem('inlineCheckboxSO2')
+            if (estadoSO2 == "true") document.getElementById('inlineCheckboxSO2').checked = true;
+            else document.getElementById('inlineCheckboxSO2').checked = false;
+
+            var estadoIrr = window.localStorage.getItem('inlineCheckboxIrr')
+            if (estadoIrr == "true") document.getElementById('inlineCheckboxIrr').checked = true;
+            else document.getElementById('inlineCheckboxIrr').checked = false;
+        </script>
     </section>
     <!------------------------------------------------ / Sección Mapa -------------------------------------------------------->
 
@@ -265,7 +264,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container download-app rounded shadow mt-5" style="background-color: #222831;">
             <div id="carouselExampleIndicators" class="carousel slide text-white pt-4" data-ride="carousel">
                 <ol class="carousel-indicators">
