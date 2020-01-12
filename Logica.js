@@ -30,7 +30,7 @@ module.exports = class Logica {
   } // ()
 
   /****************************************************************************************
-  medida -->
+  IdMedida:N idTipoMedida:N idUsuario:N valor:Z Tiempo:N Latitud:Z Longitud:Z -->
   insertarMedida()
   -->
 
@@ -59,7 +59,7 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
-  datos -->
+  idUsuario:N idSensor:N-->
   vincularSensorConUsuario()
   -->
 
@@ -89,9 +89,11 @@ module.exports = class Logica {
 
 
   /****************************************************************************************
-  userId -->
+  userId:N -->
   getLaUltimaMedidaPorUsuario()
   -->
+
+  Matthew Conde Oltra
   ****************************************************************************************/
   async getLaUltimaMedidaPorUsuario(userId) {
     var textoSQL = "SELECT * FROM Medidas WHERE IdUsuario=" + userId + " ORDER BY IdMedida DESC LIMIT 0, 1";
@@ -104,9 +106,11 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
-  email -->
+  email:texto -->
   GetIdDelUsuario()
   -->
+
+  Matthew Conde Oltra
   ****************************************************************************************/
   async GetIdDelUsuario(email) {
     var textoSQL = "SELECT idUsuario FROM Usuarios WHERE Email='" + email + "';";
@@ -120,7 +124,7 @@ module.exports = class Logica {
 
 
   /****************************************************************************************
-  email -->
+  email:texto -->
   GetUsuarioPorEmail()
   -->
 
@@ -238,7 +242,7 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
-  tipomedida -->
+  tipomedida:N -->
   getTipoSensor()
   -->
 
@@ -260,7 +264,7 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
-  idestado -->
+  idestado:N -->
   getEstado()
   -->
 
@@ -300,7 +304,7 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
-  idsensor -->
+  idsensor:N -->
   getUsuarioPorIdSensor()
   -->
 
@@ -330,11 +334,12 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
-  -->
+  idUsuario:N -->
   getSensorPorIdUsuario()
   --> JSON Sensor
 
   Coge la info de un sensor a partir del id de su usuario
+  Josep Carreres Fluixà
   ****************************************************************************************/
   async getSensorPorIdUsuario(idUsuario) {
     var textoSQL = "SELECT Sensor.IdSensor, TipoSensor.Descripcion TipoSensor, Estados.Descripcion Estado FROM Sensor INNER JOIN UsuarioSensor ON UsuarioSensor.IdSensor = Sensor.IdSensor INNER JOIN TipoSensor ON Sensor.IdTipoMedida = TipoSensor.IdTipoMedida LEFT JOIN Estados ON Sensor.IdEstado = Estados.IdEstado WHERE UsuarioSensor.IdUsuario = $idUsuario ";
@@ -393,9 +398,11 @@ module.exports = class Logica {
 
 
   /****************************************************************************************
-  intervalo -->
+  desde:N hasta:N -->
   getMedidasPorFecha()
   --> medidas
+
+  Diego Alejandro Aguirre Ramirez
   ****************************************************************************************/
   getTodasLasMedidasPorFecha(intervalo) {
     if (intervalo.desde == 0 && intervalo.hasta == 0) {
@@ -434,7 +441,7 @@ module.exports = class Logica {
 
 
   /****************************************************************************************
-  tipousuario -->
+  tipousuario : N -->
   getNumeroUsuariosTotalesPorTipo()
   --> N
 
@@ -509,11 +516,14 @@ module.exports = class Logica {
   }
 
 
-  // .................................................................
-  // -> calcularMedianaDeLas24hAnteriores->
-  // Saca la mediana de las 24h anteriores
-  // .................................................................
+  /****************************************************************************************
+  desde:N hasta:N-->
+  calcularMedianaPorIntervaloDeTiempo()
+  -->
 
+  calcula la mediana dada un intervalo de horas
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   async calcularMedianaPorIntervaloDeTiempo(intervalo) {
 
     var medidas = await this.getTodasLasMedidasPorFecha(intervalo);
@@ -545,11 +555,14 @@ module.exports = class Logica {
 
   }
 
-  // .................................................................
-  // -> getTodosErroresDeSensoresSinRevision() ->
-  // Coge los errores que no han sido revisados
-  // .................................................................
+  /****************************************************************************************
+  -->
+  getUsuariosConSensor()
+  --> JSON
 
+  Recoge todos los usuarios que tienen sensor
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   getUsuariosConSensor() {
     var textoSQL = "select * from UsuarioSensor";
 
@@ -562,11 +575,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // -> comprobarSiHayErrorDeMedicionEnSensor->
-  // Comprobar y saber si un error esta midiendo erronamente
-  // .................................................................
+  /****************************************************************************************
+  -->
+  comprobarSiHayErroresDeMedicionEnSensor()
+  -->
 
+  Comprueba si hay errores de medicion de los sensores  de 24h antes en intervalos de 4h
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   async comprobarSiHayErroresDeMedicionEnSensor() {
 
     var intervalo = {
@@ -620,11 +636,14 @@ module.exports = class Logica {
 
   }
 
-  // .................................................................
-  // -> getTodosErroresDeSensoresSinRevision() ->
-  // Coge los errores que no han sido revisados
-  // .................................................................
+  /****************************************************************************************
+  -->
+  getTodosErroresDeSensoresSinRevision()
+  --> JSON
 
+  Recoge todos los errores que no han sido revisados
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   async getTodosErroresDeSensoresSinRevision() {
     var textoSQL = "select * from ErrorSensor where Revisado = $estado ";
     var valoresParaSQL = {
@@ -639,11 +658,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // -> getTodosErroresDeSensoresSinRevision() ->
-  // Coge los errores que no han sido revisados
-  // .................................................................
+  /****************************************************************************************
+  -->
+  getErroresConSenoresYUsuarios()
+  --> JSON
 
+  Recoge los errores con sus sensores y sus usuarios
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   async getErroresConSenoresYUsuarios() {
 
     var error = await this.getTodosErroresDeSensoresSinRevision();
@@ -660,11 +682,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // Josep Carreres Fluixà
-  // idUsuario -> marcarErroresComoRevisados() ->
-  // marca como revisado el error por ID
-  // .................................................................
+  /****************************************************************************************
+  -->
+  marcarErroresComoRevisados()
+  -->
+
+  Marca todos los errores como revisados
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   marcarErroresComoRevisados() {
     var textoSQL = "UPDATE ErrorSensor SET Revisado = $revisado";
     var valoresParaSQL = {
@@ -677,11 +702,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // Josep Carreres Fluixà
-  // datos -> insertarErrorSensor () ->
-  // inserta un error de sensor
-  // .................................................................
+  /****************************************************************************************
+  idError: N IdSensor: N Revisado: v/f Fecha: N-->
+  insertarErrorSensor()
+  -->
+
+  Inserta una medida en la BBDD
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   insertarErrorSensor(datos) {
     var textoSQL = "insert into ErrorSensor values( $IdError, $IdSensor, $Revisado, $Fecha)";
     var valoresParaSQL = {
@@ -697,8 +725,6 @@ module.exports = class Logica {
       })
     })
   }
-
-
 
 
   /****************************************************************************************
@@ -799,9 +825,12 @@ module.exports = class Logica {
 
 
   /****************************************************************************************
-  intervalo-->
+  desde:N hasta:N -->
   getTodasLasMedidasPorFecha()
   --> medidas
+
+  Recoge todas las medidas dado un intervalo de fecha
+  Diego Alejandro Aguirre Ramirez
   ****************************************************************************************/
   getTodasLasMedidasPorFecha(intervalo) {
     if (intervalo.desde == 0 && intervalo.hasta == 0) {
@@ -909,7 +938,7 @@ module.exports = class Logica {
   } //()
 
   /****************************************************************************************
-  datos -->
+  idUsuario:N Email:texto Password:texto Nombre:texto Telefono:N TipoUsuario:texto-->
   insertarUsuario()
   -->
 
@@ -934,7 +963,7 @@ module.exports = class Logica {
   }
 
   /****************************************************************************************
-  sensor -->
+  idSensor: N , idTipoMedida: N , idEstado: N , FactorCalibracion: Z -->
   insertarSensor()
   -->
 
@@ -988,11 +1017,14 @@ module.exports = class Logica {
   }
 
 
-  // .................................................................
-  // Emilia Rosa van der Heide
-  // -> getMedidasEstacionOficialGandia() -> medidas
-  // recibe las medidas de la estacion oficial de Gandia
-  // .................................................................
+  /****************************************************************************************
+  -->
+  getMedidasEstacionOficialGandia()
+  -->
+
+  Recoge las medidas de estacion oficial
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   async getMedidasEstacionOficialGandia() {
     console.log("logica: getMedidasEstacionOficialGandia")
     var data = await estacionOficial.getMedidasEstacion();
@@ -1007,10 +1039,14 @@ module.exports = class Logica {
     return estaciones;
   }
 
-  // .................................................................
-  // Emilia Rosa van der Heide
-  // -> getEstacionesOficiales() -> estaciones
-  // .................................................................
+  /****************************************************************************************
+  -->
+  getEstacionesOficiales()
+  -->
+
+  Recoge las estaciones oficiales
+  Emilia Rosa van der Heide
+  ****************************************************************************************/
   async getEstacionesOficiales() {
     var textoSQL = "select * from Estaciones;";
     console.log("logica: getTodosLosSensores")
@@ -1022,11 +1058,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // Josep Carreres Fluixà
-  // idUsuario -> editarInformacionUsuario() ->
-  // edita informacion de un usuario pasandole un json con los datos a cambiar y su ID
-  // .................................................................
+  /****************************************************************************************
+  JSON{,email password telefono idUsuario}-->
+  editarInformacionUsuario()
+  -->
+
+  Edita la informacion de los usuarios
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   editarInformacionUsuario(datos) {
     var textoSQL = "UPDATE Usuarios SET Email = $email , Password = $password , Telefono = $telefono WHERE IdUsuario = $idUsuario;";
     var valoresParaSQL = {
@@ -1091,10 +1130,14 @@ module.exports = class Logica {
 
 
 
-  // .................................................................
-  // tabla -> borrarFilasDe() ->
-  //  Le pasas el nombre de la tabla y lo elimina en la BD
-  // .................................................................
+  /****************************************************************************************
+  -->
+  borrarFilasDe()
+  -->
+
+  Borra las filas de
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   borrarFilasDe(tabla) {
     return new Promise((resolver, rechazar) => {
       this.laConexion.run(
@@ -1104,10 +1147,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // Idsensor -> borrarSensorPorID() ->
-  //  Le pasas el nombre del sensor y lo elimina en la BD
-  // .................................................................
+  /****************************************************************************************
+  idSensor -->
+  borrarSensorPorID()
+  -->
+
+  Borra sensor por su id
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   borrarSensorPorID(idSensor) {
     var textoSQL = "Delete from Sensor where IdSensor = $idSensor";
     var valoresParaSQL = {
@@ -1120,10 +1167,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // idUsuario -> borrarUsuarioPorId() ->
-  //  Le pasas el id y lo elimina en la BD
-  // .................................................................
+  /****************************************************************************************
+  idUsuario -->
+  borrarUsuarioPorId()
+  -->
+
+  Borra usuario por su id
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   async borrarUsuarioPorId(idUsuario) {
     var textoSQL = "Delete from Usuarios where IdUsuario = $idUsuario";
     var valoresParaSQL = {
@@ -1145,10 +1196,14 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // IDUsuario -> desvincularUsuarioDeSensorPorIdUsuario() ->
-  //  Le pasas el nombre del sensor y lo elimina en la BD
-  // .................................................................
+  /****************************************************************************************
+  idUsuario -->
+  desvincularUsuarioDeSensorPorIdUsuario()
+  -->
+
+  Desvincula usuario de su sensor por id de usuario
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   async desvincularUsuarioDeSensorPorIdUsuario(idUsuario) {
     var textoSQL = "Delete from UsuarioSensor where IdUsuario = $idUsuario";
     var valoresParaSQL = {
@@ -1169,16 +1224,26 @@ module.exports = class Logica {
     })
   }
 
-  // .................................................................
-  // borrarFilasDeTodasLasTablas() ->
-  // .................................................................
+  /****************************************************************************************
+  -->
+  borrarFilasDeTodasLasTablas()
+  -->
+
+  Borra las filas de las tablas
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   async borrarFilasDeTodasLasTablas() {
     await this.borrarFilasDe("Medidas")
   }
 
-  // .................................................................
-  // cerrar() -->
-  // .................................................................
+  /****************************************************************************************
+  -->
+  cerrar()
+  -->
+
+  Cierra la conexion con la logica
+  Josep Carreres Fluixà
+  ****************************************************************************************/
   cerrar() {
     return new Promise((resolver, rechazar) => {
       this.laConexion.close((err) => {
@@ -1188,5 +1253,5 @@ module.exports = class Logica {
   }
 
 } // class
-// .....................................................................
-// .....................................................................
+/****************************************************************************************/
+/****************************************************************************************/

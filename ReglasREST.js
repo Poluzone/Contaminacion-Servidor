@@ -8,19 +8,8 @@ Fecha: septiembre 2019
 ****************************************************************************************/
 const path = require('path');
 const saltRounds = 10;
-const multer = require("multer");
 const util = require('util')
 const fs = require('fs')
-
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './ux/images/poluzone')
-  },
-  filename: (req, file, cb) => {
-    cb(null, 'img' + '-' + Date.now() + path.extname(file.originalname));
-  }
-})
-const upload = multer({ storage: storage })
 
 module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
   /****************************************************************************************
@@ -60,6 +49,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.send(JSON.stringify(res))
     })
+
 
   /****************************************************************************************
   POST /GETidUsuario
@@ -126,6 +116,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.send(JSON.stringify(res))
     })
+
 
   /****************************************************************************************
   GET /GetUsuarioPorEmail/:email
@@ -210,6 +201,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.status(200).send(JSON.stringify(res))
     })
 
+
   /****************************************************************************************
   POST /ComprobarLogin/:idestado
   Es una petición POST que llama a getUsuarioPorEmail() de la Lógica la cual devuelve el objeto USUARIO con el que compara la Password
@@ -261,7 +253,8 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       laLogica.insertarMedida(datos);
 
       respuesta.send("OK");
-    }) // post / insertarPersona
+    }) // post / insertarMedida
+
 
   /****************************************************************************************
   POST /insertarUsuario
@@ -332,7 +325,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
 
       respuesta.status(200).send("OK");
     }); // post / insertarPersona
-
 
 
   /****************************************************************************************
@@ -430,8 +422,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(JSON.stringify(res))
     })
-
-
 
 
   /****************************************************************************************
@@ -628,8 +618,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     async function (peticion, respuesta) {
       console.log("* POST /marcarErroresComoRevisados")
 
-      var idError = JSON.parse(peticion.body);
-
       // llamo a la función adecuada de la lógica
       await laLogica.marcarErroresComoRevisados();
 
@@ -664,7 +652,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     });
 
 
-
   /****************************************************************************************
   GET /getNumeroUsuariosTotales
   Josep Carreres Fluixa
@@ -680,7 +667,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       // todo ok
       respuesta.status(200).send(JSON.stringify(res))
     })
-
 
 
   /****************************************************************************************
@@ -792,7 +778,7 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
       respuesta.send(JSON.stringify(res))
     })
 
-  
+
   /****************************************************************************************
   POST /insertarImagen
   Es una petición POST que guarda la foto en ux/images/poluzone
@@ -815,7 +801,6 @@ module.exports.cargar = function (servidorExpress, laLogica, bcrypt) {
     return respuesta.sendStatus(200);
 
   }) // post / subirImagen
-
 
 
   /****************************************************************************************
