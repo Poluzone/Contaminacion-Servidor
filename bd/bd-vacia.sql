@@ -17,6 +17,12 @@ CREATE TABLE IF NOT EXISTS "Estados" (
 	"Descripcion"	TEXT,
 	PRIMARY KEY("IdEstado")
 );
+CREATE TABLE "ErrorSensor" (
+	"IdError"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"IdSensor"	INTEGER,
+	"Revisado"	TEXT,
+	"Fecha"	DATE
+);
 CREATE TABLE "Sensor" (
 	"IdSensor"	INTEGER NOT NULL,
 	"IdTipoMedida"	INTEGER NOT NULL,

@@ -11,6 +11,7 @@ INSERT INTO "Sensor" VALUES (1,2,3, 1.2);
 INSERT INTO "Sensor" VALUES (2,2,2, 1);
 INSERT INTO "Sensor" VALUES (3,2,2, 1.3);
 INSERT INTO "Sensor" VALUES (4,2,2, 0.9);
+INSERT INTO "ErrorSensor" VALUES ('28', '1', 'false', '1578680542830');
 INSERT INTO "Usuarios" VALUES (6,'prueba1@hotmail.com','prueba1','Prueba 1',22132,'Admin');
 INSERT INTO "Usuarios" VALUES (14,'TestEd','TestEd','Test',8943,'Normal');
 INSERT INTO "Usuarios" VALUES (15,'mat@gmail.com','$2b$10$.BkVIJNxiEkCw7LYNTzRmeJZf2b.xl8Et1O/hxlXExkiyE8UmiUzm','MAT',671169981,'Conductor');

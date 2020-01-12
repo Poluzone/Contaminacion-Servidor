@@ -2,7 +2,7 @@
 
 /* Clase para el tamaño del mapa */
 .map {
-    height: 600px;
+    height: 800px;
     width: 100%;
 }
 
@@ -12,8 +12,7 @@
 }
 
 /* Clase para la Leyenda del mapa */
-.gradient {
-}
+.gradient {}
 
 /* Clase para los tipos de fuentes */
 
@@ -166,7 +165,7 @@ body {
 header.masthead {
     text-align: center;
     color: #fff;
-    background-image: url(../images/header-bg.jpg);
+    background-image: url(../images/header-bg.png);
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center center;
@@ -213,8 +212,8 @@ header.masthead .intro-text .intro-heading {
 
 /*Para el navbar*/
 
-.navbarAdmin{
-/*si*/
+.navbarAdmin {
+    /*si*/
 }
 
 #mainNav {
@@ -361,7 +360,7 @@ header.masthead .intro-text .intro-heading {
 }
 
 .modoSensores:hover {
-    color: #F5E0D3;
+    color: #F5E0D3 !important;
 
     text-decoration: none;
 }
@@ -371,7 +370,7 @@ header.masthead .intro-text .intro-heading {
 }
 
 .modoUsuarios:hover {
-    color: #F5E0D3;
+    color: #F5E0D3 !important;
 
     text-decoration: none;
 }
@@ -382,7 +381,7 @@ header.masthead .intro-text .intro-heading {
     height: 100%;
 
     position: relative;
-    z-index:2;
+    z-index: 2;
 }
 
 /* CUERPO */
@@ -393,7 +392,7 @@ header.masthead .intro-text .intro-heading {
     height: 85%;
 
     position: relative;
-    z-index:2;
+    z-index: 2;
 }
 
 /* TARJETAS INFORMACION GENERAL */
@@ -471,12 +470,12 @@ header.masthead .intro-text .intro-heading {
     height: 100%;
 }
 
-.iconoDesvincular:hover{
+.iconoDesvincular:hover {
     cursor: pointer;
     content: url(../images/desvincularNaranja.png);
 }
 
-.iconoDesvincular{
+.iconoDesvincular {
     width: 1.5rem;
     height: 1.5rem;
 }
@@ -507,6 +506,26 @@ header.masthead .intro-text .intro-heading {
     margin: 0% !important;
 }
 
+.iconoError {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoError:hover {
+    cursor: pointer;
+    content: url(../images/warningHover.png);
+}
+
+.iconoErrorSeleccionado {
+    content: url(../images/warningHover.png);
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.iconoErrorSeleccionado:hover {
+    cursor: pointer;
+}
+
 .iconoAdd {
     width: 1.5rem;
     height: 1.5rem;
@@ -532,8 +551,8 @@ header.masthead .intro-text .intro-heading {
     overflow: hidden;
 }
 
-.nombresLista{
-    height: 12%;    
+.nombresLista {
+    height: 12%;
 }
 
 .nombresLista:hover {
@@ -567,11 +586,11 @@ header.masthead .intro-text .intro-heading {
 
 }
 
-.elementoNaranja{
+.elementoNaranja {
     background-color: #F88E52;
 }
 
-.elementoNaranja:hover{
+.elementoNaranja:hover {
     background-color: #F7A171 !important;
 }
 
@@ -623,7 +642,9 @@ header.masthead .intro-text .intro-heading {
     box-shadow: none !important;
 }
 
-.contenedorSearch {}
+.contenedorSearch {
+    padding-left: 0px !important;
+}
 
 .contenedorIconosEditar {
     padding-top: 0% !important;
@@ -675,8 +696,25 @@ header.masthead .intro-text .intro-heading {
 
 /* MAPA */
 
+.tarjetaCalendario {
+    display: inline-block;
+}
+
+.tarjetaBotonPDF {
+    display: inline-block;
+}
+
+.tarjetaBotonPDF:hover{
+    cursor: pointer;
+}
+
+.iconoPDF{
+    width: 1.7rem;
+    height: 1.7rem;
+}
+
 .columnaMapa {
-    height: 100%;
+    height: 92%;
 }
 
 .contenedorMapa {
@@ -721,13 +759,13 @@ header.masthead .intro-text .intro-heading {
 
 /* Animacion fondo */
 
-.contenedorPulsos{
+.contenedorPulsos {
     height: 2px;
 }
 
 .pulse1 {
     position: relative;
-    z-index:2;
+    z-index: 2;
     margin-left: 35%;
     display: block;
     width: 2px;
@@ -741,7 +779,7 @@ header.masthead .intro-text .intro-heading {
 
 .pulse2 {
     position: relative;
-    z-index:2;
+    z-index: 2;
     margin-left: 28%;
     display: block;
     width: 2px;
@@ -784,22 +822,8 @@ header.masthead .intro-text .intro-heading {
     }
 }
 
-.invisible{
+.invisible {
     visibility: hidden;
 }
 
-.footer {}
-
-/*.carousel-control-next,
-.carousel-control-prev {
-    filter: invert(100%);
-}
-
-.carousel-indicators li {
-    filter: invert(100%);
-}*/
-
-.carousel-inner{
-    width:100%;
-    height: 225px !important;
-}
+.footerAdmin {}
