@@ -583,8 +583,6 @@ module.exports = class Logica {
       var inc2 = 14400000;
       var cont = 0;
 
-      console.log(usuarios.length);
-
       for (var u = 0; u < usuarios.length; u++) {
 
         var medidas = await this.getMedidasDeEsteUsuarioPorFecha({
