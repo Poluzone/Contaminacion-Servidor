@@ -758,6 +758,10 @@ Modificado: 3/12/19
                 // Eliminado boton Add y Can
                 iconoAddInnerHTML = iconoAdd.innerHTML;
                 iconoAdd.innerHTML = "";
+                
+                // Cambio de texto de SENSORES a ERRORES
+                textoSENSORESyUSUARIOS.innerHTML = "";
+                textoSENSORESyUSUARIOS.appendChild(document.createTextNode("ERRORES"));
 
                 // Borrado de elementos de la lista
                 ul = document.getElementById("lista");
@@ -791,6 +795,10 @@ Modificado: 3/12/19
                 iconoError.classList.remove("iconoErrorSeleccionado");
                 // Aparece boton Add
                 iconoAdd.innerHTML = iconoAddInnerHTML;
+                
+                // Cambio de texto de ERRORES a SENSORES
+                textoSENSORESyUSUARIOS.innerHTML = "";
+                textoSENSORESyUSUARIOS.appendChild(document.createTextNode("SENSORES"));
 
                 // Limpiar lista de sensores/usuarios
                 limpiarLista();
