@@ -11,8 +11,8 @@ Fecha: 22 de Noviembre de 2019
 
 © Copyright:
 ****************************************************************************************/
-const url = "http://localhost:8080";
-//const url = "https://juconol.upv.edu.es";
+//const url = "http://localhost:8080";
+const url = "https://juconol.upv.edu.es";
 
 class Proxy {
     constructor() {
