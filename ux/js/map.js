@@ -128,12 +128,12 @@ function initMap() {
       // --------------------- CO ---------------------------------
       if (window.localStorage.getItem('inlineCheckboxCO') == "true" && datos["medidas"][i].IdTipoMedida == 2) {
         //dibuja los marcadores
-        var medida = new google.maps.Marker({
+       /* var medida = new google.maps.Marker({
           position: { lat: datos["medidas"][i].Latitud, lng: datos["medidas"][i].Longitud },
           map: getMap(),
           title: 'Medidas',
           icon: { url: icon },
-        });
+        });*/
 
         var puntoCalor = { location: new google.maps.LatLng(datos["medidas"][i].Latitud, datos["medidas"][i].Longitud), weight: datos["medidas"][i].Valor };
 
@@ -149,12 +149,12 @@ function initMap() {
           '</div>' +
           '</div>';
 
-        google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
+        /*google.maps.event.addListener(medida, 'click', (function (marker, content, infowindow) {
           return function () {
             infowindow.setContent(content);
             infowindow.open(getMap(), marker);
           };
-        })(medida, contentString, infowindow));
+        })(medida, contentString, infowindow));*/
       }
 
       // --------------------- NOX ---------------------------------
