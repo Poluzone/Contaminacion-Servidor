@@ -124,6 +124,10 @@
 
         <div id="leyenda_mapa" class="p-2 m-2 bg-white text-center">
             <img src="../images/leyenda.png" class="rounded" id="legend">
+            <!-- Button trigger modal informacion -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#informacionModal">
+                ¿Cómo interpreto esto?
+            </button>
         </div>
         <style>
             .checkbox-lg .custom-control-label::before,
@@ -556,6 +560,61 @@
                         class="btn btn-primary nunito fondoNaranja blanco">Registrarse</button>
                     <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal información adicional -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="informacionModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información sobre la calidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Cuando hay entre 0–67 ppm de contaminación en el aire, hay una calidad del aire entre el
+                        <span class="text-success">70–100%</span>. Si se encuentra en estos valores el riesgo de
+                        problemas es escaso o nulo. No se
+                        anticipan impactos a la salud cuando la calidad del aire se encuentra en este intervalo.
+                        <br> <br>
+
+                        Cuando hay entre 68–162 ppm de contaminación en el aire, hay una calidad del aire entre el
+                        <span class="text-warning">30–69%</span>.
+                        <br>
+                        En este intervalo, la calidad del aire es aceptable pero para algunos contaminantes
+                        podría existir una preocupación moderada para la salud de un grupo muy pequeño de personas. Las
+                        personas con enfermedades pulmonares, los adultos mayores y los niños son más
+                        susceptibles a la exposición al ozono, mientras que las personas con cardiopatías y enfermedades
+                        pulmonares, los adultos mayores y los niños son más susceptibles a la presencia de partículas en
+                        el aire. Se debe tener cuidado al hacer ejecicio físico al aire libre durante un tiempo
+                        prolongado, sobre todo los niños y adultos con enfermedades respiratorias tales como el asma.
+                        <br> <br>
+
+                        Cuando hay más de 163 ppm de contaminación en el aire, hay una calidad del aire entre el <span
+                            class="text-danger">0–29%</span>.
+                        <br>
+                        Es el intervalo en el cual todos pueden comenzar a padecer efectos adversos para la salud y los
+                        miembros de
+                        los grupos sensibles pueden padecer efectos más graves. Los niños y adultos activos, y personas
+                        con enfermedades respiratorias tales como el asma, deben evitar todos los esfuerzos excesivos al
+                        aire libre; las demás personas, especialmente los niños, deben limitar los esfuerzos físicos
+                        excesivos al aire libre. <br>
+
+                        Si se encuentra en unos valores muy
+                        altos, se desencadenaría una <span class="text-danger">alerta sanitaria</span> que implica que
+                        todos pueden padecer <span class="text-danger">efectos más
+                            graves para la salud.</span>
+                        <br> <br>
+                        <span class="font-italic">Los valores límite vienen fijados en el R.D. 1073/2003, transpuesto de
+                            la Directiva 1999/30/CE.</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
