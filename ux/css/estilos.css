@@ -826,4 +826,6 @@ header.masthead .intro-text .intro-heading {
     visibility: hidden;
 }
 
-.footerAdmin {}
+#leyenda_mapa div img {
+    height: 300px;
+}
