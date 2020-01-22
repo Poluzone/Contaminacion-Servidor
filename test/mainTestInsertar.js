@@ -64,7 +64,39 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
       var res = await laLogica.getTodosErroresDeSensoresSinRevision()
 
       assert.equal(res.length, 1, "¿no hay un resulado?")
+
+
+
     }) //it
+
+  it("probar marcarTodosLosErroresComoRevisados",
+    async function () {
+
+
+
+      await laLogica.marcarTodosLosErroresComoRevisados();
+
+
+      var res = await laLogica.getTodosErroresDeSensoresSinRevision()
+
+      assert.equal(res[0].Revisado, true, "¿no hay un resulado?")
+
+
+
+    }) //it
+
+  it("probar getUltimasNMedicionesPorUsuario",
+    async function () {
+
+      var datos = {
+        idUsuario: "15",
+        num: 20
+
+      }
+
+      var res = await laLogica.getUltimasNMedicionesPorUsuario(datos);
+
+    })
 
   it("probar marcarTodosLosErroresComoRevisados",
     async function () {
@@ -87,6 +119,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
   it("probar getTodosLosSensores()",
     async function () {
+
+
       var res = await laLogica.getTodosLosSensores()
 
       assert.equal(res.length, 2, "¿no hay un resulado?")
@@ -121,6 +155,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
   it("probar getSensoresYSusUsuarios()",
     async function () {
+
+
       var res = await laLogica.getSensoresYSusUsuarios();
       assert.equal(res[0].IdSensor, 1, "no coge el idsensor correcto")
       assert.equal(res[1].Usuario.Nombre, "Emilia Rosa", "el nombre no coincide")
@@ -159,6 +195,8 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
   it("probar GetUsuarioPorEmail",
     async function () {
+
+
       var res = await laLogica.GetUsuarioPorEmail("prueba1@hotmail.com")
 
       assert.equal(res[0].Telefono, "22132", "¿no es 1234A?")
@@ -217,8 +255,27 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
 
     })
 
+  // Emilia Rosa van der Heide
+  it("probar calibrarMedida",
+    async function () {
+      var medida = {
+        IdTipoMedida: 2,
+        IdUsuario: 15,
+        Valor: 243,
+        Tiempo: 234324,
+        Latitud: 234,
+        Longitud: 324
+      }
+      var res = await laLogica.calibrarMedida(medida);
+      // Sabemos que el factor de calibracion es 1.2
+      var medidaCalibrada = 243 * 1.2;
+      assert.equal(res, medidaCalibrada, "No calibra bien la medida")
+    }) // probar calibrarMedida()
+
   it("probar GetIdUsuario",
     async function () {
+
+
       var res = await laLogica.GetIdDelUsuario('mat@gmail.com');
       assert.equal(res.length, 1, "¿no hay un resulado?")
 
@@ -243,6 +300,7 @@ describe("Test 1 : Recuerda arrancar el servidor", function () {
         IdSensor: 99,
         IdTipoMedida: 2,
         IdEstado: 1,
+        FactorCalibracion: 1.2
       }
       var resu = await laLogica.insertarSensor(sensor);
       var res = await laLogica.getNumSensoresSegunEstado(2);
